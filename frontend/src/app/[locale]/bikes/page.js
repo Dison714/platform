@@ -4,7 +4,7 @@ import { apiGet } from '../../../lib/api.js';
 import CategoryFilter from '../../components/CategoryFilter.jsx';
 import BikeCard from '../../components/BikeCard.jsx';
 import { notFound } from 'next/navigation';
-import { ogTwitter } from '../../../lib/seo.js';
+import { ogTwitter, hreflangAlternates } from '../../../lib/seo.js';
 
 // Каталог рендерится на сервере (SSR) — Google видит контент. Живые данные
 // из backend, поэтому всегда свежо.
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages: hreflangAlternates('/bikes') },
     ...ogTwitter({ title, description, url }),
   };
 }

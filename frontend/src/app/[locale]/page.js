@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { isEnabledLocale } from '../../i18n/config.js';
 import { getDictionary } from '../../i18n/getDictionary.js';
 import { apiGet } from '../../lib/api.js';
-import { ogTwitter } from '../../lib/seo.js';
+import { ogTwitter, hreflangAlternates } from '../../lib/seo.js';
 
 // Главная — SSR-контент (для SEO). Категории тянем из API, остальное — словари.
 export const dynamic = 'force-dynamic';
@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages: hreflangAlternates('') },
     ...ogTwitter({ title, description, url }),
   };
 }

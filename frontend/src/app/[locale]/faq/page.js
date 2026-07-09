@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { isEnabledLocale } from '../../../i18n/config.js';
 import { getDictionary } from '../../../i18n/getDictionary.js';
 import FaqAccordion from '../../components/FaqAccordion.jsx';
-import { ogTwitter } from '../../../lib/seo.js';
+import { ogTwitter, hreflangAlternates } from '../../../lib/seo.js';
 
 export async function generateMetadata({ params }) {
   const dict = await getDictionary(params.locale);
@@ -12,7 +12,7 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages: hreflangAlternates('/faq') },
     ...ogTwitter({ title, description, url }),
   };
 }

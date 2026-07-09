@@ -4,7 +4,7 @@ import { isEnabledLocale } from '../../../../i18n/config.js';
 import { getDictionary } from '../../../../i18n/getDictionary.js';
 import { apiGet, formatIdr } from '../../../../lib/api.js';
 import { resolvePhotoUrl, pickHero, galleryPhotos } from '../../../../lib/photos.js';
-import { ogTwitter } from '../../../../lib/seo.js';
+import { ogTwitter, hreflangAlternates } from '../../../../lib/seo.js';
 import { absoluteUrl } from '../../../../lib/site.js';
 import { resolveSpecs } from '../../../../lib/specs.js';
 import Calculator from '../../../components/Calculator.jsx';
@@ -33,7 +33,9 @@ export async function generateMetadata({ params }) {
   return {
     title,
     description,
-    alternates: { canonical: url },
+    // slug единый для всех локалей (не per-locale) — hreflang просто меняет
+    // сегмент локали в пути, доп. lookup не нужен.
+    alternates: { canonical: url, languages: hreflangAlternates(`/bikes/${product.slug}`) },
     ...ogTwitter({ title, description, url, image: heroUrl, imageAlt: product.name }),
   };
 }
