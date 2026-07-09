@@ -4,7 +4,7 @@ import { isEnabledLocale } from '../../../../i18n/config.js';
 import { getDictionary } from '../../../../i18n/getDictionary.js';
 import { apiGet, formatIdr } from '../../../../lib/api.js';
 import { resolvePhotoUrl, pickHero, galleryPhotos } from '../../../../lib/photos.js';
-import { ogTwitter, hreflangAlternates } from '../../../../lib/seo.js';
+import { ogTwitter, hreflangAlternates, breadcrumbJsonLd } from '../../../../lib/seo.js';
 import { absoluteUrl } from '../../../../lib/site.js';
 import { resolveSpecs } from '../../../../lib/specs.js';
 import Calculator from '../../../components/Calculator.jsx';
@@ -83,10 +83,18 @@ export default async function ProductPage({ params }) {
         }
       : undefined,
   };
+  // Home → Bikes → [Product name]; названия ступеней — те же строки навигации
+  // (dict.nav), имя продукта — то же, что в Product JSON-LD/<title> выше.
+  const breadcrumbLd = breadcrumbJsonLd([
+    { name: dict.nav.home, path: `/${locale}` },
+    { name: dict.nav.bikes, path: `/${locale}/bikes` },
+    { name: product.name, path: `/${locale}/bikes/${product.slug}` },
+  ]);
 
   return (
     <div className="container product-wrap">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
       <Link href={`/${locale}/bikes`} className="back-link">← {dict.product.back}</Link>
 

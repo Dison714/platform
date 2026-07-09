@@ -1,5 +1,6 @@
 import { resolvePhotoUrl } from './photos.js';
 import { enabledLocales, DEFAULT_LOCALE } from '../i18n/config.js';
+import { absoluteUrl } from './site.js';
 
 // alternates.languages для generateMetadata: en/ru на ту же страницу +
 // x-default → DEFAULT_LOCALE (en). suffix — часть пути ПОСЛЕ сегмента
@@ -51,5 +52,22 @@ export function ogTwitter({ title, description, url, image, imageAlt }) {
       description,
       images: [img],
     },
+  };
+}
+
+// BreadcrumbList JSON-LD — рендерится страницей как <script type=
+// "application/ld+json">, не через generateMetadata, поэтому item нужно
+// делать абсолютным вручную (absoluteUrl), как и в Product JSON-LD.
+// items: [{ name, path }], path — относительный (/en, /en/bikes, ...).
+export function breadcrumbJsonLd(items) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((it, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: it.name,
+      item: absoluteUrl(it.path),
+    })),
   };
 }

@@ -4,7 +4,7 @@ import { apiGet } from '../../../lib/api.js';
 import CategoryFilter from '../../components/CategoryFilter.jsx';
 import BikeCard from '../../components/BikeCard.jsx';
 import { notFound } from 'next/navigation';
-import { ogTwitter, hreflangAlternates } from '../../../lib/seo.js';
+import { ogTwitter, hreflangAlternates, breadcrumbJsonLd } from '../../../lib/seo.js';
 
 // Каталог рендерится на сервере (SSR) — Google видит контент. Живые данные
 // из backend, поэтому всегда свежо.
@@ -38,9 +38,23 @@ export default async function BikesPage({ params, searchParams }) {
   ]);
   const products = productsRes.data ?? [];
   const categories = categoriesRes.data ?? [];
+  // Breadcrumb только при активном фильтре (Home → Bikes → [Category]) — без
+  // category одна ступень не несёт смысла. Имя категории — тот же резолв,
+  // что уже используется в CategoryFilter (dict.cat[code] ?? API name).
+  const activeCategory = category ? categories.find((c) => c.code === category) : null;
+  const breadcrumbLd = activeCategory
+    ? breadcrumbJsonLd([
+        { name: dict.nav.home, path: `/${locale}` },
+        { name: dict.nav.bikes, path: `/${locale}/bikes` },
+        { name: dict.cat?.[activeCategory.code] ?? activeCategory.name, path: `/${locale}/bikes?category=${category}` },
+      ])
+    : null;
 
   return (
     <div className="container">
+      {breadcrumbLd ? (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+      ) : null}
       <div className="page-head">
         <h1 className="display page-title">{dict.catalog.title}</h1>
         <p className="page-sub">
