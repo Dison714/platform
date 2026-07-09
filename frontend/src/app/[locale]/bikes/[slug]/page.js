@@ -5,6 +5,8 @@ import { getDictionary } from '../../../../i18n/getDictionary.js';
 import { apiGet, formatIdr } from '../../../../lib/api.js';
 import { resolvePhotoUrl, pickHero, galleryPhotos } from '../../../../lib/photos.js';
 import { ogTwitter } from '../../../../lib/seo.js';
+import { absoluteUrl } from '../../../../lib/site.js';
+import { resolveSpecs } from '../../../../lib/specs.js';
 import Calculator from '../../../components/Calculator.jsx';
 
 export const dynamic = 'force-dynamic';
@@ -51,6 +53,7 @@ export default async function ProductPage({ params }) {
   const hero = pickHero(product.photos);
   const gallery = galleryPhotos(product.photos, hero, 8); // hero + до 8 в галерее
   const showPlaceholder = product.need_photos || !hero;
+  const resolvedSpecs = resolveSpecs(product.specs, dict); // общий резолв для UI и JSON-LD
   // JSON-LD (Product/Offer) для SEO — данные из API, не выдуманные.
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -59,6 +62,16 @@ export default async function ProductPage({ params }) {
     category: product.category?.name,
     brand: { '@type': 'Brand', name: product.family?.name?.split(' ')[0] || dict.brand.name },
     ...(product.description ? { description: product.description } : {}),
+    ...(hero ? { image: absoluteUrl(resolvePhotoUrl(hero, 'hero')) } : {}),
+    ...(resolvedSpecs.length
+      ? {
+          additionalProperty: resolvedSpecs.map(({ label, value }) => ({
+            '@type': 'PropertyValue',
+            name: label,
+            value: String(value),
+          })),
+        }
+      : {}),
     offers: fromPrice
       ? {
           '@type': 'Offer',
@@ -119,24 +132,15 @@ export default async function ProductPage({ params }) {
             </section>
           ) : null}
 
-          {product.specs?.length ? (
+          {resolvedSpecs.length ? (
             <section className="info-block">
               <h2>{dict.product.specs_title}</h2>
               <dl className="spec-grid">
-                {product.specs.map((s) => {
-                  const meta = dict.spec?.[s.key];
-                  const label = meta?.label ?? s.key;
-                  // transmission — код (cvt/manual/automatic) → локализованное слово;
-                  // остальные — значение + единица из i18n (если есть).
-                  const value = s.key === 'transmission'
-                    ? (meta?.[s.value] ?? s.value)
-                    : (meta?.unit ? `${s.value} ${meta.unit}` : s.value);
-                  return (
-                    <div className="spec" key={s.key}>
-                      <dt>{label}</dt><dd>{value}</dd>
-                    </div>
-                  );
-                })}
+                {resolvedSpecs.map((s) => (
+                  <div className="spec" key={s.key}>
+                    <dt>{s.label}</dt><dd>{s.value}</dd>
+                  </div>
+                ))}
               </dl>
             </section>
           ) : null}
