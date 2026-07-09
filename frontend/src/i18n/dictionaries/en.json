@@ -1,0 +1,161 @@
+{
+  "brand": { "name": "Bike Bali Rent", "tagline": "Motorbike rental in Bali" },
+  "nav": { "home": "Home", "bikes": "Bikes", "about": "About", "faq": "FAQ", "contact": "Contact" },
+  "cat": {
+    "scooter_160": "Scooter 160cc",
+    "maxi_scooter": "Maxi Scooter",
+    "touring": "Touring / Enduro",
+    "naked_classic": "Naked / Classic",
+    "sport": "Sport",
+    "cruiser": "Cruiser",
+    "neo_retro_roadster": "Neo-Retro Roadster"
+  },
+  "catalog": {
+    "title": "Our bikes",
+    "subtitle": "{count} models — scooters to sport",
+    "all": "All",
+    "from_month": "from / month",
+    "details": "Details",
+    "empty": "No bikes in this category yet.",
+    "per_month_note": "30-day price"
+  },
+  "product": {
+    "back": "All bikes",
+    "specs_title": "Specifications",
+    "specs_soon": "Specs coming soon.",
+    "description_title": "About this bike",
+    "gallery_soon": "Photos coming soon"
+  },
+  "badge": {
+    "rare_colour": "Rare colour",
+    "print": "Print: "
+  },
+  "placeholder": {
+    "photo_soon": "Photo coming soon"
+  },
+  "spec": {
+    "engine_cc": { "label": "Engine", "unit": "cc" },
+    "power": { "label": "Power", "unit": "hp" },
+    "top_speed": { "label": "Top speed", "unit": "km/h" },
+    "fuel_consumption": { "label": "Fuel use", "unit": "L/100km" },
+    "fuel_tank": { "label": "Fuel tank", "unit": "L" },
+    "transmission": { "label": "Transmission", "unit": "", "cvt": "Automatic (CVT)", "manual": "Manual", "automatic": "Automatic" },
+    "seat_height": { "label": "Seat height", "unit": "mm" },
+    "seats": { "label": "Seats", "unit": "" },
+    "curb_weight": { "label": "Kerb weight", "unit": "kg" }
+  },
+  "calc": {
+    "title": "Price calculator",
+    "period": "Rental period",
+    "start": "Pick-up date",
+    "end": "Return date",
+    "days_one": "{n} day",
+    "days_other": "{n} days",
+    "days_invalid": "Return date must be after pick-up.",
+    "location": "Delivery location (optional)",
+    "location_ph": "Paste a Google Maps link",
+    "location_hint": "For the driver only — does not affect the price.",
+    "insurance": "Insurance (optional)",
+    "theft": "Theft protection",
+    "damage": "Damage protection",
+    "coverage": "Coverage",
+    "driver_age": "Your age",
+    "has_license": "I have a motorcycle license",
+    "experienced": "Experienced rider (1+ year)",
+    "helmets": "Helmets",
+    "helmets_note": "2 helmets included free — upgrade either slot below.",
+    "helmet_slot": "Helmet {n}",
+    "helmet_free": "Free helmet (included)",
+    "extras": "Add extras",
+    "equipment": "Add equipment",
+    "qty": "Qty",
+    "summary": "Your price",
+    "base": "Bike rental",
+    "delivery": "Delivery",
+    "insurance_theft": "Theft protection",
+    "insurance_damage": "Damage protection",
+    "free": "Free",
+    "total": "Total to pay",
+    "deposit": "Refundable deposit",
+    "deposit_note": "Held during the rental and returned — not part of the total.",
+    "months_note": "{n} month(s)",
+    "calculating": "Calculating…",
+    "error": "Couldn't calculate the price. Please try again.",
+    "book": "Book this bike",
+    "updating": "Updating…",
+    "retry": "Retry"
+  },
+  "booking": {
+    "title": "Request this bike",
+    "summary_line": "{name} · {days} days · total {total}",
+    "name": "Your name",
+    "name_ph": "How should we call you",
+    "contact_hint": "Leave at least one way to reach you — the manager will message you there.",
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram username",
+    "email": "Email",
+    "phone": "Phone",
+    "contact_required": "Please leave at least one contact (WhatsApp, Telegram, email or phone).",
+    "name_required": "Please enter your name.",
+    "submit": "Send request",
+    "sending": "Sending…",
+    "error": "Couldn't send the request. Please try again.",
+    "cancel": "Back to calculator",
+    "success_title": "Request received",
+    "success_msg": "Thank you! Our manager will contact you shortly on WhatsApp or Telegram to confirm the details. No prepayment needed.",
+    "success_ref": "Your request number: {ref}"
+  },
+  "home": {
+    "hero_title": "Rent a motorbike in Bali, the easy way",
+    "hero_sub": "Doorstep delivery, helmets and accessories, and optional theft & damage protection. Book online in minutes.",
+    "hero_cta": "Browse bikes",
+    "why_title": "Why ride with us",
+    "why": [
+      { "title": "Doorstep delivery", "text": "We bring the bike to your location. Better value on longer rentals — see the FAQ." },
+      { "title": "Gear included", "text": "Helmets and mounting accessories are available with your rental." },
+      { "title": "Optional insurance", "text": "Add theft or damage protection at checkout — your choice." }
+    ],
+    "categories_title": "Find your ride",
+    "categories_sub": "Browse by type",
+    "faq_title": "Common questions",
+    "faq_all": "All questions",
+    "cta_title": "Ready to ride?",
+    "cta_sub": "Pick your bike and get an instant price.",
+    "cta_btn": "Browse bikes"
+  },
+  "about": {
+    "title": "About Bike Bali Rent",
+    "p1": "Bike Bali Rent is a motorbike rental service in Bali. We help travellers and long-stay guests get around the island on a well-kept scooter or motorbike, with delivery to your door and a simple online booking.",
+    "p2": "We keep the rental straightforward: a clear price up front, helmets and accessories available, and optional theft and damage protection. There's no online prepayment — you pay when your bike is delivered.",
+    "offer_title": "What we offer",
+    "offer": [
+      "A range of bikes — from 160cc scooters to sport and touring models",
+      "Delivery to your location",
+      "Helmets and mounting accessories",
+      "Optional theft and damage protection",
+      "Flexible rental length, day to month and beyond"
+    ],
+    "contact_title": "Contact us"
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "intro": "Everything you need to know before you book. Got another question? Message us on WhatsApp or Telegram.",
+    "items": [
+      { "q": "Do you deliver the bike?", "a": "Yes — we deliver across the main tourist areas near Denpasar: Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur and nearby. Other areas on request. The delivery fee depends on how long you rent — it's better value on longer rentals, and you'll see the exact price at checkout. Share a Google Maps link when you book so the driver knows where to go." },
+      { "q": "Is there a deposit?", "a": "Yes — a refundable deposit is held during the rental and returned when you bring the bike back in good condition. The amount depends on the model, and you'll see it at checkout." },
+      { "q": "Is insurance available?", "a": "Yes, optionally. You can add theft protection and/or damage protection at checkout. The price depends on the coverage level you choose and your rider profile (age and riding experience) — you'll see the exact price at checkout." },
+      { "q": "Can I extend my rental?", "a": "Yes — just message us before your current rental ends. You pay for the extension by the end of the current period." },
+      { "q": "Is there a minimum or maximum rental period?", "a": "No minimum and no maximum — rent from a single day to as long as you like." },
+      { "q": "What do I need to rent?", "a": "Just a photo of your passport — nothing else." },
+      { "q": "How do I pay? Is there online payment?", "a": "There's no online payment. You pay when the bike is delivered or handed over. Booking online simply reserves your bike and sends your request to our team." },
+      { "q": "What's included with the bike?", "a": "Every bike comes with 2 helmets free. You can upgrade either one to a new half-face or full-face helmet for Rp 150,000 each. A rear top box for a passenger is available for Rp 200,000. Just pick what you need at checkout." },
+      { "q": "How do I book?", "a": "Pick a bike, choose your dates and extras to see the price, then send a request. Our manager confirms the details with you on WhatsApp or Telegram." }
+    ]
+  },
+  "footer": {
+    "get_in_touch": "Get in touch",
+    "hours": "Open 08:00–19:00",
+    "address": "Gg. 1 Kerobokan Kelod, Kuta Utara, Badung, Bali",
+    "rights": "All rights reserved."
+  }
+}
