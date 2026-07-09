@@ -2,19 +2,18 @@ import { SITE_URL } from './site.js';
 import { CONTACTS, HOURS } from './contacts.js';
 
 // LocalBusiness JSON-LD (не Organization): у бизнеса есть операционная база
-// с известными координатами (см. geo ниже) и публичный адрес, уже
-// показанный на сайте (About/Footer) — это не просто юрлицо без локации.
+// и публичные часы работы, уже показанные на сайте (About/Footer) — это не
+// просто юрлицо без локации. При этом бизнес принципиально не публикует
+// точный адрес/координаты (delivery-first позиционирование, подтверждено
+// владельцем) — вместо street-level address и geo используется только
+// регион (addressRegion/addressCountry) + areaServed.
 //
 // Источники фактов (не выдумано):
-// - name/telephone/sameAs/email/address/openingHours — src/lib/contacts.js
-//   (то же, что уже публикуется на About/Footer).
+// - name/sameAs/email/openingHours — src/lib/contacts.js (то же, что уже
+//   публикуется на About/Footer).
 // - legalName — Knowledge Base MDB, §22 «Реквизиты компании» (Drive).
-// - geo — system_config.delivery_base_coords (та же точка, от которой
-//   считается доставка по прямой; см. миграция 013 backend), НЕ угадано.
-//
-// TODO(business): открытые вопросы — см. финальный отчёт по чанку SEO
-// (Kerobokan vs юр.адрес в Sanur; часы 7 дней/нед без исключений; WhatsApp
-// как telephone).
+// - contactPoint.telephone/url — номер WhatsApp из contacts.js, в явном
+//   WhatsApp-контексте (url), не выдаётся за отдельную voice-линию.
 const wa = CONTACTS.find((c) => c.key === 'whatsapp');
 const instagram = CONTACTS.find((c) => c.key === 'instagram');
 const telegram = CONTACTS.find((c) => c.key === 'telegram');
@@ -26,20 +25,24 @@ export const organizationJsonLd = {
   name: 'Bike Bali Rent',
   legalName: 'PT Modern Development Bali',
   url: SITE_URL,
-  ...(wa ? { telephone: `+${wa.href.split('/').pop()}` } : {}),
   ...(email ? { email: email.value } : {}),
   sameAs: [instagram?.href, telegram?.href].filter(Boolean),
+  ...(wa
+    ? {
+        contactPoint: {
+          '@type': 'ContactPoint',
+          contactType: 'customer service',
+          telephone: `+${wa.href.split('/').pop()}`,
+          url: wa.href,
+          availableLanguage: ['English', 'Russian'],
+        },
+      }
+    : {}),
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Gg. 1 Kerobokan Kelod',
-    addressLocality: 'Kuta Utara',
     addressRegion: 'Bali',
     addressCountry: 'ID',
   },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: -8.672194,
-    longitude: 115.1755,
-  },
+  areaServed: { '@type': 'Place', name: 'Bali' },
   openingHours: `Mo-Su ${HOURS.replace('–', '-')}`,
 };
