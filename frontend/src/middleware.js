@@ -17,7 +17,8 @@ export function middleware(request) {
 
 export const config = {
   // Не трогаем API-роуты (BFF-прокси), _next и статику (в т.ч. фото байков
-  // /bikes/*.webp) — только страницы. Без исключения .webp middleware
-  // редиректил бы картинки на /<locale>/... и ломал галерею.
-  matcher: ['/((?!api|_next|favicon.ico|sitemap.xml|robots.txt|.*\\.(?:svg|png|ico|webp|jpg|jpeg|gif|avif)).*)'],
+  // /bikes/*.webp, manifest.webmanifest) — только страницы. Без исключения
+  // расширений/спецфайлов middleware редиректил бы их на /<locale>/... —
+  // так уже было с .webp и sitemap.xml/robots.txt, теперь то же с manifest.
+  matcher: ['/((?!api|_next|favicon.ico|sitemap.xml|robots.txt|manifest.webmanifest|.*\\.(?:svg|png|ico|webp|jpg|jpeg|gif|avif)).*)'],
 };
