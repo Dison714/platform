@@ -1,15 +1,14 @@
-import { Teko, Poppins } from 'next/font/google';
 import './globals.css';
+import { SITE_URL } from '../lib/site.js';
 
-// Шрифты бренда (эволюция bikebalirent.com): Teko — дисплейные заголовки,
-// Poppins — текст/UI. Self-hosted через next/font (без внешних запросов в рантайме).
-const teko = Teko({ subsets: ['latin'], weight: ['500', '600'], variable: '--font-teko', display: 'swap' });
-const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
+// metadataBase — основа для абсолютных canonical/og:url на всех страницах.
+export const metadata = {
+  metadataBase: new URL(SITE_URL),
+};
 
+// Root layout — сквозной: <html>/<body> отрисовывает [locale]/layout.js, где
+// доступен params.locale. Так lang резолвится из сегмента на билде (без headers()),
+// а static rendering страниц сохраняется.
 export default function RootLayout({ children }) {
-  return (
-    <html lang="en" className={`${teko.variable} ${poppins.variable}`}>
-      <body>{children}</body>
-    </html>
-  );
+  return children;
 }
