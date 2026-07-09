@@ -105,7 +105,7 @@ export async function listProducts({ lang, category } = {}) {
     const { rows } = await pool.query(
         `SELECT
             p.id, p.slug, p.color_name, p.variant, p.equipment_variant, p.is_bookable,
-            p.archived_color, p.print_name, p.need_photos, p.updated_at,
+            p.archived_color, p.print_name, p.need_photos,
             pf.code AS family_code, pf.brand, pf.model_name,
             vc.code AS category_code, vc.name AS category_name,
             COALESCE(t.title, ten.title) AS title,
@@ -148,7 +148,6 @@ export async function listProducts({ lang, category } = {}) {
         archived_color: r.archived_color,
         print_name: r.print_name,
         need_photos: r.need_photos,
-        updated_at: r.updated_at, // для sitemap lastmod
         is_bookable: r.is_bookable,
         // basis:'total' — сумма за весь период rental_days (30 дней), НЕ за
         // сутки. Фронт сам локализует "от 2500k / месяц" или "2500k за 30 дней".
