@@ -4,6 +4,7 @@ import { apiGet } from '../../../lib/api.js';
 import CategoryFilter from '../../components/CategoryFilter.jsx';
 import BikeCard from '../../components/BikeCard.jsx';
 import { notFound } from 'next/navigation';
+import { ogTwitter } from '../../../lib/seo.js';
 
 // Каталог рендерится на сервере (SSR) — Google видит контент. Живые данные
 // из backend, поэтому всегда свежо.
@@ -11,9 +12,14 @@ export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }) {
   const dict = await getDictionary(params.locale);
+  const title = `${dict.catalog.title} — ${dict.brand.name}`;
+  const description = dict.brand.tagline;
+  // canonical здесь намеренно не добавляем (есть query-фильтр ?category= —
+  // нормализация дублей отдельным шагом, Шаг 2 чанка SEO).
   return {
-    title: `${dict.catalog.title} — ${dict.brand.name}`,
-    description: dict.brand.tagline,
+    title,
+    description,
+    ...ogTwitter({ title, description, url: `/${params.locale}/bikes` }),
   };
 }
 

@@ -4,6 +4,7 @@ import { isEnabledLocale } from '../../../../i18n/config.js';
 import { getDictionary } from '../../../../i18n/getDictionary.js';
 import { apiGet, formatIdr } from '../../../../lib/api.js';
 import { resolvePhotoUrl, pickHero, galleryPhotos } from '../../../../lib/photos.js';
+import { ogTwitter } from '../../../../lib/seo.js';
 import Calculator from '../../../components/Calculator.jsx';
 
 export const dynamic = 'force-dynamic';
@@ -20,11 +21,18 @@ export async function generateMetadata({ params }) {
   const dict = await getDictionary(params.locale);
   const product = await loadProduct(params.slug);
   if (!product) return { title: dict.brand.name };
-  const desc = product.description || `${product.name} — ${dict.brand.tagline}`;
+  const title = `${product.name} — ${dict.brand.name}`;
+  const description = product.description || `${product.name} — ${dict.brand.tagline}`;
+  const url = `/${params.locale}/bikes/${product.slug}`;
+  // Hero — то же фото, что рендерится на странице (pickHero: is_hero → min
+  // sort_order → первое). Нет фото → ogTwitter возьмёт дефолтное брендовое.
+  const hero = pickHero(product.photos);
+  const heroUrl = hero ? resolvePhotoUrl(hero, 'hero') : undefined;
   return {
-    title: `${product.name} — ${dict.brand.name}`,
-    description: desc,
-    alternates: { canonical: `/${params.locale}/bikes/${product.slug}` },
+    title,
+    description,
+    alternates: { canonical: url },
+    ...ogTwitter({ title, description, url, image: heroUrl, imageAlt: product.name }),
   };
 }
 

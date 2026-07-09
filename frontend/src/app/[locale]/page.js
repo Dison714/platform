@@ -3,16 +3,21 @@ import { notFound } from 'next/navigation';
 import { isEnabledLocale } from '../../i18n/config.js';
 import { getDictionary } from '../../i18n/getDictionary.js';
 import { apiGet } from '../../lib/api.js';
+import { ogTwitter } from '../../lib/seo.js';
 
 // Главная — SSR-контент (для SEO). Категории тянем из API, остальное — словари.
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }) {
   const dict = await getDictionary(params.locale);
+  const title = `${dict.brand.name} — ${dict.brand.tagline}`;
+  const description = dict.home.hero_sub;
+  const url = `/${params.locale}`;
   return {
-    title: `${dict.brand.name} — ${dict.brand.tagline}`,
-    description: dict.home.hero_sub,
-    alternates: { canonical: `/${params.locale}` },
+    title,
+    description,
+    alternates: { canonical: url },
+    ...ogTwitter({ title, description, url }),
   };
 }
 

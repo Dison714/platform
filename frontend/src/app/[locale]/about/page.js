@@ -2,13 +2,18 @@ import { notFound } from 'next/navigation';
 import { isEnabledLocale } from '../../../i18n/config.js';
 import { getDictionary } from '../../../i18n/getDictionary.js';
 import { CONTACTS, ADDRESS, HOURS } from '../../../lib/contacts.js';
+import { ogTwitter } from '../../../lib/seo.js';
 
 export async function generateMetadata({ params }) {
   const dict = await getDictionary(params.locale);
+  const title = `${dict.about.title} — ${dict.brand.name}`;
+  const description = dict.about.p1;
+  const url = `/${params.locale}/about`;
   return {
-    title: `${dict.about.title} — ${dict.brand.name}`,
-    description: dict.about.p1,
-    alternates: { canonical: `/${params.locale}/about` },
+    title,
+    description,
+    alternates: { canonical: url },
+    ...ogTwitter({ title, description, url }),
   };
 }
 
