@@ -1,10 +1,11 @@
 # PROJECT_STATUS.md — снимок состояния MDB Platform
 
-_Обновлено: 2026-07-09 (чанк SEO enrichment layer закрыт по Шаг 2 из 3: аудит →
-metadataBase/hreflang/canonical/sitemap/robots/OG/JSON-LD Product+LocalBusiness.
-Ранее — чанк Photos (648 фото, рендер) и чанк Specs (family_specs). Плюс всё
-предыдущее: каркас + каталог + продукт/калькулятор + заявка + контентные страницы;
-двуязычный сайт RU+EN; номер заявки BR-00001).
+_Обновлено: 2026-07-09 (чанк **SEO enrichment layer ПОЛНОСТЬЮ ЗАКРЫТ**, Шаг 0→3:
+аудит → metadataBase/hreflang/canonical/sitemap/robots/OG/JSON-LD Product+
+LocalBusiness → favicon/manifest/BreadcrumbList. Ранее — чанк Photos (648 фото,
+рендер) и чанк Specs (family_specs). Плюс всё предыдущее: каркас + каталог +
+продукт/калькулятор + заявка + контентные страницы; двуязычный сайт RU+EN;
+номер заявки BR-00001).
 Карта состояния для продолжения в будущих сессиях.
 Бизнес-правила и архитектурные решения — в `CLAUDE.md`, дублировать не нужно._
 
@@ -269,7 +270,7 @@ equipment_units по типам:
   («iref references > 16») → конвертим через macOS `sips` (→ JPEG) перед sharp.
   Работает локально; на диске уже WebP, для Linux-сервера sips не нужен.
 
-### Чанк SEO enrichment layer (Шаг 0 → Шаг 2 из 3, закрыт)
+### Чанк SEO enrichment layer (Шаг 0 → Шаг 3, ПОЛНОСТЬЮ ЗАКРЫТ)
 
 **Шаг 0 — [SEO_AUDIT.md](../SEO_AUDIT.md) (read-only аудит, без кода).**
 До чанка: title/description были на всех 5 страницах, canonical — на 4 из 5
@@ -333,6 +334,32 @@ favicon/manifest, `BreadcrumbList`. Аудит зафиксировал это �
   сегмент локали в пути, доп. lookup не требуется. Каталог: hreflang, как и
   canonical, указывает на чистый `/bikes` при любом `?category=`.
 
+**Шаг 3 — favicon/manifest + BreadcrumbList (последний шаг чанка):**
+- **Favicon/apple-touch-icon/manifest** — файловая конвенция App Router,
+  без ручного `<link>`-инжекта: `frontend/src/app/icon.png` (32×32),
+  `apple-icon.png` (180×180), `frontend/public/icon-192.png`/`icon-512.png` +
+  `frontend/src/app/manifest.js` (`name`/`short_name` = «Bike Bali Rent»/«BBR»,
+  `theme_color`/`background_color` — реальные `--navy`/`--bg` из `globals.css`,
+  `start_url` через `absoluteUrl('/')`). Источник — `frontend/assets/brand/
+  bbr-logo-source.svg`: реальный бренд-лого (силуэт мотоциклиста + «BBR»,
+  navy/red), скачан с живого `bikebalirent.com`, затем **заменён на high-res
+  версию** (`BBR__5_-removebg-preview.svg`, 253×245px растр внутри SVG,
+  фон уже удалён — прислал владелец), заметно чётче при апскейле до 512px.
+  Source-SVG **закоммичен как есть** (не gitignored, в отличие от bulk-фото
+  байков) — маленький (~75 КБ), не регенерируется скриптом ниоткуда, это
+  master-актив бренда. `favicon.ico` сознательно не генерировали — sharp не
+  умеет в ICO, а новую зависимость ради легаси-IE не оправдано.
+  `middleware.js` matcher расширен третий раз — `manifest.webmanifest`
+  (реальный путь Next, не `manifest.json`) редиректился без исключения.
+- **BreadcrumbList JSON-LD** — helper `breadcrumbJsonLd(items)` в `lib/seo.js`
+  (абсолютные `item` через `absoluteUrl`, как и остальной JSON-LD). Product
+  page — всегда, Home → Bikes → [Product name] (то же имя, что в Product
+  JSON-LD/`<title>`). Каталог — только при активном `?category=` (без фильтра
+  одна ступень не нужна); имя категории резолвится **тем же способом**, что
+  уже в `CategoryFilter.jsx` (`dict.cat[code] ?? API name`), новый маппинг не
+  заводили. Названия ступеней Home/Bikes — из `dict.nav` (уже используемые
+  строки навигации).
+
 **Зафиксированное отклонение от ТЗ:** `og:type = 'website'` везде, включая
 product page — типизированный Metadata API Next 14.2 падает в рантайме на
 `openGraph.type: 'product'` (`Invalid OpenGraph type: product`), а по спеке
@@ -354,11 +381,12 @@ JSON-LD (см. п.4 выше). Не тихая замена — согласов
 | `641cf59` | fix(seo): LocalBusiness — убраны streetAddress/geo, добавлены contactPoint+areaServed (правки владельца) |
 | `f7bbbeb` | feat(seo): canonical на каталоге (схлопывает `?category=`) |
 | `86f6b72` | feat(seo): hreflang на всех 5 страницах |
+| `911da7d` | docs: PROJECT_STATUS.md + SEO_AUDIT.md (батч после Шага 2) |
+| `419e42e` | feat(seo): favicon, apple-touch-icon, PWA manifest |
+| `a76d0cb` | feat(seo): BreadcrumbList JSON-LD (product + filtered catalog) |
 
-11 коммитов, каждый live-проверен (curl/view-source) перед коммитом.
-
-**Остаётся в Шаге 3 (следующий этап, не начат):** favicon/apple-touch-icon +
-`manifest.js`; `BreadcrumbList` JSON-LD (каталог → продукт).
+13 коммитов, каждый live-проверен (curl/view-source) перед коммитом.
+Чанк SEO enrichment layer закрыт полностью (Шаг 0 → Шаг 3).
 
 ### Грабли / нюансы (на будущее)
 
@@ -389,10 +417,10 @@ JSON-LD (см. п.4 выше). Не тихая замена — согласов
   имена пока из конструкции (brand+model+color+variant+комплектация).
 - **Фронтенд — остаётся:** блог; остальные языки (de/fr/es/it/ja — структура готова,
   нужны словари). Главная/About/FAQ готовы, RU+EN активны, оборудование локализовано.
-- **SEO — Шаг 0–2 ГОТОВО** (чанк SEO enrichment layer, подробности — раздел выше):
-  metadataBase, per-locale `<html lang>`, sitemap.xml, robots.txt, OpenGraph/Twitter,
-  Product JSON-LD (image+specs), LocalBusiness JSON-LD, canonical каталога, hreflang.
-  **Остаётся Шаг 3:** favicon/apple-touch-icon/manifest, `BreadcrumbList` JSON-LD.
+- **SEO — ПОЛНОСТЬЮ ГОТОВО** (чанк SEO enrichment layer, Шаг 0→3, подробности —
+  раздел выше): metadataBase, per-locale `<html lang>`, sitemap.xml, robots.txt,
+  OpenGraph/Twitter, Product JSON-LD (image+specs), LocalBusiness JSON-LD,
+  canonical каталога, hreflang, favicon/apple-touch-icon/manifest, BreadcrumbList.
 - **Деплой:** backend → Render, PostgreSQL → Railway, frontend → Render/Vercel
   (в roadmap владельца рассматривается Hetzner+Coolify — не зафиксировано).
   На деплое: env (`API_BASE_URL`, `TELEGRAM_BOT_TOKEN`), решение по апгрейду Next
