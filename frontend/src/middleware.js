@@ -19,5 +19,5 @@ export const config = {
   // Не трогаем API-роуты (BFF-прокси), _next и статику (в т.ч. фото байков
   // /bikes/*.webp) — только страницы. Без исключения .webp middleware
   // редиректил бы картинки на /<locale>/... и ломал галерею.
-  matcher: ['/((?!api|_next|favicon.ico|.*\\.(?:svg|png|ico|webp|jpg|jpeg|gif|avif)).*)'],
+  matcher: ['/((?!api|_next|favicon.ico|sitemap.xml|robots.txt|.*\\.(?:svg|png|ico|webp|jpg|jpeg|gif|avif)).*)'],
 };
