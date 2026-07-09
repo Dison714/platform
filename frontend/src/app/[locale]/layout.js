@@ -4,6 +4,7 @@ import { isEnabledLocale, enabledLocales } from '../../i18n/config.js';
 import { getDictionary } from '../../i18n/getDictionary.js';
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
+import { organizationJsonLd } from '../../lib/organization.js';
 
 // Шрифты бренда: Teko — дисплейные заголовки, Poppins — текст/UI (self-hosted).
 const teko = Teko({ subsets: ['latin'], weight: ['500', '600'], variable: '--font-teko', display: 'swap' });
@@ -23,6 +24,8 @@ export default async function LocaleLayout({ children, params }) {
   return (
     <html lang={locale} className={`${teko.variable} ${poppins.variable}`}>
       <body>
+        {/* LocalBusiness — глобально на каждой странице, не только на homepage. */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         <div className="layout-root">
           <Header locale={locale} dict={dict} />
           <main style={{ flex: 1 }}>{children}</main>
