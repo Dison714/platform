@@ -14,12 +14,15 @@ export async function generateMetadata({ params }) {
   const dict = await getDictionary(params.locale);
   const title = `${dict.catalog.title} — ${dict.brand.name}`;
   const description = dict.brand.tagline;
-  // canonical здесь намеренно не добавляем (есть query-фильтр ?category= —
-  // нормализация дублей отдельным шагом, Шаг 2 чанка SEO).
+  const url = `/${params.locale}/bikes`;
+  // canonical ВСЕГДА базовый /bikes без query — любой ?category= канонизируется
+  // на немодифицированный URL (страница с фильтром остаётся индексируемой,
+  // не noindex, просто не плодит дубли по каждой категории в индексе).
   return {
     title,
     description,
-    ...ogTwitter({ title, description, url: `/${params.locale}/bikes` }),
+    alternates: { canonical: url },
+    ...ogTwitter({ title, description, url }),
   };
 }
 
