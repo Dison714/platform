@@ -384,9 +384,10 @@ JSON-LD (см. п.4 выше). Не тихая замена — согласов
 | `911da7d` | docs: PROJECT_STATUS.md + SEO_AUDIT.md (батч после Шага 2) |
 | `419e42e` | feat(seo): favicon, apple-touch-icon, PWA manifest |
 | `a76d0cb` | feat(seo): BreadcrumbList JSON-LD (product + filtered catalog) |
+| `065ec76` | docs: PROJECT_STATUS.md — чанк закрыт (Шаг 0-3) |
 
-13 коммитов, каждый live-проверен (curl/view-source) перед коммитом.
-Чанк SEO enrichment layer закрыт полностью (Шаг 0 → Шаг 3).
+15 коммитов (сверено по `git log --oneline c0db3b8..HEAD`), каждый live-проверен
+(curl/view-source) перед коммитом. Чанк SEO enrichment layer закрыт полностью (Шаг 0 → Шаг 3).
 
 ### Грабли / нюансы (на будущее)
 
@@ -421,15 +422,22 @@ JSON-LD (см. п.4 выше). Не тихая замена — согласов
   раздел выше): metadataBase, per-locale `<html lang>`, sitemap.xml, robots.txt,
   OpenGraph/Twitter, Product JSON-LD (image+specs), LocalBusiness JSON-LD,
   canonical каталога, hreflang, favicon/apple-touch-icon/manifest, BreadcrumbList.
-- **Деплой:** backend → Render, PostgreSQL → Railway, frontend → Render/Vercel
-  (в roadmap владельца рассматривается Hetzner+Coolify — не зафиксировано).
-  На деплое: env (`API_BASE_URL`, `TELEGRAM_BOT_TOKEN`), решение по апгрейду Next
-  (14.2.35 сейчас; `npm audit` чистится только на next@16 — мажор с async params).
-  CI/CD на старте нет — миграции на боевую БД проверяются руками.
-  **Фото на CDN:** выставить `NEXT_PUBLIC_PHOTO_BASE_URL` на URL R2/Cloudflare и
-  перенести `frontend/public/bikes/**` в бакет — БД не трогается (`storage_path`
+- **Деплой:** MDB Platform (backend + frontend) — Hetzner VPS + Coolify (решение
+  зафиксировано, см. CLAUDE.md §6; Render/Railway/Vercel как таргет для Platform
+  больше не актуальны). На деплое: env (`API_BASE_URL`, `TELEGRAM_BOT_TOKEN`),
+  решение по апгрейду Next (14.2.35 сейчас; `npm audit` чистится только на
+  next@16 — мажор с async params). CI/CD на старте нет — миграции на боевую БД
+  проверяются руками.
+  **Фото на CDN:** выставить `NEXT_PUBLIC_PHOTO_BASE_URL` на URL бакета и
+  перенести `frontend/public/bikes/**` туда — БД не трогается (`storage_path`
   size-agnostic, размер добавляет рендер; `cdn_url` — опц. абсолютный override).
-- Боты (`MDB_drivers_bot` и др.) на запись через `api_clients` — позже.
+- Боты (`MDB_drivers_bot` и др.) на запись через `api_clients` — позже; хостинг
+  ботов (Render.com) отдельно от деплоя Platform, не в периметре этого чанка.
+- **Следующий чанк — Deploy Hetzner + Coolify.** Перед стартом решить: (а)
+  архитектура БД — Supabase vs self-hosted PostgreSQL на Hetzner, в проекте
+  встречаются оба описания, нужно свести к одному; (б) готовность VPS/Coolify/DNS;
+  (в) Cloudflare R2 vs Amazon S3 для фото-бакета (ТЗ п.15.2 допускает оба,
+  финального выбора нет). Маркер для следующей сессии — вопросы не решены.
 
 ## 5. Как запустить локально
 
