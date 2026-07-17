@@ -12,3 +12,13 @@ export function absoluteUrl(path) {
   if (!path) return null;
   return /^https?:\/\//i.test(path) ? path : `${SITE_URL}${path}`;
 }
+
+// Единая точка правды "это боевой прод-домен?" — читают robots.js, sitemap.js,
+// [locale]/layout.js. Fail-closed по умолчанию: SITE_ENV не задан или не равен
+// 'production' → сайт закрыт от индексации (noindex + robots disallow + пустой
+// sitemap). Открывается явной установкой SITE_ENV=production при финальном
+// DNS cutover на bikebalirent.com — до этого момента любой Coolify-стейджинг/
+// IP/default-поддомен остаётся закрытым. NODE_ENV не подходит — next start
+// сам всегда работает в production-режиме независимо от того, боевой это
+// домен или нет.
+export const IS_PRODUCTION = process.env.SITE_ENV === 'production';

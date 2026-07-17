@@ -17,6 +17,14 @@
 //   node scripts/import_photos.js --manifest scripts/photos_manifest.json            # all products in manifest
 //   node scripts/import_photos.js --manifest ... --slugs a,b,c                        # only these slugs
 //   node scripts/import_photos.js --manifest ... --check                             # validate manifest↔DB, no download
+//
+// DEPLOY NOTE: this script is meant for a LOCAL (macOS) run only. HEIC inputs are
+// decoded via macOS `sips` before sharp (libheif in sharp hits a security-limit
+// bug on the same iPhone HEIC files regardless of OS — see Photos chunk notes);
+// `sips` does not exist on the Coolify Linux container, so re-running this script
+// there will fail on any HEIC source. The R2/S3 migration (open question, see
+// PROJECT_STATUS.md) should upload the already-generated .webp files already
+// sitting in frontend/public/bikes/, not re-derive them from Drive/HEIC.
 
 import { readFile, mkdir, writeFile, access, stat, unlink } from 'node:fs/promises';
 import path from 'node:path';

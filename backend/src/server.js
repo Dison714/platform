@@ -19,6 +19,12 @@ app.get('/health', async (req, res) => {
     }
 });
 
+// Лёгкая liveness-проверка без похода в БД — процесс поднят, event loop жив.
+// /health (выше) — readiness (реально готов обслуживать трафик, БД доступна).
+app.get('/health/live', (req, res) => {
+    res.json({ status: 'ok' });
+});
+
 app.use('/api', catalogRouter);
 app.use('/api', deliveryRouter);
 app.use('/api', quoteRouter);
@@ -33,6 +39,8 @@ app.use((err, req, res, next) => {
     res.status(status).json({ error: ERROR_LABELS[status] ?? (status >= 500 ? 'internal_error' : 'error'), message: err.message });
 });
 
-app.listen(env.port, () => {
+// Явный биндинг на все интерфейсы — обязателен в контейнере (Coolify/Docker
+// пробрасывают порт снаружи на 0.0.0.0, не на loopback).
+app.listen(env.port, '0.0.0.0', () => {
     console.log(`MDB Platform API listening on port ${env.port}`);
 });

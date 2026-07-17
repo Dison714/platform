@@ -5,6 +5,7 @@ import { getDictionary } from '../../i18n/getDictionary.js';
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
 import { organizationJsonLd } from '../../lib/organization.js';
+import { IS_PRODUCTION } from '../../lib/site.js';
 
 // Шрифты бренда: Teko — дисплейные заголовки, Poppins — текст/UI (self-hosted).
 const teko = Teko({ subsets: ['latin'], weight: ['500', '600'], variable: '--font-teko', display: 'swap' });
@@ -12,6 +13,15 @@ const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500'], variable: 
 
 export function generateStaticParams() {
   return enabledLocales().map((locale) => ({ locale }));
+}
+
+// До финального DNS cutover (SITE_ENV != production) — глобальный noindex на
+// каждой странице сайта (сливается с page-level metadata; ни одна страница
+// пока сама не задаёт robots, так что конфликтов нет). Вместе с robots.js
+// (Disallow: /) и пустым sitemap.js закрывает стейджинг/IP/дефолтный
+// Coolify-поддомен от индексации.
+export async function generateMetadata() {
+  return IS_PRODUCTION ? {} : { robots: { index: false, follow: false } };
 }
 
 // <html>/<body> живут здесь (а не в root layout), чтобы lang резолвился из

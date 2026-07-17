@@ -1,5 +1,5 @@
 import { apiGet } from '../lib/api.js';
-import { SITE_URL } from '../lib/site.js';
+import { SITE_URL, IS_PRODUCTION } from '../lib/site.js';
 import { enabledLocales } from '../i18n/config.js';
 
 // Нативный App Router sitemap (→ /sitemap.xml). Живые данные из API, поэтому
@@ -15,6 +15,10 @@ const STATIC_PATHS = [
 ];
 
 export default async function sitemap() {
+  // До финального DNS cutover на bikebalirent.com — пустой sitemap, не 76×2
+  // URL на стейджинге/IP/дефолтном Coolify-поддомене (см. robots.js/layout).
+  if (!IS_PRODUCTION) return [];
+
   const locales = enabledLocales(); // ['en','ru']
   const now = new Date();
 
