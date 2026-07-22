@@ -1,9 +1,10 @@
 # PROJECT_STATUS.md — снимок состояния MDB Platform
 
-_Обновлено: 2026-07-09 (чанк **SEO enrichment layer ПОЛНОСТЬЮ ЗАКРЫТ**, Шаг 0→3:
-аудит → metadataBase/hreflang/canonical/sitemap/robots/OG/JSON-LD Product+
-LocalBusiness → favicon/manifest/BreadcrumbList. Ранее — чанк Photos (648 фото,
-рендер) и чанк Specs (family_specs). Плюс всё предыдущее: каркас + каталог +
+_Обновлено: 2026-07-22 (чанк **Deploy в процессе**: backend+frontend задеплоены на
+Contabo VPS + Coolify 4.1.2, оба `running:healthy`, миграции 27/27 применены;
+сидинг CRM/DNS cutover/R2-миграция фото — впереди, ждут отдельного OK. Ранее —
+чанк **SEO enrichment layer ПОЛНОСТЬЮ ЗАКРЫТ** (Шаг 0→3), чанк Photos (648 фото,
+рендер), чанк Specs (family_specs). Плюс всё предыдущее: каркас + каталог +
 продукт/калькулятор + заявка + контентные страницы; двуязычный сайт RU+EN;
 номер заявки BR-00001).
 Карта состояния для продолжения в будущих сессиях.
@@ -389,6 +390,86 @@ JSON-LD (см. п.4 выше). Не тихая замена — согласов
 15 коммитов (сверено по `git log --oneline c0db3b8..HEAD`), каждый live-проверен
 (curl/view-source) перед коммитом. Чанк SEO enrichment layer закрыт полностью (Шаг 0 → Шаг 3).
 
+### Чанк Deploy — Contabo + Coolify (в процессе, Шаг 3.3 из плана закрыт)
+
+**Инфраструктура (фактическая, не Hetzner — регистрация Hetzner была отклонена):**
+провайдер **Contabo**, сервер `169.58.60.244` (Cloud VPS 4: 4 vCPU/8GB/100GB,
+Ubuntu 24.04.4 LTS), Coolify **4.1.2** самохостится там же. Проект в Coolify —
+`mdb-platform` (переименован из дефолтного «My first project»). БД — **self-hosted
+PostgreSQL 18** внутри Coolify-контейнера (не Supabase — выбор сделан фактом
+разворачивания, вопрос (а) из предыдущего маркера закрыт).
+
+**PostgreSQL:** ресурс `postgresql-database-xw6ykwjdrdmtly2qg8kbd16m` (образ
+`postgres:18-alpine`), база `mdb_platform` создана вручную (Coolify не подхватил
+её как `Initial Database` — `POSTGRES_DB` в контейнере остался `postgres`, известный
+баг/недосмотр конфигурации). **Миграции 001–027 применены полностью (27/27)**,
+`schema_migrations` таблица создана и заполнена вручную (гоняли через `docker exec
+psql`, не через `migrate.js` — значит бэкенд при следующем `npm run migrate` увидит
+всё как уже применённое и корректно не тронет ничего).
+Попутно найден и исправлен реальный баг миграций: `010_equipment_mounting.sql`
+дублировал `009_fleet_amendments.sql` (тот же `ALTER TYPE ... ADD VALUE 'installed'`
++ те же 8 INSERT'ов) — на чистой БД это падало (`enum label already exists`).
+Локально коллизии не было только потому, что дублирующий код добавили в `009`
+уже ПОСЛЕ того, как файл был отмечен применённым (раннер трекает по имени файла,
+не по содержимому) — по факту в локальной истории этот SQL исполнился только
+через `010`. Пофикшено: `010` превращён в no-op (комментарий, код закомментирован),
+`009` не трогали (коммит `061f82d`).
+
+**Сервер:** ребут выполнен (накопленные апдейты ядра `6.8.0-124`→`6.8.0-136`)
+после проверки restart policy на всех контейнерах (`unless-stopped`/`always`);
+`coolify-sentinel` был без policy — исправлено на `unless-stopped`. Все 7
+контейнеров (Postgres + весь Coolify-стек) пережили ребут автостартом.
+
+**Backend** (`mdb-platform-backend`, Nixpacks, `base_directory=/backend`) —
+**`running:healthy`**, домен `uy845drxpx5z6t5qf0c8voa8.169.58.60.244.sslip.io`,
+коммит `061f82d`. Env: `DATABASE_URL` (внутренний, host = alias контейнера, см.
+ниже), `NODE_ENV`, `PORT=3000`, `TELEGRAM_BOT_TOKEN` (реальный боевой токен —
+осознанное решение владельца для сквозного теста, не заглушка).
+
+**Frontend** (`mdb-platform-frontend`, Nixpacks, `base_directory=/frontend`) —
+**`running:healthy`**, домен `odke6aycqzy4zybnkutq8qbm.169.58.60.244.sslip.io`,
+коммит `061f82d`. Env: `NEXT_PUBLIC_SITE_URL` (sslip.io-домен), `NEXT_PUBLIC_PHOTO_BASE_URL`
+(пусто — фото ещё локальные), `API_BASE_URL` (внутренний адрес backend'а),
+`NODE_ENV`, `PORT=3000`. **`SITE_ENV` НЕ выставлен** — сайт намеренно закрыт от
+индексации на этом этапе (`Disallow: /`, пустой sitemap, `noindex,nofollow` —
+проверено live).
+
+**Найдено при деплое: app-ресурсы Coolify не имеют стабильного internal-хоста
+по умолчанию.** В отличие от Database-ресурса (где имя контейнера случайно
+совпало с UUID), Application-контейнеры получают случайный суффикс к имени,
+который **меняется при каждом передеплое** — попытка захардкодить `<uuid>`
+как internal host для backend не сработала (frontend → backend упал сетевой
+таймаут). Исправлено штатным полем Coolify API `custom_network_aliases`:
+backend получил постоянный alias `mdb-backend`, `API_BASE_URL` фронтенда
+указывает на `http://mdb-backend:3000` — пережило повторный передеплой backend'а
+(суффикс контейнера сменился, alias — нет). **Правило на будущее:** для
+Application-ресурсов Coolify всегда явно задавать `custom_network_aliases`
+при межсервисном обращении, не полагаться на имя контейнера.
+
+**Известный техдолг (не блокер, фиксируется, не чинится сейчас):**
+1. **`getActiveRuleSetId()` бросает необработанное исключение** (`Нет действующего
+   pricing_rule_set`), когда `pricing_rule_sets` пуста — `/api/products` (и, вероятно,
+   всё, что считает цену) отдаёт 500 вместо пустого каталога. Всплывёт сразу после
+   этого чанка на пустой БД, до сидинга CRM. Не переписывать резолверы — почини
+   отдельной задачей (graceful empty-state вместо throw).
+2. **`output: 'standalone'` в `next.config.mjs` не даёт эффекта под Nixpacks** —
+   в логах `⚠ "next start" does not work with "output: standalone" configuration`.
+   Приложение работает (Nixpacks копирует полный `.next`, не только standalone-папку),
+   но настройка сейчас мертва для этого способа деплоя. Не трогали — не блокирует.
+3. **Фото физически отсутствуют на проде** — `frontend/public/bikes/` в `.gitignore`,
+   никогда не коммитилась; в задеплоенном контейнере директории нет вообще (только
+   иконки favicon). Любая ссылка на фото байка → 404, до миграции на R2/S3 (решение
+   ещё не принято, см. ниже).
+
+**Остаётся по плану деплоя:**
+- Сидинг данных из CRM на новый сервер — **отдельная большая задача, не начата**,
+  требует отдельного плана и OK владельца.
+- DNS-подготовка (cutover на bikebalirent.com) — не начата, ждёт отдельного решения.
+- Cloudflare R2 (или альтернатива) — миграция 648 фото — не начата, финальный
+  выбор бакета не сделан (вопрос (в) из прежнего маркера всё ещё открыт).
+- SSL — автоматически через Traefik/Let's Encrypt после DNS, не начато.
+- Боты (`@MDB_tugas_approver_bot` и др.) остаются на Render — вне периметра.
+
 ### Грабли / нюансы (на будущее)
 
 - **`users`: при будущем сидинге/импорте НЕ полагаться на `ON CONFLICT` по
@@ -422,22 +503,22 @@ JSON-LD (см. п.4 выше). Не тихая замена — согласов
   раздел выше): metadataBase, per-locale `<html lang>`, sitemap.xml, robots.txt,
   OpenGraph/Twitter, Product JSON-LD (image+specs), LocalBusiness JSON-LD,
   canonical каталога, hreflang, favicon/apple-touch-icon/manifest, BreadcrumbList.
-- **Деплой:** MDB Platform (backend + frontend) — Hetzner VPS + Coolify (решение
-  зафиксировано, см. CLAUDE.md §6; Render/Railway/Vercel как таргет для Platform
-  больше не актуальны). На деплое: env (`API_BASE_URL`, `TELEGRAM_BOT_TOKEN`),
-  решение по апгрейду Next (14.2.35 сейчас; `npm audit` чистится только на
-  next@16 — мажор с async params). CI/CD на старте нет — миграции на боевую БД
-  проверяются руками.
+- **Деплой — В ПРОЦЕССЕ** (чанк Deploy, подробности — раздел выше): провайдер
+  фактически **Contabo** (не Hetzner — та регистрация была отклонена), Coolify
+  4.1.2, self-hosted PostgreSQL 18. Backend и frontend оба **`running:healthy`**
+  на sslip.io-доменах (до DNS cutover). Миграции 27/27 применены. CI/CD на
+  старте нет — миграции на боевую БД проверяются руками.
   **Фото на CDN:** выставить `NEXT_PUBLIC_PHOTO_BASE_URL` на URL бакета и
   перенести `frontend/public/bikes/**` туда — БД не трогается (`storage_path`
   size-agnostic, размер добавляет рендер; `cdn_url` — опц. абсолютный override).
 - Боты (`MDB_drivers_bot` и др.) на запись через `api_clients` — позже; хостинг
   ботов (Render.com) отдельно от деплоя Platform, не в периметре этого чанка.
-- **Следующий чанк — Deploy Hetzner + Coolify.** Перед стартом решить: (а)
-  архитектура БД — Supabase vs self-hosted PostgreSQL на Hetzner, в проекте
-  встречаются оба описания, нужно свести к одному; (б) готовность VPS/Coolify/DNS;
-  (в) Cloudflare R2 vs Amazon S3 для фото-бакета (ТЗ п.15.2 допускает оба,
-  финального выбора нет). Маркер для следующей сессии — вопросы не решены.
+- **Дальше по плану деплоя (не начато, ждёт отдельного OK):** сидинг данных
+  из CRM на новый сервер (отдельная большая задача); DNS cutover на
+  bikebalirent.com; выбор Cloudflare R2 vs Amazon S3 для фото-бакета (вопрос
+  всё ещё открыт) + миграция 648 фото; SSL (автоматически через Traefik после
+  DNS). Известный техдолг с деплоя — см. раздел выше (pricing_rule_set
+  exception, output:standalone неэффективен под Nixpacks, фото ещё не в проде).
 
 ## 5. Как запустить локально
 
