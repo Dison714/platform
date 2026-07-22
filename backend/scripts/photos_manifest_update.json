@@ -1,0 +1,36 @@
+{
+  "note": "Update manifest (post-Photos-chunk) — Xmax Pink (new), ADV Road Sync Turquoise (refresh), ADV Brown Road Sync (new archived), ADV ABS Pink #54 (refresh, HEIC/JPG dedup).",
+  "products": {
+    "yamaha-xmax-pink": [
+      { "folder": "Xmax pink (root)", "fileId": "1UWEL7-Y8lCv5YxxUFVDCDLmrxt_uVpet", "name": "Xmax pink.jpg", "mime": "image/jpeg" }
+    ],
+    "honda-adv-turquoise-road-sync": [
+      { "folder": "9.ADV Road Sync Turquoise", "fileId": "1-RkKsTZ2R1ZzTolTwK6NvlBBMrTSWShy", "name": "IMG_6324.HEIC", "mime": "image/heic" },
+      { "folder": "9.ADV Road Sync Turquoise", "fileId": "1lcyZ8uDVzl932aojyf9F5N5Q1od8Owhi", "name": "IMG_6325.HEIC", "mime": "image/heic" },
+      { "folder": "9.ADV Road Sync Turquoise", "fileId": "1eF79yOVBXXX5KI3LbJh2XMsEs3NDcMt-", "name": "IMG_6326.HEIC", "mime": "image/heic" },
+      { "folder": "9.ADV Road Sync Turquoise", "fileId": "1vVgO1WLCZR0m5i3_YQeZK7fBZS8jCaBI", "name": "IMG_6327.HEIC", "mime": "image/heic" },
+      { "folder": "9.ADV Road Sync Turquoise", "fileId": "1nUiQvuGuxhyq004_ZZcBAUW2IcDoIP7X", "name": "IMG_6328.HEIC", "mime": "image/heic" },
+      { "folder": "9.ADV Road Sync Turquoise", "fileId": "16JGZk9S0RP26KMSAVY8EYd-ensFyUJqK", "name": "IMG_6329.HEIC", "mime": "image/heic" },
+      { "folder": "9.ADV Road Sync Turquoise", "fileId": "11D6nPI8BhaIfnsFXNOErKXQ-JUaGAAdb", "name": "IMG_6330.HEIC", "mime": "image/heic" }
+    ],
+    "honda-adv-brown-road-sync": [
+      { "folder": "9.ADV Road Sync Brown", "fileId": "1KDwu4nhW-j3H1lrjShtfsPB219P0uc8c", "name": "IMG_6034.HEIC", "mime": "image/heic" },
+      { "folder": "9.ADV Road Sync Brown", "fileId": "1me0AMuawX205SedNN7mHP_ZBsIcwbwCN", "name": "IMG_6035.HEIC", "mime": "image/heic" },
+      { "folder": "9.ADV Road Sync Brown", "fileId": "1hanL6EdRzXmShhXAWRYcEf8aMAbcsjMt", "name": "IMG_6036.HEIC", "mime": "image/heic" },
+      { "folder": "9.ADV Road Sync Brown", "fileId": "1HQ0eY1_d9mM2OQnuP5RQkmuXdxcfheWI", "name": "IMG_6037.HEIC", "mime": "image/heic" },
+      { "folder": "9.ADV Road Sync Brown", "fileId": "1rh7r46XJmLE8Nh9-Q-dBxGLRC08ed8Jp", "name": "IMG_6038.HEIC", "mime": "image/heic" },
+      { "folder": "9.ADV Road Sync Brown", "fileId": "1vclMItgAkehQKq-gq98vGeevSNY8EFqZ", "name": "IMG_6039.HEIC", "mime": "image/heic" },
+      { "folder": "9.ADV Road Sync Brown", "fileId": "1tsbA9EmKIs5oMOyoQcQphE8v9xTqrTZg", "name": "IMG_6040.HEIC", "mime": "image/heic" },
+      { "folder": "9.ADV Road Sync Brown", "fileId": "12osFpsnLsh7-1s2rhetM7oxBzTJ5aDEo", "name": "2ca08ec5-9678-4f97-a49c-0bd580efa6c1.JPG", "mime": "image/jpeg" }
+    ],
+    "honda-adv-pink-purple-abs": [
+      { "folder": "54.ADV ABS Pink", "fileId": "1HYE27G8-6qvEEMSvfKBmovBFmNWVQi_y", "name": "IMG_9335.HEIC", "mime": "image/heic" },
+      { "folder": "54.ADV ABS Pink", "fileId": "19hkzaDDFMlqlSjkIghfYII-QC4p9rpNl", "name": "IMG_9336.jpg", "mime": "image/jpeg" },
+      { "folder": "54.ADV ABS Pink", "fileId": "114AWvPzTEdStRcpmdYAIonqqTLTzpLvf", "name": "IMG_9337.HEIC", "mime": "image/heic" },
+      { "folder": "54.ADV ABS Pink", "fileId": "14OCvzMUKwyUMHNxSneA8aO9aEnB5v-Rm", "name": "IMG_9338.HEIC", "mime": "image/heic" },
+      { "folder": "54.ADV ABS Pink", "fileId": "10JIeN7BMkIcRcv994mCPNo-pSpiETknG", "name": "IMG_9339.jpg", "mime": "image/jpeg" },
+      { "folder": "54.ADV ABS Pink", "fileId": "1yViimleIz8j1Ic3slIB9Y_6QuJjubsb5", "name": "IMG_9341.jpg", "mime": "image/jpeg" },
+      { "folder": "54.ADV ABS Pink", "fileId": "1OENF8BvR5mi3BxO7lkbvlrQaCDgTvY1F", "name": "IMG_9342.jpg", "mime": "image/jpeg" }
+    ]
+  }
+}
