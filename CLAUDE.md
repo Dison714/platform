@@ -54,6 +54,13 @@
   устранила, поэтому группа замены (`scooter_econ_160`: ADV/PCX/Vario/Nmax)
   вынесена в отдельный справочник. Когда будет строиться Replacement Matrix
   — опираться на `replacement_group_id`, не на `vehicle_categories`/фильтры.
+- **Product может существовать без Fleet Item** (прецедент — Keeway Road
+  Falcon 250, миграция 031): байк в заказе, физически ещё не приехал —
+  заводим Family/Product/цену/фото/видео, чтобы карточка была на сайте, но
+  Fleet Item (VIN/STNK/номер/пробег) создаётся только когда байк физически
+  получен и зарегистрирован. Booking на такой Product создать можно
+  (`fleet_item_assigned` наступит позже, вручную, как обычно) —
+  `is_bookable` не завязан на наличие хотя бы одного Fleet Item.
 
 ### 3.2 Booking ≠ Rental (ТЗ п.6.8)
 - Booking — коммерческий процесс до выдачи (статусы created→…→fleet_item_assigned→fulfilled).

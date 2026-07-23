@@ -1,12 +1,15 @@
 # PROJECT_STATUS.md — снимок состояния MDB Platform
 
-_Обновлено: 2026-07-22 (чанк **Deploy в процессе**: backend+frontend задеплоены на
-Contabo VPS + Coolify 4.1.2, оба `running:healthy`, миграции 27/27 применены;
-сидинг CRM/DNS cutover/R2-миграция фото — впереди, ждут отдельного OK. Ранее —
-чанк **SEO enrichment layer ПОЛНОСТЬЮ ЗАКРЫТ** (Шаг 0→3), чанк Photos (648 фото,
-рендер), чанк Specs (family_specs). Плюс всё предыдущее: каркас + каталог +
-продукт/калькулятор + заявка + контентные страницы; двуязычный сайт RU+EN;
-номер заявки BR-00001).
+_Обновлено: 2026-07-23 (чанк **Deploy в процессе**: backend+frontend на Contabo
+VPS + Coolify 4.1.2, оба `running:healthy`, миграции 31/31 применены; сидинг
+CRM с dev-БД — ЗАВЕРШЁН, фото на R2 — ЗАВЕРШЁНО. DNS cutover — впереди, ждёт
+отдельного OK. Дальше — чанк **Каталог: фильтры + матчинг цен + Keeway
+ЗАВЕРШЁН** (миграции 028-031): 5 фильтров по модели скутеров, разделение
+`vehicle_categories`/`replacement_groups`, 78/78 products с ценой, новый байк
+Keeway Road Falcon 250. Ранее — чанк **SEO enrichment layer ПОЛНОСТЬЮ ЗАКРЫТ**
+(Шаг 0→3), чанк Photos (657 фото/1971 файл, рендер), чанк Specs (family_specs).
+Плюс всё предыдущее: каркас + каталог + продукт/калькулятор + заявка +
+контентные страницы; двуязычный сайт RU+EN; номер заявки BR-00001).
 Карта состояния для продолжения в будущих сессиях.
 Бизнес-правила и архитектурные решения — в `CLAUDE.md`, дублировать не нужно._
 
@@ -112,7 +115,7 @@ Next.js 14 (App Router, SSR/SSG, mobile-first). Запуск на :3001, backend
 - **CORS:** клиент ходит на свой origin через BFF-прокси `/api/quote` и `/api/bookings`
   (Next route handlers), адрес backend — серверный env `API_BASE_URL`.
 
-### Применённые миграции (001–027)
+### Применённые миграции (001–031)
 
 | # | Файл | Содержимое |
 |---|------|------------|
@@ -143,6 +146,10 @@ Next.js 14 (App Router, SSR/SSG, mobile-first). Запуск на :3001, backend
 | 025 | product_variants | `products`: `equipment_variant` (TEXT+CHECK, не enum — участвует в COALESCE-индексе), `print_name`, `archived_color`, `partner_bike`, `need_photos`; identity → `UNIQUE (family_id, color_name, variant, COALESCE(equipment_variant,''), COALESCE(print_name,''))` |
 | 026 | product_photos_storage | `product_photos`: `storage_path` (относительный, без размера), `is_hero`; частичный уникальный индекс «одно hero на продукт» |
 | 027 | partner_identity | `partner_bike` добавлен в identity-индекс (партнёрский байк может совпадать с парковым по family+color — напр. Xmax Grey) |
+| 028 | scooter_filter_split | "Scooter 160cc"/"Maxi Scooter" → 5 фильтров по модели (Honda ADV/PCX/Vario 160, Yamaha Nmax 155/Xmax 250); MT-25 доп. членство Sport+Naked/Classic; Cruiser переименован в "Cruiser / Bobber / Chopper" |
+| 029 | replacement_groups | Новый справочник `replacement_groups` + `product_families.replacement_group_id` — группа взаимозаменяемости для будущей Replacement Matrix, отделена от `vehicle_categories` (см. §3.1 CLAUDE.md) |
+| 030 | price_matching | 37 products без `price_rules` получили цену "донора" (та же Family, тот же/ближайший цвет) |
+| 031 | keeway_road_falcon | Новый байк Keeway Road Falcon 250 — Family/Product/цена (=Morbidelli), без Fleet Item (в заказе, не приехал) |
 
 ## 2. Сидинг данных (реальные счётчики из БД)
 
@@ -582,6 +589,58 @@ API на публичный R2 URL, **выполнен полный redeploy с 
 Custom Domain (`cdn.bikebalirent.com` или похожий) перед реальным запуском на
 `bikebalirent.com`, обновить `NEXT_PUBLIC_PHOTO_BASE_URL` соответственно.
 
+### Чанк Каталог: фильтры + матчинг цен + Keeway (ЗАВЕРШЁН, миграции 028-031)
+
+**Фильтры (028):** "Scooter 160cc"/"Maxi Scooter" разбиты на 5 фильтров
+по модели — `honda_adv160`, `honda_pcx160`, `honda_vario160`,
+`yamaha_nmax155`, `yamaha_xmax250` (числа в коде — маркетинговое
+округление реального `engine_cc` из `family_specs`: 156.9→160 у Honda,
+155/250 у Yamaha — точные). MT-25 получил двойное членство в
+`family_filter_categories` — остаётся в Sport (первичная категория,
+бейдж карточки не меняется) и дополнительно виден в Naked/Classic.
+Cruiser переименован в "Cruiser / Bobber / Chopper" (en и ru).
+Побочный итог — `vehicle_categories` (UI-фильтр) и `replacement_groups`
+(группа взаимозаменяемости для будущей Replacement Matrix) разделены,
+подробности и обоснование — CLAUDE.md §3.1.
+
+**Матчинг цен (030):** 37 из 78 products не имели `price_rules`.
+Принцип — "перекрашенный байк = та же цена" (решение владельца): цена
+копируется с "донора" — уже оценённого продукта той же Family. Где
+donor-цвет совпадает точно (тот же цвет, `box`/`bracket`/`partner`/
+`crashbar` в названии — доп. оборудование, не новый цвет) — копирование
+однозначное. Где у Family несколько разных ценовых тиров и точного
+совпадения по цвету/варианту нет — решения владельца по каждой группе:
+- **Yamaha Nmax**, 7 цветов без совпадения (Black, Blue, Dark Green,
+  Neo Blue partner, Neo S Black partner, Neo S White partner, Red) →
+  дешёвый тир 500 000 IDR/день (донор `yamaha-nmax-green`), не дорогой
+  тир 600к (Light green/Pink Blue/Pink-purple).
+- **Yamaha Xmax**, 6 цветов без совпадения (Black partner, Cartoon
+  partner, Dark Green partner, Green, Pink, Red partner) → дешёвый тир
+  900 000 IDR/день (донор `yamaha-xmax-silver`), не дорогой тир 1100к
+  (Chameleon/Grey).
+- **Honda PCX**, 2 цвета без совпадения (Red, Silver) → базовый тир
+  (донор `honda-pcx-orange`, тот же тир что Green/Orange), не тир ABS
+  (Yellow Green).
+Итог: 78/78 products с ценой. Полная донор→таргет таблица — миграция
+`backend/migrations/030_price_matching.sql`.
+
+**Keeway Road Falcon 250 (031):** новый байк, в заказе, физически ещё
+не приехал. Заведён как Family/Product (без Fleet Item — см. CLAUDE.md
+§3.1, паттерн "Product до физического прибытия"), категория фильтра —
+Cruiser/Bobber/Chopper (тот же стилистический класс, что Morbidelli
+C252V — круглая фара, посадка круизера, широкий руль, подтверждено по
+фото), цена — идентична Morbidelli (решение владельца). 6 фото (2
+реальных дилерских — Keeway/Morbidelli/Benelli/Benda шоурум на Бали, +
+4 официальных маркетинговых от Keeway, решение владельца — использовать
+все) обработаны тем же sharp-пайплайном (3 WebP-размера), залиты в R2.
+Видео (`IMG_8559.MP4`) залито в R2 по пути `bikes/keeway-road-falcon-
+250-black/video.mp4` — **рендер видео на карточке товара ещё не
+реализован** (не баг, отдельная фронтенд-задача, файл готов и ждёт).
+При заведении найден и исправлен баг в первой версии миграции 031 —
+захардкоженный локальный `company_id` вместо lookup по `code`
+(идентичный класс проблемы, что в orphaned-FK инциденте при сидинге,
+см. выше) — до применения на сервере пойман и исправлен.
+
 ### Грабли / нюансы (на будущее)
 
 - **`users`: при будущем сидинге/импорте НЕ полагаться на `ON CONFLICT` по
@@ -626,7 +685,7 @@ Custom Domain (`cdn.bikebalirent.com` или похожий) перед реал
 - **Деплой — В ПРОЦЕССЕ** (чанк Deploy, подробности — раздел выше): провайдер
   фактически **Contabo** (не Hetzner — та регистрация была отклонена), Coolify
   4.1.2, self-hosted PostgreSQL 18. Backend и frontend оба **`running:healthy`**
-  на sslip.io-доменах (до DNS cutover). Миграции 27/27 применены. CI/CD на
+  на sslip.io-доменах (до DNS cutover). Миграции 31/31 применены. CI/CD на
   старте нет — миграции на боевую БД проверяются руками. **Сидинг каталога —
   ГОТОВО** (чанк «Сидинг данных», подробности выше): 55 таблиц перенесены
   `pg_dump`/`pg_restore` с dev-БД, orphaned FK после restore найден и исправлен,
@@ -636,13 +695,18 @@ Custom Domain (`cdn.bikebalirent.com` или похожий) перед реал
   публичный r2.dev-URL (dev-режим, замена на Custom Domain — часть будущего
   DNS-чанка), фронтенд пересобран полным ребилдом, фото визуально подтверждены
   владельцем на живом сайте.
+- **Каталог: фильтры + матчинг цен + Keeway — ГОТОВО** (чанк выше, миграции
+  028-031): 5 фильтров по модели скутеров вместо 2 общих, `vehicle_categories`/
+  `replacement_groups` разделены, 78/78 products с ценой (37 доматчены от
+  донора), новый байк Keeway Road Falcon 250 заведён (Family/Product/цена/
+  фото, без Fleet Item — в заказе).
 - Боты (`MDB_drivers_bot` и др.) на запись через `api_clients` — позже; хостинг
   ботов (Render.com) отдельно от деплоя Platform, не в периметре этого чанка.
 - **Дальше по плану деплоя (не начато, ждёт отдельного OK):** DNS cutover на
-  bikebalirent.com; выбор Cloudflare R2 vs Amazon S3 для фото-бакета (вопрос
-  всё ещё открыт) + миграция 648 фото; SSL (автоматически через Traefik после
-  DNS). Известный техдолг с деплоя — см. раздел выше (pricing_rule_set
-  exception, output:standalone неэффективен под Nixpacks, фото ещё не в проде).
+  bikebalirent.com; Custom Domain для R2-бакета (замена Public Development
+  URL — техдолг, см. раздел R2 медиа выше); SSL (автоматически через Traefik
+  после DNS). Известный техдолг с деплоя — см. раздел выше (pricing_rule_set
+  exception, output:standalone неэффективен под Nixpacks).
 
 ## 5. Как запустить локально
 
