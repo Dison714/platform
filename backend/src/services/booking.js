@@ -169,7 +169,7 @@ export async function createBooking(input) {
 
     // --- цену считает сервер заново (фронту не доверяем). lang → имена
     //     оборудования в снимке на языке заявки. Бросит 404, если продукт не найден. ---
-    const quote = await buildQuote({ product, rentalDays, insurance, equipment, lang: locale });
+    const quote = await buildQuote({ product, rentalDays, insurance, equipment, lang: locale, startDate: start_date });
 
     const companyId = await getCompanyId();
     const ruleSetId = await getActiveRuleSetId();

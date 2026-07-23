@@ -8,16 +8,18 @@ export const quoteRouter = Router();
 // POST /api/quote — полный расчёт стоимости аренды.
 // body: {
 //   product: "<id|slug>", rental_days: int>=1,
+//   start_date?: "YYYY-MM-DD",  // для сезонного мультипликатора; без неё — множитель 1
 //   insurance?: { theft?: bool, damage?: { coverage_idr }, driver?: { age, has_license, experienced } },
 //   equipment?: [ { code, quantity? } ],
 //   location_link?: string  // для водителя + shadow; на цену не влияет
 // }
 quoteRouter.post('/quote', async (req, res, next) => {
     try {
-        const { product, rental_days, insurance, equipment, location_link, lang } = req.body ?? {};
+        const { product, rental_days, start_date, insurance, equipment, location_link, lang } = req.body ?? {};
         const rentalDays = Number(rental_days);
+        const startDate = typeof start_date === 'string' && start_date.trim() ? start_date.trim() : null;
 
-        const quote = await buildQuote({ product, rentalDays, insurance, equipment, lang });
+        const quote = await buildQuote({ product, rentalDays, insurance, equipment, lang, startDate });
 
         const link = typeof location_link === 'string' && location_link.trim() ? location_link.trim() : null;
         res.json({ data: { ...quote, location_link: link }, meta: { currency: 'IDR' } });

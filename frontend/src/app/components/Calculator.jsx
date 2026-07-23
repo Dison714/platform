@@ -81,10 +81,11 @@ export default function Calculator({ slug, locale, equipment, insuranceOptions, 
   const quoteBody = useMemo(() => ({
     product: slug,
     rental_days: rentalDays,
+    start_date: start, // сезонный мультипликатор — по дате начала аренды
     lang: locale, // имена оборудования в сводке — на языке клиента
     ...(selection.insurance ? { insurance: selection.insurance } : {}),
     ...(selection.equipment ? { equipment: selection.equipment } : {}),
-  }), [slug, locale, rentalDays, selection]);
+  }), [slug, locale, rentalDays, start, selection]);
 
   const debounce = useRef(null);
   useEffect(() => {

@@ -9,7 +9,7 @@ const CURRENCY = 'IDR';
 
 // Полный расчёт аренды: база + доставка + страховка + оборудование = ИТОГО К
 // ОПЛАТЕ; депозит — ОТДЕЛЬНО (возвращаемый, не в итоге). Прозрачная разбивка.
-export async function buildQuote({ product, rentalDays, insurance, equipment, lang = 'en' }) {
+export async function buildQuote({ product, rentalDays, insurance, equipment, lang = 'en', startDate = null }) {
     if (!product) { const e = new Error('product is required'); e.status = 400; throw e; }
     if (!Number.isInteger(rentalDays) || rentalDays < 1) {
         const e = new Error('rental_days must be a positive integer');
@@ -20,7 +20,7 @@ export async function buildQuote({ product, rentalDays, insurance, equipment, la
     const prod = await findProduct(product);
     if (!prod) { const e = new Error('product_not_found'); e.status = 404; throw e; }
 
-    const baseRental = await computeBaseRental(prod.id, rentalDays);
+    const baseRental = await computeBaseRental(prod.id, rentalDays, startDate);
     const delivery = await computeDeliveryFee({ rentalDays });
     const insuranceResult = await computeInsurance(insurance, rentalDays);
     const equipmentResult = await computeEquipment(equipment, rentalDays, lang);
