@@ -390,7 +390,7 @@ JSON-LD (см. п.4 выше). Не тихая замена — согласов
 15 коммитов (сверено по `git log --oneline c0db3b8..HEAD`), каждый live-проверен
 (curl/view-source) перед коммитом. Чанк SEO enrichment layer закрыт полностью (Шаг 0 → Шаг 3).
 
-### Чанк Deploy — Contabo + Coolify (в процессе, Шаг 3.3 + сидинг данных закрыты)
+### Чанк Deploy — Contabo + Coolify (в процессе, Шаг 3.3 + сидинг данных + R2 медиа закрыты)
 
 **Инфраструктура (фактическая, не Hetzner — регистрация Hetzner была отклонена):**
 провайдер **Contabo**, сервер `169.58.60.244` (Cloud VPS 4: 4 vCPU/8GB/100GB,
@@ -457,11 +457,17 @@ Application-ресурсов Coolify всегда явно задавать `cus
    в логах `⚠ "next start" does not work with "output: standalone" configuration`.
    Приложение работает (Nixpacks копирует полный `.next`, не только standalone-папку),
    но настройка сейчас мертва для этого способа деплоя. Не трогали — не блокирует.
-3. **Фото физически отсутствуют на проде** — `frontend/public/bikes/` в `.gitignore`,
-   никогда не коммитилась; в задеплоенном контейнере директории нет вообще (только
-   иконки favicon). Любая ссылка на фото байка → 404, до миграции на R2/S3 (решение
-   ещё не принято, см. ниже).
-4. **Разный `datlocprovider` локально и на сервере** — локальная БД (Postgres.app)
+3. **Фото — ГОТОВО, перенесены на R2** (было: физически отсутствовали на проде;
+   `frontend/public/bikes/` в `.gitignore`, никогда не коммитилась). Подробности —
+   раздел «Чанк R2 медиа» ниже.
+4. **Медиа отдаются через R2 Public Development URL, не production-домен** —
+   `pub-92229917b7c74364afcdf15e1d1cff99.r2.dev` — Cloudflare сам маркирует этот
+   механизм как preview/dev, не «Recommended for production use» (в отличие от
+   Custom Domains). Работает корректно для текущего этапа (сайт ещё не на
+   `bikebalirent.com`), но перед реальным запуском нужно подключить Custom Domain
+   для бакета (например `cdn.bikebalirent.com`) и обновить
+   `NEXT_PUBLIC_PHOTO_BASE_URL` — часть будущего DNS-чанка, не текущего.
+5. **Разный `datlocprovider` локально и на сервере** — локальная БД (Postgres.app)
    инициализирована с ICU (`datlocprovider='i'`), серверная (`postgres:18-alpine`) —
    с libc (`datlocprovider='c'`). Не влияет на корректность перенесённых данных
    (подтверждено byte-level сравнением при сверке lookup-таблиц перед сидингом,
@@ -473,9 +479,9 @@ Application-ресурсов Coolify всегда явно задавать `cus
 
 **Остаётся по плану деплоя:**
 - DNS-подготовка (cutover на bikebalirent.com) — не начата, ждёт отдельного решения.
-- Cloudflare R2 (или альтернатива) — миграция 648 фото — не начата, финальный
-  выбор бакета не сделан (вопрос (в) из прежнего маркера всё ещё открыт).
 - SSL — автоматически через Traefik/Let's Encrypt после DNS, не начато.
+- Custom Domain для R2-бакета (замена Public Development URL) — часть будущего
+  DNS-чанка, см. техдолг выше.
 - Боты (`@MDB_tugas_approver_bot` и др.) остаются на Render — вне периметра.
 
 ### Чанк Сидинг данных — Contabo (ЗАВЕРШЁН)
@@ -545,6 +551,37 @@ PK (`filename`) с уже вручную заполненной серверно
 через UI (боевой `TELEGRAM_BOT_TOKEN` на бэкенде — реальное уведомление ушло
 бы Сергею/Bali Rent в Telegram).
 
+### Чанк R2 медиа-миграция (ЗАВЕРШЁН)
+
+**Бакет:** `mdb-platform-media` (Cloudflare R2), создан через S3-совместимый API
+(`aws s3api create-bucket`, endpoint `https://3c3d58a73ee90534807282e5c9c708be.r2.cloudflarestorage.com`).
+Публичный доступ включён вручную владельцем в dashboard (R2 S3-ключи не дают
+прав на управление публичным доступом — это отдельный Cloudflare API/dashboard-
+уровень, не S3 API). Публичный URL (текущий, dev-режим — см. техдолг выше):
+`https://pub-92229917b7c74364afcdf15e1d1cff99.r2.dev`.
+
+**Аплоад:** `aws s3 sync frontend/public/bikes/ s3://mdb-platform-media/bikes/`
+с `--content-type image/webp`, структура путей сохранена как есть
+(`bikes/<slug>/{thumb,gallery,hero}/NN.webp`, совпадает с тем, что строит
+`resolvePhotoUrl()` в `frontend/src/lib/photos.js`). **1971 файл** (657 фото ×
+3 размера — фактическое число, не 648, как ошибочно упоминалось на старте
+задачи; сверено с `product_photos`=657 строк в БД). Верифицировано двумя
+независимыми способами (`list-objects-v2` count + `s3 ls --recursive | wc -l`) —
+1971=1971 точное совпадение. Публичная доступность проверена curl на выборке —
+200, `Content-Type: image/webp`.
+
+**Деплой конфигурации:** `NEXT_PUBLIC_PHOTO_BASE_URL` выставлен через Coolify
+API на публичный R2 URL, **выполнен полный redeploy с ребилдом**
+(`POST /api/v1/deploy?force=true`, не простой restart) — обязательно, так как
+`NEXT_PUBLIC_*` переменные инлайнятся в JS-бандл на этапе `next build`, restart
+контейнера без ребилда продолжил бы использовать старое (пустое) значение.
+Подтверждено: HTML после ребилда содержит реальные R2-ссылки, `running:healthy`,
+фото визуально проверены владельцем на `/en/bikes` и карточках товара — отображаются.
+
+**На будущее (часть DNS-чанка, не сейчас):** заменить Public Development URL на
+Custom Domain (`cdn.bikebalirent.com` или похожий) перед реальным запуском на
+`bikebalirent.com`, обновить `NEXT_PUBLIC_PHOTO_BASE_URL` соответственно.
+
 ### Грабли / нюансы (на будущее)
 
 - **`users`: при будущем сидинге/импорте НЕ полагаться на `ON CONFLICT` по
@@ -570,8 +607,11 @@ PK (`filename`) с уже вручную заполненной серверно
   заложен в notify (`switch (channel)`), но активен только telegram.
 - **Specs — ГОТОВО** (чанк Specs): `family_specs` заполнена по 14 линейкам из
   открытых данных, рендерится на карточке продукта (label/unit/локализация КПП — i18n).
-- **Фото — ГОТОВО** (чанк Photos): 648 WebP ×3 размера в `frontend/public/bikes/`
-  (gitignored), `product_photos` заполнена, рендер hero+галерея с метками. Скрипты
+- **Фото — ГОТОВО** (чанк Photos + чанк R2 медиа): 657 фото × 3 размера (1971 WebP-
+  файл — уточнено при R2-миграции, ранее ошибочно фигурировало число 648) в
+  `frontend/public/bikes/` (gitignored локально) и в R2-бакете `mdb-platform-media`
+  (продакшен-источник, подробности в разделе Deploy выше). `product_photos`
+  заполнена (657 строк), рендер hero+галерея с метками. Скрипты
   `backend/scripts/{build_manifest.js,import_photos.js}` + `photos_manifest.json`
   идемпотентны. `is_hero` пока везде FALSE (ручная разметка «главного» фото — позже).
 - **Перевод названий ПРОДУКТОВ/категорий-описаний** — остаётся (Honda ADV Chameleon
@@ -591,9 +631,11 @@ PK (`filename`) с уже вручную заполненной серверно
   ГОТОВО** (чанк «Сидинг данных», подробности выше): 55 таблиц перенесены
   `pg_dump`/`pg_restore` с dev-БД, orphaned FK после restore найден и исправлен,
   каталог live-проверен (200 на `/en/bikes`, `/ru/bikes`, карточках товара).
-  **Фото на CDN:** выставить `NEXT_PUBLIC_PHOTO_BASE_URL` на URL бакета и
-  перенести `frontend/public/bikes/**` туда — БД не трогается (`storage_path`
-  size-agnostic, размер добавляет рендер; `cdn_url` — опц. абсолютный override).
+  **Фото на CDN — ГОТОВО** (чанк «R2 медиа», подробности выше): 1971 файл в
+  R2-бакете `mdb-platform-media`, `NEXT_PUBLIC_PHOTO_BASE_URL` выставлен на
+  публичный r2.dev-URL (dev-режим, замена на Custom Domain — часть будущего
+  DNS-чанка), фронтенд пересобран полным ребилдом, фото визуально подтверждены
+  владельцем на живом сайте.
 - Боты (`MDB_drivers_bot` и др.) на запись через `api_clients` — позже; хостинг
   ботов (Render.com) отдельно от деплоя Platform, не в периметре этого чанка.
 - **Дальше по плану деплоя (не начато, ждёт отдельного OK):** DNS cutover на
