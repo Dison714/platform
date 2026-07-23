@@ -21,15 +21,15 @@ const FAMILY_RULES = [
 ];
 
 const FAMILY_DEFS = [
-    { code: 'honda_adv', brand: 'Honda', model_name: 'ADV', category: 'scooter_160', test: (n) => /\badv\b/i.test(n) },
-    { code: 'honda_pcx', brand: 'Honda', model_name: 'PCX', category: 'scooter_160', test: (n) => /\bpcx\b/i.test(n) || /рсх/i.test(n) },
-    { code: 'honda_vario', brand: 'Honda', model_name: 'Vario', category: 'scooter_160', test: (n) => /\bvario\b/i.test(n) },
+    { code: 'honda_adv', brand: 'Honda', model_name: 'ADV', category: 'honda_adv160', test: (n) => /\badv\b/i.test(n) },
+    { code: 'honda_pcx', brand: 'Honda', model_name: 'PCX', category: 'honda_pcx160', test: (n) => /\bpcx\b/i.test(n) || /рсх/i.test(n) },
+    { code: 'honda_vario', brand: 'Honda', model_name: 'Vario', category: 'honda_vario160', test: (n) => /\bvario\b/i.test(n) },
     { code: 'honda_cb150x', brand: 'Honda', model_name: 'CB150X', category: 'touring', test: (n) => /\bcb\s?150\s?x\b|\bcx150x\b/i.test(n) },
     { code: 'honda_cbr250rr', brand: 'Honda', model_name: 'CBR250RR', category: 'sport', test: (n) => /\bcbr\s?250/i.test(n) },
     { code: 'suzuki_vstrom250', brand: 'Suzuki', model_name: 'V-Strom 250', category: 'touring', test: (n) => /\bvstrom\b/i.test(n) },
     { code: 'morbidelli_c252v', brand: 'Morbidelli', model_name: 'C252V', category: 'cruiser', test: (n) => /\bc252v\b|\bmorbidelli\b/i.test(n) },
-    { code: 'yamaha_nmax', brand: 'Yamaha', model_name: 'Nmax', category: 'scooter_160', test: (n) => /\bnmax\b/i.test(n) },
-    { code: 'yamaha_xmax', brand: 'Yamaha', model_name: 'Xmax', category: 'maxi_scooter', test: (n) => /\bxmax\b/i.test(n) },
+    { code: 'yamaha_nmax', brand: 'Yamaha', model_name: 'Nmax', category: 'yamaha_nmax155', test: (n) => /\bnmax\b/i.test(n) },
+    { code: 'yamaha_xmax', brand: 'Yamaha', model_name: 'Xmax', category: 'yamaha_xmax250', test: (n) => /\bxmax\b/i.test(n) },
     { code: 'yamaha_xsr', brand: 'Yamaha', model_name: 'XSR', category: 'naked_classic', test: (n) => /\bxsr\b/i.test(n) },
     { code: 'yamaha_mt25', brand: 'Yamaha', model_name: 'MT-25', category: 'sport', test: (n) => /mt\s?25/i.test(n) || /мт\s?25/i.test(n) },
     { code: 'kawasaki_versys', brand: 'Kawasaki', model_name: 'Versys', category: 'touring', test: (n) => /\bversys\b/i.test(n) },
@@ -633,6 +633,27 @@ async function seedFamilyFilterCategories(client, companyId) {
          ON CONFLICT DO NOTHING`,
         [companyId]
     );
+    // доп. членство: Yamaha MT-25 → Naked/Classic (остаётся и в Sport, решение владельца)
+    await client.query(
+        `INSERT INTO family_filter_categories (family_id, category_id)
+         SELECT pf.id, vc.id
+         FROM product_families pf, vehicle_categories vc
+         WHERE pf.company_id = $1 AND pf.code = 'yamaha_mt25' AND vc.code = 'naked_classic'
+         ON CONFLICT DO NOTHING`,
+        [companyId]
+    );
+}
+
+// Группа взаимозаменяемости для будущей Replacement Matrix (миграция 029,
+// CLAUDE.md §3.1) — независимо от фильтров каталога (family_filter_categories
+// выше). Идемпотентно (UPDATE по фиксированному списку кодов).
+async function seedReplacementGroups(client, companyId) {
+    await client.query(
+        `UPDATE product_families
+         SET replacement_group_id = (SELECT id FROM replacement_groups WHERE code = 'scooter_econ_160')
+         WHERE company_id = $1 AND code IN ('honda_adv', 'honda_pcx', 'honda_vario', 'yamaha_nmax')`,
+        [companyId]
+    );
 }
 
 async function seedDepositRules(client, companyId) {
@@ -686,6 +707,9 @@ async function main() {
 
         await seedFamilyFilterCategories(client, companyId);
         console.log('Family filter categories seeded.');
+
+        await seedReplacementGroups(client, companyId);
+        console.log('Replacement groups seeded.');
 
         const warehouseCount = await seedWarehouseItems(client, wb, companyId);
         console.log(`Warehouse items: ${warehouseCount}`);

@@ -2,12 +2,15 @@
   "brand": { "name": "Bike Bali Rent", "tagline": "Аренда мотобайков на Бали" },
   "nav": { "home": "Главная", "bikes": "Байки", "about": "О нас", "faq": "Вопросы", "contact": "Контакты" },
   "cat": {
-    "scooter_160": "Скутеры 160cc",
-    "maxi_scooter": "Макси-скутеры",
+    "honda_adv160": "Honda ADV 160",
+    "honda_pcx160": "Honda PCX 160",
+    "honda_vario160": "Honda Vario 160",
+    "yamaha_nmax155": "Yamaha Nmax 155",
+    "yamaha_xmax250": "Yamaha Xmax 250",
     "touring": "Туринг / Эндуро",
     "naked_classic": "Нейкед / Классика",
     "sport": "Спорт",
-    "cruiser": "Круизеры",
+    "cruiser": "Круизеры / бобберы / чопперы",
     "neo_retro_roadster": "Нео-ретро родстеры"
   },
   "catalog": {

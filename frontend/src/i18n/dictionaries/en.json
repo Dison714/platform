@@ -2,12 +2,15 @@
   "brand": { "name": "Bike Bali Rent", "tagline": "Motorbike rental in Bali" },
   "nav": { "home": "Home", "bikes": "Bikes", "about": "About", "faq": "FAQ", "contact": "Contact" },
   "cat": {
-    "scooter_160": "Scooter 160cc",
-    "maxi_scooter": "Maxi Scooter",
+    "honda_adv160": "Honda ADV 160",
+    "honda_pcx160": "Honda PCX 160",
+    "honda_vario160": "Honda Vario 160",
+    "yamaha_nmax155": "Yamaha Nmax 155",
+    "yamaha_xmax250": "Yamaha Xmax 250",
     "touring": "Touring / Enduro",
     "naked_classic": "Naked / Classic",
     "sport": "Sport",
-    "cruiser": "Cruiser",
+    "cruiser": "Cruiser / Bobber / Chopper",
     "neo_retro_roadster": "Neo-Retro Roadster"
   },
   "catalog": {
