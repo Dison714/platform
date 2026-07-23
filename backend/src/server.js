@@ -6,6 +6,7 @@ import { deliveryRouter } from './routes/delivery.js';
 import { quoteRouter } from './routes/quote.js';
 import { bookingRouter } from './routes/booking.js';
 import { equipmentRouter } from './routes/equipment.js';
+import { seasonalMultipliersRouter } from './routes/seasonalMultipliers.js';
 
 const app = express();
 app.use(express.json());
@@ -30,9 +31,10 @@ app.use('/api', deliveryRouter);
 app.use('/api', quoteRouter);
 app.use('/api', bookingRouter);
 app.use('/api', equipmentRouter);
+app.use('/api', seasonalMultipliersRouter);
 
-// Централизованный обработчик ошибок: err.status (напр. 400/404/501) или 500.
-const ERROR_LABELS = { 400: 'bad_request', 404: 'not_found', 501: 'not_implemented' };
+// Централизованный обработчик ошибок: err.status (напр. 400/404/409/501) или 500.
+const ERROR_LABELS = { 400: 'bad_request', 404: 'not_found', 409: 'conflict', 501: 'not_implemented' };
 app.use((err, req, res, next) => {
     const status = err.status ?? 500;
     if (status >= 500) console.error(err);

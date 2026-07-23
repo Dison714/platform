@@ -1,3 +1,4 @@
+import '../globals.css';
 import { Teko, Poppins } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { isEnabledLocale, enabledLocales } from '../../i18n/config.js';
@@ -5,7 +6,7 @@ import { getDictionary } from '../../i18n/getDictionary.js';
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
 import { organizationJsonLd } from '../../lib/organization.js';
-import { IS_PRODUCTION } from '../../lib/site.js';
+import { IS_PRODUCTION, SITE_URL } from '../../lib/site.js';
 
 // Шрифты бренда: Teko — дисплейные заголовки, Poppins — текст/UI (self-hosted).
 const teko = Teko({ subsets: ['latin'], weight: ['500', '600'], variable: '--font-teko', display: 'swap' });
@@ -21,11 +22,20 @@ export function generateStaticParams() {
 // (Disallow: /) и пустым sitemap.js закрывает стейджинг/IP/дефолтный
 // Coolify-поддомен от индексации.
 export async function generateMetadata() {
-  return IS_PRODUCTION ? {} : { robots: { index: false, follow: false } };
+  // metadataBase — основа для абсолютных canonical/og:url (раньше жил в
+  // корневом app/layout.js; тот убран — html/body теперь только здесь и в
+  // app/internal/layout.js, см. комментарий ниже про multiple root layouts).
+  return {
+    metadataBase: new URL(SITE_URL),
+    ...(IS_PRODUCTION ? {} : { robots: { index: false, follow: false } }),
+  };
 }
 
-// <html>/<body> живут здесь (а не в root layout), чтобы lang резолвился из
-// params.locale на билде — статический рендер сохраняется, без headers().
+// <html>/<body> живут здесь (а не в едином root layout — его нет, см. Next.js
+// "multiple root layouts": [locale]/layout.js и internal/layout.js — два
+// независимых корня, каждый сам объявляет <html>/<body>), чтобы lang
+// резолвился из params.locale на билде — статический рендер сохраняется,
+// без headers().
 export default async function LocaleLayout({ children, params }) {
   const { locale } = params;
   if (!isEnabledLocale(locale)) notFound();
