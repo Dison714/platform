@@ -13,6 +13,41 @@ Keeway Road Falcon 250. Ранее — чанк **SEO enrichment layer ПОЛН�
 Карта состояния для продолжения в будущих сессиях.
 Бизнес-правила и архитектурные решения — в `CLAUDE.md`, дублировать не нужно._
 
+## Конфигурация Claude Code — временная
+
+Permissions временно в режиме `bypassPermissions` (без подтверждений) на
+период активной разработки — решение владельца от 23.07.2026, файл
+`.claude/settings.local.json` (личный, не в git). **После запуска сайта в
+прод (DNS cutover) — вернуться к более узкому набору правил.** Целевая
+конфигурация на потом (уже согласована, просто применить):
+
+```json
+{
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(npm run *)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(docker exec *)",
+      "Bash(ssh *)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(secrets/**)",
+      "Bash(rm -rf *)"
+    ]
+  }
+}
+```
+
+Не забыть про этот пункт при работе над DNS-чанком деплоя — это
+естественный момент вернуться и переключить.
+
 ## 1. Что готово
 
 Монорепо: `backend/` (Node.js/Express + PostgreSQL) и `frontend/` (Next.js 14).
