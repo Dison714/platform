@@ -115,6 +115,21 @@
     "hero_sub": "Doorstep delivery, helmets and accessories, and optional theft & damage protection. Book online in minutes.",
     "hero_cta": "Browse bikes",
     "available_now": "Available right now",
+    "trust": [
+      { "icon": "🚚", "text": "Doorstep delivery" },
+      { "icon": "🛡️", "text": "Theft & damage insurance available" },
+      { "icon": "💰", "text": "Refundable deposit" },
+      { "icon": "💬", "text": "WhatsApp support, 08:00–19:00" }
+    ],
+    "steps_title": "How it works",
+    "steps": [
+      { "title": "Choose your bike", "text": "Browse the catalog and pick a model." },
+      { "title": "Book online", "text": "Pick your dates and extras, send a request — no prepayment." },
+      { "title": "We deliver", "text": "Your bike arrives at your address, ready to go." },
+      { "title": "Ride", "text": "Explore Bali on your own schedule." }
+    ],
+    "popular_title": "Popular models",
+    "popular_sub": "A look across our range",
     "why_title": "Why ride with us",
     "why": [
       { "title": "Doorstep delivery", "text": "We bring the bike to your location. Better value on longer rentals — see the FAQ." },

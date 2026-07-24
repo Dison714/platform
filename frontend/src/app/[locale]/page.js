@@ -7,6 +7,7 @@ import { apiGet, formatIdr } from '../../lib/api.js';
 import { pickAvailablePair } from '../../lib/availableBikes.js';
 import { resolvePhotoUrl } from '../../lib/photos.js';
 import { ogTwitter, hreflangAlternates } from '../../lib/seo.js';
+import BikeCard from '../components/BikeCard.jsx';
 
 // Главная — SSR-контент (для SEO). Категории тянем из API, остальное — словари.
 export const dynamic = 'force-dynamic';
@@ -35,6 +36,29 @@ export default async function HomePage({ params }) {
     categories = (await apiGet('/api/categories')).data ?? [];
   } catch {
     categories = []; // главная не падает, если API недоступен — просто без плиток
+  }
+
+  // Витрина популярных моделей (Блок E) — фиксированный список slug'ов,
+  // подобранный вручную для показа РАЗНООБРАЗИЯ парка (эконом-скутер →
+  // макси-скутер → турист-эндуро → круизер → спорт → нейкед-классика),
+  // а не выдуманного "популярности" — реальных данных о частоте бронирований
+  // пока нет (CRM/бронирования — v1.1+). Отдельно от виджета доступности
+  // (Блок 5) — та секция про "что свободно сейчас", эта — про ассортимент.
+  const POPULAR_SLUGS = [
+    'honda-adv-total-black',
+    'yamaha-xmax-black-partner',
+    'suzuki-vstrom250-black-crashbar',
+    'keeway-road-falcon-250-black',
+    'honda-cbr250rr-white-blue',
+    'tvs-ronin225-total-black',
+  ];
+  let popularModels = [];
+  try {
+    const all = (await apiGet('/api/products')).data ?? [];
+    const bySlug = new Map(all.map((p) => [p.slug, p]));
+    popularModels = POPULAR_SLUGS.map((s) => bySlug.get(s)).filter(Boolean);
+  } catch {
+    popularModels = [];
   }
 
   let availableBikes = [];
@@ -80,6 +104,30 @@ export default async function HomePage({ params }) {
         </div>
       </section>
 
+      <section className="trust-strip">
+        <div className="container trust-strip-in">
+          {h.trust.map((t, i) => (
+            <div className="trust-item" key={i}>
+              <span aria-hidden="true">{t.icon}</span>
+              <span>{t.text}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="container block">
+        <h2 className="display block-title">{h.steps_title}</h2>
+        <div className="steps-grid">
+          {h.steps.map((s, i) => (
+            <div className="step-card" key={i}>
+              <span className="why-num display" aria-hidden="true">{i + 1}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="container block">
         <h2 className="display block-title">{h.why_title}</h2>
         <div className="why-grid">
@@ -92,6 +140,18 @@ export default async function HomePage({ params }) {
           ))}
         </div>
       </section>
+
+      {popularModels.length > 0 && (
+        <section className="container block">
+          <h2 className="display block-title">{h.popular_title}</h2>
+          <p className="block-sub">{h.popular_sub}</p>
+          <div className="grid">
+            {popularModels.map((p) => (
+              <BikeCard key={p.id} locale={locale} product={p} dict={dict} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {categories.length > 0 && (
         <section className="container block">
