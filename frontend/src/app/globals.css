@@ -244,6 +244,19 @@ img { max-width: 100%; display: block; }
 .faq-mini { display: grid; gap: 14px; margin-top: 12px; }
 .faq-mini-item h3 { font-size: 16px; color: var(--navy); margin: 0 0 4px; }
 .faq-mini-item p { margin: 0; color: var(--ink); }
+
+/* Отзывы (Блок F) — плейсхолдер-данные, см. data/reviews.placeholder.json */
+.reviews-grid { display: grid; gap: 14px; margin-top: 16px; }
+.review-card { border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+.review-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.review-avatar {
+  width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: #fff;
+  display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 15px; flex: 0 0 auto;
+}
+.review-name { font-size: 14px; font-weight: 500; color: var(--navy); }
+.review-date { font-size: 12px; color: var(--muted); }
+.review-rating { color: var(--red); font-size: 14px; letter-spacing: 1px; margin-bottom: 6px; }
+.review-text { margin: 0; color: var(--ink); font-size: 14px; }
 .link-more { display: inline-block; margin-top: 16px; color: var(--red); font-weight: 500; }
 .cta-final { background: var(--surface); }
 .cta-in { padding: 40px 16px; text-align: center; }
@@ -253,6 +266,7 @@ img { max-width: 100%; display: block; }
   .hero-title { font-size: 52px; }
   .why-grid { grid-template-columns: repeat(3, 1fr); }
   .steps-grid { grid-template-columns: repeat(4, 1fr); }
+  .reviews-grid { grid-template-columns: repeat(4, 1fr); }
   .trust-strip-in { justify-content: space-between; }
   .cat-grid { grid-template-columns: repeat(4, 1fr); }
   .hero-in { flex-direction: row; align-items: center; justify-content: space-between; gap: 40px; }
