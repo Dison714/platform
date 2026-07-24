@@ -645,14 +645,25 @@ async function seedFamilyFilterCategories(client, companyId) {
 }
 
 // Группа взаимозаменяемости для будущей Replacement Matrix (миграция 029,
-// CLAUDE.md §3.1) — независимо от фильтров каталога (family_filter_categories
-// выше). Идемпотентно (UPDATE по фиксированному списку кодов).
+// исправлена миграцией 035 — Vario → Xmax, CLAUDE.md §3.1/§4) —
+// независимо от фильтров каталога (family_filter_categories выше).
+// Идемпотентно: сначала снимаем группу со всех, кто в ней состоит,
+// потом ставим по актуальному списку кодов — так повторный ресид не
+// оставляет Vario в группе, если тот раньше был туда записан.
 async function seedReplacementGroups(client, companyId) {
+    const groupCode = 'scooter_replacement_pool';
     await client.query(
         `UPDATE product_families
-         SET replacement_group_id = (SELECT id FROM replacement_groups WHERE code = 'scooter_econ_160')
-         WHERE company_id = $1 AND code IN ('honda_adv', 'honda_pcx', 'honda_vario', 'yamaha_nmax')`,
-        [companyId]
+         SET replacement_group_id = NULL
+         WHERE company_id = $1
+           AND replacement_group_id = (SELECT id FROM replacement_groups WHERE code = $2)`,
+        [companyId, groupCode]
+    );
+    await client.query(
+        `UPDATE product_families
+         SET replacement_group_id = (SELECT id FROM replacement_groups WHERE code = $2)
+         WHERE company_id = $1 AND code IN ('honda_adv', 'honda_pcx', 'yamaha_xmax', 'yamaha_nmax')`,
+        [companyId, groupCode]
     );
 }
 
