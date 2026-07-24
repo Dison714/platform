@@ -27,6 +27,14 @@ function unauthorized() {
   });
 }
 
+// Без crypto.randomUUID() — не гарантирован во всех self-hosted Edge Runtime
+// сборках (упавший middleware в проде выглядит как "no available server" на
+// Traefik, а не как обычная страница ошибки). Не криптографический контекст
+// (анонимный id только для стабильности ротации виджета), Math.random() достаточно.
+function randomId() {
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+}
+
 // Любой путь без активного языкового префикса → редирект на /<default>/...
 // Структура готова к 7 языкам; сейчас активен только en.
 export function middleware(request) {
@@ -52,12 +60,18 @@ export function middleware(request) {
   // один раз при первом визите, живёт год. Не привязана к клиенту (нет
   // аккаунтов у посетителей сайта), нужна только чтобы один и тот же браузер
   // видел стабильную пару карточек в течение 30-минутного окна ротации.
-  if (!request.cookies.get('mdb_cid')) {
-    response.cookies.set('mdb_cid', crypto.randomUUID(), {
-      maxAge: 60 * 60 * 24 * 365,
-      path: '/',
-      sameSite: 'lax',
-    });
+  // try/catch — эта cookie не критична: если что-то пойдёт не так, сайт должен
+  // продолжать работать (виджет просто получит нестабильную пару), а не падать.
+  try {
+    if (!request.cookies.get('mdb_cid')) {
+      response.cookies.set('mdb_cid', randomId(), {
+        maxAge: 60 * 60 * 24 * 365,
+        path: '/',
+        sameSite: 'lax',
+      });
+    }
+  } catch {
+    // не блокируем ответ из-за второстепенной cookie
   }
 
   return response;
