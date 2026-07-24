@@ -7,6 +7,7 @@ import { quoteRouter } from './routes/quote.js';
 import { bookingRouter } from './routes/booking.js';
 import { equipmentRouter } from './routes/equipment.js';
 import { seasonalMultipliersRouter } from './routes/seasonalMultipliers.js';
+import { insuranceAdminRouter } from './routes/insuranceAdmin.js';
 
 const app = express();
 app.use(express.json());
@@ -32,6 +33,7 @@ app.use('/api', quoteRouter);
 app.use('/api', bookingRouter);
 app.use('/api', equipmentRouter);
 app.use('/api', seasonalMultipliersRouter);
+app.use('/api', insuranceAdminRouter);
 
 // Централизованный обработчик ошибок: err.status (напр. 400/404/409/501) или 500.
 const ERROR_LABELS = { 400: 'bad_request', 404: 'not_found', 409: 'conflict', 501: 'not_implemented' };
