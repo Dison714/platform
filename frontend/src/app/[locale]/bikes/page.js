@@ -43,21 +43,21 @@ export default async function BikesPage({ params, searchParams }) {
   const categoryQuery = filterCodes ? filterCodes.join(',') : null;
 
   const [productsRes, categoriesRes] = await Promise.all([
-    apiGet(`/api/products${categoryQuery ? `?category=${encodeURIComponent(categoryQuery)}` : ''}`),
-    apiGet('/api/categories'),
+    apiGet(`/api/products?lang=${encodeURIComponent(locale)}${categoryQuery ? `&category=${encodeURIComponent(categoryQuery)}` : ''}`),
+    apiGet(`/api/categories?lang=${encodeURIComponent(locale)}`),
   ]);
   const products = productsRes.data ?? [];
   const categories = categoriesRes.data ?? [];
   const activeGroup = activeGroupKey ? { key: activeGroupKey, codes: categoriesInGroup(activeGroupKey) } : null;
   // Breadcrumb только при активном фильтре (Home → Bikes → [Category]) — без
-  // category одна ступень не несёт смысла. Имя категории — тот же резолв,
-  // что уже используется в CategoryFilter (dict.cat[code] ?? API name).
+  // category одна ступень не несёт смысла. Имя категории уже локализовано
+  // на бэкенде (vehicle_category_translations).
   const activeCategory = category ? categories.find((c) => c.code === category) : null;
   const breadcrumbLd = activeCategory
     ? breadcrumbJsonLd([
         { name: dict.nav.home, path: `/${locale}` },
         { name: dict.nav.bikes, path: `/${locale}/bikes` },
-        { name: dict.cat?.[activeCategory.code] ?? activeCategory.name, path: `/${locale}/bikes?category=${category}` },
+        { name: activeCategory.name, path: `/${locale}/bikes?category=${category}` },
       ])
     : null;
 
@@ -80,7 +80,6 @@ export default async function BikesPage({ params, searchParams }) {
         categories={categories}
         active={category}
         allLabel={dict.catalog.all}
-        catNames={dict.cat}
         group={activeGroup}
       />
 

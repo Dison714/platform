@@ -1,0 +1,211 @@
+{
+  "brand": {
+    "name": "Bike Bali Rent",
+    "tagline": "Alquiler de motos en Bali"
+  },
+  "nav": {
+    "home": "Inicio",
+    "bikes": "Motos",
+    "about": "Nosotros",
+    "faq": "Preguntas frecuentes",
+    "contact": "Contacto"
+  },
+  "catalog": {
+    "title": "Nuestras motos",
+    "subtitle": "{count} modelos — de scooters a deportivas",
+    "all": "Todas",
+    "group_scooter": "Scooters",
+    "group_motorcycle": "Motos",
+    "from_month": "desde / mes",
+    "details": "Detalles",
+    "empty": "Todavía no hay motos en esta categoría.",
+    "per_month_note": "Precio por 30 días"
+  },
+  "product": {
+    "back": "Todas las motos",
+    "specs_title": "Especificaciones",
+    "specs_soon": "Especificaciones próximamente.",
+    "description_title": "Sobre esta moto",
+    "gallery_soon": "Fotos próximamente"
+  },
+  "badge": {
+    "rare_colour": "Color poco común",
+    "print": "Estampado: "
+  },
+  "placeholder": {
+    "photo_soon": "Foto próximamente"
+  },
+  "spec": {
+    "engine_cc": {
+      "label": "Cilindrada",
+      "unit": "cc"
+    },
+    "power": {
+      "label": "Potencia",
+      "unit": "cv"
+    },
+    "top_speed": {
+      "label": "Velocidad máxima",
+      "unit": "km/h"
+    },
+    "fuel_consumption": {
+      "label": "Consumo",
+      "unit": "L/100km"
+    },
+    "fuel_tank": {
+      "label": "Depósito",
+      "unit": "L"
+    },
+    "transmission": {
+      "label": "Transmisión",
+      "unit": "",
+      "cvt": "Automática (CVT)",
+      "manual": "Manual",
+      "automatic": "Automática"
+    },
+    "seat_height": {
+      "label": "Altura del asiento",
+      "unit": "mm"
+    },
+    "seats": {
+      "label": "Plazas",
+      "unit": ""
+    },
+    "curb_weight": {
+      "label": "Peso en vacío",
+      "unit": "kg"
+    }
+  },
+  "calc": {
+    "title": "Calculadora de precio",
+    "period": "Periodo de alquiler",
+    "start": "Fecha de recogida",
+    "end": "Fecha de devolución",
+    "days_one": "{n} día",
+    "days_other": "{n} días",
+    "days_invalid": "La fecha de devolución debe ser posterior a la de recogida.",
+    "location": "Lugar de entrega (opcional)",
+    "location_ph": "Pega un enlace de Google Maps",
+    "location_hint": "Solo para el conductor — no afecta al precio.",
+    "insurance": "Seguro (opcional)",
+    "theft": "Protección contra robo",
+    "damage": "Protección contra daños",
+    "coverage": "Cobertura",
+    "driver_age": "Tu edad",
+    "has_license": "Tengo carné de moto",
+    "experienced": "Conductor con experiencia (1 año o más)",
+    "helmets": "Cascos",
+    "helmets_note": "2 cascos incluidos gratis — puedes mejorar cualquiera de las plazas de abajo.",
+    "helmet_slot": "Casco {n}",
+    "helmet_free": "Casco gratis (incluido)",
+    "extras": "Añadir extras",
+    "equipment": "Añadir equipo",
+    "qty": "Cant.",
+    "summary": "Tu precio",
+    "base": "Alquiler de la moto",
+    "delivery": "Entrega",
+    "insurance_theft": "Protección contra robo",
+    "insurance_damage": "Protección contra daños",
+    "free": "Gratis",
+    "total": "Total a pagar",
+    "deposit": "Depósito reembolsable",
+    "deposit_note": "Se retiene durante el alquiler y se devuelve — no forma parte del total.",
+    "months_note": "{n} mes(es)",
+    "calculating": "Calculando…",
+    "error": "No se pudo calcular el precio. Inténtalo de nuevo.",
+    "book": "Reservar esta moto",
+    "updating": "Actualizando…",
+    "retry": "Reintentar"
+  },
+  "booking": {
+    "title": "Solicitar esta moto",
+    "summary_line": "{name} · {days} días · total {total}",
+    "name": "Tu nombre",
+    "name_ph": "¿Cómo te llamamos?",
+    "contact_hint": "Deja al menos una forma de contactarte — el gestor te escribirá por ahí.",
+    "whatsapp": "WhatsApp",
+    "telegram": "Usuario de Telegram",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "contact_required": "Por favor, deja al menos un contacto (WhatsApp, Telegram, correo o teléfono).",
+    "name_required": "Por favor, introduce tu nombre.",
+    "submit": "Enviar solicitud",
+    "sending": "Enviando…",
+    "error": "No se pudo enviar la solicitud. Inténtalo de nuevo.",
+    "cancel": "Volver a la calculadora",
+    "success_title": "Solicitud recibida",
+    "success_msg": "¡Gracias! Nuestro gestor te contactará en breve por WhatsApp o Telegram para confirmar los detalles. No se necesita pago anticipado.",
+    "success_ref": "Tu número de solicitud: {ref}"
+  },
+  "home": {
+    "hero_title": "Alquila una moto en Bali, de la forma más fácil",
+    "hero_sub": "Entrega a domicilio, cascos y accesorios, y protección opcional contra robo y daños. Reserva online en minutos.",
+    "hero_cta": "Ver motos",
+    "available_now": "Disponible ahora",
+    "trust": [
+      { "icon": "🚚", "text": "Entrega a domicilio" },
+      { "icon": "🛡️", "text": "Seguro contra robo y daños disponible" },
+      { "icon": "💰", "text": "Depósito reembolsable" },
+      { "icon": "💬", "text": "Soporte por WhatsApp, 08:00–19:00" }
+    ],
+    "steps_title": "Cómo funciona",
+    "steps": [
+      { "title": "Elige tu moto", "text": "Explora el catálogo y elige un modelo." },
+      { "title": "Reserva online", "text": "Elige tus fechas y extras, envía una solicitud — sin pago anticipado." },
+      { "title": "Nosotros entregamos", "text": "Tu moto llega a tu dirección, lista para rodar." },
+      { "title": "Disfruta", "text": "Explora Bali a tu propio ritmo." }
+    ],
+    "popular_title": "Modelos populares",
+    "popular_sub": "Un vistazo a nuestra gama",
+    "reviews_title": "Lo que dicen nuestros clientes",
+    "reviews_sub": "Viajes reales, motos reales",
+    "why_title": "Por qué elegirnos",
+    "why": [
+      { "title": "Entrega a domicilio", "text": "Llevamos la moto hasta tu ubicación. Mejor relación calidad-precio en alquileres largos — consulta las preguntas frecuentes." },
+      { "title": "Equipo incluido", "text": "Cascos y accesorios de montaje disponibles con tu alquiler." },
+      { "title": "Seguro opcional", "text": "Añade protección contra robo o daños al reservar — tú eliges." }
+    ],
+    "categories_title": "Encuentra tu moto",
+    "categories_sub": "Explora por tipo",
+    "faq_title": "Preguntas frecuentes",
+    "faq_all": "Todas las preguntas",
+    "cta_title": "¿Listo para rodar?",
+    "cta_sub": "Elige tu moto y obtén un precio al instante.",
+    "cta_btn": "Ver motos"
+  },
+  "about": {
+    "title": "Sobre Bike Bali Rent",
+    "p1": "Bike Bali Rent es un servicio de alquiler de motos en Bali. Ayudamos a viajeros y a huéspedes de larga estancia a moverse por la isla en un scooter o moto bien cuidados, con entrega a domicilio y una reserva online sencilla.",
+    "p2": "Mantenemos el alquiler sencillo: un precio claro desde el principio, cascos y accesorios disponibles, y protección opcional contra robo y daños. No hay pago anticipado online — pagas cuando se entrega tu moto.",
+    "offer_title": "Qué ofrecemos",
+    "offer": [
+      "Una gama de motos — desde scooters de 160cc hasta modelos deportivos y de viaje",
+      "Entrega en tu ubicación",
+      "Cascos y accesorios de montaje",
+      "Protección opcional contra robo y daños",
+      "Duración de alquiler flexible, de un día a un mes o más"
+    ],
+    "contact_title": "Contáctanos"
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "intro": "Todo lo que necesitas saber antes de reservar. ¿Tienes otra pregunta? Escríbenos por WhatsApp o Telegram.",
+    "items": [
+      { "q": "¿Entregan la moto?", "a": "Sí — entregamos en las principales zonas turísticas cerca de Denpasar: Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur y alrededores. Otras zonas bajo petición. La tarifa de entrega depende de la duración del alquiler — es más económica en alquileres largos, y verás el precio exacto al reservar. Comparte un enlace de Google Maps al reservar para que el conductor sepa dónde ir." },
+      { "q": "¿Hay depósito?", "a": "Sí — se retiene un depósito reembolsable durante el alquiler y se devuelve cuando traes la moto de vuelta en buen estado. El importe depende del modelo y lo verás al reservar." },
+      { "q": "¿Hay seguro disponible?", "a": "Sí, opcionalmente. Puedes añadir protección contra robo y/o daños al reservar. El precio depende del nivel de cobertura elegido y de tu perfil de conductor (edad y experiencia) — verás el precio exacto al reservar." },
+      { "q": "¿Puedo extender mi alquiler?", "a": "Sí — solo tienes que escribirnos antes de que termine tu alquiler actual. Pagas la extensión antes de que acabe el periodo actual." },
+      { "q": "¿Hay una duración mínima o máxima de alquiler?", "a": "Sin mínimo ni máximo — alquila desde un solo día hasta el tiempo que quieras." },
+      { "q": "¿Qué necesito para alquilar?", "a": "Solo una foto de tu pasaporte — nada más." },
+      { "q": "¿Cómo pago? ¿Hay pago online?", "a": "No hay pago online. Pagas cuando se entrega o se te da la moto. Reservar online simplemente reserva tu moto y envía tu solicitud a nuestro equipo." },
+      { "q": "¿Qué incluye la moto?", "a": "Cada moto incluye 2 cascos gratis. Puedes mejorar cualquiera de ellos a un casco medio o integral nuevo por Rp 150.000 cada uno. Hay un maletero trasero para un pasajero disponible por Rp 200.000. Simplemente elige lo que necesites al reservar." },
+      { "q": "¿Cómo reservo?", "a": "Elige una moto, selecciona tus fechas y extras para ver el precio, y luego envía una solicitud. Nuestro gestor confirmará los detalles contigo por WhatsApp o Telegram." }
+    ]
+  },
+  "footer": {
+    "get_in_touch": "Contáctanos",
+    "hours": "Abierto de 08:00 a 19:00",
+    "address": "Gg. 1 Kerobokan Kelod, Kuta Utara, Badung, Bali",
+    "rights": "Todos los derechos reservados."
+  }
+}

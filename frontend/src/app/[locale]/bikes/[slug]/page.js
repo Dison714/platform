@@ -13,9 +13,9 @@ import ProductVideo from '../../../components/ProductVideo.jsx';
 
 export const dynamic = 'force-dynamic';
 
-async function loadProduct(slug) {
+async function loadProduct(slug, locale) {
   try {
-    return (await apiGet(`/api/products/${encodeURIComponent(slug)}`)).data;
+    return (await apiGet(`/api/products/${encodeURIComponent(slug)}?lang=${encodeURIComponent(locale)}`)).data;
   } catch {
     return null;
   }
@@ -23,7 +23,7 @@ async function loadProduct(slug) {
 
 export async function generateMetadata({ params }) {
   const dict = await getDictionary(params.locale);
-  const product = await loadProduct(params.slug);
+  const product = await loadProduct(params.slug, params.locale);
   if (!product) return { title: dict.brand.name };
   const title = `${product.name} — ${dict.brand.name}`;
   const description = product.description || `${product.name} — ${dict.brand.tagline}`;
@@ -48,7 +48,7 @@ export default async function ProductPage({ params }) {
   const dict = await getDictionary(locale);
 
   const [product, equipmentRes] = await Promise.all([
-    loadProduct(slug),
+    loadProduct(slug, locale),
     apiGet(`/api/equipment?lang=${encodeURIComponent(locale)}`),
   ]);
   if (!product) notFound();
@@ -116,7 +116,7 @@ export default async function ProductPage({ params }) {
 
         <div className="product-info">
           <div className="pill-row">
-            {product.category?.name ? <span className="pill">{dict.cat?.[product.category.code] ?? product.category.name}</span> : null}
+            {product.category?.name ? <span className="pill">{product.category.name}</span> : null}
             {product.archived_color ? <span className="badge-rare">{dict.badge?.rare_colour}</span> : null}
           </div>
           <h1 className="display product-title">{product.name}</h1>

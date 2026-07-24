@@ -35,7 +35,7 @@ export default async function HomePage({ params }) {
 
   let categories = [];
   try {
-    categories = (await apiGet('/api/categories')).data ?? [];
+    categories = (await apiGet(`/api/categories?lang=${encodeURIComponent(locale)}`)).data ?? [];
   } catch {
     categories = []; // главная не падает, если API недоступен — просто без плиток
   }
@@ -56,7 +56,7 @@ export default async function HomePage({ params }) {
   ];
   let popularModels = [];
   try {
-    const all = (await apiGet('/api/products')).data ?? [];
+    const all = (await apiGet(`/api/products?lang=${encodeURIComponent(locale)}`)).data ?? [];
     const bySlug = new Map(all.map((p) => [p.slug, p]));
     popularModels = POPULAR_SLUGS.map((s) => bySlug.get(s)).filter(Boolean);
   } catch {
@@ -65,7 +65,7 @@ export default async function HomePage({ params }) {
 
   let availableBikes = [];
   try {
-    const available = (await apiGet('/api/products?available=true')).data ?? [];
+    const available = (await apiGet(`/api/products?available=true&lang=${encodeURIComponent(locale)}`)).data ?? [];
     const cookieId = cookies().get('mdb_cid')?.value ?? null;
     availableBikes = pickAvailablePair(available, cookieId);
   } catch {
@@ -162,7 +162,7 @@ export default async function HomePage({ params }) {
           <div className="cat-grid">
             {categories.map((c) => (
               <Link key={c.code} href={`${bikesHref}?category=${c.code}`} className="cat-tile">
-                <span className="cat-name">{dict.cat?.[c.code] ?? c.name}</span>
+                <span className="cat-name">{c.name}</span>
                 <span className="cat-count">{c.product_count}</span>
               </Link>
             ))}

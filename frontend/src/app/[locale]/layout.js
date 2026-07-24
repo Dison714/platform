@@ -1,5 +1,5 @@
 import '../globals.css';
-import { Teko, Poppins } from 'next/font/google';
+import { Teko, Poppins, Noto_Sans_Arabic } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { isEnabledLocale, enabledLocales } from '../../i18n/config.js';
 import { getDictionary } from '../../i18n/getDictionary.js';
@@ -9,8 +9,12 @@ import { organizationJsonLd } from '../../lib/organization.js';
 import { IS_PRODUCTION, SITE_URL } from '../../lib/site.js';
 
 // Шрифты бренда: Teko — дисплейные заголовки, Poppins — текст/UI (self-hosted).
+// Ни один не покрывает арабскую графику — для ar подменяем --font-poppins
+// на Noto Sans Arabic (заголовки на ar остаются без display-шрифта Teko,
+// латиница/кириллица в Teko всё равно не читается арабским пользователем).
 const teko = Teko({ subsets: ['latin'], weight: ['500', '600'], variable: '--font-teko', display: 'swap' });
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
+const notoArabic = Noto_Sans_Arabic({ subsets: ['arabic'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
 
 export function generateStaticParams() {
   return enabledLocales().map((locale) => ({ locale }));
@@ -40,9 +44,11 @@ export default async function LocaleLayout({ children, params }) {
   const { locale } = params;
   if (!isEnabledLocale(locale)) notFound();
   const dict = await getDictionary(locale);
+  const isRtl = locale === 'ar';
+  const bodyFont = isRtl ? notoArabic : poppins;
 
   return (
-    <html lang={locale} className={`${teko.variable} ${poppins.variable}`}>
+    <html lang={locale} dir={isRtl ? 'rtl' : 'ltr'} className={`${teko.variable} ${bodyFont.variable}`}>
       <body>
         {/* LocalBusiness — глобально на каждой странице, не только на homepage. */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />

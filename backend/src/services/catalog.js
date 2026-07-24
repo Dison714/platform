@@ -125,13 +125,15 @@ export async function listProducts({ lang, category, available } = {}) {
             p.id, p.slug, p.color_name, p.variant, p.equipment_variant, p.is_bookable,
             p.archived_color, p.print_name, p.need_photos, p.updated_at,
             pf.code AS family_code, pf.brand, pf.model_name,
-            vc.code AS category_code, vc.name AS category_name,
+            vc.code AS category_code, COALESCE(vct.name, vcten.name, vc.name) AS category_name,
             COALESCE(t.title, ten.title) AS title,
             ph.storage_path AS ph_path, ph.cdn_url AS ph_cdn, ph.source_url AS ph_src,
             pr.price_idr AS preview_price
          FROM products p
          JOIN product_families pf ON pf.id = p.family_id AND pf.is_active = TRUE
          JOIN vehicle_categories vc ON vc.id = pf.category_id
+         LEFT JOIN vehicle_category_translations vct   ON vct.category_id   = vc.id AND vct.language_code   = $1
+         LEFT JOIN vehicle_category_translations vcten ON vcten.category_id = vc.id AND vcten.language_code = $2
          LEFT JOIN product_translations t   ON t.product_id   = p.id AND t.language_code   = $1
          LEFT JOIN product_translations ten ON ten.product_id = p.id AND ten.language_code = $2
          LEFT JOIN LATERAL (
@@ -193,12 +195,14 @@ export async function getProduct({ idOrSlug, lang } = {}) {
             p.id, p.slug, p.color_name, p.variant, p.equipment_variant, p.is_bookable,
             p.archived_color, p.print_name, p.need_photos,
             pf.id AS family_id, pf.code AS family_code, pf.brand, pf.model_name,
-            vc.code AS category_code, vc.name AS category_name,
+            vc.code AS category_code, COALESCE(vct.name, vcten.name, vc.name) AS category_name,
             COALESCE(t.title, ten.title) AS title,
             COALESCE(t.description, ten.description) AS description
          FROM products p
          JOIN product_families pf ON pf.id = p.family_id
          JOIN vehicle_categories vc ON vc.id = pf.category_id
+         LEFT JOIN vehicle_category_translations vct   ON vct.category_id   = vc.id AND vct.language_code   = $2
+         LEFT JOIN vehicle_category_translations vcten ON vcten.category_id = vc.id AND vcten.language_code = $3
          LEFT JOIN product_translations t   ON t.product_id   = p.id AND t.language_code   = $2
          LEFT JOIN product_translations ten ON ten.product_id = p.id AND ten.language_code = $3
          WHERE p.is_active = TRUE AND (${byUuid ? 'p.id = $1::uuid' : 'p.slug = $1'})`,
@@ -292,15 +296,17 @@ export async function listFamilies({ lang } = {}) {
 
     const { rows } = await pool.query(
         `SELECT pf.code, pf.brand, pf.model_name,
-                vc.code AS category_code, vc.name AS category_name,
+                vc.code AS category_code, COALESCE(vct.name, vcten.name, vc.name) AS category_name,
                 COUNT(p.id) FILTER (WHERE p.is_active) AS product_count
          FROM product_families pf
          JOIN vehicle_categories vc ON vc.id = pf.category_id
+         LEFT JOIN vehicle_category_translations vct   ON vct.category_id   = vc.id AND vct.language_code   = $1
+         LEFT JOIN vehicle_category_translations vcten ON vcten.category_id = vc.id AND vcten.language_code = $2
          LEFT JOIN products p ON p.family_id = pf.id
          WHERE pf.is_active = TRUE
-         GROUP BY pf.id, pf.code, pf.brand, pf.model_name, vc.code, vc.name, vc.sort_order, pf.model_name
+         GROUP BY pf.id, pf.code, pf.brand, pf.model_name, vc.code, vc.name, vct.name, vcten.name, vc.sort_order, pf.model_name
          ORDER BY vc.sort_order, pf.brand, pf.model_name`,
-        []
+        [language, DEFAULT_LANG]
     );
 
     const data = rows.map((r) => ({
@@ -324,15 +330,18 @@ export async function listFamilies({ lang } = {}) {
 export async function listCategories({ lang } = {}) {
     const language = await resolveLanguage(lang);
     const { rows } = await pool.query(
-        `SELECT vc.code, vc.name, vc.sort_order,
+        `SELECT vc.code, COALESCE(vct.name, vcten.name, vc.name) AS name, vc.sort_order,
                 COUNT(DISTINCT p.id) AS product_count
          FROM vehicle_categories vc
+         LEFT JOIN vehicle_category_translations vct   ON vct.category_id   = vc.id AND vct.language_code   = $1
+         LEFT JOIN vehicle_category_translations vcten ON vcten.category_id = vc.id AND vcten.language_code = $2
          JOIN family_filter_categories ffc ON ffc.category_id = vc.id
          JOIN product_families pf ON pf.id = ffc.family_id AND pf.is_active = TRUE
          JOIN products p ON p.family_id = pf.id AND p.is_active = TRUE
-         GROUP BY vc.id, vc.code, vc.name, vc.sort_order
+         GROUP BY vc.id, vc.code, vc.name, vct.name, vcten.name, vc.sort_order
          HAVING COUNT(DISTINCT p.id) > 0
-         ORDER BY vc.sort_order`
+         ORDER BY vc.sort_order`,
+        [language, DEFAULT_LANG]
     );
     const data = rows.map((r) => ({
         code: r.code,

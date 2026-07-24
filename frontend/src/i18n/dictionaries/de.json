@@ -1,0 +1,211 @@
+{
+  "brand": {
+    "name": "Bike Bali Rent",
+    "tagline": "Motorradverleih auf Bali"
+  },
+  "nav": {
+    "home": "Startseite",
+    "bikes": "Motorräder",
+    "about": "Über uns",
+    "faq": "FAQ",
+    "contact": "Kontakt"
+  },
+  "catalog": {
+    "title": "Unsere Motorräder",
+    "subtitle": "{count} Modelle — vom Roller bis zum Sportbike",
+    "all": "Alle",
+    "group_scooter": "Roller",
+    "group_motorcycle": "Motorräder",
+    "from_month": "ab / Monat",
+    "details": "Details",
+    "empty": "Noch keine Motorräder in dieser Kategorie.",
+    "per_month_note": "Preis für 30 Tage"
+  },
+  "product": {
+    "back": "Alle Motorräder",
+    "specs_title": "Technische Daten",
+    "specs_soon": "Technische Daten folgen in Kürze.",
+    "description_title": "Über dieses Motorrad",
+    "gallery_soon": "Fotos folgen in Kürze"
+  },
+  "badge": {
+    "rare_colour": "Seltene Farbe",
+    "print": "Print: "
+  },
+  "placeholder": {
+    "photo_soon": "Foto folgt in Kürze"
+  },
+  "spec": {
+    "engine_cc": {
+      "label": "Hubraum",
+      "unit": "ccm"
+    },
+    "power": {
+      "label": "Leistung",
+      "unit": "PS"
+    },
+    "top_speed": {
+      "label": "Höchstgeschwindigkeit",
+      "unit": "km/h"
+    },
+    "fuel_consumption": {
+      "label": "Verbrauch",
+      "unit": "L/100km"
+    },
+    "fuel_tank": {
+      "label": "Tankvolumen",
+      "unit": "L"
+    },
+    "transmission": {
+      "label": "Getriebe",
+      "unit": "",
+      "cvt": "Automatik (CVT)",
+      "manual": "Schaltgetriebe",
+      "automatic": "Automatik"
+    },
+    "seat_height": {
+      "label": "Sitzhöhe",
+      "unit": "mm"
+    },
+    "seats": {
+      "label": "Sitzplätze",
+      "unit": ""
+    },
+    "curb_weight": {
+      "label": "Leergewicht",
+      "unit": "kg"
+    }
+  },
+  "calc": {
+    "title": "Preisrechner",
+    "period": "Mietzeitraum",
+    "start": "Abholdatum",
+    "end": "Rückgabedatum",
+    "days_one": "{n} Tag",
+    "days_other": "{n} Tage",
+    "days_invalid": "Das Rückgabedatum muss nach dem Abholdatum liegen.",
+    "location": "Lieferort (optional)",
+    "location_ph": "Google-Maps-Link einfügen",
+    "location_hint": "Nur für den Fahrer — hat keinen Einfluss auf den Preis.",
+    "insurance": "Versicherung (optional)",
+    "theft": "Diebstahlschutz",
+    "damage": "Schadenschutz",
+    "coverage": "Deckung",
+    "driver_age": "Ihr Alter",
+    "has_license": "Ich habe einen Motorradführerschein",
+    "experienced": "Erfahrener Fahrer (1+ Jahr)",
+    "helmets": "Helme",
+    "helmets_note": "2 Helme sind kostenlos inklusive — jeden Platz unten können Sie upgraden.",
+    "helmet_slot": "Helm {n}",
+    "helmet_free": "Kostenloser Helm (inklusive)",
+    "extras": "Extras hinzufügen",
+    "equipment": "Zubehör hinzufügen",
+    "qty": "Anzahl",
+    "summary": "Ihr Preis",
+    "base": "Motorradmiete",
+    "delivery": "Lieferung",
+    "insurance_theft": "Diebstahlschutz",
+    "insurance_damage": "Schadenschutz",
+    "free": "Kostenlos",
+    "total": "Gesamtbetrag",
+    "deposit": "Rückerstattbare Kaution",
+    "deposit_note": "Wird während der Miete einbehalten und zurückerstattet — nicht Teil des Gesamtbetrags.",
+    "months_note": "{n} Monat(e)",
+    "calculating": "Wird berechnet…",
+    "error": "Preis konnte nicht berechnet werden. Bitte versuchen Sie es erneut.",
+    "book": "Dieses Motorrad buchen",
+    "updating": "Wird aktualisiert…",
+    "retry": "Erneut versuchen"
+  },
+  "booking": {
+    "title": "Dieses Motorrad anfragen",
+    "summary_line": "{name} · {days} Tage · gesamt {total}",
+    "name": "Ihr Name",
+    "name_ph": "Wie dürfen wir Sie nennen",
+    "contact_hint": "Hinterlassen Sie mindestens einen Kontaktweg — der Manager meldet sich dort bei Ihnen.",
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram-Benutzername",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "contact_required": "Bitte hinterlassen Sie mindestens einen Kontakt (WhatsApp, Telegram, E-Mail oder Telefon).",
+    "name_required": "Bitte geben Sie Ihren Namen ein.",
+    "submit": "Anfrage senden",
+    "sending": "Wird gesendet…",
+    "error": "Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+    "cancel": "Zurück zum Rechner",
+    "success_title": "Anfrage erhalten",
+    "success_msg": "Vielen Dank! Unser Manager meldet sich in Kürze per WhatsApp oder Telegram bei Ihnen, um die Details zu bestätigen. Keine Vorauszahlung nötig.",
+    "success_ref": "Ihre Anfragenummer: {ref}"
+  },
+  "home": {
+    "hero_title": "Ein Motorrad auf Bali mieten — ganz einfach",
+    "hero_sub": "Lieferung bis vor die Tür, Helme und Zubehör sowie optionaler Diebstahl- und Schadenschutz. In wenigen Minuten online buchen.",
+    "hero_cta": "Motorräder ansehen",
+    "available_now": "Jetzt verfügbar",
+    "trust": [
+      { "icon": "🚚", "text": "Lieferung bis vor die Tür" },
+      { "icon": "🛡️", "text": "Diebstahl- und Schadenversicherung verfügbar" },
+      { "icon": "💰", "text": "Rückerstattbare Kaution" },
+      { "icon": "💬", "text": "WhatsApp-Support, 08:00–19:00 Uhr" }
+    ],
+    "steps_title": "So funktioniert's",
+    "steps": [
+      { "title": "Motorrad wählen", "text": "Katalog durchstöbern und ein Modell auswählen." },
+      { "title": "Online buchen", "text": "Termine und Extras wählen, Anfrage senden — keine Vorauszahlung." },
+      { "title": "Wir liefern", "text": "Ihr Motorrad kommt fahrbereit an Ihre Adresse." },
+      { "title": "Losfahren", "text": "Entdecken Sie Bali nach Ihrem eigenen Zeitplan." }
+    ],
+    "popular_title": "Beliebte Modelle",
+    "popular_sub": "Ein Blick über unser Sortiment",
+    "reviews_title": "Was unsere Fahrer sagen",
+    "reviews_sub": "Echte Reisen, echte Motorräder",
+    "why_title": "Warum mit uns fahren",
+    "why": [
+      { "title": "Lieferung bis vor die Tür", "text": "Wir bringen das Motorrad zu Ihnen. Besseres Preis-Leistungs-Verhältnis bei längeren Mietzeiten — siehe FAQ." },
+      { "title": "Zubehör inklusive", "text": "Helme und Montagezubehör sind bei Ihrer Miete erhältlich." },
+      { "title": "Optionale Versicherung", "text": "Fügen Sie beim Checkout Diebstahl- oder Schadenschutz hinzu — Ihre Wahl." }
+    ],
+    "categories_title": "Finden Sie Ihr Motorrad",
+    "categories_sub": "Nach Typ durchsuchen",
+    "faq_title": "Häufige Fragen",
+    "faq_all": "Alle Fragen",
+    "cta_title": "Bereit loszufahren?",
+    "cta_sub": "Wählen Sie Ihr Motorrad und erhalten Sie sofort einen Preis.",
+    "cta_btn": "Motorräder ansehen"
+  },
+  "about": {
+    "title": "Über Bike Bali Rent",
+    "p1": "Bike Bali Rent ist ein Motorradverleih auf Bali. Wir helfen Reisenden und Langzeitgästen, die Insel auf einem gepflegten Roller oder Motorrad zu erkunden — mit Lieferung bis vor die Tür und einfacher Online-Buchung.",
+    "p2": "Wir halten die Miete unkompliziert: ein klarer Preis von Anfang an, Helme und Zubehör verfügbar sowie optionaler Diebstahl- und Schadenschutz. Es gibt keine Online-Vorauszahlung — Sie zahlen, wenn Ihr Motorrad geliefert wird.",
+    "offer_title": "Was wir bieten",
+    "offer": [
+      "Eine Auswahl an Motorrädern — von 160-ccm-Rollern bis zu Sport- und Tourenmodellen",
+      "Lieferung an Ihren Standort",
+      "Helme und Montagezubehör",
+      "Optionaler Diebstahl- und Schadenschutz",
+      "Flexible Mietdauer, von einem Tag bis zu mehreren Monaten und darüber hinaus"
+    ],
+    "contact_title": "Kontaktieren Sie uns"
+  },
+  "faq": {
+    "title": "Häufig gestellte Fragen",
+    "intro": "Alles, was Sie vor der Buchung wissen müssen. Haben Sie eine weitere Frage? Schreiben Sie uns auf WhatsApp oder Telegram.",
+    "items": [
+      { "q": "Liefert ihr das Motorrad?", "a": "Ja — wir liefern in die wichtigsten Touristengebiete rund um Denpasar: Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur und Umgebung. Andere Gebiete auf Anfrage. Die Liefergebühr hängt von der Mietdauer ab — je länger Sie mieten, desto günstiger wird es, und den genauen Preis sehen Sie beim Checkout. Teilen Sie bei der Buchung einen Google-Maps-Link, damit der Fahrer weiß, wohin er muss." },
+      { "q": "Gibt es eine Kaution?", "a": "Ja — eine rückerstattbare Kaution wird während der Mietzeit einbehalten und zurückgezahlt, wenn Sie das Motorrad in gutem Zustand zurückbringen. Die Höhe hängt vom Modell ab und wird beim Checkout angezeigt." },
+      { "q": "Ist eine Versicherung verfügbar?", "a": "Ja, optional. Sie können beim Checkout Diebstahlschutz und/oder Schadenschutz hinzufügen. Der Preis hängt von der gewählten Deckungshöhe und Ihrem Fahrerprofil (Alter und Fahrerfahrung) ab — den genauen Preis sehen Sie beim Checkout." },
+      { "q": "Kann ich meine Miete verlängern?", "a": "Ja — schreiben Sie uns einfach, bevor Ihre aktuelle Mietzeit endet. Die Verlängerung zahlen Sie bis zum Ende des aktuellen Zeitraums." },
+      { "q": "Gibt es eine Mindest- oder Höchstmietdauer?", "a": "Kein Minimum und kein Maximum — mieten Sie von einem einzelnen Tag bis so lange Sie möchten." },
+      { "q": "Was brauche ich, um zu mieten?", "a": "Nur ein Foto Ihres Reisepasses — mehr nicht." },
+      { "q": "Wie bezahle ich? Gibt es Online-Zahlung?", "a": "Es gibt keine Online-Zahlung. Sie zahlen, wenn das Motorrad geliefert oder übergeben wird. Die Online-Buchung reserviert lediglich Ihr Motorrad und sendet Ihre Anfrage an unser Team." },
+      { "q": "Was ist im Lieferumfang enthalten?", "a": "Jedes Motorrad wird mit 2 kostenlosen Helmen geliefert. Sie können jeden davon gegen einen neuen Halbschalen- oder Integralhelm für je Rp 150.000 upgraden. Ein hinterer Topcase für einen Beifahrer ist für Rp 200.000 erhältlich. Wählen Sie einfach, was Sie beim Checkout benötigen." },
+      { "q": "Wie buche ich?", "a": "Wählen Sie ein Motorrad, legen Sie Ihre Termine und Extras fest, um den Preis zu sehen, und senden Sie dann eine Anfrage. Unser Manager bestätigt die Details mit Ihnen per WhatsApp oder Telegram." }
+    ]
+  },
+  "footer": {
+    "get_in_touch": "Kontakt aufnehmen",
+    "hours": "Geöffnet 08:00–19:00 Uhr",
+    "address": "Gg. 1 Kerobokan Kelod, Kuta Utara, Badung, Bali",
+    "rights": "Alle Rechte vorbehalten."
+  }
+}

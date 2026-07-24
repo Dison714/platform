@@ -1,0 +1,211 @@
+{
+  "brand": {
+    "name": "Bike Bali Rent",
+    "tagline": "Location de motos à Bali"
+  },
+  "nav": {
+    "home": "Accueil",
+    "bikes": "Motos",
+    "about": "À propos",
+    "faq": "FAQ",
+    "contact": "Contact"
+  },
+  "catalog": {
+    "title": "Nos motos",
+    "subtitle": "{count} modèles — du scooter à la sportive",
+    "all": "Tous",
+    "group_scooter": "Scooters",
+    "group_motorcycle": "Motos",
+    "from_month": "à partir de / mois",
+    "details": "Détails",
+    "empty": "Pas encore de moto dans cette catégorie.",
+    "per_month_note": "Prix pour 30 jours"
+  },
+  "product": {
+    "back": "Toutes les motos",
+    "specs_title": "Caractéristiques",
+    "specs_soon": "Caractéristiques bientôt disponibles.",
+    "description_title": "À propos de cette moto",
+    "gallery_soon": "Photos bientôt disponibles"
+  },
+  "badge": {
+    "rare_colour": "Couleur rare",
+    "print": "Motif : "
+  },
+  "placeholder": {
+    "photo_soon": "Photo bientôt disponible"
+  },
+  "spec": {
+    "engine_cc": {
+      "label": "Cylindrée",
+      "unit": "cm³"
+    },
+    "power": {
+      "label": "Puissance",
+      "unit": "ch"
+    },
+    "top_speed": {
+      "label": "Vitesse max",
+      "unit": "km/h"
+    },
+    "fuel_consumption": {
+      "label": "Consommation",
+      "unit": "L/100km"
+    },
+    "fuel_tank": {
+      "label": "Réservoir",
+      "unit": "L"
+    },
+    "transmission": {
+      "label": "Transmission",
+      "unit": "",
+      "cvt": "Automatique (CVT)",
+      "manual": "Manuelle",
+      "automatic": "Automatique"
+    },
+    "seat_height": {
+      "label": "Hauteur de selle",
+      "unit": "mm"
+    },
+    "seats": {
+      "label": "Places",
+      "unit": ""
+    },
+    "curb_weight": {
+      "label": "Poids à vide",
+      "unit": "kg"
+    }
+  },
+  "calc": {
+    "title": "Calculateur de prix",
+    "period": "Période de location",
+    "start": "Date de prise en charge",
+    "end": "Date de retour",
+    "days_one": "{n} jour",
+    "days_other": "{n} jours",
+    "days_invalid": "La date de retour doit être après la date de prise en charge.",
+    "location": "Lieu de livraison (facultatif)",
+    "location_ph": "Collez un lien Google Maps",
+    "location_hint": "Pour le chauffeur uniquement — n'affecte pas le prix.",
+    "insurance": "Assurance (facultatif)",
+    "theft": "Protection vol",
+    "damage": "Protection dommages",
+    "coverage": "Couverture",
+    "driver_age": "Votre âge",
+    "has_license": "J'ai un permis moto",
+    "experienced": "Conducteur expérimenté (1 an et plus)",
+    "helmets": "Casques",
+    "helmets_note": "2 casques inclus gratuitement — améliorez l'un ou l'autre emplacement ci-dessous.",
+    "helmet_slot": "Casque {n}",
+    "helmet_free": "Casque gratuit (inclus)",
+    "extras": "Ajouter des extras",
+    "equipment": "Ajouter un équipement",
+    "qty": "Qté",
+    "summary": "Votre prix",
+    "base": "Location de la moto",
+    "delivery": "Livraison",
+    "insurance_theft": "Protection vol",
+    "insurance_damage": "Protection dommages",
+    "free": "Gratuit",
+    "total": "Total à payer",
+    "deposit": "Caution remboursable",
+    "deposit_note": "Retenue pendant la location et restituée — ne fait pas partie du total.",
+    "months_note": "{n} mois",
+    "calculating": "Calcul en cours…",
+    "error": "Impossible de calculer le prix. Veuillez réessayer.",
+    "book": "Réserver cette moto",
+    "updating": "Mise à jour…",
+    "retry": "Réessayer"
+  },
+  "booking": {
+    "title": "Demander cette moto",
+    "summary_line": "{name} · {days} jours · total {total}",
+    "name": "Votre nom",
+    "name_ph": "Comment devons-nous vous appeler",
+    "contact_hint": "Laissez au moins un moyen de vous joindre — le manager vous y contactera.",
+    "whatsapp": "WhatsApp",
+    "telegram": "Identifiant Telegram",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "contact_required": "Veuillez laisser au moins un contact (WhatsApp, Telegram, e-mail ou téléphone).",
+    "name_required": "Veuillez saisir votre nom.",
+    "submit": "Envoyer la demande",
+    "sending": "Envoi en cours…",
+    "error": "Impossible d'envoyer la demande. Veuillez réessayer.",
+    "cancel": "Retour au calculateur",
+    "success_title": "Demande reçue",
+    "success_msg": "Merci ! Notre manager vous contactera sous peu sur WhatsApp ou Telegram pour confirmer les détails. Aucun paiement anticipé n'est nécessaire.",
+    "success_ref": "Votre numéro de demande : {ref}"
+  },
+  "home": {
+    "hero_title": "Louez une moto à Bali, en toute simplicité",
+    "hero_sub": "Livraison à domicile, casques et accessoires, et protection optionnelle contre le vol et les dommages. Réservez en ligne en quelques minutes.",
+    "hero_cta": "Voir les motos",
+    "available_now": "Disponible maintenant",
+    "trust": [
+      { "icon": "🚚", "text": "Livraison à domicile" },
+      { "icon": "🛡️", "text": "Assurance vol et dommages disponible" },
+      { "icon": "💰", "text": "Caution remboursable" },
+      { "icon": "💬", "text": "Support WhatsApp, 08h00–19h00" }
+    ],
+    "steps_title": "Comment ça marche",
+    "steps": [
+      { "title": "Choisissez votre moto", "text": "Parcourez le catalogue et choisissez un modèle." },
+      { "title": "Réservez en ligne", "text": "Choisissez vos dates et extras, envoyez une demande — sans prépaiement." },
+      { "title": "Nous livrons", "text": "Votre moto arrive à votre adresse, prête à rouler." },
+      { "title": "Roulez", "text": "Explorez Bali à votre rythme." }
+    ],
+    "popular_title": "Modèles populaires",
+    "popular_sub": "Un aperçu de notre gamme",
+    "reviews_title": "Ce que disent nos clients",
+    "reviews_sub": "Vrais voyages, vraies motos",
+    "why_title": "Pourquoi rouler avec nous",
+    "why": [
+      { "title": "Livraison à domicile", "text": "Nous apportons la moto jusqu'à vous. Meilleur rapport qualité-prix pour les locations longues — voir la FAQ." },
+      { "title": "Équipement inclus", "text": "Casques et accessoires de montage disponibles avec votre location." },
+      { "title": "Assurance optionnelle", "text": "Ajoutez une protection vol ou dommages au moment de la réservation — à vous de choisir." }
+    ],
+    "categories_title": "Trouvez votre moto",
+    "categories_sub": "Parcourir par type",
+    "faq_title": "Questions fréquentes",
+    "faq_all": "Toutes les questions",
+    "cta_title": "Prêt à rouler ?",
+    "cta_sub": "Choisissez votre moto et obtenez un prix instantané.",
+    "cta_btn": "Voir les motos"
+  },
+  "about": {
+    "title": "À propos de Bike Bali Rent",
+    "p1": "Bike Bali Rent est un service de location de motos à Bali. Nous aidons les voyageurs et les résidents de longue durée à se déplacer sur l'île avec un scooter ou une moto bien entretenus, livrés à domicile et réservés simplement en ligne.",
+    "p2": "Nous gardons la location simple : un prix clair dès le départ, casques et accessoires disponibles, ainsi qu'une protection optionnelle contre le vol et les dommages. Il n'y a pas de prépaiement en ligne — vous payez à la livraison de votre moto.",
+    "offer_title": "Ce que nous proposons",
+    "offer": [
+      "Une gamme de motos — des scooters 160 cm³ aux modèles sportifs et routiers",
+      "Livraison à votre emplacement",
+      "Casques et accessoires de montage",
+      "Protection optionnelle contre le vol et les dommages",
+      "Durée de location flexible, du jour au mois et au-delà"
+    ],
+    "contact_title": "Contactez-nous"
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "intro": "Tout ce qu'il faut savoir avant de réserver. Une autre question ? Écrivez-nous sur WhatsApp ou Telegram.",
+    "items": [
+      { "q": "Livrez-vous la moto ?", "a": "Oui — nous livrons dans les principales zones touristiques autour de Denpasar : Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur et environs. Autres zones sur demande. Les frais de livraison dépendent de la durée de location — c'est plus avantageux pour les locations longues, et vous verrez le prix exact au moment de la réservation. Partagez un lien Google Maps lors de la réservation pour que le chauffeur sache où aller." },
+      { "q": "Y a-t-il une caution ?", "a": "Oui — une caution remboursable est retenue pendant la location et restituée lorsque vous rendez la moto en bon état. Le montant dépend du modèle et s'affiche au moment de la réservation." },
+      { "q": "L'assurance est-elle disponible ?", "a": "Oui, en option. Vous pouvez ajouter une protection vol et/ou dommages au moment de la réservation. Le prix dépend du niveau de couverture choisi et de votre profil de conducteur (âge et expérience de conduite) — vous verrez le prix exact au moment de la réservation." },
+      { "q": "Puis-je prolonger ma location ?", "a": "Oui — écrivez-nous simplement avant la fin de votre location actuelle. Vous payez la prolongation avant la fin de la période en cours." },
+      { "q": "Y a-t-il une durée de location minimale ou maximale ?", "a": "Ni minimum ni maximum — louez d'un seul jour à aussi longtemps que vous le souhaitez." },
+      { "q": "De quoi ai-je besoin pour louer ?", "a": "Juste une photo de votre passeport — rien d'autre." },
+      { "q": "Comment payer ? Y a-t-il un paiement en ligne ?", "a": "Il n'y a pas de paiement en ligne. Vous payez à la livraison ou à la remise de la moto. La réservation en ligne réserve simplement votre moto et envoie votre demande à notre équipe." },
+      { "q": "Qu'est-ce qui est inclus avec la moto ?", "a": "Chaque moto est livrée avec 2 casques gratuits. Vous pouvez surclasser l'un ou l'autre vers un casque jet ou intégral neuf pour Rp 150 000 chacun. Un top case arrière pour un passager est disponible pour Rp 200 000. Choisissez simplement ce dont vous avez besoin au moment de la réservation." },
+      { "q": "Comment réserver ?", "a": "Choisissez une moto, sélectionnez vos dates et extras pour voir le prix, puis envoyez une demande. Notre manager confirme les détails avec vous sur WhatsApp ou Telegram." }
+    ]
+  },
+  "footer": {
+    "get_in_touch": "Nous contacter",
+    "hours": "Ouvert de 08h00 à 19h00",
+    "address": "Gg. 1 Kerobokan Kelod, Kuta Utara, Badung, Bali",
+    "rights": "Tous droits réservés."
+  }
+}

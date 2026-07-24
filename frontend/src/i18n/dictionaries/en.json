@@ -1,17 +1,14 @@
 {
-  "brand": { "name": "Bike Bali Rent", "tagline": "Motorbike rental in Bali" },
-  "nav": { "home": "Home", "bikes": "Bikes", "about": "About", "faq": "FAQ", "contact": "Contact" },
-  "cat": {
-    "honda_adv160": "Honda ADV 160",
-    "honda_pcx160": "Honda PCX 160",
-    "honda_vario160": "Honda Vario 160",
-    "yamaha_nmax155": "Yamaha Nmax 155",
-    "yamaha_xmax250": "Yamaha Xmax 250",
-    "touring": "Touring / Enduro",
-    "naked_classic": "Naked / Classic",
-    "sport": "Sport",
-    "cruiser": "Cruiser / Bobber / Chopper",
-    "neo_retro_roadster": "Neo-Retro Roadster"
+  "brand": {
+    "name": "Bike Bali Rent",
+    "tagline": "Motorbike rental in Bali"
+  },
+  "nav": {
+    "home": "Home",
+    "bikes": "Bikes",
+    "about": "About",
+    "faq": "FAQ",
+    "contact": "Contact"
   },
   "catalog": {
     "title": "Our bikes",
@@ -39,15 +36,45 @@
     "photo_soon": "Photo coming soon"
   },
   "spec": {
-    "engine_cc": { "label": "Engine", "unit": "cc" },
-    "power": { "label": "Power", "unit": "hp" },
-    "top_speed": { "label": "Top speed", "unit": "km/h" },
-    "fuel_consumption": { "label": "Fuel use", "unit": "L/100km" },
-    "fuel_tank": { "label": "Fuel tank", "unit": "L" },
-    "transmission": { "label": "Transmission", "unit": "", "cvt": "Automatic (CVT)", "manual": "Manual", "automatic": "Automatic" },
-    "seat_height": { "label": "Seat height", "unit": "mm" },
-    "seats": { "label": "Seats", "unit": "" },
-    "curb_weight": { "label": "Kerb weight", "unit": "kg" }
+    "engine_cc": {
+      "label": "Engine",
+      "unit": "cc"
+    },
+    "power": {
+      "label": "Power",
+      "unit": "hp"
+    },
+    "top_speed": {
+      "label": "Top speed",
+      "unit": "km/h"
+    },
+    "fuel_consumption": {
+      "label": "Fuel use",
+      "unit": "L/100km"
+    },
+    "fuel_tank": {
+      "label": "Fuel tank",
+      "unit": "L"
+    },
+    "transmission": {
+      "label": "Transmission",
+      "unit": "",
+      "cvt": "Automatic (CVT)",
+      "manual": "Manual",
+      "automatic": "Automatic"
+    },
+    "seat_height": {
+      "label": "Seat height",
+      "unit": "mm"
+    },
+    "seats": {
+      "label": "Seats",
+      "unit": ""
+    },
+    "curb_weight": {
+      "label": "Kerb weight",
+      "unit": "kg"
+    }
   },
   "calc": {
     "title": "Price calculator",
@@ -116,17 +143,41 @@
     "hero_cta": "Browse bikes",
     "available_now": "Available right now",
     "trust": [
-      { "icon": "🚚", "text": "Doorstep delivery" },
-      { "icon": "🛡️", "text": "Theft & damage insurance available" },
-      { "icon": "💰", "text": "Refundable deposit" },
-      { "icon": "💬", "text": "WhatsApp support, 08:00–19:00" }
+      {
+        "icon": "🚚",
+        "text": "Doorstep delivery"
+      },
+      {
+        "icon": "🛡️",
+        "text": "Theft & damage insurance available"
+      },
+      {
+        "icon": "💰",
+        "text": "Refundable deposit"
+      },
+      {
+        "icon": "💬",
+        "text": "WhatsApp support, 08:00–19:00"
+      }
     ],
     "steps_title": "How it works",
     "steps": [
-      { "title": "Choose your bike", "text": "Browse the catalog and pick a model." },
-      { "title": "Book online", "text": "Pick your dates and extras, send a request — no prepayment." },
-      { "title": "We deliver", "text": "Your bike arrives at your address, ready to go." },
-      { "title": "Ride", "text": "Explore Bali on your own schedule." }
+      {
+        "title": "Choose your bike",
+        "text": "Browse the catalog and pick a model."
+      },
+      {
+        "title": "Book online",
+        "text": "Pick your dates and extras, send a request — no prepayment."
+      },
+      {
+        "title": "We deliver",
+        "text": "Your bike arrives at your address, ready to go."
+      },
+      {
+        "title": "Ride",
+        "text": "Explore Bali on your own schedule."
+      }
     ],
     "popular_title": "Popular models",
     "popular_sub": "A look across our range",
@@ -134,9 +185,18 @@
     "reviews_sub": "Real trips, real bikes",
     "why_title": "Why ride with us",
     "why": [
-      { "title": "Doorstep delivery", "text": "We bring the bike to your location. Better value on longer rentals — see the FAQ." },
-      { "title": "Gear included", "text": "Helmets and mounting accessories are available with your rental." },
-      { "title": "Optional insurance", "text": "Add theft or damage protection at checkout — your choice." }
+      {
+        "title": "Doorstep delivery",
+        "text": "We bring the bike to your location. Better value on longer rentals — see the FAQ."
+      },
+      {
+        "title": "Gear included",
+        "text": "Helmets and mounting accessories are available with your rental."
+      },
+      {
+        "title": "Optional insurance",
+        "text": "Add theft or damage protection at checkout — your choice."
+      }
     ],
     "categories_title": "Find your ride",
     "categories_sub": "Browse by type",
@@ -164,15 +224,42 @@
     "title": "Frequently asked questions",
     "intro": "Everything you need to know before you book. Got another question? Message us on WhatsApp or Telegram.",
     "items": [
-      { "q": "Do you deliver the bike?", "a": "Yes — we deliver across the main tourist areas near Denpasar: Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur and nearby. Other areas on request. The delivery fee depends on how long you rent — it's better value on longer rentals, and you'll see the exact price at checkout. Share a Google Maps link when you book so the driver knows where to go." },
-      { "q": "Is there a deposit?", "a": "Yes — a refundable deposit is held during the rental and returned when you bring the bike back in good condition. The amount depends on the model, and you'll see it at checkout." },
-      { "q": "Is insurance available?", "a": "Yes, optionally. You can add theft protection and/or damage protection at checkout. The price depends on the coverage level you choose and your rider profile (age and riding experience) — you'll see the exact price at checkout." },
-      { "q": "Can I extend my rental?", "a": "Yes — just message us before your current rental ends. You pay for the extension by the end of the current period." },
-      { "q": "Is there a minimum or maximum rental period?", "a": "No minimum and no maximum — rent from a single day to as long as you like." },
-      { "q": "What do I need to rent?", "a": "Just a photo of your passport — nothing else." },
-      { "q": "How do I pay? Is there online payment?", "a": "There's no online payment. You pay when the bike is delivered or handed over. Booking online simply reserves your bike and sends your request to our team." },
-      { "q": "What's included with the bike?", "a": "Every bike comes with 2 helmets free. You can upgrade either one to a new half-face or full-face helmet for Rp 150,000 each. A rear top box for a passenger is available for Rp 200,000. Just pick what you need at checkout." },
-      { "q": "How do I book?", "a": "Pick a bike, choose your dates and extras to see the price, then send a request. Our manager confirms the details with you on WhatsApp or Telegram." }
+      {
+        "q": "Do you deliver the bike?",
+        "a": "Yes — we deliver across the main tourist areas near Denpasar: Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur and nearby. Other areas on request. The delivery fee depends on how long you rent — it's better value on longer rentals, and you'll see the exact price at checkout. Share a Google Maps link when you book so the driver knows where to go."
+      },
+      {
+        "q": "Is there a deposit?",
+        "a": "Yes — a refundable deposit is held during the rental and returned when you bring the bike back in good condition. The amount depends on the model, and you'll see it at checkout."
+      },
+      {
+        "q": "Is insurance available?",
+        "a": "Yes, optionally. You can add theft protection and/or damage protection at checkout. The price depends on the coverage level you choose and your rider profile (age and riding experience) — you'll see the exact price at checkout."
+      },
+      {
+        "q": "Can I extend my rental?",
+        "a": "Yes — just message us before your current rental ends. You pay for the extension by the end of the current period."
+      },
+      {
+        "q": "Is there a minimum or maximum rental period?",
+        "a": "No minimum and no maximum — rent from a single day to as long as you like."
+      },
+      {
+        "q": "What do I need to rent?",
+        "a": "Just a photo of your passport — nothing else."
+      },
+      {
+        "q": "How do I pay? Is there online payment?",
+        "a": "There's no online payment. You pay when the bike is delivered or handed over. Booking online simply reserves your bike and sends your request to our team."
+      },
+      {
+        "q": "What's included with the bike?",
+        "a": "Every bike comes with 2 helmets free. You can upgrade either one to a new half-face or full-face helmet for Rp 150,000 each. A rear top box for a passenger is available for Rp 200,000. Just pick what you need at checkout."
+      },
+      {
+        "q": "How do I book?",
+        "a": "Pick a bike, choose your dates and extras to see the price, then send a request. Our manager confirms the details with you on WhatsApp or Telegram."
+      }
     ]
   },
   "footer": {

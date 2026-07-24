@@ -23,7 +23,7 @@ export default function BikeCard({ locale, product, dict }) {
         {archived_color ? <span className="badge-rare">{dict.badge?.rare_colour}</span> : null}
       </div>
       <div className="card-body">
-        {category?.name ? <span className="pill">{dict.cat?.[category.code] ?? category.name}</span> : null}
+        {category?.name ? <span className="pill">{category.name}</span> : null}
         <div className="card-name">{name}</div>
         {print_name ? <div className="badge-print">{dict.badge?.print}{print_name}</div> : null}
         {price_preview ? (

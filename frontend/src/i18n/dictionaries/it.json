@@ -1,0 +1,211 @@
+{
+  "brand": {
+    "name": "Bike Bali Rent",
+    "tagline": "Noleggio moto a Bali"
+  },
+  "nav": {
+    "home": "Home",
+    "bikes": "Moto",
+    "about": "Chi siamo",
+    "faq": "FAQ",
+    "contact": "Contatti"
+  },
+  "catalog": {
+    "title": "Le nostre moto",
+    "subtitle": "{count} modelli — dagli scooter alle sportive",
+    "all": "Tutte",
+    "group_scooter": "Scooter",
+    "group_motorcycle": "Moto",
+    "from_month": "da / mese",
+    "details": "Dettagli",
+    "empty": "Ancora nessuna moto in questa categoria.",
+    "per_month_note": "Prezzo per 30 giorni"
+  },
+  "product": {
+    "back": "Tutte le moto",
+    "specs_title": "Specifiche",
+    "specs_soon": "Specifiche in arrivo.",
+    "description_title": "Su questa moto",
+    "gallery_soon": "Foto in arrivo"
+  },
+  "badge": {
+    "rare_colour": "Colore raro",
+    "print": "Stampa: "
+  },
+  "placeholder": {
+    "photo_soon": "Foto in arrivo"
+  },
+  "spec": {
+    "engine_cc": {
+      "label": "Cilindrata",
+      "unit": "cc"
+    },
+    "power": {
+      "label": "Potenza",
+      "unit": "cv"
+    },
+    "top_speed": {
+      "label": "Velocità massima",
+      "unit": "km/h"
+    },
+    "fuel_consumption": {
+      "label": "Consumo",
+      "unit": "L/100km"
+    },
+    "fuel_tank": {
+      "label": "Serbatoio",
+      "unit": "L"
+    },
+    "transmission": {
+      "label": "Trasmissione",
+      "unit": "",
+      "cvt": "Automatica (CVT)",
+      "manual": "Manuale",
+      "automatic": "Automatica"
+    },
+    "seat_height": {
+      "label": "Altezza sella",
+      "unit": "mm"
+    },
+    "seats": {
+      "label": "Posti",
+      "unit": ""
+    },
+    "curb_weight": {
+      "label": "Peso a vuoto",
+      "unit": "kg"
+    }
+  },
+  "calc": {
+    "title": "Calcolatore di prezzo",
+    "period": "Periodo di noleggio",
+    "start": "Data di ritiro",
+    "end": "Data di riconsegna",
+    "days_one": "{n} giorno",
+    "days_other": "{n} giorni",
+    "days_invalid": "La data di riconsegna deve essere successiva a quella di ritiro.",
+    "location": "Luogo di consegna (facoltativo)",
+    "location_ph": "Incolla un link di Google Maps",
+    "location_hint": "Solo per l'autista — non influisce sul prezzo.",
+    "insurance": "Assicurazione (facoltativa)",
+    "theft": "Protezione furto",
+    "damage": "Protezione danni",
+    "coverage": "Copertura",
+    "driver_age": "La tua età",
+    "has_license": "Ho la patente per moto",
+    "experienced": "Guidatore esperto (1 anno o più)",
+    "helmets": "Caschi",
+    "helmets_note": "2 caschi inclusi gratis — puoi migliorare uno dei due posti qui sotto.",
+    "helmet_slot": "Casco {n}",
+    "helmet_free": "Casco gratuito (incluso)",
+    "extras": "Aggiungi extra",
+    "equipment": "Aggiungi accessori",
+    "qty": "Qtà",
+    "summary": "Il tuo prezzo",
+    "base": "Noleggio moto",
+    "delivery": "Consegna",
+    "insurance_theft": "Protezione furto",
+    "insurance_damage": "Protezione danni",
+    "free": "Gratis",
+    "total": "Totale da pagare",
+    "deposit": "Deposito rimborsabile",
+    "deposit_note": "Trattenuto durante il noleggio e restituito — non fa parte del totale.",
+    "months_note": "{n} mese/i",
+    "calculating": "Calcolo in corso…",
+    "error": "Impossibile calcolare il prezzo. Riprova.",
+    "book": "Prenota questa moto",
+    "updating": "Aggiornamento…",
+    "retry": "Riprova"
+  },
+  "booking": {
+    "title": "Richiedi questa moto",
+    "summary_line": "{name} · {days} giorni · totale {total}",
+    "name": "Il tuo nome",
+    "name_ph": "Come dobbiamo chiamarti",
+    "contact_hint": "Lascia almeno un modo per contattarti — il gestore ti scriverà lì.",
+    "whatsapp": "WhatsApp",
+    "telegram": "Nome utente Telegram",
+    "email": "Email",
+    "phone": "Telefono",
+    "contact_required": "Lascia almeno un contatto (WhatsApp, Telegram, email o telefono).",
+    "name_required": "Inserisci il tuo nome.",
+    "submit": "Invia richiesta",
+    "sending": "Invio in corso…",
+    "error": "Impossibile inviare la richiesta. Riprova.",
+    "cancel": "Torna al calcolatore",
+    "success_title": "Richiesta ricevuta",
+    "success_msg": "Grazie! Il nostro gestore ti contatterà a breve su WhatsApp o Telegram per confermare i dettagli. Non è richiesto alcun pagamento anticipato.",
+    "success_ref": "Il tuo numero di richiesta: {ref}"
+  },
+  "home": {
+    "hero_title": "Noleggia una moto a Bali, nel modo più semplice",
+    "hero_sub": "Consegna a domicilio, caschi e accessori, e protezione facoltativa contro furto e danni. Prenota online in pochi minuti.",
+    "hero_cta": "Sfoglia le moto",
+    "available_now": "Disponibile ora",
+    "trust": [
+      { "icon": "🚚", "text": "Consegna a domicilio" },
+      { "icon": "🛡️", "text": "Assicurazione furto e danni disponibile" },
+      { "icon": "💰", "text": "Deposito rimborsabile" },
+      { "icon": "💬", "text": "Assistenza WhatsApp, 08:00–19:00" }
+    ],
+    "steps_title": "Come funziona",
+    "steps": [
+      { "title": "Scegli la tua moto", "text": "Sfoglia il catalogo e scegli un modello." },
+      { "title": "Prenota online", "text": "Scegli date ed extra, invia una richiesta — senza pagamento anticipato." },
+      { "title": "Consegniamo", "text": "La tua moto arriva al tuo indirizzo, pronta all'uso." },
+      { "title": "Guida", "text": "Esplora Bali secondo i tuoi tempi." }
+    ],
+    "popular_title": "Modelli popolari",
+    "popular_sub": "Uno sguardo alla nostra gamma",
+    "reviews_title": "Cosa dicono i nostri clienti",
+    "reviews_sub": "Viaggi veri, moto vere",
+    "why_title": "Perché scegliere noi",
+    "why": [
+      { "title": "Consegna a domicilio", "text": "Portiamo la moto da te. Miglior rapporto qualità-prezzo per noleggi lunghi — consulta le FAQ." },
+      { "title": "Accessori inclusi", "text": "Caschi e accessori di montaggio disponibili con il tuo noleggio." },
+      { "title": "Assicurazione facoltativa", "text": "Aggiungi la protezione furto o danni al momento della prenotazione — a tua scelta." }
+    ],
+    "categories_title": "Trova la tua moto",
+    "categories_sub": "Sfoglia per tipo",
+    "faq_title": "Domande frequenti",
+    "faq_all": "Tutte le domande",
+    "cta_title": "Pronto a partire?",
+    "cta_sub": "Scegli la tua moto e ottieni subito il prezzo.",
+    "cta_btn": "Sfoglia le moto"
+  },
+  "about": {
+    "title": "Chi è Bike Bali Rent",
+    "p1": "Bike Bali Rent è un servizio di noleggio moto a Bali. Aiutiamo viaggiatori e ospiti di lungo periodo a spostarsi sull'isola con uno scooter o una moto ben tenuti, con consegna a domicilio e una semplice prenotazione online.",
+    "p2": "Manteniamo il noleggio semplice: un prezzo chiaro fin dall'inizio, caschi e accessori disponibili, e protezione facoltativa contro furto e danni. Non c'è pagamento anticipato online — paghi quando la moto viene consegnata.",
+    "offer_title": "Cosa offriamo",
+    "offer": [
+      "Una gamma di moto — da scooter 160cc a modelli sportivi e da turismo",
+      "Consegna nel luogo desiderato",
+      "Caschi e accessori di montaggio",
+      "Protezione facoltativa contro furto e danni",
+      "Durata di noleggio flessibile, da un giorno a un mese e oltre"
+    ],
+    "contact_title": "Contattaci"
+  },
+  "faq": {
+    "title": "Domande frequenti",
+    "intro": "Tutto quello che devi sapere prima di prenotare. Hai un'altra domanda? Scrivici su WhatsApp o Telegram.",
+    "items": [
+      { "q": "Consegnate la moto?", "a": "Sì — consegniamo nelle principali zone turistiche vicino a Denpasar: Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur e dintorni. Altre zone su richiesta. La tariffa di consegna dipende dalla durata del noleggio — conviene di più con noleggi lunghi, e vedrai il prezzo esatto al momento della prenotazione. Condividi un link di Google Maps quando prenoti così l'autista sa dove andare." },
+      { "q": "C'è un deposito?", "a": "Sì — un deposito rimborsabile viene trattenuto durante il noleggio e restituito quando riporti la moto in buone condizioni. L'importo dipende dal modello e lo vedrai al momento della prenotazione." },
+      { "q": "È disponibile l'assicurazione?", "a": "Sì, facoltativamente. Puoi aggiungere protezione furto e/o danni al momento della prenotazione. Il prezzo dipende dal livello di copertura scelto e dal tuo profilo di guidatore (età ed esperienza) — vedrai il prezzo esatto al momento della prenotazione." },
+      { "q": "Posso prolungare il noleggio?", "a": "Sì — basta scriverci prima che termini il noleggio attuale. Paghi la proroga entro la fine del periodo in corso." },
+      { "q": "C'è una durata minima o massima di noleggio?", "a": "Nessun minimo e nessun massimo — noleggia da un solo giorno a quanto vuoi." },
+      { "q": "Cosa serve per noleggiare?", "a": "Solo una foto del tuo passaporto — nient'altro." },
+      { "q": "Come si paga? C'è il pagamento online?", "a": "Non c'è pagamento online. Paghi quando la moto viene consegnata o ritirata. La prenotazione online riserva semplicemente la tua moto e invia la richiesta al nostro team." },
+      { "q": "Cosa è incluso con la moto?", "a": "Ogni moto è dotata di 2 caschi gratuiti. Puoi passare a un casco jet o integrale nuovo per Rp 150.000 ciascuno. È disponibile un bauletto posteriore per un passeggero a Rp 200.000. Scegli semplicemente ciò che ti serve al momento della prenotazione." },
+      { "q": "Come prenoto?", "a": "Scegli una moto, seleziona date ed extra per vedere il prezzo, poi invia una richiesta. Il nostro gestore confermerà i dettagli con te su WhatsApp o Telegram." }
+    ]
+  },
+  "footer": {
+    "get_in_touch": "Contattaci",
+    "hours": "Aperto 08:00–19:00",
+    "address": "Gg. 1 Kerobokan Kelod, Kuta Utara, Badung, Bali",
+    "rights": "Tutti i diritti riservati."
+  }
+}
