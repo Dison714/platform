@@ -8,6 +8,7 @@ import { ogTwitter, hreflangAlternates, breadcrumbJsonLd } from '../../../../lib
 import { absoluteUrl } from '../../../../lib/site.js';
 import { resolveSpecs } from '../../../../lib/specs.js';
 import Calculator from '../../../components/Calculator.jsx';
+import ProductGallery from '../../../components/ProductGallery.jsx';
 import ProductVideo from '../../../components/ProductVideo.jsx';
 
 export const dynamic = 'force-dynamic';
@@ -101,26 +102,13 @@ export default async function ProductPage({ params }) {
 
       <div className="product-grid">
         <div className="product-media">
-          <div className="gallery-main">
-            {showPlaceholder ? (
-              <div className="gallery-ph">
-                <span aria-hidden="true" style={{ fontSize: 56 }}>🏍</span>
-                <span className="hint">{dict.placeholder?.photo_soon ?? dict.product.gallery_soon}</span>
-              </div>
-            ) : (
-              // hero — над сгибом, грузим eager (LCP); явные размеры против CLS.
-              <img src={resolvePhotoUrl(hero, 'hero')} alt={product.name} loading="eager" width="1200" height="900" />
-            )}
-          </div>
-          {gallery.length ? (
-            <div className="gallery-thumbs">
-              {gallery.map((ph) => (
-                <div className="thumb" key={ph.sort_order}>
-                  <img src={resolvePhotoUrl(ph, 'gallery')} alt="" loading="lazy" width="800" height="600" />
-                </div>
-              ))}
-            </div>
-          ) : null}
+          <ProductGallery
+            hero={hero}
+            gallery={gallery}
+            productName={product.name}
+            showPlaceholder={showPlaceholder}
+            placeholderText={dict.placeholder?.photo_soon ?? dict.product.gallery_soon}
+          />
           <ProductVideo src={resolveVideoUrl(product.slug)} />
         </div>
 
