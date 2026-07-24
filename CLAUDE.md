@@ -164,6 +164,14 @@
 - `updated_at` — триггер `set_updated_at()`; при новой таблице с этим полем
   дописать триггер в `08_triggers_audit_flags.sql`.
 - Файлы пронумерованы по зависимостям (01→08). Новые таблицы — в файл по домену.
+- **Configuration First-панель (ТЗ п.12) — `/internal/*`, Basic Auth** (`middleware.js`,
+  один общий пароль в env `INTERNAL_ADMIN_PASSWORD`, временная защита на
+  период разработки). Разделы: сезонные цены, страховка, доставка, депозит,
+  replacement groups — общая навигация в `internal/layout.js`. Не в
+  навигации сайта, не в sitemap, `noindex`. Паттерн на раздел: backend
+  Router (validate → SQL → явные коды ошибок 409/404) → BFF-прокси
+  `/api/admin/<resource>` → клиентский компонент (таблица + форма).
+  Подробности каждого раздела — в PROJECT_STATUS.md.
 - Деплой MDB Platform (backend + frontend): Hetzner VPS + Coolify. Архитектура БД
   (self-hosted PostgreSQL на Hetzner vs Supabase) не зафиксирована — см. открытые
   вопросы в PROJECT_STATUS.md перед стартом чанка Deploy. Боты (`MDB_drivers_bot`,
