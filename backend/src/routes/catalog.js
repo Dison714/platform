@@ -9,7 +9,11 @@ export const catalogRouter = Router();
 
 catalogRouter.get('/products', async (req, res, next) => {
     try {
-        const result = await listProducts({ lang: req.query.lang, category: req.query.category });
+        const result = await listProducts({
+            lang: req.query.lang,
+            category: req.query.category,
+            available: req.query.available === 'true',
+        });
         res.json(result);
     } catch (err) {
         next(err);

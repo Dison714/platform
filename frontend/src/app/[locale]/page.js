@@ -1,8 +1,11 @@
 import Link from 'next/link';
+import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { isEnabledLocale } from '../../i18n/config.js';
 import { getDictionary } from '../../i18n/getDictionary.js';
-import { apiGet } from '../../lib/api.js';
+import { apiGet, formatIdr } from '../../lib/api.js';
+import { pickAvailablePair } from '../../lib/availableBikes.js';
+import { resolvePhotoUrl } from '../../lib/photos.js';
 import { ogTwitter, hreflangAlternates } from '../../lib/seo.js';
 
 // Главная — SSR-контент (для SEO). Категории тянем из API, остальное — словари.
@@ -33,6 +36,15 @@ export default async function HomePage({ params }) {
   } catch {
     categories = []; // главная не падает, если API недоступен — просто без плиток
   }
+
+  let availableBikes = [];
+  try {
+    const available = (await apiGet('/api/products?available=true')).data ?? [];
+    const cookieId = cookies().get('mdb_cid')?.value ?? null;
+    availableBikes = pickAvailablePair(available, cookieId);
+  } catch {
+    availableBikes = []; // виджет просто не рендерится, если API недоступен
+  }
   const faqTop = (dict.faq.items ?? []).slice(0, 3);
   const bikesHref = `/${locale}/bikes`;
 
@@ -40,9 +52,31 @@ export default async function HomePage({ params }) {
     <div className="home">
       <section className="hero">
         <div className="container hero-in">
-          <h1 className="display hero-title">{h.hero_title}</h1>
-          <p className="hero-sub">{h.hero_sub}</p>
-          <Link href={bikesHref} className="btn-cta">{h.hero_cta} →</Link>
+          <div className="hero-text">
+            <h1 className="display hero-title">{h.hero_title}</h1>
+            <p className="hero-sub">{h.hero_sub}</p>
+            <Link href={bikesHref} className="btn-cta">{h.hero_cta} →</Link>
+          </div>
+          {availableBikes.length > 0 && (
+            <div className="hero-bikes">
+              <span className="hero-bikes-label">{h.available_now}</span>
+              <div className="hero-bikes-grid">
+                {availableBikes.map((p) => (
+                  <Link href={`/${locale}/bikes/${p.slug}`} className="hero-bike-card" key={p.id}>
+                    <div className="hero-bike-photo">
+                      {p.hero ? (
+                        <img src={resolvePhotoUrl(p.hero, 'thumb')} alt={p.name} loading="lazy" width="400" height="300" />
+                      ) : (
+                        <span aria-hidden="true">🏍</span>
+                      )}
+                    </div>
+                    <div className="hero-bike-name">{p.name}</div>
+                    {p.price_preview && <div className="hero-bike-price">{formatIdr(p.price_preview.price_idr)}</div>}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

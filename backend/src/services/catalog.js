@@ -88,7 +88,7 @@ function familyName(brand, model) {
 // =====================================================================
 // GET /api/products
 // =====================================================================
-export async function listProducts({ lang, category } = {}) {
+export async function listProducts({ lang, category, available } = {}) {
     const language = await resolveLanguage(lang);
     const ruleSetId = await getActiveRuleSetId();
 
@@ -102,6 +102,10 @@ export async function listProducts({ lang, category } = {}) {
         }
     }
 
+    // available=true (Блок 5, виджет на главной) — только продукты, у которых
+    // прямо сейчас есть хотя бы один fleet_item в статусе 'available'. Никаких
+    // полей fleet_items наружу не идёт (см. комментарий выше) — только сам факт
+    // наличия, тем же способом, что и остальная выдача каталога.
     const { rows } = await pool.query(
         `SELECT
             p.id, p.slug, p.color_name, p.variant, p.equipment_variant, p.is_bookable,
@@ -128,8 +132,10 @@ export async function listProducts({ lang, category } = {}) {
                SELECT 1 FROM family_filter_categories ffc
                JOIN vehicle_categories fvc ON fvc.id = ffc.category_id
                WHERE ffc.family_id = pf.id AND fvc.code = $5))
+           AND ($6::boolean IS NOT TRUE OR EXISTS (
+               SELECT 1 FROM fleet_items fi WHERE fi.product_id = p.id AND fi.status = 'available'))
          ORDER BY pf.brand, pf.model_name, p.color_name, p.variant`,
-        [language, DEFAULT_LANG, PREVIEW_DAYS, ruleSetId, category ?? null]
+        [language, DEFAULT_LANG, PREVIEW_DAYS, ruleSetId, category ?? null, available === true]
     );
 
     const data = rows.map((r) => ({

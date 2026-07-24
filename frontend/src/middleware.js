@@ -32,18 +32,35 @@ function unauthorized() {
 export function middleware(request) {
   const { pathname } = request.nextUrl;
 
+  let response;
   if (pathname.startsWith('/internal') || pathname.startsWith('/api/admin')) {
-    return checkBasicAuth(request) ? NextResponse.next() : unauthorized();
+    response = checkBasicAuth(request) ? NextResponse.next() : unauthorized();
+  } else {
+    const hasLocale = enabledLocales().some(
+      (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`)
+    );
+    if (hasLocale) {
+      response = NextResponse.next();
+    } else {
+      const url = request.nextUrl.clone();
+      url.pathname = `/${DEFAULT_LOCALE}${pathname === '/' ? '' : pathname}`;
+      response = NextResponse.redirect(url);
+    }
   }
 
-  const hasLocale = enabledLocales().some(
-    (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`)
-  );
-  if (hasLocale) return NextResponse.next();
+  // Анонимная cookie для Блока 5 (виджет доступных байков на главной) — ставится
+  // один раз при первом визите, живёт год. Не привязана к клиенту (нет
+  // аккаунтов у посетителей сайта), нужна только чтобы один и тот же браузер
+  // видел стабильную пару карточек в течение 30-минутного окна ротации.
+  if (!request.cookies.get('mdb_cid')) {
+    response.cookies.set('mdb_cid', crypto.randomUUID(), {
+      maxAge: 60 * 60 * 24 * 365,
+      path: '/',
+      sameSite: 'lax',
+    });
+  }
 
-  const url = request.nextUrl.clone();
-  url.pathname = `/${DEFAULT_LOCALE}${pathname === '/' ? '' : pathname}`;
-  return NextResponse.redirect(url);
+  return response;
 }
 
 export const config = {
