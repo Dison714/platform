@@ -35,10 +35,17 @@ export function galleryPhotos(photos, hero, max = 8) {
     .slice(0, max);
 }
 
-// Видео карточки товара (Блок 3) — без отдельного признака в схеме: путь
-// строится по конвенции (рядом с фото, bikes/<slug>/video.mp4), рендерится
-// только если файл физически существует — проверка на клиенте (onError),
-// не здесь.
-export function resolveVideoUrl(slug) {
-  return `${PHOTO_BASE}/bikes/${slug}/video.mp4`;
+// Видео карточки товара (Блок 3, расширено под несколько видео на продукт) —
+// без отдельного признака в схеме: путь строится по конвенции (рядом с фото,
+// bikes/<slug>/video.mp4, video-2.mp4, video-3.mp4, ...), каждый слот
+// рендерится независимо и скрывается сам, если файла нет (проверка на
+// клиенте, не здесь) — см. ProductVideo.jsx. video.mp4 (первый слот) —
+// исходное имя без номера, чтобы не трогать уже залитые видео (Keeway).
+const MAX_VIDEO_SLOTS = 4;
+export function resolveVideoUrls(slug) {
+  return Array.from({ length: MAX_VIDEO_SLOTS }, (_, i) => {
+    const n = i + 1;
+    const name = n === 1 ? 'video.mp4' : `video-${n}.mp4`;
+    return `${PHOTO_BASE}/bikes/${slug}/${name}`;
+  });
 }

@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { isEnabledLocale } from '../../../../i18n/config.js';
 import { getDictionary } from '../../../../i18n/getDictionary.js';
 import { apiGet, formatIdr } from '../../../../lib/api.js';
-import { resolvePhotoUrl, pickHero, galleryPhotos, resolveVideoUrl } from '../../../../lib/photos.js';
+import { resolvePhotoUrl, pickHero, galleryPhotos, resolveVideoUrls } from '../../../../lib/photos.js';
 import { ogTwitter, hreflangAlternates, breadcrumbJsonLd } from '../../../../lib/seo.js';
 import { absoluteUrl } from '../../../../lib/site.js';
 import { resolveSpecs } from '../../../../lib/specs.js';
@@ -109,7 +109,9 @@ export default async function ProductPage({ params }) {
             showPlaceholder={showPlaceholder}
             placeholderText={dict.placeholder?.photo_soon ?? dict.product.gallery_soon}
           />
-          <ProductVideo src={resolveVideoUrl(product.slug)} />
+          {resolveVideoUrls(product.slug).map((src) => (
+            <ProductVideo key={src} src={src} />
+          ))}
         </div>
 
         <div className="product-info">
