@@ -49,8 +49,9 @@ export function middleware(request) {
 export const config = {
   // Не трогаем остальные API-роуты (BFF-прокси /api/quote, /api/bookings —
   // без локализации, без Basic Auth), _next и статику (в т.ч. фото байков
-  // /bikes/*.webp, manifest.webmanifest) — только страницы + /internal +
-  // /api/admin. Без исключения расширений/спецфайлов middleware редиректил
-  // бы их на /<locale>/... — так уже было с .webp и sitemap.xml/robots.txt.
-  matcher: ['/((?!api/(?!admin)|_next|favicon.ico|sitemap.xml|robots.txt|manifest.webmanifest|.*\\.(?:svg|png|ico|webp|jpg|jpeg|gif|avif)).*)'],
+  // /bikes/*.webp, видео /bikes/*/video.mp4, manifest.webmanifest) — только
+  // страницы + /internal + /api/admin. Без исключения расширений/спецфайлов
+  // middleware редиректил бы их на /<locale>/... — так уже было с .webp и
+  // sitemap.xml/robots.txt, и по той же причине не грузилось video.mp4 (Блок 3).
+  matcher: ['/((?!api/(?!admin)|_next|favicon.ico|sitemap.xml|robots.txt|manifest.webmanifest|.*\\.(?:svg|png|ico|webp|jpg|jpeg|gif|avif|mp4)).*)'],
 };

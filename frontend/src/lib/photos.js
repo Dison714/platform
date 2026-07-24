@@ -34,3 +34,11 @@ export function galleryPhotos(photos, hero, max = 8) {
     .sort((a, b) => a.sort_order - b.sort_order)
     .slice(0, max);
 }
+
+// Видео карточки товара (Блок 3) — без отдельного признака в схеме: путь
+// строится по конвенции (рядом с фото, bikes/<slug>/video.mp4), рендерится
+// только если файл физически существует — проверка на клиенте (onError),
+// не здесь.
+export function resolveVideoUrl(slug) {
+  return `${PHOTO_BASE}/bikes/${slug}/video.mp4`;
+}

@@ -3,11 +3,12 @@ import { notFound } from 'next/navigation';
 import { isEnabledLocale } from '../../../../i18n/config.js';
 import { getDictionary } from '../../../../i18n/getDictionary.js';
 import { apiGet, formatIdr } from '../../../../lib/api.js';
-import { resolvePhotoUrl, pickHero, galleryPhotos } from '../../../../lib/photos.js';
+import { resolvePhotoUrl, pickHero, galleryPhotos, resolveVideoUrl } from '../../../../lib/photos.js';
 import { ogTwitter, hreflangAlternates, breadcrumbJsonLd } from '../../../../lib/seo.js';
 import { absoluteUrl } from '../../../../lib/site.js';
 import { resolveSpecs } from '../../../../lib/specs.js';
 import Calculator from '../../../components/Calculator.jsx';
+import ProductVideo from '../../../components/ProductVideo.jsx';
 
 export const dynamic = 'force-dynamic';
 
@@ -120,6 +121,7 @@ export default async function ProductPage({ params }) {
               ))}
             </div>
           ) : null}
+          <ProductVideo src={resolveVideoUrl(product.slug)} />
         </div>
 
         <div className="product-info">
