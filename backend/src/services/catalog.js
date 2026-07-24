@@ -92,11 +92,25 @@ export async function listProducts({ lang, category, available } = {}) {
     const language = await resolveLanguage(lang);
     const ruleSetId = await getActiveRuleSetId();
 
+    // category — один код (как раньше) ИЛИ несколько через запятую (Блок A:
+    // верхний таб "Скутеры"/"Мотоциклы" на фронте резолвится в список из 5
+    // конкретных категорий и передаётся сюда одним запросом — группировка
+    // "скутеры/мотоциклы" целиком на фронте, бэкенд просто фильтрует по
+    // произвольному множеству кодов, ничего не знает про группы).
+    const categoryCodes = category
+        ? category.split(',').map((c) => c.trim()).filter(Boolean)
+        : null;
+
     // Валидация фильтра category — отдаём явную ошибку, а не молча пустой список.
-    if (category) {
-        const { rows } = await pool.query('SELECT 1 FROM vehicle_categories WHERE code = $1', [category]);
-        if (rows.length === 0) {
-            const err = new Error(`Unknown category: ${category}`);
+    if (categoryCodes) {
+        const { rows } = await pool.query(
+            'SELECT code FROM vehicle_categories WHERE code = ANY($1::text[])',
+            [categoryCodes]
+        );
+        const found = new Set(rows.map((r) => r.code));
+        const unknown = categoryCodes.filter((c) => !found.has(c));
+        if (unknown.length > 0) {
+            const err = new Error(`Unknown category: ${unknown.join(', ')}`);
             err.status = 400;
             throw err;
         }
@@ -128,14 +142,14 @@ export async function listProducts({ lang, category, available } = {}) {
          LEFT JOIN price_rules pr
              ON pr.product_id = p.id AND pr.rental_days = $3 AND pr.rule_set_id = $4
          WHERE p.is_active = TRUE
-           AND ($5::text IS NULL OR EXISTS (
+           AND ($5::text[] IS NULL OR EXISTS (
                SELECT 1 FROM family_filter_categories ffc
                JOIN vehicle_categories fvc ON fvc.id = ffc.category_id
-               WHERE ffc.family_id = pf.id AND fvc.code = $5))
+               WHERE ffc.family_id = pf.id AND fvc.code = ANY($5::text[])))
            AND ($6::boolean IS NOT TRUE OR EXISTS (
                SELECT 1 FROM fleet_items fi WHERE fi.product_id = p.id AND fi.status = 'available'))
          ORDER BY pf.brand, pf.model_name, p.color_name, p.variant`,
-        [language, DEFAULT_LANG, PREVIEW_DAYS, ruleSetId, category ?? null, available === true]
+        [language, DEFAULT_LANG, PREVIEW_DAYS, ruleSetId, categoryCodes, available === true]
     );
 
     const data = rows.map((r) => ({

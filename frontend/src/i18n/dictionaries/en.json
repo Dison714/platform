@@ -17,6 +17,8 @@
     "title": "Our bikes",
     "subtitle": "{count} models — scooters to sport",
     "all": "All",
+    "group_scooter": "Scooters",
+    "group_motorcycle": "Motorcycles",
     "from_month": "from / month",
     "details": "Details",
     "empty": "No bikes in this category yet.",

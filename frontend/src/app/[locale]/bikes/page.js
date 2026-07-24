@@ -1,7 +1,9 @@
 import { isEnabledLocale } from '../../../i18n/config.js';
 import { getDictionary } from '../../../i18n/getDictionary.js';
 import { apiGet } from '../../../lib/api.js';
+import { categoriesInGroup, groupOfCategory } from '../../../lib/categoryGroups.js';
 import CategoryFilter from '../../components/CategoryFilter.jsx';
+import GroupFilter from '../../components/GroupFilter.jsx';
 import BikeCard from '../../components/BikeCard.jsx';
 import { notFound } from 'next/navigation';
 import { ogTwitter, hreflangAlternates, breadcrumbJsonLd } from '../../../lib/seo.js';
@@ -31,13 +33,22 @@ export default async function BikesPage({ params, searchParams }) {
   if (!isEnabledLocale(locale)) notFound();
   const dict = await getDictionary(locale);
   const category = searchParams?.category ?? null;
+  // group (Блок A) — верхний таб "Скутеры"/"Мотоциклы". Резолвится в список
+  // конкретных категорий здесь же (маппинг целиком на фронте, см.
+  // lib/categoryGroups.js) — бэкенд просто фильтрует по списку кодов, ничего
+  // не знает про группы. Явный category (клик по нижнему чипу) главнее group.
+  const groupKey = searchParams?.group ?? null;
+  const activeGroupKey = groupKey ?? groupOfCategory(category);
+  const filterCodes = category ? [category] : (groupKey ? categoriesInGroup(groupKey) : null);
+  const categoryQuery = filterCodes ? filterCodes.join(',') : null;
 
   const [productsRes, categoriesRes] = await Promise.all([
-    apiGet(`/api/products${category ? `?category=${encodeURIComponent(category)}` : ''}`),
+    apiGet(`/api/products${categoryQuery ? `?category=${encodeURIComponent(categoryQuery)}` : ''}`),
     apiGet('/api/categories'),
   ]);
   const products = productsRes.data ?? [];
   const categories = categoriesRes.data ?? [];
+  const activeGroup = activeGroupKey ? { key: activeGroupKey, codes: categoriesInGroup(activeGroupKey) } : null;
   // Breadcrumb только при активном фильтре (Home → Bikes → [Category]) — без
   // category одна ступень не несёт смысла. Имя категории — тот же резолв,
   // что уже используется в CategoryFilter (dict.cat[code] ?? API name).
@@ -62,12 +73,15 @@ export default async function BikesPage({ params, searchParams }) {
         </p>
       </div>
 
+      <GroupFilter locale={locale} active={activeGroupKey} dict={dict} />
+
       <CategoryFilter
         locale={locale}
         categories={categories}
         active={category}
         allLabel={dict.catalog.all}
         catNames={dict.cat}
+        group={activeGroup}
       />
 
       {products.length === 0 ? (

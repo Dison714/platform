@@ -57,13 +57,14 @@ img { max-width: 100%; display: block; }
 .page-title { font-size: 34px; color: var(--navy); }
 .page-sub { color: var(--muted); font-size: 14px; margin-top: 2px; }
 
-.filter { display: flex; gap: 9px; overflow-x: auto; padding: 14px 0 4px; -webkit-overflow-scrolling: touch; }
-.filter::-webkit-scrollbar { display: none; }
+.filter { display: flex; gap: 9px; flex-wrap: wrap; padding: 14px 0 4px; }
+.filter-groups { padding-top: 18px; }
 .chip {
   white-space: nowrap; font-size: 14px; padding: 7px 14px; border-radius: 999px;
   border: 1px solid var(--border); color: var(--navy); background: #fff;
 }
 .chip.on { background: var(--navy); color: #fff; border-color: var(--navy); }
+.chip-group { font-weight: 500; }
 
 .grid {
   display: grid; gap: 14px; padding: 14px 0 40px;
