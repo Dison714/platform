@@ -67,6 +67,7 @@ export default async function ProductPage({ params, searchParams }) {
   const hero = pickHero(product.photos);
   const gallery = galleryPhotos(product.photos, hero, 8); // hero + до 8 в галерее
   const showPlaceholder = product.need_photos || !hero;
+  const videoUrls = resolveVideoUrls(product.slug);
   const resolvedSpecs = resolveSpecs(product.specs, dict); // общий резолв для UI и JSON-LD
   // JSON-LD (Product/Offer) для SEO — данные из API, не выдуманные.
   const jsonLd = {
@@ -148,8 +149,17 @@ export default async function ProductPage({ params, searchParams }) {
             showPlaceholder={showPlaceholder}
             placeholderText={dict.placeholder?.photo_soon ?? dict.product.gallery_soon}
           />
-          {resolveVideoUrls(product.slug).map((src) => (
-            <ProductVideo key={src} src={src} />
+          {/* Мобильный порядок видео (не трогаем): 1,2,3,4 сразу под галереей,
+              как и было. На десктопе видео 1/3/4 скрываются здесь и вместо
+              них рендерятся ниже, внутри .product-info (см. video-desktop-only) —
+              так они реально лежат в блоке с текстом, а не делят grid-строку
+              с фото (иначе высокая галерея утягивает их вниз общей строкой). */}
+          {videoUrls.map((src, i) => (
+            <ProductVideo
+              key={`m-${src}`}
+              src={src}
+              className={`product-video-${i + 1}${i === 1 ? '' : ' video-mobile-only'}`}
+            />
           ))}
         </div>
 
@@ -185,6 +195,20 @@ export default async function ProductPage({ params, searchParams }) {
               </dl>
             </section>
           ) : null}
+
+          {/* Десктопный порядок видео 1/3/4 — реальные узлы внутри .product-info
+              (не просто CSS-переставленные), поэтому спокойно лежат сразу под
+              текстом независимо от высоты галереи слева. Скрыты на мобильном
+              (video-desktop-only) — там уже показаны копии выше, в .product-media. */}
+          {videoUrls.map((src, i) => (
+            i === 1 ? null : (
+              <ProductVideo
+                key={`d-${src}`}
+                src={src}
+                className={`product-video-${i + 1} video-desktop-only`}
+              />
+            )
+          ))}
         </div>
       </div>
 

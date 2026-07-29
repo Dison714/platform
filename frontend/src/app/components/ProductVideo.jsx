@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from 'react';
 // и onError молча теряется (проверено: ошибка на видео реально была, но
 // компонент не скрывался). Простановка src после mount гарантирует, что
 // слушатель уже активен к началу загрузки.
-export default function ProductVideo({ src }) {
+export default function ProductVideo({ src, className }) {
   const [hidden, setHidden] = useState(false);
   const videoRef = useRef(null);
 
@@ -24,7 +24,7 @@ export default function ProductVideo({ src }) {
 
   if (hidden) return null;
   return (
-    <div className="product-video">
+    <div className={className ? `product-video ${className}` : 'product-video'}>
       <video ref={videoRef} controls preload="metadata" onError={() => setHidden(true)} />
     </div>
   );

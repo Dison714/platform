@@ -133,7 +133,24 @@ img { max-width: 100%; display: block; }
 .spec { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding: 6px 0; }
 .spec dt { color: var(--muted); font-size: 14px; margin: 0; }
 .spec dd { margin: 0; font-weight: 500; font-size: 14px; }
-@media (min-width: 880px) { .product-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+/* Video reflow, desktop only (≥880px): video 1 moves under the text in the
+   info column; video 2 stays right after the gallery (its old spot); video
+   3/4 stack under video 1. Each video is rendered TWICE — once inside
+   .product-media (original mobile position/order, untouched) and once
+   inside .product-info (desktop position, right after the specs) — and
+   only one copy is shown per breakpoint via video-mobile-only/
+   video-desktop-only. A pure grid-column/order placement doesn't work here:
+   .product-media and .product-info share grid rows, so a tall photo column
+   would force the text column's "next row" (video 1) down with it — a real
+   DOM child of .product-info stacks under the text regardless of the photo
+   column's height. Mobile keeps its default (no media query) block
+   stacking, so nothing changes there. */
+.video-desktop-only { display: none; }
+@media (min-width: 880px) {
+  .product-grid { grid-template-columns: 1fr 1fr; align-items: start; }
+  .video-mobile-only { display: none; }
+  .video-desktop-only { display: block; }
+}
 
 /* ---------- Calculator ---------- */
 .calc { margin-top: 26px; border: 1px solid var(--border); border-radius: 16px; padding: 16px; background: #fff; }
