@@ -22,7 +22,6 @@
     "per_month_note": "Prix pour 30 jours"
   },
   "product": {
-    "back": "Toutes les motos",
     "specs_title": "Caractéristiques",
     "specs_soon": "Caractéristiques bientôt disponibles.",
     "description_title": "À propos de cette moto",
@@ -143,17 +142,41 @@
     "hero_cta": "Voir les motos",
     "available_now": "Disponible maintenant",
     "trust": [
-      { "icon": "🚚", "text": "Livraison à domicile" },
-      { "icon": "🛡️", "text": "Assurance vol et dommages disponible" },
-      { "icon": "💰", "text": "Caution remboursable" },
-      { "icon": "💬", "text": "Support WhatsApp, 08h00–19h00" }
+      {
+        "icon": "🚚",
+        "text": "Livraison à domicile"
+      },
+      {
+        "icon": "🛡️",
+        "text": "Assurance vol et dommages disponible"
+      },
+      {
+        "icon": "💰",
+        "text": "Caution remboursable"
+      },
+      {
+        "icon": "💬",
+        "text": "Support WhatsApp, 08h00–19h00"
+      }
     ],
     "steps_title": "Comment ça marche",
     "steps": [
-      { "title": "Choisissez votre moto", "text": "Parcourez le catalogue et choisissez un modèle." },
-      { "title": "Réservez en ligne", "text": "Choisissez vos dates et extras, envoyez une demande — sans prépaiement." },
-      { "title": "Nous livrons", "text": "Votre moto arrive à votre adresse, prête à rouler." },
-      { "title": "Roulez", "text": "Explorez Bali à votre rythme." }
+      {
+        "title": "Choisissez votre moto",
+        "text": "Parcourez le catalogue et choisissez un modèle."
+      },
+      {
+        "title": "Réservez en ligne",
+        "text": "Choisissez vos dates et extras, envoyez une demande — sans prépaiement."
+      },
+      {
+        "title": "Nous livrons",
+        "text": "Votre moto arrive à votre adresse, prête à rouler."
+      },
+      {
+        "title": "Roulez",
+        "text": "Explorez Bali à votre rythme."
+      }
     ],
     "popular_title": "Modèles populaires",
     "popular_sub": "Un aperçu de notre gamme",
@@ -161,9 +184,18 @@
     "reviews_sub": "Vrais voyages, vraies motos",
     "why_title": "Pourquoi rouler avec nous",
     "why": [
-      { "title": "Livraison à domicile", "text": "Nous apportons la moto jusqu'à vous. Meilleur rapport qualité-prix pour les locations longues — voir la FAQ." },
-      { "title": "Équipement inclus", "text": "Casques et accessoires de montage disponibles avec votre location." },
-      { "title": "Assurance optionnelle", "text": "Ajoutez une protection vol ou dommages au moment de la réservation — à vous de choisir." }
+      {
+        "title": "Livraison à domicile",
+        "text": "Nous apportons la moto jusqu'à vous. Meilleur rapport qualité-prix pour les locations longues — voir la FAQ."
+      },
+      {
+        "title": "Équipement inclus",
+        "text": "Casques et accessoires de montage disponibles avec votre location."
+      },
+      {
+        "title": "Assurance optionnelle",
+        "text": "Ajoutez une protection vol ou dommages au moment de la réservation — à vous de choisir."
+      }
     ],
     "categories_title": "Trouvez votre moto",
     "categories_sub": "Parcourir par type",
@@ -191,15 +223,42 @@
     "title": "Questions fréquentes",
     "intro": "Tout ce qu'il faut savoir avant de réserver. Une autre question ? Écrivez-nous sur WhatsApp ou Telegram.",
     "items": [
-      { "q": "Livrez-vous la moto ?", "a": "Oui — nous livrons dans les principales zones touristiques autour de Denpasar : Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur et environs. Autres zones sur demande. Les frais de livraison dépendent de la durée de location — c'est plus avantageux pour les locations longues, et vous verrez le prix exact au moment de la réservation. Partagez un lien Google Maps lors de la réservation pour que le chauffeur sache où aller." },
-      { "q": "Y a-t-il une caution ?", "a": "Oui — une caution remboursable est retenue pendant la location et restituée lorsque vous rendez la moto en bon état. Le montant dépend du modèle et s'affiche au moment de la réservation." },
-      { "q": "L'assurance est-elle disponible ?", "a": "Oui, en option. Vous pouvez ajouter une protection vol et/ou dommages au moment de la réservation. Le prix dépend du niveau de couverture choisi et de votre profil de conducteur (âge et expérience de conduite) — vous verrez le prix exact au moment de la réservation." },
-      { "q": "Puis-je prolonger ma location ?", "a": "Oui — écrivez-nous simplement avant la fin de votre location actuelle. Vous payez la prolongation avant la fin de la période en cours." },
-      { "q": "Y a-t-il une durée de location minimale ou maximale ?", "a": "Ni minimum ni maximum — louez d'un seul jour à aussi longtemps que vous le souhaitez." },
-      { "q": "De quoi ai-je besoin pour louer ?", "a": "Juste une photo de votre passeport — rien d'autre." },
-      { "q": "Comment payer ? Y a-t-il un paiement en ligne ?", "a": "Il n'y a pas de paiement en ligne. Vous payez à la livraison ou à la remise de la moto. La réservation en ligne réserve simplement votre moto et envoie votre demande à notre équipe." },
-      { "q": "Qu'est-ce qui est inclus avec la moto ?", "a": "Chaque moto est livrée avec 2 casques gratuits. Vous pouvez surclasser l'un ou l'autre vers un casque jet ou intégral neuf pour Rp 150 000 chacun. Un top case arrière pour un passager est disponible pour Rp 200 000. Choisissez simplement ce dont vous avez besoin au moment de la réservation." },
-      { "q": "Comment réserver ?", "a": "Choisissez une moto, sélectionnez vos dates et extras pour voir le prix, puis envoyez une demande. Notre manager confirme les détails avec vous sur WhatsApp ou Telegram." }
+      {
+        "q": "Livrez-vous la moto ?",
+        "a": "Oui — nous livrons dans les principales zones touristiques autour de Denpasar : Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur et environs. Autres zones sur demande. Les frais de livraison dépendent de la durée de location — c'est plus avantageux pour les locations longues, et vous verrez le prix exact au moment de la réservation. Partagez un lien Google Maps lors de la réservation pour que le chauffeur sache où aller."
+      },
+      {
+        "q": "Y a-t-il une caution ?",
+        "a": "Oui — une caution remboursable est retenue pendant la location et restituée lorsque vous rendez la moto en bon état. Le montant dépend du modèle et s'affiche au moment de la réservation."
+      },
+      {
+        "q": "L'assurance est-elle disponible ?",
+        "a": "Oui, en option. Vous pouvez ajouter une protection vol et/ou dommages au moment de la réservation. Le prix dépend du niveau de couverture choisi et de votre profil de conducteur (âge et expérience de conduite) — vous verrez le prix exact au moment de la réservation."
+      },
+      {
+        "q": "Puis-je prolonger ma location ?",
+        "a": "Oui — écrivez-nous simplement avant la fin de votre location actuelle. Vous payez la prolongation avant la fin de la période en cours."
+      },
+      {
+        "q": "Y a-t-il une durée de location minimale ou maximale ?",
+        "a": "Ni minimum ni maximum — louez d'un seul jour à aussi longtemps que vous le souhaitez."
+      },
+      {
+        "q": "De quoi ai-je besoin pour louer ?",
+        "a": "Juste une photo de votre passeport — rien d'autre."
+      },
+      {
+        "q": "Comment payer ? Y a-t-il un paiement en ligne ?",
+        "a": "Il n'y a pas de paiement en ligne. Vous payez à la livraison ou à la remise de la moto. La réservation en ligne réserve simplement votre moto et envoie votre demande à notre équipe."
+      },
+      {
+        "q": "Qu'est-ce qui est inclus avec la moto ?",
+        "a": "Chaque moto est livrée avec 2 casques gratuits. Vous pouvez surclasser l'un ou l'autre vers un casque jet ou intégral neuf pour Rp 150 000 chacun. Un top case arrière pour un passager est disponible pour Rp 200 000. Choisissez simplement ce dont vous avez besoin au moment de la réservation."
+      },
+      {
+        "q": "Comment réserver ?",
+        "a": "Choisissez une moto, sélectionnez vos dates et extras pour voir le prix, puis envoyez une demande. Notre manager confirme les détails avec vous sur WhatsApp ou Telegram."
+      }
     ]
   },
   "footer": {

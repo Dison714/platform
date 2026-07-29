@@ -22,7 +22,6 @@
     "per_month_note": "Prezzo per 30 giorni"
   },
   "product": {
-    "back": "Tutte le moto",
     "specs_title": "Specifiche",
     "specs_soon": "Specifiche in arrivo.",
     "description_title": "Su questa moto",
@@ -143,17 +142,41 @@
     "hero_cta": "Sfoglia le moto",
     "available_now": "Disponibile ora",
     "trust": [
-      { "icon": "🚚", "text": "Consegna a domicilio" },
-      { "icon": "🛡️", "text": "Assicurazione furto e danni disponibile" },
-      { "icon": "💰", "text": "Deposito rimborsabile" },
-      { "icon": "💬", "text": "Assistenza WhatsApp, 08:00–19:00" }
+      {
+        "icon": "🚚",
+        "text": "Consegna a domicilio"
+      },
+      {
+        "icon": "🛡️",
+        "text": "Assicurazione furto e danni disponibile"
+      },
+      {
+        "icon": "💰",
+        "text": "Deposito rimborsabile"
+      },
+      {
+        "icon": "💬",
+        "text": "Assistenza WhatsApp, 08:00–19:00"
+      }
     ],
     "steps_title": "Come funziona",
     "steps": [
-      { "title": "Scegli la tua moto", "text": "Sfoglia il catalogo e scegli un modello." },
-      { "title": "Prenota online", "text": "Scegli date ed extra, invia una richiesta — senza pagamento anticipato." },
-      { "title": "Consegniamo", "text": "La tua moto arriva al tuo indirizzo, pronta all'uso." },
-      { "title": "Guida", "text": "Esplora Bali secondo i tuoi tempi." }
+      {
+        "title": "Scegli la tua moto",
+        "text": "Sfoglia il catalogo e scegli un modello."
+      },
+      {
+        "title": "Prenota online",
+        "text": "Scegli date ed extra, invia una richiesta — senza pagamento anticipato."
+      },
+      {
+        "title": "Consegniamo",
+        "text": "La tua moto arriva al tuo indirizzo, pronta all'uso."
+      },
+      {
+        "title": "Guida",
+        "text": "Esplora Bali secondo i tuoi tempi."
+      }
     ],
     "popular_title": "Modelli popolari",
     "popular_sub": "Uno sguardo alla nostra gamma",
@@ -161,9 +184,18 @@
     "reviews_sub": "Viaggi veri, moto vere",
     "why_title": "Perché scegliere noi",
     "why": [
-      { "title": "Consegna a domicilio", "text": "Portiamo la moto da te. Miglior rapporto qualità-prezzo per noleggi lunghi — consulta le FAQ." },
-      { "title": "Accessori inclusi", "text": "Caschi e accessori di montaggio disponibili con il tuo noleggio." },
-      { "title": "Assicurazione facoltativa", "text": "Aggiungi la protezione furto o danni al momento della prenotazione — a tua scelta." }
+      {
+        "title": "Consegna a domicilio",
+        "text": "Portiamo la moto da te. Miglior rapporto qualità-prezzo per noleggi lunghi — consulta le FAQ."
+      },
+      {
+        "title": "Accessori inclusi",
+        "text": "Caschi e accessori di montaggio disponibili con il tuo noleggio."
+      },
+      {
+        "title": "Assicurazione facoltativa",
+        "text": "Aggiungi la protezione furto o danni al momento della prenotazione — a tua scelta."
+      }
     ],
     "categories_title": "Trova la tua moto",
     "categories_sub": "Sfoglia per tipo",
@@ -191,15 +223,42 @@
     "title": "Domande frequenti",
     "intro": "Tutto quello che devi sapere prima di prenotare. Hai un'altra domanda? Scrivici su WhatsApp o Telegram.",
     "items": [
-      { "q": "Consegnate la moto?", "a": "Sì — consegniamo nelle principali zone turistiche vicino a Denpasar: Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur e dintorni. Altre zone su richiesta. La tariffa di consegna dipende dalla durata del noleggio — conviene di più con noleggi lunghi, e vedrai il prezzo esatto al momento della prenotazione. Condividi un link di Google Maps quando prenoti così l'autista sa dove andare." },
-      { "q": "C'è un deposito?", "a": "Sì — un deposito rimborsabile viene trattenuto durante il noleggio e restituito quando riporti la moto in buone condizioni. L'importo dipende dal modello e lo vedrai al momento della prenotazione." },
-      { "q": "È disponibile l'assicurazione?", "a": "Sì, facoltativamente. Puoi aggiungere protezione furto e/o danni al momento della prenotazione. Il prezzo dipende dal livello di copertura scelto e dal tuo profilo di guidatore (età ed esperienza) — vedrai il prezzo esatto al momento della prenotazione." },
-      { "q": "Posso prolungare il noleggio?", "a": "Sì — basta scriverci prima che termini il noleggio attuale. Paghi la proroga entro la fine del periodo in corso." },
-      { "q": "C'è una durata minima o massima di noleggio?", "a": "Nessun minimo e nessun massimo — noleggia da un solo giorno a quanto vuoi." },
-      { "q": "Cosa serve per noleggiare?", "a": "Solo una foto del tuo passaporto — nient'altro." },
-      { "q": "Come si paga? C'è il pagamento online?", "a": "Non c'è pagamento online. Paghi quando la moto viene consegnata o ritirata. La prenotazione online riserva semplicemente la tua moto e invia la richiesta al nostro team." },
-      { "q": "Cosa è incluso con la moto?", "a": "Ogni moto è dotata di 2 caschi gratuiti. Puoi passare a un casco jet o integrale nuovo per Rp 150.000 ciascuno. È disponibile un bauletto posteriore per un passeggero a Rp 200.000. Scegli semplicemente ciò che ti serve al momento della prenotazione." },
-      { "q": "Come prenoto?", "a": "Scegli una moto, seleziona date ed extra per vedere il prezzo, poi invia una richiesta. Il nostro gestore confermerà i dettagli con te su WhatsApp o Telegram." }
+      {
+        "q": "Consegnate la moto?",
+        "a": "Sì — consegniamo nelle principali zone turistiche vicino a Denpasar: Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur e dintorni. Altre zone su richiesta. La tariffa di consegna dipende dalla durata del noleggio — conviene di più con noleggi lunghi, e vedrai il prezzo esatto al momento della prenotazione. Condividi un link di Google Maps quando prenoti così l'autista sa dove andare."
+      },
+      {
+        "q": "C'è un deposito?",
+        "a": "Sì — un deposito rimborsabile viene trattenuto durante il noleggio e restituito quando riporti la moto in buone condizioni. L'importo dipende dal modello e lo vedrai al momento della prenotazione."
+      },
+      {
+        "q": "È disponibile l'assicurazione?",
+        "a": "Sì, facoltativamente. Puoi aggiungere protezione furto e/o danni al momento della prenotazione. Il prezzo dipende dal livello di copertura scelto e dal tuo profilo di guidatore (età ed esperienza) — vedrai il prezzo esatto al momento della prenotazione."
+      },
+      {
+        "q": "Posso prolungare il noleggio?",
+        "a": "Sì — basta scriverci prima che termini il noleggio attuale. Paghi la proroga entro la fine del periodo in corso."
+      },
+      {
+        "q": "C'è una durata minima o massima di noleggio?",
+        "a": "Nessun minimo e nessun massimo — noleggia da un solo giorno a quanto vuoi."
+      },
+      {
+        "q": "Cosa serve per noleggiare?",
+        "a": "Solo una foto del tuo passaporto — nient'altro."
+      },
+      {
+        "q": "Come si paga? C'è il pagamento online?",
+        "a": "Non c'è pagamento online. Paghi quando la moto viene consegnata o ritirata. La prenotazione online riserva semplicemente la tua moto e invia la richiesta al nostro team."
+      },
+      {
+        "q": "Cosa è incluso con la moto?",
+        "a": "Ogni moto è dotata di 2 caschi gratuiti. Puoi passare a un casco jet o integrale nuovo per Rp 150.000 ciascuno. È disponibile un bauletto posteriore per un passeggero a Rp 200.000. Scegli semplicemente ciò che ti serve al momento della prenotazione."
+      },
+      {
+        "q": "Come prenoto?",
+        "a": "Scegli una moto, seleziona date ed extra per vedere il prezzo, poi invia una richiesta. Il nostro gestore confermerà i dettagli con te su WhatsApp o Telegram."
+      }
     ]
   },
   "footer": {

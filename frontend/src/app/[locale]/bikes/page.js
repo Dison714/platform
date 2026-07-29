@@ -47,6 +47,16 @@ export default async function BikesPage({ params, searchParams }) {
   const model = activeGroupKey === 'motorcycle' ? (searchParams?.model ?? null) : null;
   const filterCodes = category ? [category] : (groupKey ? categoriesInGroup(groupKey) : null);
   const categoryQuery = model ? null : (filterCodes ? filterCodes.join(',') : null);
+  // Тот же фильтр, что уже в адресной строке этой страницы — прокидываем его
+  // в ссылку каждой карточки, чтобы на карточке товара можно было построить
+  // breadcrumb ровно по тому пути, которым сюда пришёл клиент (не хардкодить
+  // "Все байки"). Сырые searchParams, а не resolved-переменные — чтобы
+  // отражать URL как есть, включая случаи, когда category и group заданы вместе.
+  const cardFilterParams = new URLSearchParams();
+  if (searchParams?.group) cardFilterParams.set('group', searchParams.group);
+  if (searchParams?.category) cardFilterParams.set('category', searchParams.category);
+  if (searchParams?.model) cardFilterParams.set('model', searchParams.model);
+  const cardFilterQuery = cardFilterParams.toString();
 
   const [productsRes, categoriesRes, familiesRes] = await Promise.all([
     apiGet(
@@ -113,7 +123,7 @@ export default async function BikesPage({ params, searchParams }) {
       ) : (
         <div className="grid">
           {products.map((p) => (
-            <BikeCard key={p.id} locale={locale} product={p} dict={dict} />
+            <BikeCard key={p.id} locale={locale} product={p} dict={dict} filterQuery={cardFilterQuery} />
           ))}
         </div>
       )}

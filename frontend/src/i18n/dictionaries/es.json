@@ -22,7 +22,6 @@
     "per_month_note": "Precio por 30 días"
   },
   "product": {
-    "back": "Todas las motos",
     "specs_title": "Especificaciones",
     "specs_soon": "Especificaciones próximamente.",
     "description_title": "Sobre esta moto",
@@ -143,17 +142,41 @@
     "hero_cta": "Ver motos",
     "available_now": "Disponible ahora",
     "trust": [
-      { "icon": "🚚", "text": "Entrega a domicilio" },
-      { "icon": "🛡️", "text": "Seguro contra robo y daños disponible" },
-      { "icon": "💰", "text": "Depósito reembolsable" },
-      { "icon": "💬", "text": "Soporte por WhatsApp, 08:00–19:00" }
+      {
+        "icon": "🚚",
+        "text": "Entrega a domicilio"
+      },
+      {
+        "icon": "🛡️",
+        "text": "Seguro contra robo y daños disponible"
+      },
+      {
+        "icon": "💰",
+        "text": "Depósito reembolsable"
+      },
+      {
+        "icon": "💬",
+        "text": "Soporte por WhatsApp, 08:00–19:00"
+      }
     ],
     "steps_title": "Cómo funciona",
     "steps": [
-      { "title": "Elige tu moto", "text": "Explora el catálogo y elige un modelo." },
-      { "title": "Reserva online", "text": "Elige tus fechas y extras, envía una solicitud — sin pago anticipado." },
-      { "title": "Nosotros entregamos", "text": "Tu moto llega a tu dirección, lista para rodar." },
-      { "title": "Disfruta", "text": "Explora Bali a tu propio ritmo." }
+      {
+        "title": "Elige tu moto",
+        "text": "Explora el catálogo y elige un modelo."
+      },
+      {
+        "title": "Reserva online",
+        "text": "Elige tus fechas y extras, envía una solicitud — sin pago anticipado."
+      },
+      {
+        "title": "Nosotros entregamos",
+        "text": "Tu moto llega a tu dirección, lista para rodar."
+      },
+      {
+        "title": "Disfruta",
+        "text": "Explora Bali a tu propio ritmo."
+      }
     ],
     "popular_title": "Modelos populares",
     "popular_sub": "Un vistazo a nuestra gama",
@@ -161,9 +184,18 @@
     "reviews_sub": "Viajes reales, motos reales",
     "why_title": "Por qué elegirnos",
     "why": [
-      { "title": "Entrega a domicilio", "text": "Llevamos la moto hasta tu ubicación. Mejor relación calidad-precio en alquileres largos — consulta las preguntas frecuentes." },
-      { "title": "Equipo incluido", "text": "Cascos y accesorios de montaje disponibles con tu alquiler." },
-      { "title": "Seguro opcional", "text": "Añade protección contra robo o daños al reservar — tú eliges." }
+      {
+        "title": "Entrega a domicilio",
+        "text": "Llevamos la moto hasta tu ubicación. Mejor relación calidad-precio en alquileres largos — consulta las preguntas frecuentes."
+      },
+      {
+        "title": "Equipo incluido",
+        "text": "Cascos y accesorios de montaje disponibles con tu alquiler."
+      },
+      {
+        "title": "Seguro opcional",
+        "text": "Añade protección contra robo o daños al reservar — tú eliges."
+      }
     ],
     "categories_title": "Encuentra tu moto",
     "categories_sub": "Explora por tipo",
@@ -191,15 +223,42 @@
     "title": "Preguntas frecuentes",
     "intro": "Todo lo que necesitas saber antes de reservar. ¿Tienes otra pregunta? Escríbenos por WhatsApp o Telegram.",
     "items": [
-      { "q": "¿Entregan la moto?", "a": "Sí — entregamos en las principales zonas turísticas cerca de Denpasar: Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur y alrededores. Otras zonas bajo petición. La tarifa de entrega depende de la duración del alquiler — es más económica en alquileres largos, y verás el precio exacto al reservar. Comparte un enlace de Google Maps al reservar para que el conductor sepa dónde ir." },
-      { "q": "¿Hay depósito?", "a": "Sí — se retiene un depósito reembolsable durante el alquiler y se devuelve cuando traes la moto de vuelta en buen estado. El importe depende del modelo y lo verás al reservar." },
-      { "q": "¿Hay seguro disponible?", "a": "Sí, opcionalmente. Puedes añadir protección contra robo y/o daños al reservar. El precio depende del nivel de cobertura elegido y de tu perfil de conductor (edad y experiencia) — verás el precio exacto al reservar." },
-      { "q": "¿Puedo extender mi alquiler?", "a": "Sí — solo tienes que escribirnos antes de que termine tu alquiler actual. Pagas la extensión antes de que acabe el periodo actual." },
-      { "q": "¿Hay una duración mínima o máxima de alquiler?", "a": "Sin mínimo ni máximo — alquila desde un solo día hasta el tiempo que quieras." },
-      { "q": "¿Qué necesito para alquilar?", "a": "Solo una foto de tu pasaporte — nada más." },
-      { "q": "¿Cómo pago? ¿Hay pago online?", "a": "No hay pago online. Pagas cuando se entrega o se te da la moto. Reservar online simplemente reserva tu moto y envía tu solicitud a nuestro equipo." },
-      { "q": "¿Qué incluye la moto?", "a": "Cada moto incluye 2 cascos gratis. Puedes mejorar cualquiera de ellos a un casco medio o integral nuevo por Rp 150.000 cada uno. Hay un maletero trasero para un pasajero disponible por Rp 200.000. Simplemente elige lo que necesites al reservar." },
-      { "q": "¿Cómo reservo?", "a": "Elige una moto, selecciona tus fechas y extras para ver el precio, y luego envía una solicitud. Nuestro gestor confirmará los detalles contigo por WhatsApp o Telegram." }
+      {
+        "q": "¿Entregan la moto?",
+        "a": "Sí — entregamos en las principales zonas turísticas cerca de Denpasar: Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur y alrededores. Otras zonas bajo petición. La tarifa de entrega depende de la duración del alquiler — es más económica en alquileres largos, y verás el precio exacto al reservar. Comparte un enlace de Google Maps al reservar para que el conductor sepa dónde ir."
+      },
+      {
+        "q": "¿Hay depósito?",
+        "a": "Sí — se retiene un depósito reembolsable durante el alquiler y se devuelve cuando traes la moto de vuelta en buen estado. El importe depende del modelo y lo verás al reservar."
+      },
+      {
+        "q": "¿Hay seguro disponible?",
+        "a": "Sí, opcionalmente. Puedes añadir protección contra robo y/o daños al reservar. El precio depende del nivel de cobertura elegido y de tu perfil de conductor (edad y experiencia) — verás el precio exacto al reservar."
+      },
+      {
+        "q": "¿Puedo extender mi alquiler?",
+        "a": "Sí — solo tienes que escribirnos antes de que termine tu alquiler actual. Pagas la extensión antes de que acabe el periodo actual."
+      },
+      {
+        "q": "¿Hay una duración mínima o máxima de alquiler?",
+        "a": "Sin mínimo ni máximo — alquila desde un solo día hasta el tiempo que quieras."
+      },
+      {
+        "q": "¿Qué necesito para alquilar?",
+        "a": "Solo una foto de tu pasaporte — nada más."
+      },
+      {
+        "q": "¿Cómo pago? ¿Hay pago online?",
+        "a": "No hay pago online. Pagas cuando se entrega o se te da la moto. Reservar online simplemente reserva tu moto y envía tu solicitud a nuestro equipo."
+      },
+      {
+        "q": "¿Qué incluye la moto?",
+        "a": "Cada moto incluye 2 cascos gratis. Puedes mejorar cualquiera de ellos a un casco medio o integral nuevo por Rp 150.000 cada uno. Hay un maletero trasero para un pasajero disponible por Rp 200.000. Simplemente elige lo que necesites al reservar."
+      },
+      {
+        "q": "¿Cómo reservo?",
+        "a": "Elige una moto, selecciona tus fechas y extras para ver el precio, y luego envía una solicitud. Nuestro gestor confirmará los detalles contigo por WhatsApp o Telegram."
+      }
     ]
   },
   "footer": {

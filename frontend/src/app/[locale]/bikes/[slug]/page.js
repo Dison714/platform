@@ -6,10 +6,10 @@ import { resolvePhotoUrl, pickHero, galleryPhotos, resolveVideoUrls } from '../.
 import { ogTwitter, hreflangAlternates, breadcrumbJsonLd } from '../../../../lib/seo.js';
 import { absoluteUrl } from '../../../../lib/site.js';
 import { resolveSpecs } from '../../../../lib/specs.js';
+import Link from 'next/link';
 import Calculator from '../../../components/Calculator.jsx';
 import ProductGallery from '../../../components/ProductGallery.jsx';
 import ProductVideo from '../../../components/ProductVideo.jsx';
-import BackLink from '../../../components/BackLink.jsx';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,14 +42,24 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function ProductPage({ params }) {
+export default async function ProductPage({ params, searchParams }) {
   const { locale, slug } = params;
   if (!isEnabledLocale(locale)) notFound();
   const dict = await getDictionary(locale);
 
-  const [product, equipmentRes] = await Promise.all([
+  // Путь фильтра, которым клиент пришёл на карточку (см. bikes/page.js
+  // cardFilterQuery → BikeCard href) — если задан, строим полный breadcrumb
+  // (Байки → группа → категория/модель → товар) вместо голого "Все байки",
+  // иначе точно тот же поход клиента не восстановить.
+  const groupKey = searchParams?.group ?? null;
+  const categoryCode = searchParams?.category ?? null;
+  const modelCode = searchParams?.model ?? null;
+
+  const [product, equipmentRes, categoriesRes, familiesRes] = await Promise.all([
     loadProduct(slug, locale),
     apiGet(`/api/equipment?lang=${encodeURIComponent(locale)}`),
+    categoryCode ? apiGet(`/api/categories?lang=${encodeURIComponent(locale)}`) : Promise.resolve({ data: [] }),
+    modelCode ? apiGet(`/api/families?lang=${encodeURIComponent(locale)}`) : Promise.resolve({ data: [] }),
   ]);
   if (!product) notFound();
 
@@ -85,20 +95,49 @@ export default async function ProductPage({ params }) {
         }
       : undefined,
   };
-  // Home → Bikes → [Product name]; названия ступеней — те же строки навигации
-  // (dict.nav), имя продукта — то же, что в Product JSON-LD/<title> выше.
-  const breadcrumbLd = breadcrumbJsonLd([
+  // Home → Bikes → [группа] → [категория|модель] → [Product name] — ровно
+  // путь фильтров, которым клиент пришёл (см. groupKey/categoryCode/modelCode
+  // выше). Без фильтра — просто Home → Bikes → Product, как раньше.
+  const trail = [
     { name: dict.nav.home, path: `/${locale}` },
     { name: dict.nav.bikes, path: `/${locale}/bikes` },
-    { name: product.name, path: `/${locale}/bikes/${product.slug}` },
-  ]);
+  ];
+  if (groupKey === 'scooter' || groupKey === 'motorcycle') {
+    const groupLabel = groupKey === 'scooter' ? dict.catalog.group_scooter : dict.catalog.group_motorcycle;
+    trail.push({ name: groupLabel, path: `/${locale}/bikes?group=${groupKey}` });
+  }
+  if (categoryCode) {
+    const cat = categoriesRes.data?.find((c) => c.code === categoryCode);
+    if (cat) {
+      trail.push({
+        name: cat.name,
+        path: `/${locale}/bikes?category=${categoryCode}${groupKey ? `&group=${groupKey}` : ''}`,
+      });
+    }
+  } else if (modelCode) {
+    const fam = familiesRes.data?.find((f) => f.code === modelCode);
+    if (fam) trail.push({ name: fam.name, path: `/${locale}/bikes?group=motorcycle&model=${modelCode}` });
+  }
+  trail.push({ name: product.name, path: `/${locale}/bikes/${product.slug}` });
+  const breadcrumbLd = breadcrumbJsonLd(trail);
 
   return (
     <div className="container product-wrap">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
-      <BackLink href={`/${locale}/bikes`} label={dict.product.back} />
+      <nav className="breadcrumb" aria-label="Breadcrumb">
+        {trail.map((step, i) =>
+          i === trail.length - 1 ? (
+            <span key={step.path} className="breadcrumb-current">{step.name}</span>
+          ) : (
+            <span key={step.path} className="breadcrumb-step">
+              <Link href={step.path}>{step.name}</Link>
+              <span className="breadcrumb-sep">/</span>
+            </span>
+          )
+        )}
+      </nav>
 
       <div className="product-grid">
         <div className="product-media">

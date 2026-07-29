@@ -22,7 +22,6 @@
     "per_month_note": "Preis für 30 Tage"
   },
   "product": {
-    "back": "Alle Motorräder",
     "specs_title": "Technische Daten",
     "specs_soon": "Technische Daten folgen in Kürze.",
     "description_title": "Über dieses Motorrad",
@@ -143,17 +142,41 @@
     "hero_cta": "Motorräder ansehen",
     "available_now": "Jetzt verfügbar",
     "trust": [
-      { "icon": "🚚", "text": "Lieferung bis vor die Tür" },
-      { "icon": "🛡️", "text": "Diebstahl- und Schadenversicherung verfügbar" },
-      { "icon": "💰", "text": "Rückerstattbare Kaution" },
-      { "icon": "💬", "text": "WhatsApp-Support, 08:00–19:00 Uhr" }
+      {
+        "icon": "🚚",
+        "text": "Lieferung bis vor die Tür"
+      },
+      {
+        "icon": "🛡️",
+        "text": "Diebstahl- und Schadenversicherung verfügbar"
+      },
+      {
+        "icon": "💰",
+        "text": "Rückerstattbare Kaution"
+      },
+      {
+        "icon": "💬",
+        "text": "WhatsApp-Support, 08:00–19:00 Uhr"
+      }
     ],
     "steps_title": "So funktioniert's",
     "steps": [
-      { "title": "Motorrad wählen", "text": "Katalog durchstöbern und ein Modell auswählen." },
-      { "title": "Online buchen", "text": "Termine und Extras wählen, Anfrage senden — keine Vorauszahlung." },
-      { "title": "Wir liefern", "text": "Ihr Motorrad kommt fahrbereit an Ihre Adresse." },
-      { "title": "Losfahren", "text": "Entdecken Sie Bali nach Ihrem eigenen Zeitplan." }
+      {
+        "title": "Motorrad wählen",
+        "text": "Katalog durchstöbern und ein Modell auswählen."
+      },
+      {
+        "title": "Online buchen",
+        "text": "Termine und Extras wählen, Anfrage senden — keine Vorauszahlung."
+      },
+      {
+        "title": "Wir liefern",
+        "text": "Ihr Motorrad kommt fahrbereit an Ihre Adresse."
+      },
+      {
+        "title": "Losfahren",
+        "text": "Entdecken Sie Bali nach Ihrem eigenen Zeitplan."
+      }
     ],
     "popular_title": "Beliebte Modelle",
     "popular_sub": "Ein Blick über unser Sortiment",
@@ -161,9 +184,18 @@
     "reviews_sub": "Echte Reisen, echte Motorräder",
     "why_title": "Warum mit uns fahren",
     "why": [
-      { "title": "Lieferung bis vor die Tür", "text": "Wir bringen das Motorrad zu Ihnen. Besseres Preis-Leistungs-Verhältnis bei längeren Mietzeiten — siehe FAQ." },
-      { "title": "Zubehör inklusive", "text": "Helme und Montagezubehör sind bei Ihrer Miete erhältlich." },
-      { "title": "Optionale Versicherung", "text": "Fügen Sie beim Checkout Diebstahl- oder Schadenschutz hinzu — Ihre Wahl." }
+      {
+        "title": "Lieferung bis vor die Tür",
+        "text": "Wir bringen das Motorrad zu Ihnen. Besseres Preis-Leistungs-Verhältnis bei längeren Mietzeiten — siehe FAQ."
+      },
+      {
+        "title": "Zubehör inklusive",
+        "text": "Helme und Montagezubehör sind bei Ihrer Miete erhältlich."
+      },
+      {
+        "title": "Optionale Versicherung",
+        "text": "Fügen Sie beim Checkout Diebstahl- oder Schadenschutz hinzu — Ihre Wahl."
+      }
     ],
     "categories_title": "Finden Sie Ihr Motorrad",
     "categories_sub": "Nach Typ durchsuchen",
@@ -191,15 +223,42 @@
     "title": "Häufig gestellte Fragen",
     "intro": "Alles, was Sie vor der Buchung wissen müssen. Haben Sie eine weitere Frage? Schreiben Sie uns auf WhatsApp oder Telegram.",
     "items": [
-      { "q": "Liefert ihr das Motorrad?", "a": "Ja — wir liefern in die wichtigsten Touristengebiete rund um Denpasar: Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur und Umgebung. Andere Gebiete auf Anfrage. Die Liefergebühr hängt von der Mietdauer ab — je länger Sie mieten, desto günstiger wird es, und den genauen Preis sehen Sie beim Checkout. Teilen Sie bei der Buchung einen Google-Maps-Link, damit der Fahrer weiß, wohin er muss." },
-      { "q": "Gibt es eine Kaution?", "a": "Ja — eine rückerstattbare Kaution wird während der Mietzeit einbehalten und zurückgezahlt, wenn Sie das Motorrad in gutem Zustand zurückbringen. Die Höhe hängt vom Modell ab und wird beim Checkout angezeigt." },
-      { "q": "Ist eine Versicherung verfügbar?", "a": "Ja, optional. Sie können beim Checkout Diebstahlschutz und/oder Schadenschutz hinzufügen. Der Preis hängt von der gewählten Deckungshöhe und Ihrem Fahrerprofil (Alter und Fahrerfahrung) ab — den genauen Preis sehen Sie beim Checkout." },
-      { "q": "Kann ich meine Miete verlängern?", "a": "Ja — schreiben Sie uns einfach, bevor Ihre aktuelle Mietzeit endet. Die Verlängerung zahlen Sie bis zum Ende des aktuellen Zeitraums." },
-      { "q": "Gibt es eine Mindest- oder Höchstmietdauer?", "a": "Kein Minimum und kein Maximum — mieten Sie von einem einzelnen Tag bis so lange Sie möchten." },
-      { "q": "Was brauche ich, um zu mieten?", "a": "Nur ein Foto Ihres Reisepasses — mehr nicht." },
-      { "q": "Wie bezahle ich? Gibt es Online-Zahlung?", "a": "Es gibt keine Online-Zahlung. Sie zahlen, wenn das Motorrad geliefert oder übergeben wird. Die Online-Buchung reserviert lediglich Ihr Motorrad und sendet Ihre Anfrage an unser Team." },
-      { "q": "Was ist im Lieferumfang enthalten?", "a": "Jedes Motorrad wird mit 2 kostenlosen Helmen geliefert. Sie können jeden davon gegen einen neuen Halbschalen- oder Integralhelm für je Rp 150.000 upgraden. Ein hinterer Topcase für einen Beifahrer ist für Rp 200.000 erhältlich. Wählen Sie einfach, was Sie beim Checkout benötigen." },
-      { "q": "Wie buche ich?", "a": "Wählen Sie ein Motorrad, legen Sie Ihre Termine und Extras fest, um den Preis zu sehen, und senden Sie dann eine Anfrage. Unser Manager bestätigt die Details mit Ihnen per WhatsApp oder Telegram." }
+      {
+        "q": "Liefert ihr das Motorrad?",
+        "a": "Ja — wir liefern in die wichtigsten Touristengebiete rund um Denpasar: Bukit, Canggu, Seseh, Ubud, Denpasar, Sanur und Umgebung. Andere Gebiete auf Anfrage. Die Liefergebühr hängt von der Mietdauer ab — je länger Sie mieten, desto günstiger wird es, und den genauen Preis sehen Sie beim Checkout. Teilen Sie bei der Buchung einen Google-Maps-Link, damit der Fahrer weiß, wohin er muss."
+      },
+      {
+        "q": "Gibt es eine Kaution?",
+        "a": "Ja — eine rückerstattbare Kaution wird während der Mietzeit einbehalten und zurückgezahlt, wenn Sie das Motorrad in gutem Zustand zurückbringen. Die Höhe hängt vom Modell ab und wird beim Checkout angezeigt."
+      },
+      {
+        "q": "Ist eine Versicherung verfügbar?",
+        "a": "Ja, optional. Sie können beim Checkout Diebstahlschutz und/oder Schadenschutz hinzufügen. Der Preis hängt von der gewählten Deckungshöhe und Ihrem Fahrerprofil (Alter und Fahrerfahrung) ab — den genauen Preis sehen Sie beim Checkout."
+      },
+      {
+        "q": "Kann ich meine Miete verlängern?",
+        "a": "Ja — schreiben Sie uns einfach, bevor Ihre aktuelle Mietzeit endet. Die Verlängerung zahlen Sie bis zum Ende des aktuellen Zeitraums."
+      },
+      {
+        "q": "Gibt es eine Mindest- oder Höchstmietdauer?",
+        "a": "Kein Minimum und kein Maximum — mieten Sie von einem einzelnen Tag bis so lange Sie möchten."
+      },
+      {
+        "q": "Was brauche ich, um zu mieten?",
+        "a": "Nur ein Foto Ihres Reisepasses — mehr nicht."
+      },
+      {
+        "q": "Wie bezahle ich? Gibt es Online-Zahlung?",
+        "a": "Es gibt keine Online-Zahlung. Sie zahlen, wenn das Motorrad geliefert oder übergeben wird. Die Online-Buchung reserviert lediglich Ihr Motorrad und sendet Ihre Anfrage an unser Team."
+      },
+      {
+        "q": "Was ist im Lieferumfang enthalten?",
+        "a": "Jedes Motorrad wird mit 2 kostenlosen Helmen geliefert. Sie können jeden davon gegen einen neuen Halbschalen- oder Integralhelm für je Rp 150.000 upgraden. Ein hinterer Topcase für einen Beifahrer ist für Rp 200.000 erhältlich. Wählen Sie einfach, was Sie beim Checkout benötigen."
+      },
+      {
+        "q": "Wie buche ich?",
+        "a": "Wählen Sie ein Motorrad, legen Sie Ihre Termine und Extras fest, um den Preis zu sehen, und senden Sie dann eine Anfrage. Unser Manager bestätigt die Details mit Ihnen per WhatsApp oder Telegram."
+      }
     ]
   },
   "footer": {

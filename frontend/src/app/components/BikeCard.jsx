@@ -6,12 +6,13 @@ import { resolvePhotoUrl } from '../../lib/photos.js';
 // (need_photos → «Photo coming soon», иначе аккуратная иконка, не битая картинка).
 // Метки: archived_color → «Rare colour» (деликатно); print_name → имя серии.
 // partner_bike в UI НЕ показываем (флаг только для внутренней аналитики).
-export default function BikeCard({ locale, product, dict }) {
+export default function BikeCard({ locale, product, dict, filterQuery = '' }) {
   const { slug, name, category, hero, price_preview, archived_color, print_name, need_photos } = product;
   const thumb = resolvePhotoUrl(hero, 'thumb');
+  const href = `/${locale}/bikes/${slug}${filterQuery ? `?${filterQuery}` : ''}`;
 
   return (
-    <Link href={`/${locale}/bikes/${slug}`} className="card">
+    <Link href={href} className="card">
       <div className="card-img">
         {thumb ? (
           <img src={thumb} alt={name} loading="lazy" width="400" height="300" />
