@@ -172,12 +172,25 @@
   Router (validate → SQL → явные коды ошибок 409/404) → BFF-прокси
   `/api/admin/<resource>` → клиентский компонент (таблица + форма).
   Подробности каждого раздела — в PROJECT_STATUS.md.
-- Деплой MDB Platform (backend + frontend): Hetzner VPS + Coolify. Архитектура БД
-  (self-hosted PostgreSQL на Hetzner vs Supabase) не зафиксирована — см. открытые
-  вопросы в PROJECT_STATUS.md перед стартом чанка Deploy. Боты (`MDB_drivers_bot`,
+- Деплой MDB Platform (backend + frontend): **Contabo VPS** (`169.58.60.244`) +
+  Coolify 4.1.2, самохостится там же. БД — **self-hosted PostgreSQL 18** внутри
+  Coolify-контейнера (не Supabase — зафиксировано фактом разворачивания),
+  контейнер `xw6ykwjdrdmtly2qg8kbd16m`. Боты (`MDB_drivers_bot`,
   `MDB_tugas_approver_bot`, `Bali_Rent_Manager_bot`) — отдельно на Render.com, вне
   периметра деплоя Platform. Без CI/CD на старте: каждое изменение схемы проверять
   руками перед применением к боевой БД с данными.
+- **Доступ к проду и R2 — только по ссылке, без секретов в файлах.** SSH на
+  сервер: ключ `~/.ssh/mdb_platform_new`, юзер `root`
+  (`ssh -i ~/.ssh/mdb_platform_new root@169.58.60.244`) — даёт прямой `docker
+  exec`/`docker cp` в Postgres-контейнер, R2-курьер через presigned URL не
+  нужен. R2 (Cloudflare, бакет `mdb-platform-media`) — профиль `aws configure
+  --profile r2` в `~/.aws/credentials` на машине разработчика (сами ключи —
+  Cloudflare dashboard → R2 → Manage API Tokens, никогда не хранить в
+  репозитории/CLAUDE.md/PROJECT_STATUS.md). Паттерн разовой синхронизации
+  данных на прод: сгенерировать SQL из `backend/scripts/gen_catalog_sync.mjs`
+  / `gen_price_sync.mjs` (апсерт по бизнес-ключу, НЕ по `id` — id генерируются
+  заново на каждой стороне и никогда не совпадут между dev/prod) → `scp` +
+  `docker cp` в контейнер → `psql -v ON_ERROR_STOP=1 -f`.
 
 ## 7. Источники для сидирования
 
