@@ -12,6 +12,7 @@ export default function BookingForm({ slug, locale, start, end, locationLink, se
   const [telegram, setTelegram] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [comment, setComment] = useState('');
   const [status, setStatus] = useState('idle'); // idle | sending | error
   const [errMsg, setErrMsg] = useState('');
   const [done, setDone] = useState(null); // booking_id при успехе
@@ -34,6 +35,7 @@ export default function BookingForm({ slug, locale, start, end, locationLink, se
       ...(selection.insurance ? { insurance: selection.insurance } : {}),
       ...(selection.equipment ? { equipment: selection.equipment } : {}),
       ...(locationLink ? { location_link: locationLink } : {}),
+      ...(comment.trim() ? { comment: comment.trim() } : {}),
     };
   }
 
@@ -98,6 +100,11 @@ export default function BookingForm({ slug, locale, start, end, locationLink, se
           <input type="tel" inputMode="tel" value={phone} placeholder="+62…" onChange={(e) => setPhone(e.target.value)} />
         </label>
       </div>
+
+      <label className="field"><span>{t.comment}</span>
+        <textarea value={comment} rows={3} onChange={(e) => setComment(e.target.value)} />
+      </label>
+      <p className="hint">{t.comment_hint}</p>
 
       {status === 'error' && <p className="hint err">{errMsg}</p>}
 

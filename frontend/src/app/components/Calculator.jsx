@@ -53,12 +53,14 @@ export default function Calculator({ slug, locale, equipment, insuranceOptions, 
 
   // Общая часть выбора (страховка + допы) — переиспользуется для quote и booking.
   const selection = useMemo(() => {
-    // Шлемы: в расчёт идут ТОЛЬКО премиум-слоты (цена > 0). Free-слоты строк не
-    // дают → 0 премиум = нет строки, 1 = 150k, 2 = 300k.
+    // Шлемы: каждый отмеченный слот фиксируется явно, даже если выбран
+    // бесплатный тип (0к) — иначе непонятно, взял клиент шлем или нет.
+    // null = чекбокс слота снят → в заявку не идёт вообще.
     const helmetTally = {};
     for (const code of helmetSlots) {
+      if (!code) continue;
       const h = helmets.find((x) => x.code === code);
-      if (h && h.rental_price_idr > 0) helmetTally[code] = (helmetTally[code] || 0) + 1;
+      if (h) helmetTally[code] = (helmetTally[code] || 0) + 1;
     }
     const equip = [
       ...Object.entries(helmetTally).map(([code, n]) => ({ code, quantity: n })),
@@ -163,21 +165,37 @@ export default function Calculator({ slug, locale, equipment, insuranceOptions, 
             <section className="calc-section">
               <h3>{t.helmets}</h3>
               <p className="hint" style={{ marginTop: 0, marginBottom: 8 }}>{t.helmets_note}</p>
-              {[0, 1].map((i) => (
-                <label className="field" key={i}>
-                  <span>{t.helmet_slot.replace('{n}', String(i + 1))}</span>
-                  <select
-                    value={helmetSlots[i] ?? ''}
-                    onChange={(e) => setHelmetSlots((s) => { const c = [...s]; c[i] = e.target.value; return c; })}
-                  >
-                    {helmets.map((h) => (
-                      <option key={h.code} value={h.code}>
-                        {h.rental_price_idr > 0 ? `${h.name} (+${formatIdr(h.rental_price_idr)})` : t.helmet_free}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              ))}
+              {[0, 1].map((i) => {
+                const defaultFreeCode = helmets.find((h) => h.rental_price_idr === 0)?.code ?? helmets[0]?.code ?? null;
+                return (
+                  <div className="field" key={i}>
+                    <label className="check">
+                      <input
+                        type="checkbox"
+                        checked={helmetSlots[i] != null}
+                        onChange={(e) => setHelmetSlots((s) => {
+                          const c = [...s];
+                          c[i] = e.target.checked ? defaultFreeCode : null;
+                          return c;
+                        })}
+                      />
+                      {t.helmet_slot.replace('{n}', String(i + 1))}
+                    </label>
+                    {helmetSlots[i] != null && (
+                      <select
+                        value={helmetSlots[i]}
+                        onChange={(e) => setHelmetSlots((s) => { const c = [...s]; c[i] = e.target.value; return c; })}
+                      >
+                        {helmets.map((h) => (
+                          <option key={h.code} value={h.code}>
+                            {h.rental_price_idr > 0 ? `${h.name} (+${formatIdr(h.rental_price_idr)})` : `${h.name} — ${t.free}`}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </div>
+                );
+              })}
             </section>
           )}
 

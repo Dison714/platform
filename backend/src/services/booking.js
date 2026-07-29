@@ -69,10 +69,89 @@ function deliveryLine(d, t) {
     return `${t.delivery}${tier} — ${kk(d.fee_idr)}`;
 }
 
+// Заявка водителю (база знаний диспетчера): деньги — просто тысячи без
+// разделителей/суффикса ("4400"), как в шаблоне Дмитрия — не путать с kk().
+function ddk(idr) {
+    return String(Math.round(Number(idr) / 1000));
+}
+
+function formatDDMMYYYY(isoDate) {
+    const [y, m, d] = String(isoDate).split('-');
+    return `${d}.${m}.${y}`;
+}
+
+// Все шлемы в группе helmet сводятся к физическому типу для комплектации —
+// биллинг (обычный/новый, платный/бесплатный) водителю не важен, важно
+// открытый (HF) или закрытый (FF) (база знаний диспетчера §4.2).
+const HELMET_HF_CODES = new Set(['helmet_biasa', 'helmet_kyt_hf', 'helmet_kyt_hf_new']);
+const HELMET_FF_CODES = new Set(['helmet_kyt_ff', 'helmet_kyt_ff_new']);
+
+// Peralatan (комплектация в заявке водителю). Правила (уточнены с Дмитрием,
+// не покрыты базой знаний диспетчера п.4.2 целиком):
+//  - lap, dudukan hp — всегда, независимо от чекбоксов клиента на сайте;
+//  - jas hujan — количество = числу выбранных шлемов, только если клиент
+//    отметил дождевик (по числу шлемов, а не фиксированная 1 шт — так
+//    подтвердил Дмитрий, это переопределяет дефолт подготовки байка "1 шт"
+//    из базы знаний, специфично для этой заявки);
+//  - karpet — всегда при выбранном SHAD-боксе (shad_box);
+//  - safety set — всегда и только для категории 'touring' (Vstrom/Versys).
+function computePeralatan(equipmentItems, categoryCode) {
+    let helmetCount = 0;
+    let hasRaincoat = false;
+    let hasShadBox = false;
+    const helmetTokens = [];
+    for (const it of equipmentItems ?? []) {
+        if (HELMET_HF_CODES.has(it.code)) {
+            for (let i = 0; i < it.quantity; i++) helmetTokens.push('HF');
+            helmetCount += it.quantity;
+        } else if (HELMET_FF_CODES.has(it.code)) {
+            for (let i = 0; i < it.quantity; i++) helmetTokens.push('FF');
+            helmetCount += it.quantity;
+        } else if (it.code === 'raincoat') {
+            hasRaincoat = true;
+        } else if (it.code === 'shad_box') {
+            hasShadBox = true;
+        }
+    }
+    const list = [...helmetTokens];
+    if (hasRaincoat && helmetCount > 0) list.push(`${helmetCount} jas hujan`);
+    list.push('dudukan hp', 'lap');
+    if (hasShadBox) list.push('karpet');
+    if (categoryCode === 'touring') list.push('safety set');
+    return list;
+}
+
+// Заявка для водителей (вторая карточка, всегда на индонезийском — CLAUDE.md
+// §4: "все задачи водителям на индонезийском"). Sopir/Pakai/номер юнита в
+// Motor — сознательно пустые плейсхолдеры (нет справочника свободных
+// байков/водителей в админке — будущий чанк). Memesan/время НЕ парсим из
+// комментария клиента — диспетчер читает и проставляет вручную.
+export function buildDriverText({ seq, startDate, customer, link, comment, productName, categoryCode, quote }) {
+    const eq = quote.breakdown.equipment;
+    const peralatan = computePeralatan(eq?.items, categoryCode);
+    const total = Number(quote.total_payable_idr) + Number(quote.deposit.amount_idr);
+
+    const lines = [
+        `${seq}.`,
+        `Sopir: —`,
+        `Memesan: pengiriman ${formatDDMMYYYY(startDate)}, jam — lihat Komentar`,
+        `Pakai: —`,
+        `Location: ${link ? esc(link) : '—'}`,
+        `Client hubungan: ${buildContactsHtml(customer)}`,
+        `Motor: ${esc(productName)} — unit: —`,
+        `Harga: ${ddk(quote.total_payable_idr)}`,
+        `Deposit: ${ddk(quote.deposit.amount_idr)}`,
+        `Total: ${ddk(total)}`,
+        `Peralatan: ${peralatan.length ? peralatan.join(', ') : '—'}`,
+        `Komentar: ${comment ? esc(comment) : '—'}`,
+    ];
+    return lines.join('\n');
+}
+
 // Текст уведомления менеджеру — ЦЕЛИКОМ на языке заявки (locale). Подписи из
 // серверного словаря NOTIFY[locale]; названия оборудования уже локализованы в
 // снимке (computeEquipment(lang)). ВСЕ суммы — из quote_snapshot, без пересчёта.
-export function buildManagerText({ locale, ref, productName, startDate, endDate, rentalDays, customer, quote, link }) {
+export function buildManagerText({ locale, ref, productName, startDate, endDate, rentalDays, customer, quote, link, comment }) {
     const t = notifyDict(locale);
     const b = quote.breakdown;
     const ins = b.insurance;
@@ -108,6 +187,7 @@ export function buildManagerText({ locale, ref, productName, startDate, endDate,
         '———————',
         `💰 <b>${t.to_pay}: ${kk(quote.total_payable_idr)} IDR</b>`,
         `🔐 ${t.deposit}: ${kk(quote.deposit.amount_idr)} IDR`,
+        ...(comment ? ['', `💬 <b>${t.comment}</b>: ${esc(comment)}`] : []),
     ];
     return lines.join('\n');
 }
@@ -144,7 +224,7 @@ async function findOrCreateCustomer(client, companyId, c) {
 }
 
 export async function createBooking(input) {
-    const { product, start_date, end_date, customer, insurance, equipment, location_link } = input ?? {};
+    const { product, start_date, end_date, customer, insurance, equipment, location_link, comment } = input ?? {};
     // Язык заявки: уведомление менеджеру и снимок имён — на нём. Неизвестный → en.
     const locale = SUPPORTED_LOCALES.includes(input?.locale) ? input.locale : 'en';
 
@@ -174,6 +254,7 @@ export async function createBooking(input) {
     const companyId = await getCompanyId();
     const ruleSetId = await getActiveRuleSetId();
     const link = typeof location_link === 'string' && location_link.trim() ? location_link.trim() : null;
+    const commentText = typeof comment === 'string' && comment.trim() ? comment.trim() : null;
 
     const client = await pool.connect();
     try {
@@ -185,8 +266,8 @@ export async function createBooking(input) {
             `INSERT INTO bookings (
                 company_id, source, status, customer_id, product_id, rule_set_id,
                 start_date, end_date, rental_days,
-                base_price_idr, delivery_fee_idr, total_payable_idr, quote_snapshot, location_link, locale
-             ) VALUES ($1,'website','created',$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+                base_price_idr, delivery_fee_idr, total_payable_idr, quote_snapshot, location_link, locale, comment
+             ) VALUES ($1,'website','created',$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
              RETURNING id, status, created_at, booking_number`,
             [
                 companyId, customerId, quote.product.id, ruleSetId,
@@ -194,7 +275,7 @@ export async function createBooking(input) {
                 quote.breakdown.base_rental.price_idr,
                 quote.breakdown.delivery.fee_idr,
                 quote.total_payable_idr,
-                quote, link, locale,
+                quote, link, locale, commentText,
             ]
         );
         const booking = bRows[0];
@@ -216,6 +297,7 @@ export async function createBooking(input) {
         const text = buildManagerText({
             locale, ref, productName: quote.product.name,
             startDate: start_date, endDate: end_date, rentalDays, customer, quote, link,
+            comment: commentText,
         });
         const notificationIds = [];
         for (const chatId of chatIds) {
@@ -225,6 +307,44 @@ export async function createBooking(input) {
                 [companyId, { chat_id: chatId, text, parse_mode: 'HTML' }, booking.id]
             );
             notificationIds.push(nRows[0].id);
+        }
+
+        // Заявка водителям (Фаза D) — та же эскалация (Дмитрий подтвердил: тот
+        // же chat_id, что и у менеджера). category_id — для правила "safety set
+        // только для touring" в Peralatan.
+        const { rows: catRows } = await client.query(
+            `SELECT vc.code
+             FROM products p
+             JOIN product_families pf ON pf.id = p.family_id
+             JOIN vehicle_categories vc ON vc.id = pf.category_id
+             WHERE p.id = $1`,
+            [quote.product.id]
+        );
+        const categoryCode = catRows[0]?.code ?? null;
+
+        // Сквозной номер карточки за календарный день — атомарный UPSERT в этой
+        // же транзакции (миграция 042).
+        const { rows: seqRows } = await client.query(
+            `INSERT INTO driver_notification_daily_seq (company_id, seq_date, last_seq)
+             VALUES ($1, CURRENT_DATE, 1)
+             ON CONFLICT (company_id, seq_date)
+             DO UPDATE SET last_seq = driver_notification_daily_seq.last_seq + 1
+             RETURNING last_seq`,
+            [companyId]
+        );
+        const dailySeq = seqRows[0].last_seq;
+
+        const driverText = buildDriverText({
+            seq: dailySeq, startDate: start_date, customer, link, comment: commentText,
+            productName: quote.product.name, categoryCode, quote,
+        });
+        for (const chatId of chatIds) {
+            const { rows: dRows } = await client.query(
+                `INSERT INTO notifications (company_id, channel, status, template_code, payload, booking_id)
+                 VALUES ($1,'telegram','queued','driver_card',$2,$3) RETURNING id`,
+                [companyId, { chat_id: chatId, text: driverText, parse_mode: 'HTML' }, booking.id]
+            );
+            notificationIds.push(dRows[0].id);
         }
 
         await client.query('COMMIT');

@@ -22,6 +22,7 @@ export const NOTIFY = {
     deposit: 'Deposit (refundable)',
     location_map: 'Location on map',
     location: 'Location',
+    comment: 'Comment',
   },
   ru: {
     lang_name: 'Русский',
@@ -43,6 +44,7 @@ export const NOTIFY = {
     deposit: 'Депозит (возврат)',
     location_map: 'Локация на карте',
     location: 'Локация',
+    comment: 'Комментарий',
   },
 };
 
