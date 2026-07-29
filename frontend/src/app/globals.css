@@ -66,6 +66,13 @@ img { max-width: 100%; display: block; }
 .chip.on { background: var(--navy); color: #fff; border-color: var(--navy); }
 .chip-group { font-weight: 500; }
 
+/* Третья строка (П.20) — модели внутри "Мотоциклы", визуально мельче и
+   легче, чем группа/категория, чтобы читалась как уточнение, не как
+   равноправный третий уровень. */
+.filter-models { padding-top: 2px; }
+.chip-model { font-size: 12.5px; padding: 5px 11px; color: var(--muted); }
+.chip-model.on { background: var(--red); color: #fff; border-color: transparent; }
+
 .grid {
   display: grid; gap: 14px; padding: 14px 0 40px;
   grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -4,6 +4,7 @@ import { apiGet } from '../../../lib/api.js';
 import { categoriesInGroup, groupOfCategory } from '../../../lib/categoryGroups.js';
 import CategoryFilter from '../../components/CategoryFilter.jsx';
 import GroupFilter from '../../components/GroupFilter.jsx';
+import ModelFilter from '../../components/ModelFilter.jsx';
 import BikeCard from '../../components/BikeCard.jsx';
 import { notFound } from 'next/navigation';
 import { ogTwitter, hreflangAlternates, breadcrumbJsonLd } from '../../../lib/seo.js';
@@ -39,16 +40,31 @@ export default async function BikesPage({ params, searchParams }) {
   // не знает про группы. Явный category (клик по нижнему чипу) главнее group.
   const groupKey = searchParams?.group ?? null;
   const activeGroupKey = groupKey ?? groupOfCategory(category);
+  // model (Блок A, третья строка, П.20) — конкретная линейка внутри "Мотоциклы".
+  // Своя ось фильтра (product_families.code), не пересекается с category —
+  // при активном model категорийный фильтр не применяем, модель уже
+  // однозначно определяет продукты (см. catalog.js listProducts).
+  const model = activeGroupKey === 'motorcycle' ? (searchParams?.model ?? null) : null;
   const filterCodes = category ? [category] : (groupKey ? categoriesInGroup(groupKey) : null);
-  const categoryQuery = filterCodes ? filterCodes.join(',') : null;
+  const categoryQuery = model ? null : (filterCodes ? filterCodes.join(',') : null);
 
-  const [productsRes, categoriesRes] = await Promise.all([
-    apiGet(`/api/products?lang=${encodeURIComponent(locale)}${categoryQuery ? `&category=${encodeURIComponent(categoryQuery)}` : ''}`),
+  const [productsRes, categoriesRes, familiesRes] = await Promise.all([
+    apiGet(
+      `/api/products?lang=${encodeURIComponent(locale)}` +
+      (categoryQuery ? `&category=${encodeURIComponent(categoryQuery)}` : '') +
+      (model ? `&model=${encodeURIComponent(model)}` : '')
+    ),
     apiGet(`/api/categories?lang=${encodeURIComponent(locale)}`),
+    apiGet(`/api/families?lang=${encodeURIComponent(locale)}`),
   ]);
   const products = productsRes.data ?? [];
   const categories = categoriesRes.data ?? [];
+  const families = familiesRes.data ?? [];
   const activeGroup = activeGroupKey ? { key: activeGroupKey, codes: categoriesInGroup(activeGroupKey) } : null;
+  // Третья строка — только модели, чья категория входит в группу "Мотоциклы".
+  const motorcycleFamilies = activeGroupKey === 'motorcycle'
+    ? families.filter((f) => categoriesInGroup('motorcycle').includes(f.category.code))
+    : [];
   // Breadcrumb только при активном фильтре (Home → Bikes → [Category]) — без
   // category одна ступень не несёт смысла. Имя категории уже локализовано
   // на бэкенде (vehicle_category_translations).
@@ -82,6 +98,15 @@ export default async function BikesPage({ params, searchParams }) {
         allLabel={dict.catalog.all}
         group={activeGroup}
       />
+
+      {motorcycleFamilies.length > 0 ? (
+        <ModelFilter
+          locale={locale}
+          families={motorcycleFamilies}
+          active={model}
+          allLabel={dict.catalog.all}
+        />
+      ) : null}
 
       {products.length === 0 ? (
         <p style={{ padding: '24px 0', color: 'var(--muted)' }}>{dict.catalog.empty}</p>

@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { isEnabledLocale } from '../../../../i18n/config.js';
 import { getDictionary } from '../../../../i18n/getDictionary.js';
@@ -10,6 +9,7 @@ import { resolveSpecs } from '../../../../lib/specs.js';
 import Calculator from '../../../components/Calculator.jsx';
 import ProductGallery from '../../../components/ProductGallery.jsx';
 import ProductVideo from '../../../components/ProductVideo.jsx';
+import BackLink from '../../../components/BackLink.jsx';
 
 export const dynamic = 'force-dynamic';
 
@@ -98,7 +98,7 @@ export default async function ProductPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
-      <Link href={`/${locale}/bikes`} className="back-link">← {dict.product.back}</Link>
+      <BackLink href={`/${locale}/bikes`} label={dict.product.back} />
 
       <div className="product-grid">
         <div className="product-media">

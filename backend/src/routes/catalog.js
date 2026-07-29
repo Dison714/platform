@@ -12,6 +12,7 @@ catalogRouter.get('/products', async (req, res, next) => {
         const result = await listProducts({
             lang: req.query.lang,
             category: req.query.category,
+            model: req.query.model,
             available: req.query.available === 'true',
         });
         res.json(result);

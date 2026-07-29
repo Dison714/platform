@@ -88,7 +88,7 @@ function familyName(brand, model) {
 // =====================================================================
 // GET /api/products
 // =====================================================================
-export async function listProducts({ lang, category, available } = {}) {
+export async function listProducts({ lang, category, model, available } = {}) {
     const language = await resolveLanguage(lang);
     const ruleSetId = await getActiveRuleSetId();
 
@@ -111,6 +111,27 @@ export async function listProducts({ lang, category, available } = {}) {
         const unknown = categoryCodes.filter((c) => !found.has(c));
         if (unknown.length > 0) {
             const err = new Error(`Unknown category: ${unknown.join(', ')}`);
+            err.status = 400;
+            throw err;
+        }
+    }
+
+    // model (Блок A, третья строка — конкретная линейка внутри "Мотоциклы") —
+    // фильтр по product_families.code, независим от category/group: family —
+    // однозначная линейка (XSR, MT-25, ...), в отличие от category (тип кузова,
+    // где у одной линейки может быть двойное членство, см. family_filter_categories).
+    const modelCodes = model
+        ? model.split(',').map((c) => c.trim()).filter(Boolean)
+        : null;
+    if (modelCodes) {
+        const { rows } = await pool.query(
+            'SELECT code FROM product_families WHERE code = ANY($1::text[])',
+            [modelCodes]
+        );
+        const found = new Set(rows.map((r) => r.code));
+        const unknown = modelCodes.filter((c) => !found.has(c));
+        if (unknown.length > 0) {
+            const err = new Error(`Unknown model: ${unknown.join(', ')}`);
             err.status = 400;
             throw err;
         }
@@ -150,8 +171,9 @@ export async function listProducts({ lang, category, available } = {}) {
                WHERE ffc.family_id = pf.id AND fvc.code = ANY($5::text[])))
            AND ($6::boolean IS NOT TRUE OR EXISTS (
                SELECT 1 FROM fleet_items fi WHERE fi.product_id = p.id AND fi.status = 'available'))
+           AND ($7::text[] IS NULL OR pf.code = ANY($7::text[]))
          ORDER BY pf.brand, pf.model_name, p.color_name, p.variant`,
-        [language, DEFAULT_LANG, PREVIEW_DAYS, ruleSetId, categoryCodes, available === true]
+        [language, DEFAULT_LANG, PREVIEW_DAYS, ruleSetId, categoryCodes, available === true, modelCodes]
     );
 
     const data = rows.map((r) => ({

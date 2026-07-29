@@ -1,4 +1,3 @@
-import { resolvePhotoUrl } from './photos.js';
 import { enabledLocales, DEFAULT_LOCALE } from '../i18n/config.js';
 import { absoluteUrl } from './site.js';
 
@@ -16,14 +15,15 @@ export function hreflangAlternates(suffix) {
   return languages;
 }
 
-// Дефолтный og:image для страниц без собственного фото (homepage/каталог/
-// About/FAQ) — реальное отснятое фото байка из product_photos (Honda ADV
-// Total Black), НЕ логотип (файла нет в репозитории) и НЕ сток. Собственность
-// бизнеса. Относительный путь — metadataBase в root layout резолвит в
-// абсолютный URL автоматически (как и alternates.canonical).
-const DEFAULT_OG_PHOTO = { storage_path: 'bikes/honda-adv-total-black/01' };
+// Дефолтный og:image (превью при шаринге ссылки в WhatsApp/Telegram/соцсетях)
+// для страниц без собственного фото (homepage/каталог/About/FAQ) — не
+// продуктовое фото из product_photos/R2, а отдельный статический файл
+// (frontend/public/og-preview.webp, владелец выбрал конкретный кадр из
+// «Проф» — сgeneral, не привязан к какому-то одному Product). НЕ логотип
+// (файла нет в репозитории) и НЕ сток. Относительный путь — metadataBase в
+// root layout резолвит в абсолютный URL автоматически (как и alternates.canonical).
 export function defaultOgImageUrl() {
-  return resolvePhotoUrl(DEFAULT_OG_PHOTO, 'hero');
+  return '/og-preview.webp';
 }
 
 // openGraph+twitter блок для generateMetadata. Canonical/hreflang НЕ входят
