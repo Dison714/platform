@@ -1,4 +1,5 @@
 import '../globals.css';
+import Script from 'next/script';
 import { Teko, Poppins, Noto_Sans_Arabic } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { isEnabledLocale, enabledLocales } from '../../i18n/config.js';
@@ -7,6 +8,14 @@ import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
 import { organizationJsonLd } from '../../lib/organization.js';
 import { IS_PRODUCTION, SITE_URL } from '../../lib/site.js';
+
+// Google Ads conversion tag — перенесено со старого WordPress-сайта
+// (там стоял как GT-KDB22DZQ через Site Kit). Пока без привязки к
+// конкретному conversion action — Дмитрий перелинкует в кабинете Google
+// Ads после проверки, что тег вообще стреляет на платформе. Не гейтим
+// IS_PRODUCTION намеренно: нужно поймать событие на sslip.io-стейджинге
+// до DNS-катовера.
+const GOOGLE_ADS_ID = 'AW-17065885486';
 
 // Шрифты бренда: Teko — дисплейные заголовки, Poppins — текст/UI (self-hosted).
 // Ни один не покрывает арабскую графику — для ar подменяем --font-poppins
@@ -52,6 +61,15 @@ export default async function LocaleLayout({ children, params }) {
       <body>
         {/* LocalBusiness — глобально на каждой странице, не только на homepage. */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`} strategy="afterInteractive" />
+        <Script id="google-ads-gtag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GOOGLE_ADS_ID}');
+          `}
+        </Script>
         <div className="layout-root">
           <Header locale={locale} dict={dict} />
           <main style={{ flex: 1 }}>{children}</main>
