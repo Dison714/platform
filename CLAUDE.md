@@ -172,13 +172,22 @@
   Router (validate → SQL → явные коды ошибок 409/404) → BFF-прокси
   `/api/admin/<resource>` → клиентский компонент (таблица + форма).
   Подробности каждого раздела — в PROJECT_STATUS.md.
-- Деплой MDB Platform (backend + frontend): **Contabo VPS** (`169.58.60.244`) +
-  Coolify 4.1.2, самохостится там же. БД — **self-hosted PostgreSQL 18** внутри
-  Coolify-контейнера (не Supabase — зафиксировано фактом разворачивания),
-  контейнер `xw6ykwjdrdmtly2qg8kbd16m`. Боты (`MDB_drivers_bot`,
-  `MDB_tugas_approver_bot`, `Bali_Rent_Manager_bot`) — отдельно на Render.com, вне
-  периметра деплоя Platform. Без CI/CD на старте: каждое изменение схемы проверять
-  руками перед применением к боевой БД с данными.
+- Деплой MDB Platform (backend + frontend): **Contabo VPS** (`169.58.60.244`,
+  IPv6 `2a02:c207:2345:9293::1` — не путать с docker-мостом `fd85:...` на
+  том же сервере, это приватный ULA) + Coolify 4.1.2, самохостится там же.
+  БД — **self-hosted PostgreSQL 18** внутри Coolify-контейнера (не Supabase —
+  зафиксировано фактом разворачивания), контейнер `xw6ykwjdrdmtly2qg8kbd16m`.
+  Боты (`MDB_drivers_bot`, `MDB_tugas_approver_bot`, `Bali_Rent_Manager_bot`) —
+  отдельно на Render.com, вне периметра деплоя Platform. Без CI/CD на старте:
+  каждое изменение схемы проверять руками перед применением к боевой БД с
+  данными.
+- **DNS cutover на `bikebalirent.com` — ЗАВЕРШЁН (2026-07-30).** NS на
+  Cloudflare, A+AAAA → Contabo (DNS only, без proxy), отдельные Let's
+  Encrypt сертификаты на apex и `www`, `SITE_ENV=production` включён
+  (индексация открыта). Email (MX/SPF/DKIM/DMARC) остаётся на Hostinger —
+  почта не переезжала. WordPress-хостинг на Hostinger физически ещё не
+  отключён (решение за Дмитрием). Подробности хода cutover и найденных
+  багов — `PROJECT_STATUS.md`, раздел «Сессия 2026-07-30».
 - **Доступ к проду и R2 — только по ссылке, без секретов в файлах.** SSH на
   сервер: ключ `~/.ssh/mdb_platform_new`, юзер `root`
   (`ssh -i ~/.ssh/mdb_platform_new root@169.58.60.244`) — даёт прямой `docker
