@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { isEnabledLocale } from '../../../i18n/config.js';
 import { getDictionary } from '../../../i18n/getDictionary.js';
-import { CONTACTS, ADDRESS, HOURS } from '../../../lib/contacts.js';
+import { CONTACTS, ADDRESS, HOURS, HOURS_NOTE } from '../../../lib/contacts.js';
 import { ogTwitter, hreflangAlternates } from '../../../lib/seo.js';
 
 export async function generateMetadata({ params }) {
@@ -51,6 +51,7 @@ export default async function AboutPage({ params }) {
           <span className="contact-value">{HOURS}</span>
         </div>
       </div>
+      <p className="hint">{HOURS_NOTE}</p>
     </div>
   );
 }
