@@ -16,7 +16,7 @@ export default function Footer({ dict }) {
           <a href="https://wa.me/6282146433303"><span className="i" aria-hidden="true">✆</span>WhatsApp +62 821 464 333 03</a>
           <a href="https://t.me/Bali_rent_main"><span className="i" aria-hidden="true">✈</span>Telegram @Bali_rent_main</a>
           <a href="https://instagram.com/bali_rents"><span className="i" aria-hidden="true">◎</span>Instagram @bali_rents</a>
-          <a href="mailto:support@bikebalirent.com"><span className="i" aria-hidden="true">✉</span>support@bikebalirent.com</a>
+          <a href="mailto:rentbalibike@gmail.com"><span className="i" aria-hidden="true">✉</span>rentbalibike@gmail.com</a>
         </div>
       </div>
       <div className="ftr-bottom">
