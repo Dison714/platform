@@ -184,10 +184,16 @@
 - **DNS cutover на `bikebalirent.com` — ЗАВЕРШЁН (2026-07-30).** NS на
   Cloudflare, A+AAAA → Contabo (DNS only, без proxy), отдельные Let's
   Encrypt сертификаты на apex и `www`, `SITE_ENV=production` включён
-  (индексация открыта). Email (MX/SPF/DKIM/DMARC) остаётся на Hostinger —
-  почта не переезжала. WordPress-хостинг на Hostinger физически ещё не
+  (индексация открыта). WordPress-хостинг на Hostinger физически ещё не
   отключён (решение за Дмитрием). Подробности хода cutover и найденных
   багов — `PROJECT_STATUS.md`, раздел «Сессия 2026-07-30».
+- **Почтовых ящиков на домене `bikebalirent.com` никогда не было** (подтверждено
+  Дмитрием, 2026-08-01) — контактный email компании живёт на отдельном Gmail
+  (`rentbalibike@gmail.com`, `frontend/src/lib/contacts.js`), не на домене. DNS
+  домена явно задекларирован как non-mail: null MX (`0 .`), `SPF: v=spf1 -all`,
+  `DMARC: p=reject`. Не путать с почтой ботов/уведомлений — она вообще не
+  проходит через этот домен. Подробности — `PROJECT_STATUS.md`, раздел
+  «Сессия 2026-08-01».
 - **Доступ к проду и R2 — только по ссылке, без секретов в файлах.** SSH на
   сервер: ключ `~/.ssh/mdb_platform_new`, юзер `root`
   (`ssh -i ~/.ssh/mdb_platform_new root@169.58.60.244`) — даёт прямой `docker
