@@ -1,7 +1,10 @@
 {
   "brand": {
     "name": "Bike Bali Rent",
-    "tagline": "Location de motos à Bali"
+    "tagline": "Location de motos et motos personnalisées à Bali"
+  },
+  "contact": {
+    "prefill_message": "Bonjour ! Je vous contacte depuis le site Bike Bali Rent (bikebalirent.com)."
   },
   "nav": {
     "home": "Accueil",

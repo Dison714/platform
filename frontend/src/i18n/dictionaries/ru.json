@@ -1,7 +1,10 @@
 {
   "brand": {
     "name": "Bike Bali Rent",
-    "tagline": "Аренда мотобайков на Бали"
+    "tagline": "Аренда мотобайков и кастомные байки на Бали"
+  },
+  "contact": {
+    "prefill_message": "Здравствуйте! Пишу с сайта Bike Bali Rent (bikebalirent.com)."
   },
   "nav": {
     "home": "Главная",

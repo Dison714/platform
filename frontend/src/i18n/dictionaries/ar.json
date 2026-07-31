@@ -1,7 +1,10 @@
 {
   "brand": {
     "name": "Bike Bali Rent",
-    "tagline": "تأجير الدراجات النارية في بالي"
+    "tagline": "تأجير الدراجات النارية والدراجات المخصصة في بالي"
+  },
+  "contact": {
+    "prefill_message": "مرحبًا! أتواصل معكم من موقع Bike Bali Rent (bikebalirent.com)."
   },
   "nav": {
     "home": "الرئيسية",

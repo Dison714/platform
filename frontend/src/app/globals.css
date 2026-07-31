@@ -36,6 +36,8 @@ img { max-width: 100%; display: block; }
 .hdr-in { display: flex; align-items: center; justify-content: space-between; height: 58px; }
 .logo { font-size: 26px; color: #fff; }
 .logo b { color: var(--red); font-weight: inherit; }
+.hdr-tagline { font-size: 12px; color: rgba(255,255,255,0.72); margin-inline-start: 14px; white-space: nowrap; }
+@media (max-width: 900px) { .hdr-tagline { display: none; } }
 .nav-desktop { display: none; gap: 22px; align-items: center; }
 .nav-desktop a { font-size: 15px; opacity: 0.92; }
 .nav-desktop a:hover { opacity: 1; }
@@ -329,6 +331,7 @@ img { max-width: 100%; display: block; }
 .contact-row { display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px; border-top: 1px solid var(--border); color: var(--ink); }
 .contact-row:first-child { border-top: 0; }
 .contact-row:not(.static):hover { background: var(--surface); }
+.terms-note { font-size: 13px; font-style: italic; color: #6a6a6a; border-inline-start: 3px solid var(--border); padding-inline-start: 12px; margin: 0 0 20px; }
 .terms-list { padding-inline-start: 22px; display: grid; gap: 12px; color: var(--ink); }
 
 /* ---------- Product long-form content (Family-level, below Calculator) ---------- */

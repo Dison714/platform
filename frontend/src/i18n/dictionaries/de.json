@@ -1,7 +1,10 @@
 {
   "brand": {
     "name": "Bike Bali Rent",
-    "tagline": "Motorradverleih auf Bali"
+    "tagline": "Motorradvermietung & Custom Bikes auf Bali"
+  },
+  "contact": {
+    "prefill_message": "Hallo! Ich schreibe von der Bike Bali Rent Website (bikebalirent.com)."
   },
   "nav": {
     "home": "Startseite",

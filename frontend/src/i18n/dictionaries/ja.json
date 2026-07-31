@@ -1,7 +1,10 @@
 {
   "brand": {
     "name": "Bike Bali Rent",
-    "tagline": "バリ島のバイクレンタル"
+    "tagline": "バリ島でのバイクレンタル＆カスタムバイク"
+  },
+  "contact": {
+    "prefill_message": "こんにちは。Bike Bali Rentのウェブサイト（bikebalirent.com）からご連絡しています。"
   },
   "nav": {
     "home": "ホーム",

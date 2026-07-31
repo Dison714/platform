@@ -32,6 +32,7 @@ export default function Header({ locale, dict }) {
         <Link href={`${base}/bikes`} className="display logo" aria-label={dict.brand.name}>
           BIKE BALI <b>RENT</b>
         </Link>
+        <span className="hdr-tagline">{dict.brand.tagline}</span>
 
         <nav className="nav-desktop" aria-label="Main">
           {links.map((l) => (
