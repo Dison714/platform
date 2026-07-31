@@ -36,16 +36,23 @@ app.use('/api', deliveryRouter);
 app.use('/api', quoteRouter);
 app.use('/api', bookingRouter);
 app.use('/api', equipmentRouter);
+// deliveryAdminRouter должен быть смонтирован ДО любого
+// app.use('/api', requireInternalToken, ...) ниже: requireInternalToken там
+// навешан на весь путь '/api' (не на конкретный роутер), значит он
+// перехватывает ЛЮБОЙ непойманный выше запрос под /api/*, включая тот, что
+// на самом деле предназначен deliveryAdminRouter, если смонтировать его
+// после первого такого шлюза. GET /delivery-fee-rules читает сам продуктовый
+// сайт (bikes/[slug]/page.js — калькулятор доставки, JSON-LD
+// shippingDetails) и должен остаться публичным; POST/PUT/DELETE внутри
+// deliveryAdmin.js гейтятся requireInternalToken точечно, на уровне
+// конкретного route-handler'а — так это работает независимо от порядка
+// монтирования.
+app.use('/api', deliveryAdminRouter);
 // Configuration First admin-разделы (ТЗ п.12) — за requireInternalToken.
-// Публичные роуты выше (catalog/delivery/quote/booking/equipment) им не
-// защищены и не должны быть — их дёргает сам сайт.
+// Публичные роуты выше (catalog/delivery/quote/booking/equipment/delivery-
+// admin's GET) им не защищены и не должны быть — их дёргает сам сайт.
 app.use('/api', requireInternalToken, seasonalMultipliersRouter);
 app.use('/api', requireInternalToken, insuranceAdminRouter);
-// deliveryAdminRouter — исключение: GET /delivery-fee-rules читает сам
-// продуктовый сайт (bikes/[slug]/page.js — тарифы доставки для калькулятора
-// и JSON-LD shippingDetails), поэтому router не гейтится целиком; токен
-// применён точечно на POST/PUT/DELETE внутри самого deliveryAdmin.js.
-app.use('/api', deliveryAdminRouter);
 app.use('/api', requireInternalToken, depositAdminRouter);
 app.use('/api', requireInternalToken, replacementGroupsAdminRouter);
 
