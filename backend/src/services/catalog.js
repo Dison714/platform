@@ -233,7 +233,7 @@ export async function getProduct({ idOrSlug, lang } = {}) {
     if (rows.length === 0) return null;
     const r = rows[0];
 
-    const [photos, specs, pricing, insurance] = await Promise.all([
+    const [photos, specs, pricing, insurance, content] = await Promise.all([
         pool.query(
             `SELECT storage_path, cdn_url, source_url, is_hero, sort_order
              FROM product_photos WHERE product_id = $1 ORDER BY sort_order`,
@@ -255,6 +255,15 @@ export async function getProduct({ idOrSlug, lang } = {}) {
             `SELECT kind, driver_exp, coverage_idr, monthly_idr, bali_only
              FROM insurance_plans WHERE rule_set_id = $1 ORDER BY kind, driver_exp`,
             [ruleSetId]
+        ),
+        // Длинный маркетинговый блок — на уровне Family (одинаков для всех
+        // цветов), COALESCE-фолбэк на en, пока не переведено (как description).
+        pool.query(
+            `SELECT COALESCE(fc.content_html, fcen.content_html) AS content_html
+             FROM (SELECT 1) AS one
+             LEFT JOIN family_content_translations fc   ON fc.family_id   = $1 AND fc.language_code   = $2
+             LEFT JOIN family_content_translations fcen ON fcen.family_id = $1 AND fcen.language_code = $3`,
+            [r.family_id, language, DEFAULT_LANG]
         ),
     ]);
 
@@ -285,6 +294,7 @@ export async function getProduct({ idOrSlug, lang } = {}) {
             source: s.source,
             sort_order: s.sort_order,
         })),
+        content_html: content.rows[0]?.content_html ?? null,
         pricing: {
             currency: CURRENCY,
             // Прямая таблица 1-30 дней (ТЗ п.6.1.1, без интерполяции).

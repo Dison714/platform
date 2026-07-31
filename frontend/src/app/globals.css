@@ -330,6 +330,18 @@ img { max-width: 100%; display: block; }
 .contact-row:first-child { border-top: 0; }
 .contact-row:not(.static):hover { background: var(--surface); }
 .terms-list { padding-inline-start: 22px; display: grid; gap: 12px; color: var(--ink); }
+
+/* ---------- Product long-form content (Family-level, below Calculator) ---------- */
+.product-long-content { max-width: 780px; margin: 40px auto 0; }
+.product-long-content h2, .product-long-content h3 {
+  font-family: var(--font-teko), sans-serif; letter-spacing: 0.5px; color: var(--navy);
+  font-size: 24px; margin: 28px 0 10px;
+}
+.product-long-content h2:first-child, .product-long-content h3:first-child { margin-top: 0; }
+.product-long-content p { color: var(--ink); line-height: 1.6; margin: 0 0 12px; }
+.product-long-content ul { padding-inline-start: 22px; display: grid; gap: 8px; margin: 0 0 16px; color: var(--ink); }
+.product-long-content li { line-height: 1.5; }
+.product-long-content strong { color: var(--navy); }
 .contact-label { color: var(--muted); }
 .contact-value { font-weight: 500; color: var(--navy); text-align: end; }
 .contact-row.static .contact-value { color: var(--ink); font-weight: 400; }

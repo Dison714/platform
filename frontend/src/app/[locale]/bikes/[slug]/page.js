@@ -255,6 +255,17 @@ export default async function ProductPage({ params, searchParams }) {
         insuranceOptions={equipmentRes.data.insurance}
         dict={dict}
       />
+
+      {/* Длинный маркетинговый блок (Family-level, family_content_translations) —
+          намеренно НИЖЕ калькулятора/брони, чтобы не мешать above-the-fold
+          конверсии; короткий product.description выше (между ценой и
+          Specifications) — это отдельное поле, не дублирует этот блок. */}
+      {product.content_html ? (
+        <section
+          className="product-long-content"
+          dangerouslySetInnerHTML={{ __html: product.content_html }}
+        />
+      ) : null}
     </div>
   );
 }
