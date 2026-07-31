@@ -1,11 +1,14 @@
 import { Router } from 'express';
 import { pool } from '../db/pool.js';
 import { getActiveRuleSetId } from '../services/ruleSet.js';
+import { requireInternalToken } from '../middleware/internalAuth.js';
 
 export const deliveryAdminRouter = Router();
 
-// Configuration First (п.12 ТЗ) — /internal/delivery. Доступ уже закрыт
-// Basic Auth на уровне Next.js middleware.
+// Configuration First (п.12 ТЗ) — /internal/delivery, запись через Basic
+// Auth + requireInternalToken (см. ниже на POST/PUT/DELETE). GET читается
+// и оттуда, и напрямую публичным сайтом (bikes/[slug]/page.js) — поэтому
+// не гейтится, в отличие от остальных 4 admin-роутеров в server.js.
 
 // GET /api/delivery-fee-rules — тиры активного rule_set.
 deliveryAdminRouter.get('/delivery-fee-rules', async (req, res, next) => {
@@ -54,7 +57,7 @@ function isOverlapError(err) {
 }
 
 // POST /api/delivery-fee-rules — новый тир.
-deliveryAdminRouter.post('/delivery-fee-rules', async (req, res, next) => {
+deliveryAdminRouter.post('/delivery-fee-rules', requireInternalToken, async (req, res, next) => {
     try {
         const v = validateBody(req.body);
         const ruleSetId = await getActiveRuleSetId();
@@ -72,7 +75,7 @@ deliveryAdminRouter.post('/delivery-fee-rules', async (req, res, next) => {
 });
 
 // PUT /api/delivery-fee-rules/:id — обновить тир.
-deliveryAdminRouter.put('/delivery-fee-rules/:id', async (req, res, next) => {
+deliveryAdminRouter.put('/delivery-fee-rules/:id', requireInternalToken, async (req, res, next) => {
     try {
         const v = validateBody(req.body);
         const { rows } = await pool.query(
@@ -91,7 +94,7 @@ deliveryAdminRouter.put('/delivery-fee-rules/:id', async (req, res, next) => {
 });
 
 // DELETE /api/delivery-fee-rules/:id
-deliveryAdminRouter.delete('/delivery-fee-rules/:id', async (req, res, next) => {
+deliveryAdminRouter.delete('/delivery-fee-rules/:id', requireInternalToken, async (req, res, next) => {
     try {
         const { rowCount } = await pool.query('DELETE FROM delivery_fee_rules WHERE id = $1', [req.params.id]);
         if (rowCount === 0) { const e = new Error('not_found'); e.status = 404; throw e; }

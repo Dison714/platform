@@ -36,12 +36,16 @@ app.use('/api', deliveryRouter);
 app.use('/api', quoteRouter);
 app.use('/api', bookingRouter);
 app.use('/api', equipmentRouter);
-// Configuration First admin-разделы (ТЗ п.12) — единственные роуты за
-// requireInternalToken. Публичные роуты выше (catalog/delivery/quote/
-// booking/equipment) им не защищены и не должны быть — их дёргает сам сайт.
+// Configuration First admin-разделы (ТЗ п.12) — за requireInternalToken.
+// Публичные роуты выше (catalog/delivery/quote/booking/equipment) им не
+// защищены и не должны быть — их дёргает сам сайт.
 app.use('/api', requireInternalToken, seasonalMultipliersRouter);
 app.use('/api', requireInternalToken, insuranceAdminRouter);
-app.use('/api', requireInternalToken, deliveryAdminRouter);
+// deliveryAdminRouter — исключение: GET /delivery-fee-rules читает сам
+// продуктовый сайт (bikes/[slug]/page.js — тарифы доставки для калькулятора
+// и JSON-LD shippingDetails), поэтому router не гейтится целиком; токен
+// применён точечно на POST/PUT/DELETE внутри самого deliveryAdmin.js.
+app.use('/api', deliveryAdminRouter);
 app.use('/api', requireInternalToken, depositAdminRouter);
 app.use('/api', requireInternalToken, replacementGroupsAdminRouter);
 
