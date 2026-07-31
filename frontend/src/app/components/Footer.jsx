@@ -1,5 +1,7 @@
 // Футер: контакты бренда (статичные данные, не из API).
-export default function Footer({ dict }) {
+import Link from 'next/link';
+
+export default function Footer({ dict, locale }) {
   const year = new Date().getFullYear();
   return (
     <footer className="ftr">
@@ -20,7 +22,9 @@ export default function Footer({ dict }) {
         </div>
       </div>
       <div className="ftr-bottom">
-        <div className="container">© {year} {dict.brand.name}. {dict.footer.rights}</div>
+        <div className="container">
+          © {year} {dict.brand.name}. {dict.footer.rights} · <Link href={`/${locale}/terms`} className="ftr-terms-link">{dict.footer.terms}</Link>
+        </div>
       </div>
     </footer>
   );

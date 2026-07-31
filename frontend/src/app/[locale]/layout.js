@@ -73,7 +73,7 @@ export default async function LocaleLayout({ children, params }) {
         <div className="layout-root">
           <Header locale={locale} dict={dict} />
           <main style={{ flex: 1 }}>{children}</main>
-          <Footer dict={dict} />
+          <Footer dict={dict} locale={locale} />
         </div>
       </body>
     </html>

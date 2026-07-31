@@ -55,11 +55,12 @@ export default async function ProductPage({ params, searchParams }) {
   const categoryCode = searchParams?.category ?? null;
   const modelCode = searchParams?.model ?? null;
 
-  const [product, equipmentRes, categoriesRes, familiesRes] = await Promise.all([
+  const [product, equipmentRes, categoriesRes, familiesRes, deliveryTiersRes] = await Promise.all([
     loadProduct(slug, locale),
     apiGet(`/api/equipment?lang=${encodeURIComponent(locale)}`),
     categoryCode ? apiGet(`/api/categories?lang=${encodeURIComponent(locale)}`) : Promise.resolve({ data: [] }),
     modelCode ? apiGet(`/api/families?lang=${encodeURIComponent(locale)}`) : Promise.resolve({ data: [] }),
+    apiGet('/api/delivery-fee-rules'),
   ]);
   if (!product) notFound();
 
@@ -69,12 +70,25 @@ export default async function ProductPage({ params, searchParams }) {
   const showPlaceholder = product.need_photos || !hero;
   const videoUrls = resolveVideoUrls(product.slug);
   const resolvedSpecs = resolveSpecs(product.specs, dict); // общий резолв для UI и JSON-LD
-  // JSON-LD (Product/Offer) для SEO — данные из API, не выдуманные.
+  // Google Merchant listing (структурированные данные, GSC "Данные о товарах
+  // продавца") хочет валидный google_product_category, а не наш ярлык
+  // фильтра каталога (vehicle_categories.name — "Naked / Classic" и т.п.,
+  // это UI-фильтр, не таксономия). У мотобайков/скутеров в таксономии
+  // Google один лист без разбивки на "скутер"/"мотоцикл" (ID 919):
+  // https://productcategory.net/finder/vehicles-and-parts/vehicles/motor-vehicles/motorcycles-and-scooters/
+  const GOOGLE_PRODUCT_CATEGORY = 'Vehicles & Parts > Vehicles > Motor Vehicles > Motorcycles & Scooters';
+  // Тарифы доставки — из /api/delivery-fee-rules (тот же rule_set, что и
+  // калькулятор), не задублированы вручную, чтобы не разъехаться при
+  // изменении в /internal/delivery. shippingDetails — по одной записи на
+  // тариф; сам rental-by-duration тариф не укладывается 1:1 в семантику
+  // OfferShippingDetails (она про вес/сумму заказа, не срок аренды), но
+  // числа реальные — компромисс согласован с владельцем.
+  const deliveryTiers = deliveryTiersRes.data ?? [];
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
-    category: product.category?.name,
+    category: GOOGLE_PRODUCT_CATEGORY,
     brand: { '@type': 'Brand', name: product.family?.name?.split(' ')[0] || dict.brand.name },
     ...(product.description ? { description: product.description } : {}),
     ...(hero ? { image: absoluteUrl(resolvePhotoUrl(hero, 'hero')) } : {}),
@@ -93,6 +107,28 @@ export default async function ProductPage({ params, searchParams }) {
           priceCurrency: product.pricing.currency,
           price: fromPrice,
           availability: 'https://schema.org/InStock',
+          // Договор аренды (п.4, Agreement_MDB_final.docx / /terms): оплата
+          // невозвратна при досрочном возврате — возврата товара в смысле
+          // merchant return тут в принципе нет, это аренда, а не покупка.
+          hasMerchantReturnPolicy: {
+            '@type': 'MerchantReturnPolicy',
+            returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+            url: absoluteUrl(`/${locale}/terms`),
+          },
+          ...(deliveryTiers.length
+            ? {
+                shippingDetails: deliveryTiers.map((t) => ({
+                  '@type': 'OfferShippingDetails',
+                  shippingRate: { '@type': 'MonetaryAmount', value: Number(t.fee_idr), currency: 'IDR' },
+                  shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'ID', addressRegion: 'Bali' },
+                  deliveryTime: {
+                    '@type': 'ShippingDeliveryTime',
+                    handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY' },
+                    transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 1, unitCode: 'DAY' },
+                  },
+                })),
+              }
+            : {}),
         }
       : undefined,
   };
