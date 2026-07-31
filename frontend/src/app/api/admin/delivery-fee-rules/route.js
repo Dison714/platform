@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
-
-const BASE = process.env.API_BASE_URL || 'http://localhost:3000';
+import { backendAdminFetch } from '../../../../lib/backendAdminFetch.js';
 
 export async function GET() {
   try {
-    const res = await fetch(`${BASE}/api/delivery-fee-rules`, { cache: 'no-store' });
+    const res = await backendAdminFetch('/api/delivery-fee-rules');
     const data = await res.text();
     return new NextResponse(data, { status: res.status, headers: { 'Content-Type': 'application/json' } });
   } catch {
@@ -15,11 +14,10 @@ export async function GET() {
 export async function POST(request) {
   const body = await request.text();
   try {
-    const res = await fetch(`${BASE}/api/delivery-fee-rules`, {
+    const res = await backendAdminFetch('/api/delivery-fee-rules', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body,
-      cache: 'no-store',
     });
     const data = await res.text();
     return new NextResponse(data, { status: res.status, headers: { 'Content-Type': 'application/json' } });

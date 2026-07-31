@@ -1,15 +1,13 @@
 import { NextResponse } from 'next/server';
-
-const BASE = process.env.API_BASE_URL || 'http://localhost:3000';
+import { backendAdminFetch } from '../../../../../lib/backendAdminFetch.js';
 
 export async function PUT(request, { params }) {
   const body = await request.text();
   try {
-    const res = await fetch(`${BASE}/api/delivery-fee-rules/${params.id}`, {
+    const res = await backendAdminFetch(`/api/delivery-fee-rules/${params.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body,
-      cache: 'no-store',
     });
     const data = await res.text();
     return new NextResponse(data, { status: res.status, headers: { 'Content-Type': 'application/json' } });
@@ -20,9 +18,8 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
-    const res = await fetch(`${BASE}/api/delivery-fee-rules/${params.id}`, {
+    const res = await backendAdminFetch(`/api/delivery-fee-rules/${params.id}`, {
       method: 'DELETE',
-      cache: 'no-store',
     });
     if (res.status === 204) return new NextResponse(null, { status: 204 });
     const data = await res.text();

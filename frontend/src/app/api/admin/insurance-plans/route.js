@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
+import { backendAdminFetch } from '../../../../lib/backendAdminFetch.js';
 
 // BFF-прокси для /internal/insurance. Basic Auth уже проверен middleware'ом
 // на уровне /api/admin/*.
-const BASE = process.env.API_BASE_URL || 'http://localhost:3000';
-
 export async function GET() {
   try {
-    const res = await fetch(`${BASE}/api/insurance-plans`, { cache: 'no-store' });
+    const res = await backendAdminFetch('/api/insurance-plans');
     const data = await res.text();
     return new NextResponse(data, { status: res.status, headers: { 'Content-Type': 'application/json' } });
   } catch {

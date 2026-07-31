@@ -11,6 +11,7 @@ import { insuranceAdminRouter } from './routes/insuranceAdmin.js';
 import { deliveryAdminRouter } from './routes/deliveryAdmin.js';
 import { depositAdminRouter } from './routes/depositAdmin.js';
 import { replacementGroupsAdminRouter } from './routes/replacementGroupsAdmin.js';
+import { requireInternalToken } from './middleware/internalAuth.js';
 
 const app = express();
 app.use(express.json());
@@ -35,11 +36,14 @@ app.use('/api', deliveryRouter);
 app.use('/api', quoteRouter);
 app.use('/api', bookingRouter);
 app.use('/api', equipmentRouter);
-app.use('/api', seasonalMultipliersRouter);
-app.use('/api', insuranceAdminRouter);
-app.use('/api', deliveryAdminRouter);
-app.use('/api', depositAdminRouter);
-app.use('/api', replacementGroupsAdminRouter);
+// Configuration First admin-разделы (ТЗ п.12) — единственные роуты за
+// requireInternalToken. Публичные роуты выше (catalog/delivery/quote/
+// booking/equipment) им не защищены и не должны быть — их дёргает сам сайт.
+app.use('/api', requireInternalToken, seasonalMultipliersRouter);
+app.use('/api', requireInternalToken, insuranceAdminRouter);
+app.use('/api', requireInternalToken, deliveryAdminRouter);
+app.use('/api', requireInternalToken, depositAdminRouter);
+app.use('/api', requireInternalToken, replacementGroupsAdminRouter);
 
 // Централизованный обработчик ошибок: err.status (напр. 400/404/409/501) или 500.
 const ERROR_LABELS = { 400: 'bad_request', 404: 'not_found', 409: 'conflict', 501: 'not_implemented' };

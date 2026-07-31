@@ -1,15 +1,13 @@
 import { NextResponse } from 'next/server';
-
-const BASE = process.env.API_BASE_URL || 'http://localhost:3000';
+import { backendAdminFetch } from '../../../../../../lib/backendAdminFetch.js';
 
 export async function PUT(request, { params }) {
   const body = await request.text();
   try {
-    const res = await fetch(`${BASE}/api/product-families/${params.id}/replacement-group`, {
+    const res = await backendAdminFetch(`/api/product-families/${params.id}/replacement-group`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body,
-      cache: 'no-store',
     });
     const data = await res.text();
     return new NextResponse(data, { status: res.status, headers: { 'Content-Type': 'application/json' } });
