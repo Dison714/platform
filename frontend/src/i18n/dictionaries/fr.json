@@ -1,7 +1,8 @@
 {
   "brand": {
     "name": "Bike Bali Rent",
-    "tagline": "Location de motos et motos personnalisées à Bali"
+    "tagline": "Location de motos et motos personnalisées à Bali",
+    "seo_title": "Location de motos et scooters à Bali | Motos personnalisées"
   },
   "contact": {
     "prefill_message": "Bonjour ! 🛵 Je souhaite louer une moto."
@@ -28,6 +29,7 @@
     "specs_title": "Caractéristiques",
     "specs_soon": "Caractéristiques bientôt disponibles.",
     "description_title": "À propos de cette moto",
+    "more_details_title": "En savoir plus sur cette moto",
     "gallery_soon": "Photos bientôt disponibles"
   },
   "badge": {

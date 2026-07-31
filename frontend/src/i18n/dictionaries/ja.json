@@ -1,7 +1,8 @@
 {
   "brand": {
     "name": "Bike Bali Rent",
-    "tagline": "バリ島でのバイクレンタル＆カスタムバイク"
+    "tagline": "バリ島でのバイクレンタル＆カスタムバイク",
+    "seo_title": "バリ島でのバイク・スクーターレンタル | カスタムバイク"
   },
   "contact": {
     "prefill_message": "こんにちは！🛵 バイクをレンタルしたいです。"
@@ -28,6 +29,7 @@
     "specs_title": "スペック",
     "specs_soon": "スペックは近日公開予定です。",
     "description_title": "このバイクについて",
+    "more_details_title": "このバイクをもっと知る",
     "gallery_soon": "写真は近日公開予定です"
   },
   "badge": {

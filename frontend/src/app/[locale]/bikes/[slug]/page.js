@@ -259,12 +259,14 @@ export default async function ProductPage({ params, searchParams }) {
       {/* Длинный маркетинговый блок (Family-level, family_content_translations) —
           намеренно НИЖЕ калькулятора/брони, чтобы не мешать above-the-fold
           конверсии; короткий product.description выше (между ценой и
-          Specifications) — это отдельное поле, не дублирует этот блок. */}
+          Specifications) — это отдельное поле, не дублирует этот блок.
+          Явный разделитель (заголовок + граница) — чтобы блок не сливался
+          визуально с калькулятором/кнопкой бронирования над ним. */}
       {product.content_html ? (
-        <section
-          className="product-long-content"
-          dangerouslySetInnerHTML={{ __html: product.content_html }}
-        />
+        <section className="product-long-content-wrap">
+          <h2 className="section-h2">{dict.product.more_details_title}</h2>
+          <div className="product-long-content" dangerouslySetInnerHTML={{ __html: product.content_html }} />
+        </section>
       ) : null}
     </div>
   );

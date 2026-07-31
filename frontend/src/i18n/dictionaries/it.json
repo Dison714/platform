@@ -1,7 +1,8 @@
 {
   "brand": {
     "name": "Bike Bali Rent",
-    "tagline": "Noleggio moto e moto personalizzate a Bali"
+    "tagline": "Noleggio moto e moto personalizzate a Bali",
+    "seo_title": "Noleggio moto e scooter a Bali | Moto personalizzate"
   },
   "contact": {
     "prefill_message": "Ciao! 🛵 Vorrei noleggiare una moto."
@@ -28,6 +29,7 @@
     "specs_title": "Specifiche",
     "specs_soon": "Specifiche in arrivo.",
     "description_title": "Su questa moto",
+    "more_details_title": "Scopri di più su questa moto",
     "gallery_soon": "Foto in arrivo"
   },
   "badge": {

@@ -1,7 +1,8 @@
 {
   "brand": {
     "name": "Bike Bali Rent",
-    "tagline": "Motorradvermietung & Custom Bikes auf Bali"
+    "tagline": "Motorradvermietung & Custom Bikes auf Bali",
+    "seo_title": "Motorrad- und Rollerverleih auf Bali | Custom Bikes"
   },
   "contact": {
     "prefill_message": "Hallo! 🛵 Ich möchte ein Motorrad mieten."
@@ -28,6 +29,7 @@
     "specs_title": "Technische Daten",
     "specs_soon": "Technische Daten folgen in Kürze.",
     "description_title": "Über dieses Motorrad",
+    "more_details_title": "Mehr über dieses Motorrad",
     "gallery_soon": "Fotos folgen in Kürze"
   },
   "badge": {

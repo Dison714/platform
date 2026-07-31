@@ -1,7 +1,8 @@
 {
   "brand": {
     "name": "Bike Bali Rent",
-    "tagline": "Motorbike Rental & Custom Bikes in Bali"
+    "tagline": "Motorbike Rental & Custom Bikes in Bali",
+    "seo_title": "Rent Motorbike and Scooter in Bali | Custom Motorbikes"
   },
   "contact": {
     "prefill_message": "Hello! 🛵 I want to rent a motorbike."
@@ -28,6 +29,7 @@
     "specs_title": "Specifications",
     "specs_soon": "Specs coming soon.",
     "description_title": "About this bike",
+    "more_details_title": "Get to Know This Bike",
     "gallery_soon": "Photos coming soon"
   },
   "badge": {

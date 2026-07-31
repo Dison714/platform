@@ -335,7 +335,15 @@ img { max-width: 100%; display: block; }
 .terms-list { padding-inline-start: 22px; display: grid; gap: 12px; color: var(--ink); }
 
 /* ---------- Product long-form content (Family-level, below Calculator) ---------- */
-.product-long-content { max-width: 780px; margin: 40px auto 0; }
+/* Явная граница + отступ + светлый фон — чтобы не сливалось с блоком
+   бронирования/калькулятором над ним, клиент не путает "прочитать про байк"
+   с "закончить бронирование". */
+.product-long-content-wrap {
+  max-width: 780px; margin: 56px auto 0; padding: 32px 24px;
+  background: var(--surface); border-radius: 12px;
+}
+.product-long-content-wrap > .section-h2 { margin-top: 0; }
+.product-long-content { max-width: 100%; margin: 0; }
 .product-long-content h2, .product-long-content h3 {
   font-family: var(--font-teko), sans-serif; letter-spacing: 0.5px; color: var(--navy);
   font-size: 24px; margin: 28px 0 10px;

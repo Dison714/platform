@@ -16,7 +16,7 @@ export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }) {
   const dict = await getDictionary(params.locale);
-  const title = `${dict.brand.name} — ${dict.brand.tagline}`;
+  const title = dict.brand.seo_title;
   const description = dict.home.hero_sub;
   const url = `/${params.locale}`;
   return {
