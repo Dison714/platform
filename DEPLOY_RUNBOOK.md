@@ -50,13 +50,15 @@ dev-адрес `pub-92229917b7c74364afcdf15e1d1cff99.r2.dev` пока не от�
 # сначала обязательно dry-run — посмотреть, что реально изменится
 aws s3 sync frontend/public/bikes/ s3://mdb-platform-media/bikes/ \
   --endpoint-url https://3c3d58a73ee90534807282e5c9c708be.r2.cloudflarestorage.com \
-  --content-type image/webp --delete --dryrun --profile r2
+  --content-type image/webp --cache-control "public, max-age=86400, s-maxage=604800" \
+  --delete --dryrun --profile r2
 
 # если план выглядит разумно (не тысячи неожиданных удалений) — тот же
 # командой без --dryrun
 aws s3 sync frontend/public/bikes/ s3://mdb-platform-media/bikes/ \
   --endpoint-url https://3c3d58a73ee90534807282e5c9c708be.r2.cloudflarestorage.com \
-  --content-type image/webp --delete --profile r2
+  --content-type image/webp --cache-control "public, max-age=86400, s-maxage=604800" \
+  --delete --profile r2
 ```
 
 Требует настроенного `aws configure --profile r2` (R2 Access Key/Secret из
@@ -123,7 +125,8 @@ cd backend && node scripts/gen_catalog_sync.mjs
 ```bash
 aws s3 sync frontend/public/reviews/ s3://mdb-platform-media/reviews/ \
   --endpoint-url https://3c3d58a73ee90534807282e5c9c708be.r2.cloudflarestorage.com \
-  --content-type image/webp --profile r2
+  --content-type image/webp --cache-control "public, max-age=86400, s-maxage=604800" \
+  --profile r2
 ```
 
 ## Отзывы: удалить (напр. клиент попросил снять свой отзыв)
@@ -190,18 +193,54 @@ curl -s https://bikebalirent.com/en | grep -c 'r2.dev'   # должно быть
 отката (вернуть переменную + redeploy). Отключается в Cloudflare → R2 →
 бакет → Settings → Public Development URL → Disable, только когда уверены.
 
-⚠️ **Кэш Cloudflare пока НЕ работает** (`cf-cache-status: DYNAMIC` на
-повторных запросах). Причина: у объектов в R2 не проставлен `Cache-Control`,
-поэтому Cloudflare считает ответы некэшируемыми. Домен настроен верно, дело в
-метаданных объектов. Лечится массовым проставлением заголовка:
+## Кэш на `cdn.bikebalirent.com`
+
+Состоит из ДВУХ частей, и одной недостаточно — проверено на практике.
+
+**Часть 1 — `Cache-Control` на объектах (СДЕЛАНО 2026-08-03).** Проставлено
+`public, max-age=86400, s-maxage=604800` на все 1722 объекта: сутки в браузере,
+неделя на узлах CDN. Проверено по равномерной выборке 41 объекта — пропусков
+нет; `Content-Type` сохранён (два прохода: `*.webp` → `image/webp`,
+`*.mp4` → `video/mp4`, иначе видео получило бы тип картинки).
+
+Команды заливки выше уже содержат `--cache-control` — **не убирать его**,
+иначе новые файлы приедут без заголовка. Если понадобится сменить срок на
+всём бакете разом:
 
 ```bash
-# ВНИМАНИЕ: перезаписывает метаданные всех объектов (~1722 шт.)
-aws s3 cp s3://mdb-platform-media/bikes/ s3://mdb-platform-media/bikes/ \
-  --recursive --metadata-directive REPLACE \
-  --content-type image/webp --cache-control "public, max-age=86400, s-maxage=2592000" \
-  --endpoint-url https://3c3d58a73ee90534807282e5c9c708be.r2.cloudflarestorage.com --profile r2
+# ВНИМАНИЕ: перезаписывает метаданные. Обязательно двумя проходами по типам!
+EP=https://3c3d58a73ee90534807282e5c9c708be.r2.cloudflarestorage.com
+CC="public, max-age=86400, s-maxage=604800"
+aws s3 cp s3://mdb-platform-media/bikes/ s3://mdb-platform-media/bikes/ --recursive \
+  --metadata-directive REPLACE --exclude "*" --include "*.webp" \
+  --content-type image/webp --cache-control "$CC" --profile r2 --endpoint-url $EP
+aws s3 cp s3://mdb-platform-media/bikes/ s3://mdb-platform-media/bikes/ --recursive \
+  --metadata-directive REPLACE --exclude "*" --include "*.mp4" \
+  --content-type video/mp4 --cache-control "$CC" --profile r2 --endpoint-url $EP
 ```
 
-После замены фото — не забывать Purge Cache в Cloudflare, иначе на краю
-останется старая картинка до истечения s-maxage.
+**Часть 2 — Cache Rule в Cloudflare (НЕ СДЕЛАНО, действие в дашборде).**
+Одного заголовка мало: для R2-домена Cloudflare сам кэшировать не начинает,
+`cf-cache-status` остаётся `DYNAMIC` даже когда `Cache-Control` отдаётся
+корректно. Нужно явное правило:
+
+Cloudflare → зона `bikebalirent.com` → Caching → Cache Rules → Create rule
+- Условие: `Hostname` equals `cdn.bikebalirent.com`
+- Then: Cache eligibility → **Eligible for cache**
+- Edge TTL: `Use cache-control header if present, bypass cache if not`
+- Browser TTL: `Respect origin TTL`
+
+Правило только разрешает кэширование, сроки берутся из заголовка объектов —
+поэтому менять сроки потом можно командой выше, не трогая правило.
+
+Проверка, что заработало (второй запрос должен дать `HIT`):
+
+```bash
+U=https://cdn.bikebalirent.com/bikes/honda-adv-total-black/thumb/01.webp
+curl -sI "$U" | grep -i cf-cache-status
+curl -sI "$U" | grep -i cf-cache-status
+```
+
+⚠️ **После замены фото по тому же пути — обязательно Purge Cache** в
+Cloudflare (Caching → Configuration → Purge). Иначе на узлах CDN до недели
+будет отдаваться старая картинка, хотя в R2 уже лежит новая.
