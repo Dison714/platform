@@ -34,9 +34,10 @@ docker cp <container>:/tmp/prod_backup_2026-07-29.dump ./prod_backup_2026-07-29.
 
 Бакет: `mdb-platform-media` (Cloudflare R2), endpoint
 `https://3c3d58a73ee90534807282e5c9c708be.r2.cloudflarestorage.com`.
-Публичный URL: `https://pub-92229917b7c74364afcdf15e1d1cff99.r2.dev`
-(`NEXT_PUBLIC_PHOTO_BASE_URL` на проде указывает сюда — dev-режим,
-Custom Domain ещё не подключён, это отдельный техдолг).
+Публичный URL: `https://cdn.bikebalirent.com` (Custom Domain, подключён
+2026-08-03; `NEXT_PUBLIC_PHOTO_BASE_URL` на проде указывает сюда). Старый
+dev-адрес `pub-92229917b7c74364afcdf15e1d1cff99.r2.dev` пока не отключён и
+работает — оставлен как страховка для отката.
 
 Локально сейчас: 1715 файлов, 740MB в `frontend/public/bikes/`
 (структура `bikes/<slug>/{thumb,gallery,hero}/NN.webp` + иногда `video.mp4`,
@@ -140,7 +141,7 @@ aws s3 rm s3://mdb-platform-media/reviews/<id>.webp \
 
 # 2. Проверить, что ссылка действительно умерла (ожидаем 404)
 curl -s -o /dev/null -w "%{http_code}\n" \
-  https://pub-92229917b7c74364afcdf15e1d1cff99.r2.dev/reviews/<id>.webp
+  https://cdn.bikebalirent.com/reviews/<id>.webp
 ```
 
 Затем: удалить объект из `frontend/src/data/reviews.json`, удалить локальный
@@ -148,29 +149,59 @@ curl -s -o /dev/null -w "%{http_code}\n" \
 `prep_reviews.mjs` (иначе следующий прогон скрипта зальёт его обратно),
 закоммитить и задеплоить фронт.
 
-## R2: переезд с dev-URL на Custom Domain
+## R2: переезд с dev-URL на Custom Domain (ВЫПОЛНЕНО 2026-08-03)
 
-Сейчас медиа отдаётся с `pub-92229917b7c74364afcdf15e1d1cff99.r2.dev` —
-это Public Development URL, Cloudflare сам режет ему скорость и не рекомендует
-для боевого трафика. Целевой адрес — `cdn.bikebalirent.com`.
+Медиа отдаётся с `https://cdn.bikebalirent.com`. Оставлено здесь как описание
+процедуры — пригодится, если понадобится сменить домен ещё раз.
 
 Шаги 1-2 делаются **только в дашборде Cloudflare** — S3-ключи из профиля `r2`
 таких прав не дают (это отдельный Cloudflare API, не S3).
 
 1. Cloudflare → R2 → бакет `mdb-platform-media` → Settings → Custom Domains →
-   Connect Domain → `cdn.bikebalirent.com`. DNS-запись Cloudflare создаст сам,
-   зона уже на этом аккаунте.
-2. Дождаться выпуска сертификата (обычно минуты).
-3. Coolify → сервис `mdb-platform-frontend` → Environment Variables →
-   `NEXT_PUBLIC_PHOTO_BASE_URL` = `https://cdn.bikebalirent.com`
-4. **Redeploy фронта именно с ребилдом.** `NEXT_PUBLIC_*` вшивается в бандл на
-   этапе сборки, а не читается в рантайме — без ребилда в HTML останется старый
-   r2.dev-адрес. На этом уже спотыкались при первой миграции на R2.
-5. Проверить, что в HTML живого сайта появились ссылки на новый домен:
+   Connect Domain → `cdn.bikebalirent.com`. DNS-запись Cloudflare создаёт сам,
+   зона уже на этом аккаунте. Запись будет **проксируемой (оранжевое облако)** —
+   так и надо, через прокси работают кэш и WAF. Не путать с apex/www, которые
+   намеренно DNS only.
+2. Дождаться статуса Active (выпуск сертификата, минуты).
+3. Coolify → `mdb-platform-frontend` → Environment Variables → секция
+   **Production** → отредактировать существующую `NEXT_PUBLIC_PHOTO_BASE_URL`
+   на `https://cdn.bikebalirent.com`.
+   ⚠️ Именно **отредактировать**, а не «+ Add»: каждая переменная существует в
+   Coolify дважды (Production + Preview), и попытка добавить новую с тем же
+   именем молча не сохраняется. Проверить, что значение реально легло:
 
 ```bash
-curl -s https://bikebalirent.com/en | grep -o 'https://[^"]*\.webp' | head -3
+ssh -i ~/.ssh/mdb_platform_new root@169.58.60.244 \
+  'docker exec coolify php artisan tinker --execute="foreach (\App\Models\EnvironmentVariable::where(\"key\",\"NEXT_PUBLIC_PHOTO_BASE_URL\")->get() as \$e) echo \$e->id.\" \".(\$e->is_preview?\"Preview\":\"Production\").\" [\".\$e->value.\"]\".PHP_EOL;"'
 ```
 
-Старый r2.dev-адрес после переезда продолжит работать — отключать его
-отдельно не нужно, но и ссылаться на него больше негде.
+4. **Redeploy** (не Restart!). `NEXT_PUBLIC_*` вшивается в бандл на этапе
+   сборки, а не читается в рантайме — Restart переменную не подхватит, в HTML
+   останется старый адрес. В Coolify Redeploy включает пересборку; в логе
+   должно быть `Building docker image started` / `completed`.
+5. Проверить, что в HTML живого сайта только новый домен:
+
+```bash
+curl -s https://bikebalirent.com/en | grep -c 'cdn.bikebalirent.com'
+curl -s https://bikebalirent.com/en | grep -c 'r2.dev'   # должно быть 0
+```
+
+Старый r2.dev продолжает работать и намеренно НЕ отключён — страховка для
+отката (вернуть переменную + redeploy). Отключается в Cloudflare → R2 →
+бакет → Settings → Public Development URL → Disable, только когда уверены.
+
+⚠️ **Кэш Cloudflare пока НЕ работает** (`cf-cache-status: DYNAMIC` на
+повторных запросах). Причина: у объектов в R2 не проставлен `Cache-Control`,
+поэтому Cloudflare считает ответы некэшируемыми. Домен настроен верно, дело в
+метаданных объектов. Лечится массовым проставлением заголовка:
+
+```bash
+# ВНИМАНИЕ: перезаписывает метаданные всех объектов (~1722 шт.)
+aws s3 cp s3://mdb-platform-media/bikes/ s3://mdb-platform-media/bikes/ \
+  --recursive --metadata-directive REPLACE \
+  --content-type image/webp --cache-control "public, max-age=86400, s-maxage=2592000" \
+  --endpoint-url https://3c3d58a73ee90534807282e5c9c708be.r2.cloudflarestorage.com --profile r2
+```
+
+После замены фото — не забывать Purge Cache в Cloudflare, иначе на краю
+останется старая картинка до истечения s-maxage.
