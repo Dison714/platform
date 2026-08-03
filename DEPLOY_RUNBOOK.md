@@ -219,27 +219,40 @@ aws s3 cp s3://mdb-platform-media/bikes/ s3://mdb-platform-media/bikes/ --recurs
   --content-type video/mp4 --cache-control "$CC" --profile r2 --endpoint-url $EP
 ```
 
-**Часть 2 — Cache Rule в Cloudflare (НЕ СДЕЛАНО, действие в дашборде).**
-Одного заголовка мало: для R2-домена Cloudflare сам кэшировать не начинает,
-`cf-cache-status` остаётся `DYNAMIC` даже когда `Cache-Control` отдаётся
-корректно. Нужно явное правило:
+**Часть 2 — Cache Rule `cdn-media-cache` (СДЕЛАНО 2026-08-03).**
 
-Cloudflare → зона `bikebalirent.com` → Caching → Cache Rules → Create rule
+Cloudflare → зона `bikebalirent.com` → Caching → Cache Rules
 - Условие: `Hostname` equals `cdn.bikebalirent.com`
+  (выражение: `(http.host eq "cdn.bikebalirent.com")`)
 - Then: Cache eligibility → **Eligible for cache**
 - Edge TTL: `Use cache-control header if present, bypass cache if not`
 - Browser TTL: `Respect origin TTL`
+- Остальные настройки (Cache key, Vary, Serve stale, ETags, Origin error
+  pass-through) — не трогать, умолчания верны для статики.
 
 Правило только разрешает кэширование, сроки берутся из заголовка объектов —
-поэтому менять сроки потом можно командой выше, не трогая правило.
+менять сроки можно командой выше, не трогая правило.
 
-Проверка, что заработало (второй запрос должен дать `HIT`):
+⚠️⚠️ **КАК ПРОВЕРЯТЬ КЭШ — читать обязательно, иначе потеряете час.**
+`curl -sI` шлёт **HEAD**, а на HEAD Cloudflare отдаёт `cf-cache-status:
+DYNAMIC` ВСЕГДА, независимо от того, лежит объект в кэше или нет. Проверять
+только настоящим GET:
 
 ```bash
+# ПРАВИЛЬНО — GET с выводом заголовков
 U=https://cdn.bikebalirent.com/bikes/honda-adv-total-black/thumb/01.webp
-curl -sI "$U" | grep -i cf-cache-status
+curl -s -o /dev/null -D - "$U" | grep -iE 'cf-cache-status|^age'
+curl -s -o /dev/null -D - "$U" | grep -iE 'cf-cache-status|^age'
+# первый на холодном объекте → MISS, второй → HIT с растущим age
+
+# НЕПРАВИЛЬНО — всегда DYNAMIC, ничего не показывает
 curl -sI "$U" | grep -i cf-cache-status
 ```
+
+Была ли Cache Rule строго необходима — не доказано: объект попал в кэш ещё
+до её создания, сразу после простановки `Cache-Control` (`age` ~3200 с при
+проверке сразу после создания правила). Похоже, заголовка достаточно.
+Правило оставлено, чтобы поведение не зависело от умолчаний Cloudflare.
 
 ⚠️ **После замены фото по тому же пути — обязательно Purge Cache** в
 Cloudflare (Caching → Configuration → Purge). Иначе на узлах CDN до недели
