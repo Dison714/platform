@@ -186,8 +186,15 @@
     ],
     "popular_title": "Beliebte Modelle",
     "popular_sub": "Ein Blick über unser Sortiment",
-    "reviews_title": "Was unsere Fahrer sagen",
+    "reviews_title": "Kundenfeedback",
     "reviews_sub": "Echte Reisen, echte Motorräder",
+    "reviews_labels": {
+      "show_original": "Original anzeigen",
+      "close": "Schließen",
+      "screenshot_alt": "Screenshot der ursprünglichen WhatsApp-Nachricht des Kunden",
+      "original_note": "Ursprüngliche WhatsApp-Nachricht. Der Text oben ist unsere Übersetzung aus dem Englischen.",
+      "original_note_same": "Ursprüngliche WhatsApp-Nachricht."
+    },
     "why_title": "Warum mit uns fahren",
     "why": [
       {

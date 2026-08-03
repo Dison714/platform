@@ -188,6 +188,13 @@
     "popular_sub": "ラインナップの一部をご紹介",
     "reviews_title": "お客様の声",
     "reviews_sub": "実際の旅行、実際のバイク",
+    "reviews_labels": {
+      "show_original": "原文を表示",
+      "close": "閉じる",
+      "screenshot_alt": "お客様からのWhatsAppメッセージ原文のスクリーンショット",
+      "original_note": "WhatsAppのメッセージ原文です。上の文章は英語からの当社による翻訳です。",
+      "original_note_same": "WhatsAppのメッセージ原文です。"
+    },
     "why_title": "選ばれる理由",
     "why": [
       {

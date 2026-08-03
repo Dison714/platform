@@ -35,6 +35,14 @@ export function galleryPhotos(photos, hero, max = 8) {
     .slice(0, max);
 }
 
+// Скриншот отзыва (Блок F). Лежит в том же бакете, что и фото байков, под
+// префиксом reviews/ — путь в reviews.json уже полный ('reviews/<id>.webp'),
+// размеров у него один, поэтому без вставки size-каталога.
+export function resolveReviewScreenshotUrl(storagePath) {
+  if (!storagePath) return null;
+  return `${PHOTO_BASE}/${storagePath}`;
+}
+
 // Видео карточки товара (Блок 3, расширено под несколько видео на продукт) —
 // без отдельного признака в схеме: путь строится по конвенции (рядом с фото,
 // bikes/<slug>/video.mp4, video-2.mp4, video-3.mp4, ...), каждый слот

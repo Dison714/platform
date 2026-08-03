@@ -186,8 +186,15 @@
     ],
     "popular_title": "Популярные модели",
     "popular_sub": "Срез нашего парка",
-    "reviews_title": "Отзывы райдеров",
+    "reviews_title": "Отзывы клиентов",
     "reviews_sub": "Реальные поездки, реальные байки",
+    "reviews_labels": {
+      "show_original": "Показать оригинал",
+      "close": "Закрыть",
+      "screenshot_alt": "Скриншот оригинального сообщения клиента в WhatsApp",
+      "original_note": "Оригинальное сообщение в WhatsApp. Текст выше — наш перевод с английского.",
+      "original_note_same": "Оригинальное сообщение в WhatsApp."
+    },
     "why_title": "Почему мы",
     "why": [
       {

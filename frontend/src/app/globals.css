@@ -278,18 +278,54 @@ img { max-width: 100%; display: block; }
 .faq-mini-item h3 { font-size: 16px; color: var(--navy); margin: 0 0 4px; }
 .faq-mini-item p { margin: 0; color: var(--ink); }
 
-/* Отзывы (Блок F) — плейсхолдер-данные, см. data/reviews.placeholder.json */
-.reviews-grid { display: grid; gap: 14px; margin-top: 16px; }
-.review-card { border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
-.review-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.review-avatar {
-  width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: #fff;
-  display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 15px; flex: 0 0 auto;
+/* Отзывы (Блок F) — реальные данные, см. data/reviews.json.
+   Раскладка колоночная (CSS columns), а не grid: отзывы приходят из WhatsApp
+   как есть, от одной строки до абзаца на 700 знаков, и в grid короткие карточки
+   растягивались бы до высоты самой длинной. columns укладывает их плотно. */
+.reviews-grid { margin-top: 16px; padding: 0; list-style: none; columns: 1; column-gap: 14px; }
+.review-card {
+  border: 1px solid var(--border); border-radius: 12px; padding: 18px;
+  /* без этого колонка рвёт карточку пополам между колонками */
+  break-inside: avoid; -webkit-column-break-inside: avoid;
+  margin-bottom: 14px;
 }
+.review-text {
+  margin: 0; color: var(--ink); font-size: 14px; line-height: 1.55;
+  /* blockquote в reset-е несёт отступы браузера — снимаем */
+  padding: 0; border: 0;
+  /* Отзывы приходят как есть: от одной строки до 700 знаков. Без обрезки
+     самая длинная карточка вытягивала колонку до 613px против 160px у
+     соседних. Клип чисто визуальный — текст остаётся в DOM целиком, то есть
+     индексируется и читается скринридером, а зрячий видит полный вариант
+     на скриншоте оригинала. */
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 12;
+  overflow: hidden;
+}
+.review-foot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
 .review-name { font-size: 14px; font-weight: 500; color: var(--navy); }
-.review-date { font-size: 12px; color: var(--muted); }
-.review-rating { color: var(--red); font-size: 14px; letter-spacing: 1px; margin-bottom: 6px; }
-.review-text { margin: 0; color: var(--ink); font-size: 14px; }
+.review-original-btn {
+  display: inline-flex; align-items: center; gap: 6px; margin-inline-start: auto;
+  background: none; border: 0; padding: 0; cursor: pointer;
+  font: inherit; font-size: 13px; color: var(--red);
+}
+.review-original-btn:hover { text-decoration: underline; }
+.review-original-icon { width: 15px; height: 15px; flex: 0 0 auto; }
+
+/* Лайтбокс оригинала. Нативный <dialog>: фокус-трап и Esc — из коробки. */
+.review-dialog {
+  border: 0; border-radius: 14px; padding: 0; max-width: min(560px, 92vw);
+  max-height: 88vh; background: #fff; box-shadow: 0 18px 50px rgba(0, 0, 0, .28);
+}
+.review-dialog::backdrop { background: rgba(0, 0, 0, .55); }
+.review-dialog-inner { position: relative; overflow-y: auto; max-height: 88vh; padding: 12px; }
+.review-dialog-img { display: block; width: 100%; height: auto; border-radius: 8px; }
+.review-dialog-note { margin: 10px 2px 2px; font-size: 12px; color: var(--muted); }
+.review-dialog-close {
+  position: absolute; inset-block-start: 18px; inset-inline-end: 18px; z-index: 1;
+  width: 32px; height: 32px; border: 0; border-radius: 50%; cursor: pointer;
+  background: rgba(255, 255, 255, .92); box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+  font-size: 22px; line-height: 1; color: var(--navy);
+}
 .link-more { display: inline-block; margin-top: 16px; color: var(--red); font-weight: 500; }
 .cta-final { background: var(--surface); }
 .cta-in { padding: 40px 16px; text-align: center; }
@@ -299,7 +335,7 @@ img { max-width: 100%; display: block; }
   .hero-title { font-size: 52px; }
   .why-grid { grid-template-columns: repeat(3, 1fr); }
   .steps-grid { grid-template-columns: repeat(4, 1fr); }
-  .reviews-grid { grid-template-columns: repeat(4, 1fr); }
+  .reviews-grid { columns: 3; }
   .trust-strip-in { justify-content: space-between; }
   .cat-grid { grid-template-columns: repeat(4, 1fr); }
   .hero-in { flex-direction: row; align-items: center; justify-content: space-between; gap: 40px; }

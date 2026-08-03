@@ -9,7 +9,7 @@ import { resolvePhotoUrl } from '../../lib/photos.js';
 import { ogTwitter, hreflangAlternates } from '../../lib/seo.js';
 import BikeCard from '../components/BikeCard.jsx';
 import Reviews from '../components/Reviews.jsx';
-import reviewsData from '../../data/reviews.placeholder.json';
+import reviewsData from '../../data/reviews.json';
 
 // Главная — SSR-контент (для SEO). Категории тянем из API, остальное — словари.
 export const dynamic = 'force-dynamic';
@@ -183,7 +183,13 @@ export default async function HomePage({ params }) {
         <Link href={`/${locale}/faq`} className="link-more">{h.faq_all} →</Link>
       </section>
 
-      <Reviews title={h.reviews_title} sub={h.reviews_sub} reviews={reviewsData[locale] ?? reviewsData.en} />
+      <Reviews
+        title={h.reviews_title}
+        sub={h.reviews_sub}
+        reviews={reviewsData.reviews}
+        locale={locale}
+        labels={h.reviews_labels}
+      />
 
       <section className="cta-final">
         <div className="container cta-in">

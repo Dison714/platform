@@ -1,0 +1,131 @@
+{
+  "_note": "РЕАЛЬНЫЕ отзывы клиентов из WhatsApp (заменили плейсхолдер reviews.placeholder.json, удалён). Оригинал каждого — скриншот в R2 под reviews/<id>.webp, доступен на сайте по кнопке «показать оригинал». Тексты в text.* — перевод английского оригинала (original_locale), сделан вручную, не машинный. НЕ ставим rating: в WhatsApp клиент звёзд не выставляет, любая оценка здесь была бы выдуманной (и по той же причине нет Review/aggregateRating в Schema.org). name/date заполнены только там, где реально известны из переписки; выдумывать нельзя. Структура полей намеренно повторяет будущие таблицы reviews + review_translations (ТЗ п.4.9.4, CLAUDE.md §3.8) — перенос в БД при ~20-25 отзывах будет механическим. Добавить отзыв: положить скриншот в исходную папку, прописать его в backend/scripts/prep_reviews.mjs, прогнать скрипт, залить в R2, добавить объект сюда.",
+  "reviews": [
+    {
+      "id": "vstrom-250-breakdown-handled",
+      "name": null,
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/vstrom-250-breakdown-handled.webp",
+      "original_locale": "en",
+      "text": {
+        "en": "Many thanks to the BBR team for a great experience, from the reservation till the return of the bike. I was looking for a 250cc with top case and side cases and they had V-Strom 250. Bike was recent and in good condition. Price benchmark was good also. The bike was delivered and picked up to our place. At some point the clutch cable disconnected itself from the lever, making the bike unusable. They were very reactive to provide a similar bike (Versys 250) within 2 hours and returned the V-Strom the next day. All along the interaction was courteous and professional, with short response time and the staff that came home was friendly. I do recommend BBR and will get back in touch with them at my next trip.",
+        "ru": "Большое спасибо команде BBR за отличный опыт — от брони до возврата байка. Я искал 250 кубов с центральным и боковыми кофрами, у них был V-Strom 250. Байк свежий и в хорошем состоянии. По цене тоже вышло хорошо. Байк привезли к нам и потом забрали. В какой-то момент трос сцепления соскочил с рычага, и ездить стало невозможно. Ребята очень оперативно подогнали похожий байк (Versys 250) в течение двух часов, а на следующий день вернули V-Strom. Всё общение было вежливым и профессиональным, отвечали быстро, сотрудник, который приезжал к нам, был приветлив. Рекомендую BBR и обязательно свяжусь с ними в следующую поездку.",
+        "de": "Vielen Dank an das BBR-Team für eine großartige Erfahrung, von der Reservierung bis zur Rückgabe des Bikes. Ich suchte eine 250er mit Topcase und Seitenkoffern, und sie hatten eine V-Strom 250. Das Bike war neu und in gutem Zustand. Auch preislich stimmte es. Das Bike wurde zu uns gebracht und wieder abgeholt. Irgendwann löste sich der Kupplungszug vom Hebel und das Bike war nicht mehr fahrbar. Sie reagierten sehr schnell, stellten innerhalb von 2 Stunden ein vergleichbares Bike (Versys 250) bereit und brachten die V-Strom am nächsten Tag zurück. Der Kontakt war durchweg zuvorkommend und professionell, mit kurzen Reaktionszeiten, und der Mitarbeiter, der zu uns kam, war freundlich. Ich kann BBR empfehlen und werde mich bei meiner nächsten Reise wieder melden.",
+        "fr": "Un grand merci à l'équipe BBR pour cette excellente expérience, de la réservation jusqu'au retour de la moto. Je cherchais une 250 cc avec top-case et valises latérales, et ils avaient une V-Strom 250. La moto était récente et en bon état. Le rapport qualité-prix était bon également. La moto a été livrée et récupérée chez nous. À un moment, le câble d'embrayage s'est détaché du levier, rendant la moto inutilisable. Ils ont réagi très vite en fournissant une moto similaire (Versys 250) en 2 heures, et ont ramené la V-Strom le lendemain. Les échanges ont toujours été courtois et professionnels, avec des réponses rapides, et la personne venue chez nous était sympathique. Je recommande BBR et je les recontacterai lors de mon prochain voyage.",
+        "es": "Muchas gracias al equipo de BBR por una gran experiencia, desde la reserva hasta la devolución de la moto. Buscaba una 250 cc con baúl y maletas laterales, y tenían una V-Strom 250. La moto era reciente y estaba en buen estado. La relación calidad-precio también fue buena. Nos entregaron y recogieron la moto en casa. En un momento dado el cable del embrague se soltó de la maneta y la moto quedó inutilizable. Reaccionaron muy rápido y nos facilitaron una moto similar (Versys 250) en 2 horas, y devolvieron la V-Strom al día siguiente. El trato fue en todo momento amable y profesional, con respuestas rápidas, y la persona que vino a casa fue muy agradable. Recomiendo BBR y volveré a contactar con ellos en mi próximo viaje.",
+        "it": "Molte grazie al team BBR per un'ottima esperienza, dalla prenotazione fino alla riconsegna della moto. Cercavo una 250 cc con bauletto e valigie laterali, e avevano una V-Strom 250. La moto era recente e in buone condizioni. Anche il prezzo era in linea. La moto è stata consegnata e ritirata a casa nostra. A un certo punto il cavo della frizione si è staccato dalla leva, rendendo la moto inutilizzabile. Sono stati molto reattivi e ci hanno fornito una moto simile (Versys 250) entro 2 ore, riportando la V-Strom il giorno dopo. Il rapporto è sempre stato cortese e professionale, con tempi di risposta brevi, e la persona venuta a casa è stata gentile. Consiglio BBR e li ricontatterò al mio prossimo viaggio.",
+        "ja": "予約からバイクの返却まで、BBRチームには本当に素晴らしい対応をしていただきました。トップケースとサイドケース付きの250ccを探していたところ、V-Strom 250がありました。年式も新しく、状態も良好でした。価格も納得のいくものでした。バイクは自宅まで配達・引き取りしてもらえました。途中でクラッチワイヤーがレバーから外れ、走行できなくなってしまいましたが、2時間以内に同等のバイク（Versys 250）を用意してくれ、翌日にはV-Stromを戻してくれました。やり取りは終始丁寧かつプロフェッショナルで、返信も早く、自宅に来てくれたスタッフも感じの良い方でした。BBRをおすすめします。次回の旅行でもまた連絡するつもりです。",
+        "ar": "شكراً جزيلاً لفريق BBR على تجربة رائعة، من الحجز وحتى إعادة الدراجة. كنت أبحث عن دراجة 250 سي سي بصندوق خلفي وصناديق جانبية، وكان لديهم V-Strom 250. كانت الدراجة حديثة وبحالة جيدة، والسعر كان مناسباً أيضاً. تم توصيل الدراجة واستلامها من مكان إقامتنا. في مرحلة ما انفصل كابل القابض عن الذراع وأصبحت الدراجة غير صالحة للاستخدام. تجاوبوا بسرعة كبيرة ووفروا دراجة مماثلة (Versys 250) خلال ساعتين، وأعادوا V-Strom في اليوم التالي. كان التعامل طوال الوقت لبقاً ومهنياً، مع سرعة في الرد، وكان الموظف الذي جاء إلينا ودوداً. أنصح بـ BBR وسأتواصل معهم مجدداً في رحلتي القادمة."
+      }
+    },
+    {
+      "id": "best-service-ive-had-in-bali",
+      "name": null,
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/best-service-ive-had-in-bali.webp",
+      "original_locale": "en",
+      "text": {
+        "en": "Always a great experience, any issues are resolved literally within a few hours which is no doubt the best service I've had in Bali. The response from the team is so fast and they're there to help in an instant. Also the best bikes, colours and everything for such great prices. I highly recommend!!!",
+        "ru": "Каждый раз всё отлично — любые вопросы решаются буквально за пару часов, это без сомнения лучший сервис из всех, что мне попадались на Бали. Команда отвечает моментально и готова помочь в ту же секунду. Плюс лучшие байки, цвета и всё остальное — и по очень приятным ценам. Очень рекомендую!!!",
+        "de": "Immer eine großartige Erfahrung – Probleme werden buchstäblich innerhalb weniger Stunden gelöst, das ist ohne Zweifel der beste Service, den ich auf Bali erlebt habe. Das Team antwortet unglaublich schnell und hilft sofort. Dazu die besten Bikes, Farben und alles zu wirklich guten Preisen. Absolute Empfehlung!!!",
+        "fr": "Toujours une excellente expérience : le moindre problème est résolu en quelques heures à peine, c'est sans aucun doute le meilleur service que j'aie connu à Bali. L'équipe répond très vite et intervient immédiatement. Et en plus, les meilleures motos, les meilleures couleurs, le tout à des prix très intéressants. Je recommande vivement !!!",
+        "es": "Siempre una gran experiencia: cualquier incidencia se resuelve literalmente en unas pocas horas, es sin duda el mejor servicio que he tenido en Bali. El equipo responde rapidísimo y te ayuda al instante. Además, las mejores motos, los mejores colores y todo a unos precios estupendos. ¡Lo recomiendo muchísimo!",
+        "it": "Sempre un'ottima esperienza: qualsiasi problema viene risolto letteralmente in poche ore, è senza dubbio il miglior servizio che abbia trovato a Bali. Il team risponde velocissimo ed è pronto ad aiutarti all'istante. E poi le moto migliori, i colori migliori e tutto a prezzi davvero ottimi. Consigliatissimo!!!",
+        "ja": "いつも本当に良くしてもらっています。何か問題があっても文字どおり数時間で解決してくれて、バリで受けたサービスの中では間違いなく一番です。チームの返信はとても早く、すぐに駆けつけて助けてくれます。バイクも色も一番良くて、しかもとてもお得な価格です。心からおすすめします！！！",
+        "ar": "التجربة رائعة في كل مرة، وأي مشكلة تُحل خلال ساعات قليلة حرفياً، وهذه بلا شك أفضل خدمة حصلت عليها في بالي. الفريق يرد بسرعة كبيرة ويقدم المساعدة على الفور. كما أن لديهم أفضل الدراجات والألوان وكل شيء بأسعار ممتازة. أوصي بهم بشدة!!!"
+      }
+    },
+    {
+      "id": "pleasure-to-ride-good-condition",
+      "name": null,
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/pleasure-to-ride-good-condition.webp",
+      "original_locale": "en",
+      "text": {
+        "en": "Thank you for the bike! It was a pleasure to ride and very good condition. Will definitely be using you guys next time I'm back in Bali.",
+        "ru": "Спасибо за байк! Одно удовольствие кататься, состояние отличное. В следующий приезд на Бали обязательно обращусь к вам снова.",
+        "de": "Danke für das Bike! Es hat Spaß gemacht, damit zu fahren, und der Zustand war sehr gut. Beim nächsten Bali-Aufenthalt komme ich auf jeden Fall wieder zu euch.",
+        "fr": "Merci pour la moto ! Un vrai plaisir à conduire et en très bon état. Je ferai à nouveau appel à vous lors de mon prochain séjour à Bali.",
+        "es": "¡Gracias por la moto! Un placer conducirla y en muy buen estado. Sin duda volveré a contar con vosotros la próxima vez que vaya a Bali.",
+        "it": "Grazie per la moto! Un piacere da guidare e in ottime condizioni. Al mio prossimo viaggio a Bali mi rivolgerò senz'altro di nuovo a voi.",
+        "ja": "バイクをありがとうございました！ 走っていてとても気持ちよく、状態も非常に良かったです。次にバリに来るときも必ずお願いします。",
+        "ar": "شكراً لكم على الدراجة! كانت قيادتها ممتعة وبحالة ممتازة. سألجأ إليكم بالتأكيد في المرة القادمة التي أزور فيها بالي."
+      }
+    },
+    {
+      "id": "good-bikes-good-service-good-people",
+      "name": "Fab",
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/good-bikes-good-service-good-people.webp",
+      "original_locale": "en",
+      "text": {
+        "en": "Thanks as well to you guys: good bikes, good service, good people. It was a great experience.",
+        "ru": "И вам спасибо: хорошие байки, хороший сервис, хорошие люди. Отличный опыт.",
+        "de": "Danke auch euch: gute Bikes, guter Service, gute Leute. Es war eine großartige Erfahrung.",
+        "fr": "Merci à vous aussi : de bonnes motos, un bon service, de bonnes personnes. C'était une très belle expérience.",
+        "es": "Gracias a vosotros también: buenas motos, buen servicio, buena gente. Fue una gran experiencia.",
+        "it": "Grazie anche a voi: belle moto, buon servizio, brave persone. È stata un'ottima esperienza.",
+        "ja": "こちらこそありがとうございました。良いバイク、良いサービス、良い人たち。とても良い体験でした。",
+        "ar": "والشكر لكم أيضاً: دراجات جيدة، خدمة جيدة، أشخاص طيبون. كانت تجربة رائعة."
+      }
+    },
+    {
+      "id": "will-definitely-rent-again-manu",
+      "name": "Manu",
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/will-definitely-rent-again-manu.webp",
+      "original_locale": "en",
+      "text": {
+        "en": "We really enjoyed renting from you, and when we come back to Bali, we will definitely rent from you again! Thank you very much!!",
+        "ru": "Нам очень понравилось у вас арендовать, и когда мы снова приедем на Бали, обязательно возьмём байк у вас! Большое спасибо!!",
+        "de": "Das Mieten bei euch hat uns wirklich gefallen, und wenn wir wieder nach Bali kommen, mieten wir auf jeden Fall erneut bei euch! Vielen Dank!!",
+        "fr": "Nous avons vraiment apprécié la location chez vous, et quand nous reviendrons à Bali, nous louerons à nouveau chez vous, c'est certain ! Merci beaucoup !!",
+        "es": "Nos ha gustado mucho alquilar con vosotros y, cuando volvamos a Bali, sin duda alquilaremos otra vez con vosotros. ¡Muchísimas gracias!",
+        "it": "Ci siamo trovati davvero bene a noleggiare da voi e, quando torneremo a Bali, noleggeremo sicuramente di nuovo da voi! Grazie mille!!",
+        "ja": "皆さんからレンタルできて本当に良かったです。またバリに来たときは、必ずまたお願いします！ どうもありがとうございました！！",
+        "ar": "استمتعنا حقاً بالاستئجار منكم، وعندما نعود إلى بالي سنستأجر منكم مرة أخرى بالتأكيد! شكراً جزيلاً لكم!!"
+      }
+    },
+    {
+      "id": "great-experience-message-back",
+      "name": null,
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/great-experience-message-back.webp",
+      "original_locale": "en",
+      "text": {
+        "en": "Wanted to personally thank you for renting this bike, was a great experience and will definitely message you guys when I'm back.",
+        "ru": "Хотел лично поблагодарить вас за этот байк — отличный опыт, обязательно напишу вам, когда вернусь.",
+        "de": "Ich wollte mich persönlich für die Miete dieses Bikes bedanken – es war eine großartige Erfahrung, und ich melde mich auf jeden Fall wieder, wenn ich zurück bin.",
+        "fr": "Je tenais à vous remercier personnellement pour la location de cette moto : une très belle expérience. Je vous recontacterai sans faute à mon retour.",
+        "es": "Quería daros las gracias personalmente por alquilarme esta moto, fue una experiencia estupenda y os escribiré sin falta cuando vuelva.",
+        "it": "Volevo ringraziarvi personalmente per il noleggio di questa moto: è stata un'ottima esperienza e vi scriverò senz'altro quando torno.",
+        "ja": "このバイクを貸してくださり、個人的にお礼を伝えたいと思いました。とても良い体験でした。また戻ってきたら必ず連絡します。",
+        "ar": "أردت أن أشكركم شخصياً على تأجير هذه الدراجة، كانت تجربة رائعة وسأراسلكم بالتأكيد عند عودتي."
+      }
+    },
+    {
+      "id": "want-the-same-bike-next-time",
+      "name": null,
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/want-the-same-bike-next-time.webp",
+      "original_locale": "en",
+      "text": {
+        "en": "Hi my friend, thank you for the bike. I really like it — when I return to Bali I want the same bike.",
+        "ru": "Привет, друг, спасибо за байк. Мне он очень понравился — когда вернусь на Бали, хочу такой же.",
+        "de": "Hallo mein Freund, danke für das Bike. Es gefällt mir wirklich gut – wenn ich nach Bali zurückkomme, möchte ich genau dasselbe.",
+        "fr": "Salut mon ami, merci pour la moto. Elle me plaît vraiment beaucoup — quand je reviendrai à Bali, je veux la même.",
+        "es": "Hola amigo, gracias por la moto. Me ha gustado mucho: cuando vuelva a Bali quiero la misma.",
+        "it": "Ciao amico, grazie per la moto. Mi è piaciuta davvero molto: quando tornerò a Bali voglio la stessa.",
+        "ja": "やあ、バイクをありがとう。とても気に入りました。バリにまた来るときは、同じバイクがいいです。",
+        "ar": "مرحباً يا صديقي، شكراً على الدراجة. أعجبتني كثيراً — وعندما أعود إلى بالي أريد الدراجة نفسها."
+      }
+    }
+  ]
+}

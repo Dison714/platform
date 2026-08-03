@@ -186,8 +186,15 @@
     ],
     "popular_title": "Modelos populares",
     "popular_sub": "Un vistazo a nuestra gama",
-    "reviews_title": "Lo que dicen nuestros clientes",
+    "reviews_title": "Opiniones de clientes",
     "reviews_sub": "Viajes reales, motos reales",
+    "reviews_labels": {
+      "show_original": "Ver el original",
+      "close": "Cerrar",
+      "screenshot_alt": "Captura de pantalla del mensaje original del cliente en WhatsApp",
+      "original_note": "Mensaje original de WhatsApp. El texto de arriba es nuestra traducción del inglés.",
+      "original_note_same": "Mensaje original de WhatsApp."
+    },
     "why_title": "Por qué elegirnos",
     "why": [
       {

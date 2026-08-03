@@ -186,8 +186,15 @@
     ],
     "popular_title": "Popular models",
     "popular_sub": "A look across our range",
-    "reviews_title": "What riders say",
+    "reviews_title": "Customer feedback",
     "reviews_sub": "Real trips, real bikes",
+    "reviews_labels": {
+      "show_original": "Show original",
+      "close": "Close",
+      "screenshot_alt": "Screenshot of the original WhatsApp message from the customer",
+      "original_note": "Original WhatsApp message. The review above is our translation from English.",
+      "original_note_same": "Original WhatsApp message."
+    },
     "why_title": "Why ride with us",
     "why": [
       {
