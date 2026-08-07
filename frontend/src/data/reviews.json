@@ -126,6 +126,168 @@
         "ja": "やあ、バイクをありがとう。とても気に入りました。バリにまた来るときは、同じバイクがいいです。",
         "ar": "مرحباً يا صديقي، شكراً على الدراجة. أعجبتني كثيراً — وعندما أعود إلى بالي أريد الدراجة نفسها."
       }
+    },
+    {
+      "id": "fast-replies-recommend",
+      "name": null,
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/fast-replies-recommend.webp",
+      "original_locale": "ru",
+      "text": {
+        "en": "Thanks again! The bike was in great condition and the raincoats came in handy too. Out of all the rental offers we got, we picked you because you replied to our questions so quickly — other rental places went silent for 2-3 hours. Definitely recommend. See you again!",
+        "ru": "Спасибо еще раз! Байк был в отличном состоянии и дождевики тоже пригодились. Из всех предложений по аренде байка выбрали вас, так как быстро отвечали на интересующие вопросы (другие арендаторы молчали по 2-3 часа). Однозначно к рекомендации. До встречи!",
+        "de": "Nochmals danke! Das Bike war in einwandfreiem Zustand, und die Regenponchos kamen auch gut zupass. Von allen Vermietungsangeboten haben wir uns für euch entschieden, weil ihr so schnell auf unsere Fragen geantwortet habt (andere Vermieter haben 2-3 Stunden nicht reagiert). Absolute Empfehlung. Bis zum nächsten Mal!",
+        "fr": "Merci encore ! La moto était en excellent état, et les ponchos de pluie nous ont bien servi aussi. Parmi toutes les offres de location, on vous a choisis parce que vous répondiez très vite à nos questions (d'autres loueurs restaient silencieux pendant 2-3 heures). Je recommande vivement. À bientôt !",
+        "es": "¡Gracias otra vez! La moto estaba en muy buen estado, y los impermeables también nos vinieron genial. De todas las ofertas de alquiler, os elegimos porque respondíais muy rápido a nuestras preguntas (otros arrendadores tardaban 2-3 horas en contestar). Sin duda os recomiendo. ¡Hasta la próxima!",
+        "it": "Grazie ancora! La moto era in ottime condizioni, e anche gli impermeabili sono tornati utili. Tra tutte le offerte di noleggio, abbiamo scelto voi perché rispondevate velocissimo alle nostre domande (altri noleggiatori restavano in silenzio per 2-3 ore). Vi consiglio senza dubbio. A presto!",
+        "ja": "改めてありがとうございました！バイクは状態が良く、レインコートも役に立ちました。いろいろなレンタルの中から御社を選んだのは、質問への返信がとても早かったからです（他のところは2〜3時間も返事がありませんでした）。間違いなくおすすめです。また会いましょう！",
+        "ar": "شكراً مرة أخرى! كانت الدراجة بحالة ممتازة ومعاطف المطر كانت مفيدة أيضاً. من بين كل عروض التأجير اخترناكم لأنكم كنتم تردون على أسئلتنا بسرعة (بينما مؤجرون آخرون كانوا يصمتون لمدة 2-3 ساعات). أنصح بكم بالتأكيد. إلى اللقاء!"
+      }
+    },
+    {
+      "id": "treated-bike-like-our-own",
+      "name": null,
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/treated-bike-like-our-own.webp",
+      "original_locale": "ru",
+      "text": {
+        "en": "We'll definitely come back and rent a bike from you again. We treated the bike like our own — really loved it.",
+        "ru": "Обязательно еще приедем и возьмем у вас байк. К байку относились как к своему — очень понравился.",
+        "de": "Wir kommen auf jeden Fall wieder und mieten wieder ein Bike bei euch. Wir sind mit dem Bike umgegangen, als wäre es unser eigenes – es hat uns wirklich gut gefallen.",
+        "fr": "On reviendra sûrement louer une moto chez vous. On a traité la moto comme si c'était la nôtre — elle nous a vraiment plu.",
+        "es": "Sin duda volveremos a alquilaros una moto. Cuidamos la moto como si fuera nuestra — nos encantó.",
+        "it": "Torneremo sicuramente a noleggiare una moto da voi. Abbiamo trattato la moto come se fosse nostra — ci è piaciuta moltissimo.",
+        "ja": "また必ずそちらでバイクを借りに来ます。バイクは自分のもののように大切に扱いました——とても気に入りました。",
+        "ar": "سنعود بالتأكيد لاستئجار دراجة منكم مرة أخرى. تعاملنا مع الدراجة وكأنها ملكنا — أعجبتنا كثيراً."
+      }
+    },
+    {
+      "id": "helped-find-bike-same-day",
+      "name": null,
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/helped-find-bike-same-day.webp",
+      "original_locale": "ru",
+      "text": {
+        "en": "Thank you so much for helping me find a bike so fast! Everything was clear and quick — I only decided this morning that I wanted a bike, and by evening I had exactly the model I wanted. They even delivered an identical temporary bike while I waited a few days for my color to arrive — the bike is perfect, exactly what I wanted! Also explained to me what CBC and ABC insurance mean — thanks for being so fast!",
+        "ru": "Очень благодарю что так быстро помог найти байк! Все четко и быстро, только сегодня захотела утром байк и сегодня вечером он у меня в нужной модели, даже доставили временный точно такой же, пока я несколько дней жду свой цвет, байк идеальный какой и хотела! Объяснил мне что такое CBC и ABC, благодарю за такую скорость.",
+        "de": "Vielen Dank, dass du mir so schnell geholfen hast, ein Bike zu finden! Alles war klar und schnell – ich wollte erst heute Morgen ein Bike, und am Abend hatte ich schon genau das gewünschte Modell. Sie haben sogar ein identisches Ersatzbike geliefert, während ich ein paar Tage auf meine Farbe gewartet habe – das Bike ist perfekt, genau das, was ich wollte! Hat mir auch erklärt, was CBC und ABC bedeuten – danke für so viel Tempo!",
+        "fr": "Merci beaucoup de m'avoir aidée à trouver une moto aussi vite ! Tout était clair et rapide — j'ai décidé ce matin même que je voulais une moto, et le soir j'avais déjà exactement le modèle voulu. Ils ont même livré une moto identique temporaire pendant que j'attendais ma couleur quelques jours — la moto est parfaite, exactement ce que je voulais ! Il m'a aussi expliqué ce que sont les assurances CBC et ABC — merci pour cette rapidité !",
+        "es": "¡Muchas gracias por ayudarme a encontrar una moto tan rápido! Todo fue claro y rápido — decidí esta misma mañana que quería una moto, y por la tarde ya tenía exactamente el modelo que quería. Incluso me entregaron una moto idéntica temporal mientras esperaba unos días mi color — ¡la moto es perfecta, justo lo que quería! También me explicó qué son el CBC y el ABC — gracias por tanta rapidez.",
+        "it": "Grazie mille per avermi aiutata a trovare una moto così in fretta! Tutto chiaro e veloce — ho deciso stamattina stessa che volevo una moto, e la sera avevo già esattamente il modello che volevo. Hanno persino consegnato una moto identica temporanea mentre aspettavo qualche giorno il mio colore — la moto è perfetta, proprio quella che volevo! Mi ha anche spiegato cosa sono CBC e ABC — grazie per tanta velocità!",
+        "ja": "こんなに早くバイクを見つけてくれて本当にありがとうございました！すべてが明確で早かったです。今朝バイクが欲しいと思っただけなのに、夕方には希望のモデルが用意されていました。自分の色を数日待つ間、まったく同じ代車まで用意してくれて、バイクは理想通り完璧でした！CBCとABC（保険）についても説明してくれました。このスピード感に感謝します！",
+        "ar": "شكراً جزيلاً على مساعدتي في إيجاد دراجة بهذه السرعة! كان كل شيء واضحاً وسريعاً — قررت هذا الصباح فقط أنني أريد دراجة، وبحلول المساء كانت لدي الطراز الذي أردته بالضبط. حتى أنهم وصّلوا دراجة مؤقتة مطابقة تماماً بينما انتظرت بضعة أيام لوصول لوني، والدراجة مثالية تماماً كما أردت! كما شرح لي معنى تأمين CBC وABC — شكراً على هذه السرعة!"
+      }
+    },
+    {
+      "id": "clean-bikes-deposit-returned-full",
+      "name": null,
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/clean-bikes-deposit-returned-full.webp",
+      "original_locale": "ru",
+      "text": {
+        "en": "Thank you so much for the bikes! We rented for a week — clean, fueled up, full kit (helmet, raincoat, cover). The owner was always reachable (good thing we never actually needed help). We left a deposit and got the whole thing back, no issues or disputes at all! Delivery service too! I recommend it to everyone, and I'll definitely use you again when I come back.",
+        "ru": "Спасибо большое за байки! Взяли на неделю в аренду, чистые, заправленные, полный комплект (шлем, дождевик, чехол). Владелец всегда на связи (хорошо что никакая помощь не понадобилась). Оставляли депозит, все вернули полностью без всяких претензий и разногласий! Так же услуга по доставке! Рекомендую всем и когда вернусь, обязательно воспользуюсь.",
+        "de": "Vielen Dank für die Bikes! Eine Woche gemietet – sauber, vollgetankt, komplettes Set (Helm, Regenponcho, Abdeckung). Der Besitzer war immer erreichbar (gut, dass wir letztlich keine Hilfe brauchten). Wir haben eine Kaution hinterlassen und alles vollständig zurückbekommen, ohne Beanstandungen! Auch der Lieferservice war top! Kann ich jedem empfehlen, und wenn ich wiederkomme, nutze ich es auf jeden Fall wieder.",
+        "fr": "Merci beaucoup pour les motos ! Louées pour une semaine — propres, avec le plein, kit complet (casque, poncho de pluie, housse). Le propriétaire était toujours joignable (heureusement, on n'a finalement pas eu besoin d'aide). On a laissé une caution et on l'a récupérée intégralement, sans aucun litige ! Service de livraison aussi ! Je recommande à tout le monde, et quand je reviendrai, je referai appel à vous sans hésiter.",
+        "es": "¡Muchas gracias por las motos! Las alquilamos por una semana — limpias, con el depósito lleno, kit completo (casco, impermeable, funda). El propietario siempre estaba disponible (menos mal que al final no necesitamos ayuda). Dejamos un depósito y nos lo devolvieron íntegro, sin ninguna disputa. ¡Servicio de entrega también! Lo recomiendo a todos, y cuando vuelva, sin duda lo usaré de nuevo.",
+        "it": "Grazie mille per le moto! Noleggiate per una settimana — pulite, con il pieno, kit completo (casco, impermeabile, copertura). Il proprietario era sempre raggiungibile (per fortuna alla fine non abbiamo avuto bisogno di aiuto). Abbiamo lasciato una caparra e l'abbiamo riavuta per intero, senza alcuna contestazione! Anche il servizio di consegna! Lo consiglio a tutti, e quando torno lo userò di sicuro di nuovo.",
+        "ja": "バイクをありがとうございました！1週間レンタルしましたが、清潔で満タン、フルセット（ヘルメット、レインコート、カバー）付きでした。オーナーはいつも連絡が取れました（結局助けは必要ありませんでしたが）。デポジットを預けましたが、何のトラブルもなく全額返してもらえました！配達サービスもありました！みんなにおすすめしますし、また来たら必ず利用します。",
+        "ar": "شكراً جزيلاً على الدراجات! استأجرناها لمدة أسبوع — نظيفة، ومملوءة بالوقود، ومع طقم كامل (خوذة، معطف مطر، غطاء). كان المالك متاحاً دائماً للتواصل (لحسن الحظ لم نحتج لأي مساعدة فعلياً). تركنا وديعة واستعدناها كاملة دون أي خلافات! وأيضاً خدمة التوصيل! أنصح الجميع بها، وعند عودتي سأستخدمها بالتأكيد مرة أخرى."
+      }
+    },
+    {
+      "id": "helped-beyond-the-rental",
+      "name": null,
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/helped-beyond-the-rental.webp",
+      "original_locale": "ru",
+      "text": {
+        "en": "I want to leave a review about your work. You provided me with two scooters in a row, both in excellent condition. It was a pleasure dealing with you from the very start, and it's not just about there being no language barrier — I never had any trouble arranging meeting times and places, payment methods, or anything else. You were helpful and accommodating even with things not directly related to the scooter rental. If anyone asks for a recommendation — I recommend you!",
+        "ru": "Хочу оставить отзыв о твоей работе. Ты снабдил меня последовательно двумя скутерами в исключительном состоянии. Было приятно с тобой взаимодействовать с самого начала, и дело не только в отсутствии языкового барьера: у меня не возникало трудностей с тем, чтобы договориться о времени и месте встречи, о способах оплаты и всём остальном. Ты помогал и шёл навстречу даже в тех вопросах, которые не связаны непосредственно с арендой скутера. Если кто будет спрашивать рекомендации — рекомендую!",
+        "de": "Ich möchte eine Bewertung über deine Arbeit hinterlassen. Du hast mir nacheinander zwei Roller in einwandfreiem Zustand zur Verfügung gestellt. Es war von Anfang an angenehm, mit dir zu tun zu haben, und das liegt nicht nur an der fehlenden Sprachbarriere: Ich hatte nie Schwierigkeiten, Uhrzeit und Treffpunkt, Zahlungsarten und alles Weitere zu klären. Du hast geholfen und warst entgegenkommend, sogar bei Dingen, die nicht direkt mit der Rollermiete zu tun hatten. Falls jemand nach einer Empfehlung fragt – ich empfehle dich!",
+        "fr": "Je tiens à laisser un avis sur votre travail. Vous m'avez fourni successivement deux scooters en excellent état. Le contact avec vous a été agréable dès le début, et ce n'est pas seulement grâce à l'absence de barrière linguistique : je n'ai jamais eu de mal à convenir des horaires, du lieu de rendez-vous, des modes de paiement et de tout le reste. Vous m'avez aidé et vous êtes montré arrangeant même pour des questions qui ne concernaient pas directement la location du scooter. Si quelqu'un demande une recommandation — je vous recommande !",
+        "es": "Quiero dejar una reseña sobre tu trabajo. Me proporcionaste sucesivamente dos scooters en un estado excelente. Fue un placer tratar contigo desde el principio, y no es solo por la ausencia de barrera idiomática: nunca tuve problemas para acordar horarios y lugares de encuentro, formas de pago y todo lo demás. Me ayudaste y te mostraste flexible incluso en asuntos que no tenían que ver directamente con el alquiler del scooter. Si alguien pide una recomendación, ¡te recomiendo!",
+        "it": "Voglio lasciare una recensione sul tuo lavoro. Mi hai fornito in successione due scooter in condizioni eccellenti. È stato un piacere avere a che fare con te fin dall'inizio, e non solo per l'assenza di barriera linguistica: non ho mai avuto difficoltà a concordare orari e luoghi d'incontro, metodi di pagamento e tutto il resto. Mi hai aiutato e sei stato disponibile anche per questioni non direttamente legate al noleggio dello scooter. Se qualcuno chiede una raccomandazione — ti raccomando!",
+        "ja": "あなたの仕事についてレビューを残したいと思います。あなたは私に状態の良いスクーターを続けて2台用意してくれました。最初からあなたとのやり取りは気持ちが良く、それは言葉の壁がなかったからというだけではありません。待ち合わせの時間や場所、支払い方法など、何一つ困ることがありませんでした。スクーターのレンタルと直接関係のないことでも、助けてくれて融通を利かせてくれました。誰かにおすすめを聞かれたら、あなたを推薦します！",
+        "ar": "أريد أن أترك تقييماً عن عملك. لقد زودتني بدراجتين بخارية متتاليتين بحالة ممتازة. كان التعامل معك ممتعاً منذ البداية، والأمر لا يتعلق فقط بعدم وجود حاجز لغوي: لم أواجه أي صعوبة في الاتفاق على وقت ومكان اللقاء، وطرق الدفع، وكل شيء آخر. كنت متعاوناً ومتفهماً حتى في الأمور التي لا تتعلق مباشرة باستئجار الدراجة. إذا سأل أحد عن توصية — أوصي بك!"
+      }
+    },
+    {
+      "id": "great-service-good-prices",
+      "name": null,
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/great-service-good-prices.webp",
+      "original_locale": "ru",
+      "text": {
+        "en": "Thank you so much for the excellent service — new, clean bikes with delivery! Everything top-notch, convenient payment method, and great prices!",
+        "ru": "Большое спасибо за отличный сервис, новые и чистые байки с доставкой! Все на высшем уровне, удобный способ оплаты и отличные цены!",
+        "de": "Vielen Dank für den ausgezeichneten Service, neue und saubere Bikes mit Lieferung! Alles auf höchstem Niveau, bequeme Zahlungsmethode und tolle Preise!",
+        "fr": "Un grand merci pour l'excellent service, des motos neuves et propres livrées chez nous ! Tout était irréprochable, un mode de paiement pratique et d'excellents prix !",
+        "es": "Muchas gracias por el excelente servicio, ¡motos nuevas y limpias con entrega a domicilio! Todo de primer nivel, forma de pago cómoda y precios estupendos.",
+        "it": "Grazie mille per l'ottimo servizio, moto nuove e pulite con consegna a domicilio! Tutto ai massimi livelli, metodo di pagamento comodo e prezzi ottimi!",
+        "ja": "素晴らしいサービスをありがとうございました。新しくて清潔なバイクを配達までしてもらえました！すべてが最高レベルで、支払い方法も便利、価格もとても良かったです！",
+        "ar": "شكراً جزيلاً على الخدمة الممتازة، دراجات جديدة ونظيفة مع خدمة التوصيل! كل شيء بمستوى عالٍ، طريقة دفع مريحة وأسعار رائعة!"
+      }
+    },
+    {
+      "id": "the-bikes-amazing-thank-you",
+      "name": null,
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/the-bikes-amazing-thank-you.webp",
+      "original_locale": "en",
+      "text": {
+        "en": "The bikes amazing thank you!",
+        "ru": "Байки потрясающие, спасибо!",
+        "de": "Die Bikes sind fantastisch, danke!",
+        "fr": "Les motos sont incroyables, merci !",
+        "es": "¡Las motos son increíbles, gracias!",
+        "it": "Le moto sono fantastiche, grazie!",
+        "ja": "バイクは最高です、ありがとう！",
+        "ar": "الدراجات رائعة، شكراً!"
+      }
+    },
+    {
+      "id": "good-time-with-your-bikes",
+      "name": null,
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/good-time-with-your-bikes.webp",
+      "original_locale": "en",
+      "text": {
+        "en": "Glad to hear. Thank you for your service as well. We had a good time with your bikes :)",
+        "ru": "Приятно слышать. Спасибо и вам за сервис. Нам очень понравилось кататься на ваших байках :)",
+        "de": "Freut mich zu hören. Danke auch für euren Service. Wir hatten eine schöne Zeit mit euren Bikes :)",
+        "fr": "Ravi de l'entendre. Merci également pour votre service. On a passé un bon moment avec vos motos :)",
+        "es": "Me alegra oír eso. Gracias también por vuestro servicio. Lo pasamos genial con vuestras motos :)",
+        "it": "Piacere di sentirlo. Grazie anche a voi per il servizio. Ci siamo divertiti con le vostre moto :)",
+        "ja": "それは良かったです。サービスもありがとうございました。バイクでとても楽しい時間を過ごせました :)",
+        "ar": "يسعدني سماع ذلك. شكراً لكم أيضاً على خدمتكم. قضينا وقتاً ممتعاً مع دراجاتكم :)"
+      }
+    },
+    {
+      "id": "really-great-bike-love-it",
+      "name": "Peter",
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/really-great-bike-love-it.webp",
+      "original_locale": "en",
+      "text": {
+        "en": "Btw, the bike is really great I love it.",
+        "ru": "Кстати, байк реально классный, мне очень нравится.",
+        "de": "Übrigens, das Bike ist wirklich super, ich liebe es.",
+        "fr": "Au fait, la moto est vraiment top, je l'adore.",
+        "es": "Por cierto, la moto es genial, me encanta.",
+        "it": "A proposito, la moto è davvero fantastica, la adoro.",
+        "ja": "ちなみに、このバイク本当に最高で、とても気に入っています。",
+        "ar": "بالمناسبة، الدراجة رائعة حقاً، أنا معجب بها كثيراً."
+      }
     }
   ]
 }

@@ -38,6 +38,21 @@ const SOURCES = [
   // Верх — наша реплика; оставляем сообщения клиента, включая просьбу дать Google-аккаунт.
   { src: 'IMG_2749.PNG', id: 'good-bikes-good-service-good-people', crop: { left: 72, top: 450, width: 1290, height: 810 } },
   // IMG_2747 не берём: сообщение про helmetsack — операционка, не отзыв.
+
+  // Партия 2 (2026-08-07)
+  { src: 'IMG_2797.PNG', id: 'fast-replies-recommend', crop: 'auto' },
+  { src: 'IMG_2798.PNG', id: 'treated-bike-like-our-own', crop: 'auto' },
+  { src: 'IMG_2799.PNG', id: 'helped-find-bike-same-day', crop: 'auto' },
+  { src: 'IMG_2800.PNG', id: 'clean-bikes-deposit-returned-full', crop: 'auto' },
+  { src: 'IMG_2801.PNG', id: 'helped-beyond-the-rental', crop: 'auto' },
+  { src: 'IMG_2802.PNG', id: 'great-service-good-prices', crop: 'auto' },
+  // Верх кадра — наша реплика "No problem at all!"; берём только ответ клиента.
+  { src: 'IMG_2803.PNG', id: 'the-bikes-amazing-thank-you', crop: { left: 0, top: 150, width: 1124, height: 180 } },
+  { src: 'IMG_2804.PNG', id: 'good-time-with-your-bikes', crop: 'auto' },
+  // Полный скрин переписки с Peter: вырезаем только его реплику про байк,
+  // логистику встречи и наши ответы не публикуем. photo_...-55 (продолжение
+  // той же переписки, жалоба на боковые кофры) не берём — это операционка.
+  { src: 'photo_2026-08-07_12-00-53.jpg', id: 'really-great-bike-love-it', crop: { left: 0, top: 685, width: 590, height: 100 } },
 ];
 
 async function autoBox(img, w, h) {
