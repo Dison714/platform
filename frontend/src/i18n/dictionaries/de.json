@@ -193,7 +193,9 @@
       "close": "Schließen",
       "screenshot_alt": "Screenshot der ursprünglichen WhatsApp-Nachricht des Kunden",
       "original_note": "Ursprüngliche WhatsApp-Nachricht. Der Text oben ist unsere Übersetzung aus dem Englischen.",
-      "original_note_same": "Ursprüngliche WhatsApp-Nachricht."
+      "original_note_same": "Ursprüngliche WhatsApp-Nachricht.",
+      "show_all": "Alle {n} Bewertungen anzeigen",
+      "show_less": "Weniger anzeigen"
     },
     "why_title": "Warum mit uns fahren",
     "why": [

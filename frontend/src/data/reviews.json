@@ -288,6 +288,24 @@
         "ja": "ちなみに、このバイク本当に最高で、とても気に入っています。",
         "ar": "بالمناسبة، الدراجة رائعة حقاً، أنا معجب بها كثيراً."
       }
+    },
+    {
+      "id": "followed-instructions-no-problem",
+      "name": "Peter",
+      "date": null,
+      "source": "whatsapp",
+      "screenshot": "reviews/followed-instructions-no-problem.webp",
+      "original_locale": "en",
+      "text": {
+        "en": "And thanks for the note on breaking it in — I think we had the hardest road on the first day, from Munduk Moding, but after that, following your instructions, no problem.",
+        "ru": "И спасибо за подсказку про обкатку — думаю, самая сложная дорога была в первый день, от Мунтук-Модинг, а дальше, следуя вашим инструкциям, всё было без проблем.",
+        "de": "Und danke für den Hinweis zum Einfahren – ich glaube, die schwierigste Straße hatten wir am ersten Tag, von Munduk Moding aus, danach war es nach euren Anweisungen kein Problem mehr.",
+        "fr": "Et merci pour la remarque sur le rodage — je pense qu'on a eu la route la plus difficile le premier jour, depuis Munduk Moding, mais après, en suivant vos instructions, aucun problème.",
+        "es": "Y gracias por la nota sobre el rodaje: creo que tuvimos la carretera más difícil el primer día, desde Munduk Moding, pero después, siguiendo vuestras instrucciones, no hubo ningún problema.",
+        "it": "E grazie per la nota sul rodaggio — credo che la strada più difficile l'abbiamo avuta il primo giorno, da Munduk Moding, ma dopo, seguendo le vostre istruzioni, nessun problema.",
+        "ja": "慣らし運転についてのアドバイスもありがとうございました。初日、Munduk Modingからの道が一番大変だったと思いますが、その後は指示に従って問題なく走れました。",
+        "ar": "وشكراً على الملاحظة بخصوص فترة التطويع — أعتقد أن أصعب طريق كان في اليوم الأول، من مونضوك مودينغ، لكن بعد ذلك، باتباع تعليماتكم، لم تكن هناك أي مشكلة."
+      }
     }
   ]
 }

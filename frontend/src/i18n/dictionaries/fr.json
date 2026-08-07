@@ -193,7 +193,9 @@
       "close": "Fermer",
       "screenshot_alt": "Capture d'écran du message WhatsApp original du client",
       "original_note": "Message WhatsApp original. Le texte ci-dessus est notre traduction de l'anglais.",
-      "original_note_same": "Message WhatsApp original."
+      "original_note_same": "Message WhatsApp original.",
+      "show_all": "Voir les {n} avis",
+      "show_less": "Afficher moins"
     },
     "why_title": "Pourquoi rouler avec nous",
     "why": [

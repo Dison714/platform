@@ -193,7 +193,9 @@
       "close": "Close",
       "screenshot_alt": "Screenshot of the original WhatsApp message from the customer",
       "original_note": "Original WhatsApp message. The review above is our translation from English.",
-      "original_note_same": "Original WhatsApp message."
+      "original_note_same": "Original WhatsApp message.",
+      "show_all": "Show all {n} reviews",
+      "show_less": "Show fewer reviews"
     },
     "why_title": "Why ride with us",
     "why": [

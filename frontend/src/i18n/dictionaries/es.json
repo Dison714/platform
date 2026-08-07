@@ -193,7 +193,9 @@
       "close": "Cerrar",
       "screenshot_alt": "Captura de pantalla del mensaje original del cliente en WhatsApp",
       "original_note": "Mensaje original de WhatsApp. El texto de arriba es nuestra traducción del inglés.",
-      "original_note_same": "Mensaje original de WhatsApp."
+      "original_note_same": "Mensaje original de WhatsApp.",
+      "show_all": "Ver las {n} reseñas",
+      "show_less": "Mostrar menos"
     },
     "why_title": "Por qué elegirnos",
     "why": [

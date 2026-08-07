@@ -193,7 +193,9 @@
       "close": "Закрыть",
       "screenshot_alt": "Скриншот оригинального сообщения клиента в WhatsApp",
       "original_note": "Оригинальное сообщение в WhatsApp. Текст выше — наш перевод с английского.",
-      "original_note_same": "Оригинальное сообщение в WhatsApp."
+      "original_note_same": "Оригинальное сообщение в WhatsApp.",
+      "show_all": "Показать все отзывы ({n})",
+      "show_less": "Свернуть отзывы"
     },
     "why_title": "Почему мы",
     "why": [

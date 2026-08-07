@@ -3,13 +3,16 @@
 // Что делает: кропает исходный экспорт (1632x2040, формат Instagram-сторис с
 // градиентной подложкой) до самой переписки и жмёт в WebP 900w.
 //
-// Кроп двухрежимный:
-//   auto   — граница ищется по дисперсии строки/колонки: градиентная подложка
-//            однородна по X, область чата с пузырями — нет. Годится, когда на
-//            скриншоте только сообщения клиента.
-//   manual — явный box, когда из кадра надо вырезать наши собственные реплики
-//            (просьба об отзыве, промо Instagram) или логистику возврата.
-//            Публикуем только то, что написал клиент.
+// Кроп трёхрежимный:
+//   auto    — граница ищется по дисперсии строки/колонки: градиентная подложка
+//             однородна по X, область чата с пузырями — нет. Годится, когда на
+//             скриншоте только сообщения клиента.
+//   manual  — явный box, когда из кадра надо вырезать наши собственные реплики
+//             (просьба об отзыве, промо Instagram) или логистику возврата.
+//             Публикуем только то, что написал клиент.
+//   compose — несколько box'ов из одного скриншота склеиваются по вертикали
+//             (напр. имя контакта из шапки чата + сообщение, вырезанные из
+//             разных мест кадра). Фон между блоками — цвет угла первого box.
 //
 // Запуск (из backend/):
 //   node scripts/prep_reviews.mjs <src-dir> <out-dir>
@@ -49,10 +52,21 @@ const SOURCES = [
   // Верх кадра — наша реплика "No problem at all!"; берём только ответ клиента.
   { src: 'IMG_2803.PNG', id: 'the-bikes-amazing-thank-you', crop: { left: 0, top: 150, width: 1124, height: 180 } },
   { src: 'IMG_2804.PNG', id: 'good-time-with-your-bikes', crop: 'auto' },
-  // Полный скрин переписки с Peter: вырезаем только его реплику про байк,
-  // логистику встречи и наши ответы не публикуем. photo_...-55 (продолжение
-  // той же переписки, жалоба на боковые кофры) не берём — это операционка.
-  { src: 'photo_2026-08-07_12-00-53.jpg', id: 'really-great-bike-love-it', crop: { left: 0, top: 685, width: 590, height: 100 } },
+  // Полный скрин переписки с Peter: вырезаем его реплику про байк + имя из
+  // шапки чата (без фото контакта — чужое лицо не публикуем), логистику
+  // встречи и наши ответы не берём.
+  {
+    src: 'photo_2026-08-07_12-00-53.jpg',
+    id: 'really-great-bike-love-it',
+    crop: { compose: [
+      { left: 140, top: 78, width: 120, height: 38 },  // "Peter" из шапки, без аватарки
+      { left: 0, top: 685, width: 590, height: 100 },   // сама реплика
+    ] },
+  },
+  // photo_...-55 — продолжение той же переписки с Peter: жалоба на боковые
+  // кофры операционная, но последний абзац (11:39) — отдельный отзыв про то,
+  // что после инструкций всё стало нормально.
+  { src: 'photo_2026-08-07_12-00-55.jpg', id: 'followed-instructions-no-problem', crop: { left: 0, top: 895, width: 590, height: 130 } },
 ];
 
 async function autoBox(img, w, h) {
@@ -94,6 +108,36 @@ async function autoBox(img, w, h) {
   };
 }
 
+const COMPOSE_GAP = 14; // px исходника между склеенными блоками
+
+async function composeBoxes(img, boxes) {
+  const parts = await Promise.all(boxes.map((box) => img.clone().extract(box).toBuffer()));
+  const width = Math.max(...boxes.map((b) => b.width));
+  const height = boxes.reduce((sum, b) => sum + b.height, 0) + COMPOSE_GAP * (boxes.length - 1);
+
+  const { data: bg } = await img
+    .clone()
+    .extract({ left: boxes[0].left, top: boxes[0].top, width: 1, height: 1 })
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+
+  let top = 0;
+  const composite = boxes.map((box, i) => {
+    const layer = { input: parts[i], left: 0, top };
+    top += box.height + COMPOSE_GAP;
+    return layer;
+  });
+
+  return sharp({
+    create: {
+      width,
+      height,
+      channels: 3,
+      background: { r: bg[0], g: bg[1], b: bg[2] },
+    },
+  }).composite(composite);
+}
+
 const [, , srcDir, outDir] = process.argv;
 if (!srcDir || !outDir) {
   console.error('usage: node scripts/prep_reviews.mjs <src-dir> <out-dir>');
@@ -104,18 +148,25 @@ mkdirSync(outDir, { recursive: true });
 for (const { src, id, crop } of SOURCES) {
   const img = sharp(path.join(srcDir, src));
   const { width, height } = await img.metadata();
-  const box = crop === 'auto' ? await autoBox(img, width, height) : crop;
 
+  const mode = crop === 'auto' ? 'auto' : crop.compose ? 'compose' : 'manual';
   const out = path.join(outDir, `${id}.webp`);
-  const info = await img
-    .clone()
-    .extract(box)
+
+  let pipeline;
+  if (mode === 'auto') {
+    pipeline = img.clone().extract(await autoBox(img, width, height));
+  } else if (mode === 'compose') {
+    pipeline = await composeBoxes(img, crop.compose);
+  } else {
+    pipeline = img.clone().extract(crop);
+  }
+
+  const info = await pipeline
     .resize({ width: OUT_WIDTH, withoutEnlargement: true })
     .webp({ quality: WEBP_QUALITY })
     .toFile(out);
 
   console.log(
-    `${src} → ${id}.webp  ${info.width}x${info.height}  ${(info.size / 1024).toFixed(0)} KB` +
-    `  [${crop === 'auto' ? 'auto' : 'manual'}]`
+    `${src} → ${id}.webp  ${info.width}x${info.height}  ${(info.size / 1024).toFixed(0)} KB  [${mode}]`
   );
 }

@@ -193,7 +193,9 @@
       "close": "閉じる",
       "screenshot_alt": "お客様からのWhatsAppメッセージ原文のスクリーンショット",
       "original_note": "WhatsAppのメッセージ原文です。上の文章は英語からの当社による翻訳です。",
-      "original_note_same": "WhatsAppのメッセージ原文です。"
+      "original_note_same": "WhatsAppのメッセージ原文です。",
+      "show_all": "すべてのレビューを表示（{n}件）",
+      "show_less": "表示を減らす"
     },
     "why_title": "選ばれる理由",
     "why": [

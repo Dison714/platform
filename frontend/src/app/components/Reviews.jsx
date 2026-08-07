@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import ReviewScreenshot from './ReviewScreenshot.jsx';
 import { resolveReviewScreenshotUrl } from '../../lib/photos.js';
 
@@ -14,14 +17,22 @@ import { resolveReviewScreenshotUrl } from '../../lib/photos.js';
 // По той же причине блок не отдаёт Schema.org Review/aggregateRating —
 // разметка на собственных отзывах о себе всё равно не даёт rich-результатов
 // (self-serving reviews), а фабриковать оценку ради неё тем более незачем.
+//
+// Свернуто/развёрнуто — через CSS-класс на <ul>, не через условный рендер:
+// все карточки остаются в DOM и с выключенным JS (индексация, скринридеры),
+// «свёрнуто» — просто display:none у лишних li начиная с INITIAL_VISIBLE.
+const INITIAL_VISIBLE = 6;
+
 export default function Reviews({ title, sub, reviews, locale, labels }) {
+  const [expanded, setExpanded] = useState(false);
   if (!reviews?.length) return null;
+  const hasMore = reviews.length > INITIAL_VISIBLE;
 
   return (
     <section className="container block">
       <h2 className="display block-title">{title}</h2>
       <p className="block-sub">{sub}</p>
-      <ul className="reviews-grid">
+      <ul className={`reviews-grid${hasMore && !expanded ? ' is-collapsed' : ''}`}>
         {reviews.map((r) => {
           // Текст на языке страницы, иначе оригинал — так новый отзыв можно
           // выложить сразу, а переводы дописать позже, не ломая блок.
@@ -44,6 +55,21 @@ export default function Reviews({ title, sub, reviews, locale, labels }) {
           );
         })}
       </ul>
+      {hasMore ? (
+        <div className="reviews-more">
+          <button
+            type="button"
+            className="reviews-more-btn"
+            aria-expanded={expanded}
+            onClick={() => setExpanded((v) => !v)}
+          >
+            {expanded ? labels.show_less : labels.show_all.replace('{n}', String(reviews.length))}
+            <svg className="reviews-more-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+        </div>
+      ) : null}
     </section>
   );
 }

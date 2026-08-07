@@ -283,6 +283,18 @@ img { max-width: 100%; display: block; }
    как есть, от одной строки до абзаца на 700 знаков, и в grid короткие карточки
    растягивались бы до высоты самой длинной. columns укладывает их плотно. */
 .reviews-grid { margin-top: 16px; padding: 0; list-style: none; columns: 1; column-gap: 14px; }
+/* Свёрнутое состояние — часть отзывов скрыта (li остаётся в DOM, см. Reviews.jsx). */
+.reviews-grid.is-collapsed li:nth-child(n + 7) { display: none; }
+.reviews-more { display: flex; justify-content: center; margin-top: 4px; }
+.reviews-more-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: none; border: 1px solid var(--border); border-radius: 999px;
+  padding: 10px 20px; cursor: pointer; font: inherit; font-size: 14px; font-weight: 500;
+  color: var(--navy);
+}
+.reviews-more-btn:hover { border-color: var(--navy); }
+.reviews-more-icon { width: 16px; height: 16px; flex: 0 0 auto; transition: transform .2s; }
+.reviews-more-btn[aria-expanded="true"] .reviews-more-icon { transform: rotate(180deg); }
 .review-card {
   border: 1px solid var(--border); border-radius: 12px; padding: 18px;
   /* без этого колонка рвёт карточку пополам между колонками */
