@@ -5,7 +5,7 @@ import { formatIdr } from '../../lib/api.js';
 // Форма заявки. Клиент шлёт ВЫБОР (продукт, даты, страховка, допы,
 // location_link) + контакты — НЕ итоговую сумму. Бэкенд пересчитывает цену,
 // делает снимок и сам пингует менеджеров в Telegram (фронт это не трогает).
-export default function BookingForm({ slug, locale, start, end, locationLink, selection, quote, dict, onCancel }) {
+export default function BookingForm({ slug, locale, start, end, locationLink, deliveryTime, selection, quote, dict, onCancel }) {
   const t = dict.booking;
   const [name, setName] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
@@ -35,6 +35,7 @@ export default function BookingForm({ slug, locale, start, end, locationLink, se
       ...(selection.insurance ? { insurance: selection.insurance } : {}),
       ...(selection.equipment ? { equipment: selection.equipment } : {}),
       ...(locationLink ? { location_link: locationLink } : {}),
+      ...(deliveryTime ? { delivery_time: deliveryTime } : {}),
       ...(comment.trim() ? { comment: comment.trim() } : {}),
     };
   }

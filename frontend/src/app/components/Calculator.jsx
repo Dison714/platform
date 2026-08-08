@@ -23,6 +23,7 @@ export default function Calculator({ slug, locale, equipment, insuranceOptions, 
   const [start, setStart] = useState(todayISO(1));
   const [end, setEnd] = useState(todayISO(8));
   const [locationLink, setLocationLink] = useState('');
+  const [deliveryTime, setDeliveryTime] = useState('');
 
   const [theft, setTheft] = useState(false);
   const [damageOn, setDamageOn] = useState(false);
@@ -137,6 +138,12 @@ export default function Calculator({ slug, locale, equipment, insuranceOptions, 
             <input type="url" inputMode="url" placeholder={t.location_ph}
               value={locationLink} onChange={(e) => setLocationLink(e.target.value)} />
             <p className="hint">{t.location_hint}</p>
+          </section>
+
+          <section className="calc-section">
+            <h3>{t.delivery_time}</h3>
+            <input type="time" value={deliveryTime} onChange={(e) => setDeliveryTime(e.target.value)} />
+            <p className="hint">{t.delivery_time_hint}</p>
           </section>
 
           <section className="calc-section">
@@ -267,6 +274,7 @@ export default function Calculator({ slug, locale, equipment, insuranceOptions, 
                 start={start}
                 end={end}
                 locationLink={locationLink || null}
+                deliveryTime={deliveryTime || null}
                 selection={selection}
                 quote={result}
                 dict={dict}
