@@ -6,6 +6,7 @@ import { notifyDict } from './notifyDict.js';
 
 const CONTACT_FIELDS = ['phone', 'whatsapp', 'telegram_username', 'telegram_id', 'email'];
 const SUPPORTED_LOCALES = ['en', 'ru'];
+const PAYMENT_METHODS = new Set(['cash', 'bank_transfer', 'other']);
 
 function badReq(message) {
     const e = new Error(message);
@@ -128,8 +129,9 @@ function computePeralatan(equipmentItems, categoryCode) {
 // руками при редактировании карточки в Telegram, а лишний "—" пришлось бы
 // сначала стирать. Motor — без номера юнита: справочника свободных байков
 // тоже нет (тот же будущий чанк), поэтому поле просто не показываем, а не
-// подставляем прочерк. Jam — из delivery_time (клиент указал на сайте), если
-// нет — из комментария (старый флоу, дальше диспетчер читает Komentar сам).
+// подставляем прочерк. Jam — из delivery_time (клиент указал на сайте); слово
+// "jam" пишем всегда, даже без времени — чтобы диспетчеру, читающему
+// Komentar, оставалось дописать значение вручную, а не сначала что-то стирать.
 export function buildDriverText({ seq, startDate, deliveryTime, customer, link, comment, productName, categoryCode, quote }) {
     const eq = quote.breakdown.equipment;
     const peralatan = computePeralatan(eq?.items, categoryCode);
@@ -138,7 +140,7 @@ export function buildDriverText({ seq, startDate, deliveryTime, customer, link, 
     const lines = [
         `${seq}.`,
         `Sopir: `,
-        `Memesan: pengiriman ${formatDDMMYYYY(startDate)}${deliveryTime ? `, jam ${deliveryTime}` : ''}`,
+        `Memesan: pengiriman ${formatDDMMYYYY(startDate)}, jam ${deliveryTime || ''}`,
         `Pakai: `,
         `Location: ${link ? esc(link) : ''}`,
         `Client hubungan: ${buildContactsHtml(customer)}`,
@@ -155,7 +157,7 @@ export function buildDriverText({ seq, startDate, deliveryTime, customer, link, 
 // Текст уведомления менеджеру — ЦЕЛИКОМ на языке заявки (locale). Подписи из
 // серверного словаря NOTIFY[locale]; названия оборудования уже локализованы в
 // снимке (computeEquipment(lang)). ВСЕ суммы — из quote_snapshot, без пересчёта.
-export function buildManagerText({ locale, ref, productName, startDate, endDate, rentalDays, deliveryTime, customer, quote, link, comment }) {
+export function buildManagerText({ locale, ref, productName, startDate, endDate, rentalDays, deliveryTime, customer, quote, link, paymentPreference, comment }) {
     const t = notifyDict(locale);
     const b = quote.breakdown;
     const ins = b.insurance;
@@ -185,6 +187,7 @@ export function buildManagerText({ locale, ref, productName, startDate, endDate,
         `👤 ${esc(customer.full_name)}`,
         `☎️ ${buildContactsHtml(customer)}`,
         link ? `📍 <a href="${esc(link)}">${t.location_map}</a>` : `📍 ${t.location}: —`,
+        ...(paymentPreference?.length ? [`💳 ${t.payment}: ${paymentPreference.map((p) => t[`payment_${p}`]).join(', ')}`] : []),
         '',
         `<b>${t.calc}</b>`,
         ...calc,
@@ -228,7 +231,7 @@ async function findOrCreateCustomer(client, companyId, c) {
 }
 
 export async function createBooking(input) {
-    const { product, start_date, end_date, customer, insurance, equipment, location_link, delivery_time, comment } = input ?? {};
+    const { product, start_date, end_date, customer, insurance, equipment, location_link, delivery_time, payment_preference, comment } = input ?? {};
     // Язык заявки: уведомление менеджеру и снимок имён — на нём. Неизвестный → en.
     const locale = SUPPORTED_LOCALES.includes(input?.locale) ? input.locale : 'en';
 
@@ -259,8 +262,12 @@ export async function createBooking(input) {
     const ruleSetId = await getActiveRuleSetId();
     const link = typeof location_link === 'string' && location_link.trim() ? location_link.trim() : null;
     const commentText = typeof comment === 'string' && comment.trim() ? comment.trim() : null;
-    // HH:MM с клиентского <input type="time">; что угодно другое — молча игнорируем.
+    // HH:MM из клиентского выпадающего списка на сайте; что угодно другое — молча игнорируем.
     const deliveryTime = typeof delivery_time === 'string' && /^\d{2}:\d{2}$/.test(delivery_time) ? delivery_time : null;
+    // Отмеченные клиентом способы оплаты (можно несколько); неизвестные коды отсеиваем.
+    const paymentPreference = Array.isArray(payment_preference)
+        ? [...new Set(payment_preference.filter((p) => PAYMENT_METHODS.has(p)))]
+        : [];
 
     const client = await pool.connect();
     try {
@@ -272,8 +279,8 @@ export async function createBooking(input) {
             `INSERT INTO bookings (
                 company_id, source, status, customer_id, product_id, rule_set_id,
                 start_date, end_date, rental_days,
-                base_price_idr, delivery_fee_idr, total_payable_idr, quote_snapshot, location_link, delivery_time, locale, comment
-             ) VALUES ($1,'website','created',$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+                base_price_idr, delivery_fee_idr, total_payable_idr, quote_snapshot, location_link, delivery_time, payment_preference, locale, comment
+             ) VALUES ($1,'website','created',$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
              RETURNING id, status, created_at, booking_number`,
             [
                 companyId, customerId, quote.product.id, ruleSetId,
@@ -281,7 +288,7 @@ export async function createBooking(input) {
                 quote.breakdown.base_rental.price_idr,
                 quote.breakdown.delivery.fee_idr,
                 quote.total_payable_idr,
-                quote, link, deliveryTime, locale, commentText,
+                quote, link, deliveryTime, paymentPreference.length ? paymentPreference : null, locale, commentText,
             ]
         );
         const booking = bRows[0];
@@ -303,7 +310,7 @@ export async function createBooking(input) {
         const text = buildManagerText({
             locale, ref, productName: quote.product.name,
             startDate: start_date, endDate: end_date, rentalDays, deliveryTime, customer, quote, link,
-            comment: commentText,
+            paymentPreference, comment: commentText,
         });
         const notificationIds = [];
         for (const chatId of chatIds) {

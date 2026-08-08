@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { formatIdr } from '../../lib/api.js';
 
+const PAYMENT_METHOD_CODES = ['cash', 'bank_transfer', 'other'];
+
 // Форма заявки. Клиент шлёт ВЫБОР (продукт, даты, страховка, допы,
 // location_link) + контакты — НЕ итоговую сумму. Бэкенд пересчитывает цену,
 // делает снимок и сам пингует менеджеров в Telegram (фронт это не трогает).
@@ -10,8 +12,7 @@ export default function BookingForm({ slug, locale, start, end, locationLink, de
   const [name, setName] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [telegram, setTelegram] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [paymentMethods, setPaymentMethods] = useState({});
   const [comment, setComment] = useState('');
   const [status, setStatus] = useState('idle'); // idle | sending | error
   const [errMsg, setErrMsg] = useState('');
@@ -24,8 +25,7 @@ export default function BookingForm({ slug, locale, start, end, locationLink, de
     const customer = { full_name: name.trim() };
     if (whatsapp.trim()) customer.whatsapp = whatsapp.trim();
     if (telegram.trim()) customer.telegram_username = telegram.trim().replace(/^@/, '');
-    if (email.trim()) customer.email = email.trim();
-    if (phone.trim()) customer.phone = phone.trim();
+    const paymentPreference = PAYMENT_METHOD_CODES.filter((code) => paymentMethods[code]);
     return {
       product: slug,
       locale, // язык заявки → язык уведомления менеджеру
@@ -36,6 +36,7 @@ export default function BookingForm({ slug, locale, start, end, locationLink, de
       ...(selection.equipment ? { equipment: selection.equipment } : {}),
       ...(locationLink ? { location_link: locationLink } : {}),
       ...(deliveryTime ? { delivery_time: deliveryTime } : {}),
+      ...(paymentPreference.length ? { payment_preference: paymentPreference } : {}),
       ...(comment.trim() ? { comment: comment.trim() } : {}),
     };
   }
@@ -43,7 +44,7 @@ export default function BookingForm({ slug, locale, start, end, locationLink, de
   async function submit(e) {
     e.preventDefault();
     if (!name.trim()) { setStatus('error'); setErrMsg(t.name_required); return; }
-    const hasContact = [whatsapp, telegram, email, phone].some((v) => v.trim() !== '');
+    const hasContact = [whatsapp, telegram].some((v) => v.trim() !== '');
     if (!hasContact) { setStatus('error'); setErrMsg(t.contact_required); return; }
 
     setStatus('sending'); setErrMsg('');
@@ -94,12 +95,20 @@ export default function BookingForm({ slug, locale, start, end, locationLink, de
         <label className="field"><span>{t.telegram}</span>
           <input type="text" value={telegram} placeholder="@username" onChange={(e) => setTelegram(e.target.value)} />
         </label>
-        <label className="field"><span>{t.email}</span>
-          <input type="email" value={email} placeholder="name@email.com" onChange={(e) => setEmail(e.target.value)} />
-        </label>
-        <label className="field"><span>{t.phone}</span>
-          <input type="tel" inputMode="tel" value={phone} placeholder="+62…" onChange={(e) => setPhone(e.target.value)} />
-        </label>
+      </div>
+
+      <div className="field">
+        <span>{t.payment_method}</span>
+        {PAYMENT_METHOD_CODES.map((code) => (
+          <label className="check" key={code}>
+            <input
+              type="checkbox"
+              checked={!!paymentMethods[code]}
+              onChange={(e) => setPaymentMethods((m) => ({ ...m, [code]: e.target.checked }))}
+            />
+            {t[`payment_${code}`]}
+          </label>
+        ))}
       </div>
 
       <label className="field"><span>{t.comment}</span>

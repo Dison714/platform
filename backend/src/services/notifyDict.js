@@ -23,6 +23,10 @@ export const NOTIFY = {
     location_map: 'Location on map',
     location: 'Location',
     comment: 'Comment',
+    payment: 'Payment',
+    payment_cash: 'Cash',
+    payment_bank_transfer: 'Bank transfer',
+    payment_other: 'Other',
   },
   ru: {
     lang_name: 'Русский',
@@ -45,6 +49,10 @@ export const NOTIFY = {
     location_map: 'Локация на карте',
     location: 'Локация',
     comment: 'Комментарий',
+    payment: 'Оплата',
+    payment_cash: 'Наличные',
+    payment_bank_transfer: 'Банковский перевод',
+    payment_other: 'Другое',
   },
 };
 
