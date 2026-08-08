@@ -17,6 +17,15 @@ function daysBetween(start, end) {
   return Math.round((new Date(end).getTime() - new Date(start).getTime()) / 86_400_000);
 }
 
+// 09:00–22:00, шаг 30 минут — окно, в которое доставка идёт штатно (без
+// согласования с менеджером). Раньше/позже — по запросу, см. delivery_time_hint.
+const DELIVERY_TIME_OPTIONS = Array.from({ length: 27 }, (_, i) => {
+  const totalMinutes = 9 * 60 + i * 30;
+  const h = String(Math.floor(totalMinutes / 60)).padStart(2, '0');
+  const m = String(totalMinutes % 60).padStart(2, '0');
+  return `${h}:${m}`;
+});
+
 export default function Calculator({ slug, locale, equipment, insuranceOptions, dict }) {
   const t = dict.calc;
 
@@ -142,7 +151,12 @@ export default function Calculator({ slug, locale, equipment, insuranceOptions, 
 
           <section className="calc-section">
             <h3>{t.delivery_time}</h3>
-            <input type="time" value={deliveryTime} onChange={(e) => setDeliveryTime(e.target.value)} />
+            <select value={deliveryTime} onChange={(e) => setDeliveryTime(e.target.value)}>
+              <option value="">{t.delivery_time_ph}</option>
+              {DELIVERY_TIME_OPTIONS.map((time) => (
+                <option key={time} value={time}>{time}</option>
+              ))}
+            </select>
             <p className="hint">{t.delivery_time_hint}</p>
           </section>
 
