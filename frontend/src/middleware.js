@@ -35,24 +35,82 @@ function randomId() {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 }
 
-// Любой путь без активного языкового префикса → редирект на /<default>/...
-// Структура готова к 7 языкам; сейчас активен только en.
-export function middleware(request) {
+// Разбор Accept-Language в список {tag, q}, отсортированный по убыванию
+// приоритета браузера. Некорректный/отсутствующий q считаем как 1.
+function parseAcceptLanguage(header) {
+  if (!header) return [];
+  return header
+    .split(',')
+    .map((part) => {
+      const [rawTag, rawQ] = part.trim().split(';q=');
+      const tag = rawTag?.trim().toLowerCase();
+      const q = rawQ ? parseFloat(rawQ) : 1;
+      return tag ? { tag, q: Number.isFinite(q) ? q : 1 } : null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.q - a.q);
+}
+
+// Первый тег из Accept-Language, чей primary subtag (до дефиса, напр. "de"
+// из "de-DE") входит в enabled — это и есть автодетект языка для голого
+// домена. matched===null → покажем DEFAULT_LOCALE как раньше; browserPrimary
+// возвращается отдельно, чтобы залогировать сам факт "к нам приходил язык,
+// которого нет" даже когда redirect уходит на дефолт.
+function detectLocale(header, enabled) {
+  const parsed = parseAcceptLanguage(header);
+  for (const { tag } of parsed) {
+    const primary = tag.split('-')[0];
+    if (enabled.includes(primary)) return { matched: primary, browserPrimary: primary };
+  }
+  return { matched: null, browserPrimary: parsed[0]?.tag.split('-')[0] ?? null };
+}
+
+// Fire-and-forget сигнал в web_events (backend/src/services/webEvents.js) —
+// сырой материал для будущего решения "добавлять ли язык N" (CLAUDE.md §5).
+// Не await'ится в вызывающем коде: waitUntil держит процесс, если платформа
+// его даёт, но редирект не должен ждать сеть в любом случае — ошибки/недо-
+// ступность backend проглатываются здесь же.
+function logUnsupportedLocale(event, browserPrimary, header, pathname) {
+  const base = process.env.API_BASE_URL || 'http://localhost:3000';
+  const promise = fetch(`${base}/api/web-events`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      event_code: 'locale_autodetect_unmatched',
+      metadata: { browser_lang: browserPrimary, accept_language: header, path: pathname },
+    }),
+  }).catch(() => {});
+  if (typeof event?.waitUntil === 'function') event.waitUntil(promise);
+}
+
+// Любой путь без активного языкового префикса → редирект на язык браузера
+// (Accept-Language), если он входит в 8 поддерживаемых; иначе на
+// DEFAULT_LOCALE. Раньше редиректило на DEFAULT_LOCALE безусловно — дефолт
+// нередко подсовывался немецко-/франко-/etc.-язычным пользователям, зашедшим
+// на голый домен без явного /de и т.п. (актуально для части Google Ads
+// объявлений, где Final URL — голый домен).
+export function middleware(request, event) {
   const { pathname } = request.nextUrl;
 
   let response;
   if (pathname.startsWith('/internal') || pathname.startsWith('/api/admin')) {
     response = checkBasicAuth(request) ? NextResponse.next() : unauthorized();
   } else {
-    const hasLocale = enabledLocales().some(
+    const enabled = enabledLocales();
+    const hasLocale = enabled.some(
       (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`)
     );
     if (hasLocale) {
       response = NextResponse.next();
     } else {
       const url = request.nextUrl.clone();
-      url.pathname = `/${DEFAULT_LOCALE}${pathname === '/' ? '' : pathname}`;
+      const acceptLanguage = request.headers.get('accept-language');
+      const { matched, browserPrimary } = detectLocale(acceptLanguage, enabled);
+      url.pathname = `/${matched || DEFAULT_LOCALE}${pathname === '/' ? '' : pathname}`;
       response = NextResponse.redirect(url);
+      if (!matched && browserPrimary) {
+        logUnsupportedLocale(event, browserPrimary, acceptLanguage, pathname);
+      }
     }
   }
 

@@ -5,6 +5,7 @@ import { catalogRouter } from './routes/catalog.js';
 import { deliveryRouter } from './routes/delivery.js';
 import { quoteRouter } from './routes/quote.js';
 import { bookingRouter } from './routes/booking.js';
+import { webEventsRouter } from './routes/webEvents.js';
 import { equipmentRouter } from './routes/equipment.js';
 import { seasonalMultipliersRouter } from './routes/seasonalMultipliers.js';
 import { insuranceAdminRouter } from './routes/insuranceAdmin.js';
@@ -35,6 +36,7 @@ app.use('/api', catalogRouter);
 app.use('/api', deliveryRouter);
 app.use('/api', quoteRouter);
 app.use('/api', bookingRouter);
+app.use('/api', webEventsRouter);
 app.use('/api', equipmentRouter);
 // deliveryAdminRouter должен быть смонтирован ДО любого
 // app.use('/api', requireInternalToken, ...) ниже: requireInternalToken там
