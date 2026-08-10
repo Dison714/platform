@@ -202,8 +202,15 @@
   (`send_page_view:false` у GA4, `defer:true` у Метрики — иначе задвоение).
   Домен также верифицирован в Яндекс.Вебмастере через DNS TXT
   (`yandex-verification: 4c43981840ad9980` на корне `bikebalirent.com`,
-  Cloudflare, DNS only) — не в коде, чисто DNS-запись. Подробности —
-  `PROJECT_STATUS.md`, разделы «Сессия 2026-07-30» и «Сессия 2026-08-10».
+  Cloudflare, DNS only) — не в коде, чисто DNS-запись. Помимо `page_view`/
+  `hit`, есть явные конверсионные GA4-события поверх автосбора Enhanced
+  Measurement (тот не различает канал и не отличает неудачную попытку от
+  успешной): `whatsapp_click`/`telegram_click` (клик по wa.me/t.me в
+  Footer.jsx/about — общий клиентский компонент `ContactLink.jsx`,
+  `lib/contacts.js`) и `booking_form_submit` (`BookingForm.jsx`, шлётся
+  только после успешного `POST /api/bookings`, не на raw submit). Подробности
+  — `PROJECT_STATUS.md`, разделы «Сессия 2026-07-30», «Сессия 2026-08-10» и
+  «Сессия 2026-08-10 (продолжение)».
 - **Доступ к проду и R2 — только по ссылке, без секретов в файлах.** SSH на
   сервер: ключ `~/.ssh/mdb_platform_new`, юзер `root`
   (`ssh -i ~/.ssh/mdb_platform_new root@169.58.60.244`) — даёт прямой `docker
