@@ -58,6 +58,17 @@ export default function BookingForm({ slug, locale, start, end, locationLink, de
       const json = await res.json();
       // Единый короткий номер во всех каналах (как в уведомлении менеджеру).
       setDone(json.data.booking_ref || json.data.booking_id);
+      // Конверсионный сигнал — только после успешного ответа API (не на
+      // raw submit, это уже ловит Enhanced Measurement, включая неудачные
+      // попытки), чтобы считать реально дошедшие заявки.
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'booking_form_submit', {
+          locale,
+          product: slug,
+          start_date: start,
+          end_date: end,
+        });
+      }
     } catch {
       setStatus('error'); setErrMsg(t.error);
     }

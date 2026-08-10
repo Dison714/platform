@@ -13,6 +13,20 @@ export function withPrefill(href, message) {
   const sep = href.includes('?') ? '&' : '?';
   return `${href}${sep}text=${encodeURIComponent(message)}`;
 }
+
+// Чат-каналы — единственные CONTACTS-ссылки с префиллом И с явным
+// GA4-трекингом клика (Instagram/email — просто ссылки). Общий Set вместо
+// двух копий в Footer.jsx/about/page.js.
+export const CHAT_KEYS = new Set(['whatsapp', 'telegram']);
+
+// Явный конверсионный сигнал вместо Enhanced Measurement generic "click":
+// свой event name на канал (whatsapp_click/telegram_click), не путается с
+// автосбором в отчётах GA4.
+export function trackChatClick(key, href) {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', `${key}_click`, { link_url: href });
+  }
+}
 export const ADDRESS = 'Gg. 1 Kerobokan Kelod, Kuta Utara, Badung, Bali';
 export const HOURS = '08:00–19:00';
 // Сноска к часам работы — не часть openingHours JSON-LD (organization.js

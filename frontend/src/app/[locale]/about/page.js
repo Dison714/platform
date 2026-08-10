@@ -1,9 +1,8 @@
 import { notFound } from 'next/navigation';
 import { isEnabledLocale } from '../../../i18n/config.js';
 import { getDictionary } from '../../../i18n/getDictionary.js';
-import { CONTACTS, ADDRESS, HOURS, HOURS_NOTE, withPrefill } from '../../../lib/contacts.js';
-
-const PREFILL_KEYS = new Set(['whatsapp', 'telegram']); // маркер источника лида — только чаты, не Instagram/email
+import { CONTACTS, ADDRESS, HOURS, HOURS_NOTE } from '../../../lib/contacts.js';
+import ContactLink from '../../components/ContactLink.jsx';
 import { ogTwitter, hreflangAlternates } from '../../../lib/seo.js';
 
 export async function generateMetadata({ params }) {
@@ -39,14 +38,10 @@ export default async function AboutPage({ params }) {
       <h2 className="display section-h2" id="contact">{a.contact_title}</h2>
       <div className="contact-card">
         {CONTACTS.map((c) => (
-          <a
-            className="contact-row"
-            key={c.key}
-            href={PREFILL_KEYS.has(c.key) ? withPrefill(c.href, dict.contact.prefill_message) : c.href}
-          >
+          <ContactLink className="contact-row" key={c.key} contact={c} prefillMessage={dict.contact.prefill_message}>
             <span className="contact-label">{c.label}</span>
             <span className="contact-value">{c.value}</span>
-          </a>
+          </ContactLink>
         ))}
         <div className="contact-row static">
           <span className="contact-label">Address</span>

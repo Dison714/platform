@@ -1,9 +1,9 @@
 // Футер: контакты бренда (статичные данные, не из API).
 import Link from 'next/link';
-import { CONTACTS, withPrefill } from '../../lib/contacts.js';
+import { CONTACTS } from '../../lib/contacts.js';
+import ContactLink from './ContactLink.jsx';
 
 const ICONS = { whatsapp: '✆', telegram: '✈', instagram: '◎', email: '✉' };
-const PREFILL_KEYS = new Set(['whatsapp', 'telegram']); // маркер источника лида — только чаты, не Instagram/email
 
 export default function Footer({ dict, locale }) {
   const year = new Date().getFullYear();
@@ -20,12 +20,9 @@ export default function Footer({ dict, locale }) {
         <div>
           <h3 className="display">{dict.footer.get_in_touch}</h3>
           {CONTACTS.map((c) => (
-            <a
-              key={c.key}
-              href={PREFILL_KEYS.has(c.key) ? withPrefill(c.href, dict.contact.prefill_message) : c.href}
-            >
+            <ContactLink key={c.key} contact={c} prefillMessage={dict.contact.prefill_message}>
               <span className="i" aria-hidden="true">{ICONS[c.key]}</span>{c.key === 'email' ? c.value : `${c.label} ${c.value}`}
-            </a>
+            </ContactLink>
           ))}
         </div>
       </div>
