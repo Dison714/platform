@@ -194,6 +194,16 @@
   `DMARC: p=reject`. Не путать с почтой ботов/уведомлений — она вообще не
   проходит через этот домен. Подробности — `PROJECT_STATUS.md`, раздел
   «Сессия 2026-08-01».
+- **Аналитика на сайте** (`frontend/src/app/[locale]/layout.js` +
+  `analytics/RouteTracker.js`): Google Ads conversion tag `AW-17065885486`,
+  GA4 `G-S6RSSC9KFW`, Яндекс.Метрика `111448067`. Один общий gtag.js/dataLayer
+  на Google Ads + GA4 (второй раз библиотеку не грузить). `page_view`/`hit`
+  шлются вручную из `RouteTracker` на маунте и на каждой смене маршрута
+  (`send_page_view:false` у GA4, `defer:true` у Метрики — иначе задвоение).
+  Домен также верифицирован в Яндекс.Вебмастере через DNS TXT
+  (`yandex-verification: 4c43981840ad9980` на корне `bikebalirent.com`,
+  Cloudflare, DNS only) — не в коде, чисто DNS-запись. Подробности —
+  `PROJECT_STATUS.md`, разделы «Сессия 2026-07-30» и «Сессия 2026-08-10».
 - **Доступ к проду и R2 — только по ссылке, без секретов в файлах.** SSH на
   сервер: ключ `~/.ssh/mdb_platform_new`, юзер `root`
   (`ssh -i ~/.ssh/mdb_platform_new root@169.58.60.244`) — даёт прямой `docker
