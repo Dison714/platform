@@ -21,6 +21,7 @@ export default function Header({ locale, dict }) {
   const links = [
     { href: `${base}`, label: dict.nav.home },
     { href: `${base}/bikes`, label: dict.nav.bikes },
+    { href: `${base}/blog`, label: dict.nav.blog },
     { href: `${base}/about`, label: dict.nav.about },
     { href: `${base}/faq`, label: dict.nav.faq },
     { href: `${base}/about#contact`, label: dict.nav.contact },
