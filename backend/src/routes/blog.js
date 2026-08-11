@@ -49,3 +49,23 @@ blogRouter.get('/blog/posts/:slug', async (req, res, next) => {
         res.json({ data: rows[0] });
     } catch (err) { next(err); }
 });
+
+// GET /api/blog/posts/:slug/translations?lang=xx — slug той же статьи на
+// остальных языках (Задача 7: языковой переключатель на странице статьи
+// резолвит slug через article_id, не меняет только префикс локали — slug
+// per-locale, в отличие от products.slug).
+blogRouter.get('/blog/posts/:slug/translations', async (req, res, next) => {
+    try {
+        const lang = req.query.lang || DEFAULT_LANG;
+        const { rows } = await pool.query(
+            `SELECT at2.language_code, at2.slug
+             FROM article_translations at1
+             JOIN article_translations at2 ON at2.article_id = at1.article_id
+             JOIN articles a ON a.id = at1.article_id
+             WHERE at1.slug = $1 AND at1.language_code = $2 AND a.status = 'published'`,
+            [req.params.slug, lang]
+        );
+        if (rows.length === 0) return res.status(404).json({ error: 'post_not_found' });
+        res.json({ data: rows });
+    } catch (err) { next(err); }
+});

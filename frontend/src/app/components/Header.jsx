@@ -1,8 +1,15 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LOCALES, enabledLocales } from '../../i18n/config.js';
+
+// /blog/[slug] — единственный раздел с per-locale slug (article_translations.slug,
+// в отличие от единого products.slug у /bikes) — просто менять сегмент локали
+// в пути (как для остального сайта) там даёт 404/краш (Задача 7). На странице
+// статьи резолвим slug для целевого языка через article_id (бэкенд:
+// /api/blog/posts/:slug/translations).
+const BLOG_ARTICLE_RE = /^\/[a-z]{2}\/blog\/([^/]+)$/;
 
 // Шапка: логотип + меню + переключатель языка. На телефоне меню — гамбургер.
 export default function Header({ locale, dict }) {
@@ -10,9 +17,34 @@ export default function Header({ locale, dict }) {
   const pathname = usePathname() || `/${locale}`;
   const base = `/${locale}`;
 
-  // Переключение языка: меняем первый сегмент пути на другую локаль,
-  // оставаясь на той же странице.
+  const articleSlug = pathname.match(BLOG_ARTICLE_RE)?.[1] ?? null;
+  const [articleTranslations, setArticleTranslations] = useState(null);
+
+  useEffect(() => {
+    if (!articleSlug) {
+      setArticleTranslations(null);
+      return;
+    }
+    let cancelled = false;
+    setArticleTranslations(null);
+    fetch(`/api/blog/posts/${encodeURIComponent(articleSlug)}/translations?lang=${encodeURIComponent(locale)}`)
+      .then((res) => (res.ok ? res.json() : { data: [] }))
+      .then(({ data }) => { if (!cancelled) setArticleTranslations(data ?? []); })
+      .catch(() => { if (!cancelled) setArticleTranslations([]); });
+    return () => { cancelled = true; };
+  }, [articleSlug, locale]);
+
+  // Переключение языка: на странице статьи блога — резолв slug'а под целевой
+  // язык (см. BLOG_ARTICLE_RE выше); пока перевод не подгружен или его нет —
+  // fallback на /{target}/blog, а не угадывание чужого slug'а. На остальных
+  // страницах — просто меняем первый сегмент пути, оставаясь на той же странице
+  // (slug там единый для всех локалей).
   const switchLocaleHref = (target) => {
+    if (articleSlug) {
+      if (!articleTranslations) return `/${target}/blog`;
+      const match = articleTranslations.find((t) => t.language_code === target);
+      return match ? `/${target}/blog/${match.slug}` : `/${target}/blog`;
+    }
     const parts = pathname.split('/');
     parts[1] = target; // [0]='' , [1]=локаль
     return parts.join('/') || `/${target}`;
