@@ -13,6 +13,7 @@ const SECTIONS = [
   { href: '/internal/delivery', label: 'Доставка' },
   { href: '/internal/deposit', label: 'Депозит' },
   { href: '/internal/replacement-groups', label: 'Replacement Groups' },
+  { href: '/internal/blog', label: 'Blog' },
 ];
 
 export default function InternalNav() {

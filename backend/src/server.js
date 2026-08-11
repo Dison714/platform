@@ -12,6 +12,8 @@ import { insuranceAdminRouter } from './routes/insuranceAdmin.js';
 import { deliveryAdminRouter } from './routes/deliveryAdmin.js';
 import { depositAdminRouter } from './routes/depositAdmin.js';
 import { replacementGroupsAdminRouter } from './routes/replacementGroupsAdmin.js';
+import { blogRouter } from './routes/blog.js';
+import { blogAdminRouter } from './routes/blogAdmin.js';
 import { requireInternalToken } from './middleware/internalAuth.js';
 
 const app = express();
@@ -38,6 +40,7 @@ app.use('/api', quoteRouter);
 app.use('/api', bookingRouter);
 app.use('/api', webEventsRouter);
 app.use('/api', equipmentRouter);
+app.use('/api', blogRouter);
 // deliveryAdminRouter должен быть смонтирован ДО любого
 // app.use('/api', requireInternalToken, ...) ниже: requireInternalToken там
 // навешан на весь путь '/api' (не на конкретный роутер), значит он
@@ -57,6 +60,7 @@ app.use('/api', requireInternalToken, seasonalMultipliersRouter);
 app.use('/api', requireInternalToken, insuranceAdminRouter);
 app.use('/api', requireInternalToken, depositAdminRouter);
 app.use('/api', requireInternalToken, replacementGroupsAdminRouter);
+app.use('/api', requireInternalToken, blogAdminRouter);
 
 // Централизованный обработчик ошибок: err.status (напр. 400/404/409/501) или 500.
 const ERROR_LABELS = { 400: 'bad_request', 404: 'not_found', 409: 'conflict', 501: 'not_implemented' };
