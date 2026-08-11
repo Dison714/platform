@@ -367,6 +367,21 @@ img { max-width: 100%; display: block; }
   .hero-bike-price { font-size: 14px; }
 }
 
+/* ---------- Blog article body (markdown) ---------- */
+.article-body { font-size: 16px; line-height: 1.7; }
+.article-body h2 { font-size: 24px; color: var(--navy); margin: 32px 0 12px; }
+.article-body h3 { font-size: 19px; color: var(--navy); margin: 24px 0 10px; }
+.article-body p { margin: 0 0 14px; }
+.article-body ul, .article-body ol { margin: 0 0 14px; padding-inline-start: 22px; }
+.article-body li { margin-bottom: 6px; }
+.article-body a { color: var(--red); text-decoration: underline; }
+.article-body strong { color: var(--navy); }
+.article-body blockquote { margin: 0 0 14px; padding: 10px 16px; border-inline-start: 3px solid var(--red); background: var(--surface); color: var(--muted); }
+.article-body hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+.article-body table { width: 100%; border-collapse: collapse; margin: 0 0 20px; font-size: 15px; }
+.article-body th, .article-body td { padding: 10px 12px; border: 1px solid var(--border); text-align: start; }
+.article-body th { background: var(--surface); color: var(--navy); }
+
 /* ---------- About / generic page ---------- */
 .page { padding: 26px 16px 44px; max-width: 760px; }
 .page-h1 { font-size: 34px; color: var(--navy); margin: 0 0 14px; }

@@ -1,4 +1,6 @@
 import { notFound } from 'next/navigation';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { isEnabledLocale } from '../../../../i18n/config.js';
 import { apiGet } from '../../../../lib/api.js';
 import { ogTwitter } from '../../../../lib/seo.js';
@@ -23,9 +25,11 @@ export async function generateMetadata({ params }) {
 }
 
 // Каркас (ТЗ п.4.15): резолв по (language_code, slug) из article_translations
-// (п.4.9.3 — своя страница на язык, не JS-переключатель). content — обычный
-// текст (без rich-text редактора на этом этапе, см. задачу), рендерим
-// построчно как параграфы; полноценный дизайн/JSON-LD — следующий шаг.
+// (п.4.9.3 — своя страница на язык, не JS-переключатель). content — markdown
+// (таблицы/списки/bold/ссылки из исходных .md), rich-text редактора в админке
+// пока нет (правится textarea), но рендер на публичной странице — полноценный
+// markdown (remark-gfm — таблицы и авто-ссылки из GFM); полноценный дизайн/
+// JSON-LD — следующий шаг.
 export default async function BlogPostPage({ params }) {
   const { locale, slug } = params;
   if (!isEnabledLocale(locale)) notFound();
@@ -33,13 +37,15 @@ export default async function BlogPostPage({ params }) {
   const post = await loadPost(slug, locale);
   if (!post) notFound();
 
-  const paragraphs = (post.content ?? '').split('\n').filter((p) => p.trim());
-
   return (
     <div className="container page">
       <h1 className="display page-h1">{post.title}</h1>
-      {post.excerpt && <p className="lede">{post.excerpt}</p>}
-      {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+      {/* excerpt не дублируется здесь отдельным lede — он совпадает с первым
+          абзацем content (см. Задачу 2 сессии), используется как teaser в
+          /blog и как фолбэк seo_description в generateMetadata выше. */}
+      <div className="article-body">
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content ?? ''}</ReactMarkdown>
+      </div>
     </div>
   );
 }
