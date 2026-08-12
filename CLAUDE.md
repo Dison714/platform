@@ -167,7 +167,8 @@
 - **Configuration First-панель (ТЗ п.12) — `/internal/*`, Basic Auth** (`middleware.js`,
   один общий пароль в env `INTERNAL_ADMIN_PASSWORD`, временная защита на
   период разработки). Разделы: сезонные цены, страховка, доставка, депозит,
-  replacement groups — общая навигация в `internal/layout.js`. Не в
+  replacement groups, блог (`/internal/blog`, list+edit статей, ТЗ п.4.15) —
+  общая навигация в `internal/layout.js`. Не в
   навигации сайта, не в sitemap, `noindex`. Паттерн на раздел: backend
   Router (validate → SQL → явные коды ошибок 409/404) → BFF-прокси
   `/api/admin/<resource>` → клиентский компонент (таблица + форма).
@@ -220,9 +221,22 @@
   Cloudflare dashboard → R2 → Manage API Tokens, никогда не хранить в
   репозитории/CLAUDE.md/PROJECT_STATUS.md). Паттерн разовой синхронизации
   данных на прод: сгенерировать SQL из `backend/scripts/gen_catalog_sync.mjs`
-  / `gen_price_sync.mjs` (апсерт по бизнес-ключу, НЕ по `id` — id генерируются
-  заново на каждой стороне и никогда не совпадут между dev/prod) → `scp` +
-  `docker cp` в контейнер → `psql -v ON_ERROR_STOP=1 -f`.
+  / `gen_price_sync.mjs` / `gen_blog_sync.mjs` (апсерт по бизнес-ключу
+  — `slug`, НЕ `id`: id генерируются заново на каждой стороне и никогда не
+  совпадут между dev/prod) → `scp` + `docker cp` в контейнер →
+  `psql -v ON_ERROR_STOP=1 -f`. `gen_blog_sync.mjs` используется не только
+  для первичной публикации категории, но и для контентных апдейтов уже
+  опубликованных статей (пример — WhatsApp/Telegram-линковка в
+  deposit-safety, сессия 2026-08-12): `status` в апсерте `articles` —
+  жёсткий литерал `'published'`, не читается из dev, поэтому расхождение
+  dev/prod по статусу конкретной статьи (например, черновик на dev) не
+  откатывает её published-статус на проде. Перед любым `ALTER`/сидом на боевых данных —
+  `pg_dump -F c` бэкап в scratchpad (см. PROJECT_STATUS.md, сессия
+  2026-08-11/12 для примера). Автодеплоя по `git push` на этом проекте нет
+  (проверено: тег образа app-контейнера в Coolify = git SHA коммита, сверить
+  `docker ps --format '{{.Image}}'` → `git cat-file -t <тег>`) — редеплой
+  backend/frontend в Coolify UI всегда ручной, коммит может неделями лежать
+  в `origin/main`, не будучи выкаченным.
 
 ## 7. Источники для сидирования
 
