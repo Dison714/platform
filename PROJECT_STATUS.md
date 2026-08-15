@@ -2457,6 +2457,71 @@ outbound-клик (без явного `whatsapp_click`/`telegram_click`, но �
 но не удивляться при следующей ручной проверке через dev, почему пилар не
 отдаётся публичным `/api/blog/posts/:slug`.
 
+### Сессия 2026-08-15 — фото PCX Road Sync Pink + устранение дрейфа company_id dev/prod (ЗАВЕРШЕНО на dev; prod не тронут)
+
+**Контекст.** При заливке фото/видео для `honda-pcx-pink-purple-road-sync` и
+скрытии `honda-vario-white` (`is_active=FALSE`) обнаружилось, что штатный
+`gen_catalog_sync.mjs` падает на FK-constraint: `product_families.company_id`
+на dev (`d813b6be-41a1-41e7-9bb6-9d8bbedf5901`) не совпадал с id той же по
+смыслу компании на prod (`37005782-1dec-4f77-9673-f4c85eac9d89`, `code
+'mdb_bali'` на обеих сторонах). Причина — `INSERT INTO companies` в
+`backend/migrations/001_foundation.sql` не хардкодил `id`, полагаясь на
+`DEFAULT gen_random_uuid()`; миграция прогонялась независимо на dev и на
+prod → два случайных UUID для одной строки. В моменте (для тех двух товаров)
+обошли точечным SQL-патчем по `slug`/`id` продуктов, без `product_families` —
+это и вскрыло проблему, не решило её.
+
+**Аудит** (`information_schema` по `companies`, не по памяти о схеме) — 19
+таблиц с `company_id`: `bookings, customers, delivery_shadow_stats,
+deposit_rules, driver_notification_daily_seq, driver_tasks, faqs,
+feature_flags, finance_transactions, fleet_items, landing_pages,
+notifications, pages, pricing_rule_sets, product_families, system_config,
+users, warehouse_items, web_events`. Проверено построчно: во всех таблицах с
+данными 100% строк ссылались на dev-id, ни NULL, ни посторонних значений —
+единственная компания, чистый сценарий.
+
+**Найденный по ходу баг в первом варианте SQL-патча** (поймал Дмитрий, не
+я): `companies.code` — `UNIQUE NOT NULL`. План
+`INSERT новой строки с code='mdb_bali'` → `UPDATE 19 таблиц` →
+`DELETE старой строки` уронил бы транзакцию на первом же `INSERT`, потому что
+старая строка с тем же `code` всё ещё жива в этот момент. Фикс — один
+`UPDATE companies SET code='mdb_bali_old_tmp' WHERE id=<dev-id>` перед
+`INSERT` (код ничем не референсится по FK, только `id`, так что временно
+освобождать его безопасно).
+
+**Применено на dev** (бэкап `local_dev_backup_2026-08-15.dump` в scratchpad
+перед стартом): `UPDATE code→tmp` → `INSERT` новой строки `companies` с
+`id='37005782-…'` (id с прода) и остальными полями, скопированными с
+dev-строки → 19×`UPDATE ... company_id` (счётчики совпали с аудитом
+1:1 — 5/6/3/2/1/0/0/14/0/56/0/11/0/1/19/15/0/49/0) →
+`DELETE FROM companies WHERE id=<dev-id>`. Одна транзакция, `COMMIT` прошёл
+чисто. Прод не трогали ни на одном шаге.
+
+**Причина устранена** — `backend/migrations/001_foundation.sql`: `INSERT INTO
+companies` теперь явно указывает `id='37005782-1dec-4f77-9673-f4c85eac9d89'`
+(значение с прода) вместо `DEFAULT gen_random_uuid()`. При пересоздании dev
+БД с нуля (новая машина и т.п.) дрейф больше не повторится.
+
+**Верификация** — `node backend/scripts/gen_catalog_sync.mjs` (только чтение
+dev БД + генерация файла, prod не вызывается): в сгенерированном
+`catalog_sync.sql` все 19 `product_families`-строк теперь несут
+`company_id='37005782-…'`, вхождений старого dev-id — 0. Раз prod уже хранит
+`companies.id=37005782-…`, апсерт с тем же значением — не операция, реальный
+`gen_catalog_sync.mjs` → prod больше не упрётся в этот FK.
+
+**Не в объёме этой сессии, на заметку:** в корне репозитория лежит
+незакоммиченный параллельный набор файлов `00_full_schema.sql`,
+`01_foundation.sql` … `26_product_descriptions_seed.sql` (шапка «MDB PLATFORM
+— DATABASE SCHEMA (Opus build)») — `01_foundation.sql` до этой сессии был
+байт-в-байт идентичен `backend/migrations/001_foundation.sql` (включая тот же
+непрохардкоженный `INSERT INTO companies`), плюс там же есть `25_family_content.sql`,
+`25b_family_content_seed.sql`, `26_product_descriptions_seed.sql` — миграции,
+которых вообще нет в `backend/migrations/` (там пронумеровано до `048`, но
+по другой схеме). Похоже на черновик реорганизации/консолидации миграций,
+не тронут в рамках этой задачи — если этот набор когда-то станет
+источником для bootstrap БД, тот же дрейф `company_id` повторится, пока туда
+не перенесут аналогичный фикс.
+
 ## 5. Как запустить локально
 
 ```bash

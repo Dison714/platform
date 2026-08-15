@@ -65,8 +65,13 @@ CREATE TABLE companies (
 );
 COMMENT ON TABLE companies IS 'ТЗ п.13.1: ядро не зависит от Bike Bali. Большинство доменных таблиц несут company_id, чтобы новая страна/бизнес = новая строка + данные, без миграции схемы. v1.0 — одна компания.';
 
-INSERT INTO companies (code, legal_name, country_code, base_currency)
-VALUES ('mdb_bali', 'PT. Modern Development Bali', 'ID', 'IDR');
+-- id захардкожен (не gen_random_uuid()): миграция прогоняется независимо на
+-- dev и на prod, и до этой правки давала на каждой стороне свой случайный
+-- UUID для одной и той же по смыслу компании — company_id расходился между
+-- средами и ломал gen_catalog_sync.mjs (FK-constraint на product_families).
+-- Устранено 2026-08-15, id зафиксирован по значению, уже живущему на проде.
+INSERT INTO companies (id, code, legal_name, country_code, base_currency)
+VALUES ('37005782-1dec-4f77-9673-f4c85eac9d89', 'mdb_bali', 'PT. Modern Development Bali', 'ID', 'IDR');
 
 -- ---------------------------------------------------------------------
 -- AUTH / ROLES

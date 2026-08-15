@@ -102,7 +102,7 @@ export async function attachVideo(slug, folder, videoFile, slot = 1) {
   const outPath = path.join(PUBLIC_BIKES, slug, outName);
   await mkdir(path.dirname(outPath), { recursive: true });
   await execP(
-    `ffmpeg -y -i ${JSON.stringify(srcPath)} -vf "scale=1920:1080:force_original_aspect_ratio=decrease:force_divisible_by=2" -c:v libx264 -preset medium -crf 23 -pix_fmt yuv420p -an -movflags +faststart ${JSON.stringify(outPath)} -loglevel error`
+    `ffmpeg -y -i ${JSON.stringify(srcPath)} -vf "scale=1920:1080:force_original_aspect_ratio=decrease:force_divisible_by=2" -c:v libx264 -preset medium -crf 23 -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart ${JSON.stringify(outPath)} -loglevel error`
   );
   console.log(`video attached: ${slug} slot${slot} <- ${videoFile}`);
 }
