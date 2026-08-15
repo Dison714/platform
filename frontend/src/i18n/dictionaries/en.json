@@ -5,7 +5,8 @@
     "seo_title": "Rent Motorbike and Scooter in Bali | Custom Motorbikes"
   },
   "contact": {
-    "prefill_message": "Hello! 🛵 I want to rent a motorbike."
+    "prefill_message": "Hello! 🛵 I want to rent a motorbike.",
+    "floating_invite": "Questions? Message us"
   },
   "nav": {
     "home": "Home",
@@ -145,7 +146,8 @@
     "error": "Couldn't send the request. Please try again.",
     "cancel": "Back to calculator",
     "success_title": "Request received",
-    "success_msg": "Thank you! Our manager will contact you shortly on WhatsApp or Telegram to confirm the details. No prepayment needed.",
+    "success_cta": "Confirm your booking on {messenger}",
+    "success_prefill": "Hi! 🛵 I'd like to confirm my booking {ref}{details}.",
     "success_ref": "Your request number: {ref}"
   },
   "home": {

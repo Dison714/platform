@@ -5,7 +5,8 @@
     "seo_title": "Alquiler de motos y scooters en Bali | Motos personalizadas"
   },
   "contact": {
-    "prefill_message": "¡Hola! 🛵 Quiero alquilar una moto."
+    "prefill_message": "¡Hola! 🛵 Quiero alquilar una moto.",
+    "floating_invite": "¿Preguntas? Escríbenos"
   },
   "nav": {
     "home": "Inicio",
@@ -145,7 +146,8 @@
     "error": "No se pudo enviar la solicitud. Inténtalo de nuevo.",
     "cancel": "Volver a la calculadora",
     "success_title": "Solicitud recibida",
-    "success_msg": "¡Gracias! Nuestro gestor te contactará en breve por WhatsApp o Telegram para confirmar los detalles. No se necesita pago anticipado.",
+    "success_cta": "Confirmar la reserva en {messenger}",
+    "success_prefill": "¡Hola! 🛵 Quiero confirmar mi reserva {ref}{details}.",
     "success_ref": "Tu número de solicitud: {ref}"
   },
   "home": {

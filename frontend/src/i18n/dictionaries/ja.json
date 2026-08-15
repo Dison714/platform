@@ -5,7 +5,8 @@
     "seo_title": "バリ島でのバイク・スクーターレンタル | カスタムバイク"
   },
   "contact": {
-    "prefill_message": "こんにちは！🛵 バイクをレンタルしたいです。"
+    "prefill_message": "こんにちは！🛵 バイクをレンタルしたいです。",
+    "floating_invite": "ご質問はこちらへ"
   },
   "nav": {
     "home": "ホーム",
@@ -145,7 +146,8 @@
     "error": "リクエストを送信できませんでした。もう一度お試しください。",
     "cancel": "料金計算に戻る",
     "success_title": "リクエストを受け付けました",
-    "success_msg": "ありがとうございます！担当マネージャーより間もなくWhatsAppまたはTelegramで詳細をご連絡いたします。前払いは不要です。",
+    "success_cta": "{messenger}で予約を確認",
+    "success_prefill": "こんにちは！🛵 予約番号{ref}{details}の確認をお願いします。",
     "success_ref": "リクエスト番号: {ref}"
   },
   "home": {

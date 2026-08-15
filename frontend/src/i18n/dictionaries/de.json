@@ -5,7 +5,8 @@
     "seo_title": "Motorrad- und Rollerverleih auf Bali | Custom Bikes"
   },
   "contact": {
-    "prefill_message": "Hallo! 🛵 Ich möchte ein Motorrad mieten."
+    "prefill_message": "Hallo! 🛵 Ich möchte ein Motorrad mieten.",
+    "floating_invite": "Fragen? Schreiben Sie uns"
   },
   "nav": {
     "home": "Startseite",
@@ -145,7 +146,8 @@
     "error": "Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
     "cancel": "Zurück zum Rechner",
     "success_title": "Anfrage erhalten",
-    "success_msg": "Vielen Dank! Unser Manager meldet sich in Kürze per WhatsApp oder Telegram bei Ihnen, um die Details zu bestätigen. Keine Vorauszahlung nötig.",
+    "success_cta": "Buchung bestätigen auf {messenger}",
+    "success_prefill": "Hallo! 🛵 Ich möchte meine Buchung {ref}{details} bestätigen.",
     "success_ref": "Ihre Anfragenummer: {ref}"
   },
   "home": {

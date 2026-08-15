@@ -5,7 +5,8 @@
     "seo_title": "Noleggio moto e scooter a Bali | Moto personalizzate"
   },
   "contact": {
-    "prefill_message": "Ciao! 🛵 Vorrei noleggiare una moto."
+    "prefill_message": "Ciao! 🛵 Vorrei noleggiare una moto.",
+    "floating_invite": "Domande? Scrivici"
   },
   "nav": {
     "home": "Home",
@@ -145,7 +146,8 @@
     "error": "Impossibile inviare la richiesta. Riprova.",
     "cancel": "Torna al calcolatore",
     "success_title": "Richiesta ricevuta",
-    "success_msg": "Grazie! Il nostro gestore ti contatterà a breve su WhatsApp o Telegram per confermare i dettagli. Non è richiesto alcun pagamento anticipato.",
+    "success_cta": "Conferma la prenotazione su {messenger}",
+    "success_prefill": "Ciao! 🛵 Vorrei confermare la mia prenotazione {ref}{details}.",
     "success_ref": "Il tuo numero di richiesta: {ref}"
   },
   "home": {

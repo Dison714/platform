@@ -1,8 +1,31 @@
 'use client';
 import { useState } from 'react';
 import { formatIdr } from '../../lib/api.js';
+import { CONTACTS } from '../../lib/contacts.js';
+import ContactLink from './ContactLink.jsx';
+import PrefixInput from './PrefixInput.jsx';
+import { WhatsAppIcon, TelegramIcon } from './icons/BrandIcons.jsx';
+
+const WHATSAPP_EXAMPLE = '62 812 3456 789';
+const TELEGRAM_EXAMPLE = 'username';
 
 const PAYMENT_METHOD_CODES = ['cash', 'bank_transfer', 'other'];
+
+// Поля WhatsApp/Telegram живут с "залипающим" префиксом (+/@) — убирает
+// лишний шаг набора и держит формат стабильным, даже если клиент допечатает
+// свой + или @ поверх дефолтного.
+function sanitizePrefixed(value, prefix) {
+  const body = value.split(prefix).join('');
+  return body ? prefix + body : '';
+}
+function isBlankPrefixed(value, prefix) {
+  const trimmed = value.trim();
+  return trimmed === '' || trimmed === prefix;
+}
+function placeCursorAtEnd(e) {
+  const len = e.target.value.length;
+  e.target.setSelectionRange(len, len);
+}
 
 // Форма заявки. Клиент шлёт ВЫБОР (продукт, даты, страховка, допы,
 // location_link) + контакты — НЕ итоговую сумму. Бэкенд пересчитывает цену,
@@ -10,8 +33,8 @@ const PAYMENT_METHOD_CODES = ['cash', 'bank_transfer', 'other'];
 export default function BookingForm({ slug, locale, start, end, locationLink, deliveryTime, selection, quote, dict, onCancel }) {
   const t = dict.booking;
   const [name, setName] = useState('');
-  const [whatsapp, setWhatsapp] = useState('');
-  const [telegram, setTelegram] = useState('');
+  const [whatsapp, setWhatsapp] = useState('+');
+  const [telegram, setTelegram] = useState('@');
   const [paymentMethods, setPaymentMethods] = useState({});
   const [comment, setComment] = useState('');
   const [status, setStatus] = useState('idle'); // idle | sending | error
@@ -23,8 +46,8 @@ export default function BookingForm({ slug, locale, start, end, locationLink, de
 
   function buildBody() {
     const customer = { full_name: name.trim() };
-    if (whatsapp.trim()) customer.whatsapp = whatsapp.trim();
-    if (telegram.trim()) customer.telegram_username = telegram.trim().replace(/^@/, '');
+    if (!isBlankPrefixed(whatsapp, '+')) customer.whatsapp = whatsapp.trim();
+    if (!isBlankPrefixed(telegram, '@')) customer.telegram_username = telegram.trim().replace(/^@/, '');
     const paymentPreference = PAYMENT_METHOD_CODES.filter((code) => paymentMethods[code]);
     return {
       product: slug,
@@ -44,7 +67,7 @@ export default function BookingForm({ slug, locale, start, end, locationLink, de
   async function submit(e) {
     e.preventDefault();
     if (!name.trim()) { setStatus('error'); setErrMsg(t.name_required); return; }
-    const hasContact = [whatsapp, telegram].some((v) => v.trim() !== '');
+    const hasContact = !isBlankPrefixed(whatsapp, '+') || !isBlankPrefixed(telegram, '@');
     if (!hasContact) { setStatus('error'); setErrMsg(t.contact_required); return; }
 
     setStatus('sending'); setErrMsg('');
@@ -75,12 +98,32 @@ export default function BookingForm({ slug, locale, start, end, locationLink, de
   }
 
   if (done) {
+    // Контекст для менеджера прямо в предзаполненном сообщении — номер
+    // заявки обязателен, модель+даты добавляются, когда есть quote (клиент
+    // пришёл с калькулятора, а не с голого booking-виджета).
+    const waContact = CONTACTS.find((c) => c.key === 'whatsapp');
+    const tgContact = CONTACTS.find((c) => c.key === 'telegram');
+    const dateFmt = (iso) => new Date(iso).toLocaleDateString(locale, { day: 'numeric', month: 'short' });
+    const dates = start && end ? `${dateFmt(start)} – ${dateFmt(end)}` : '';
+    const summary = [quote?.product?.name, dates].filter(Boolean).join(', ');
+    const details = summary ? ` (${summary})` : '';
+    const prefill = t.success_prefill.replace('{ref}', String(done)).replace('{details}', details);
+
     return (
       <div className="confirm" role="status">
         <div className="confirm-icon" aria-hidden="true">✓</div>
         <h3 className="display">{t.success_title}</h3>
-        <p>{t.success_msg}</p>
         <p className="confirm-ref">{t.success_ref.replace('{ref}', String(done))}</p>
+        <div className="confirm-cta">
+          <ContactLink contact={waContact} prefillMessage={prefill} className="confirm-btn confirm-wa" source="success_screen">
+            <WhatsAppIcon size={22} />
+            {t.success_cta.replace('{messenger}', waContact.label)}
+          </ContactLink>
+          <ContactLink contact={tgContact} prefillMessage={prefill} className="confirm-btn confirm-tg" source="success_screen">
+            <TelegramIcon size={22} />
+            {t.success_cta.replace('{messenger}', tgContact.label)}
+          </ContactLink>
+        </div>
       </div>
     );
   }
@@ -101,10 +144,25 @@ export default function BookingForm({ slug, locale, start, end, locationLink, de
       <p className="hint">{t.contact_hint}</p>
       <div className="bform-contacts">
         <label className="field"><span>{t.whatsapp}</span>
-          <input type="tel" inputMode="tel" value={whatsapp} placeholder="+62…" onChange={(e) => setWhatsapp(e.target.value)} />
+          <PrefixInput
+            type="tel"
+            inputMode="tel"
+            prefix="+"
+            example={WHATSAPP_EXAMPLE}
+            value={whatsapp}
+            onChange={(e) => setWhatsapp(sanitizePrefixed(e.target.value, '+'))}
+            onFocus={placeCursorAtEnd}
+          />
         </label>
         <label className="field"><span>{t.telegram}</span>
-          <input type="text" value={telegram} placeholder="@username" onChange={(e) => setTelegram(e.target.value)} />
+          <PrefixInput
+            type="text"
+            prefix="@"
+            example={TELEGRAM_EXAMPLE}
+            value={telegram}
+            onChange={(e) => setTelegram(sanitizePrefixed(e.target.value, '@'))}
+            onFocus={placeCursorAtEnd}
+          />
         </label>
       </div>
 

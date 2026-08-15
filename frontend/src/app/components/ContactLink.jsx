@@ -4,7 +4,7 @@
 // boundary для onClick-трекинга, поэтому вынесено сюда.
 import { withPrefill, trackChatClick, CHAT_KEYS } from '../../lib/contacts.js';
 
-export default function ContactLink({ contact, prefillMessage, className, children }) {
+export default function ContactLink({ contact, prefillMessage, className, children, source }) {
   const trackable = CHAT_KEYS.has(contact.key);
   const href = trackable ? withPrefill(contact.href, prefillMessage) : contact.href;
 
@@ -16,7 +16,7 @@ export default function ContactLink({ contact, prefillMessage, className, childr
       className={className}
       href={href}
       {...(trackable ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      onClick={trackable ? () => trackChatClick(contact.key, href) : undefined}
+      onClick={trackable ? () => trackChatClick(contact.key, href, source) : undefined}
     >
       {children}
     </a>

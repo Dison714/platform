@@ -21,10 +21,11 @@ export const CHAT_KEYS = new Set(['whatsapp', 'telegram']);
 
 // Явный конверсионный сигнал вместо Enhanced Measurement generic "click":
 // свой event name на канал (whatsapp_click/telegram_click), не путается с
-// автосбором в отчётах GA4.
-export function trackChatClick(key, href) {
+// автосбором в отчётах GA4. source различает точку конверсии (footer,
+// floating_button, contacts_page, success_screen) для анализа воронки.
+export function trackChatClick(key, href, source) {
   if (typeof window.gtag === 'function') {
-    window.gtag('event', `${key}_click`, { link_url: href });
+    window.gtag('event', `${key}_click`, { link_url: href, ...(source ? { source } : {}) });
   }
 }
 export const ADDRESS = 'Gg. 1 Kerobokan Kelod, Kuta Utara, Badung, Bali';

@@ -2,8 +2,7 @@
 import Link from 'next/link';
 import { CONTACTS } from '../../lib/contacts.js';
 import ContactLink from './ContactLink.jsx';
-
-const ICONS = { whatsapp: '✆', telegram: '✈', instagram: '◎', email: '✉' };
+import { BRAND_ICONS } from './icons/BrandIcons.jsx';
 
 export default function Footer({ dict, locale }) {
   const year = new Date().getFullYear();
@@ -19,11 +18,20 @@ export default function Footer({ dict, locale }) {
         </div>
         <div>
           <h3 className="display">{dict.footer.get_in_touch}</h3>
-          {CONTACTS.map((c) => (
-            <ContactLink key={c.key} contact={c} prefillMessage={dict.contact.prefill_message}>
-              <span className="i" aria-hidden="true">{ICONS[c.key]}</span>{c.key === 'email' ? c.value : `${c.label} ${c.value}`}
-            </ContactLink>
-          ))}
+          <div className="ftr-contacts">
+            {CONTACTS.map((c) => {
+              const Icon = BRAND_ICONS[c.key];
+              return (
+                <ContactLink key={c.key} contact={c} prefillMessage={dict.contact.prefill_message} className="ftr-contact" source="footer">
+                  <Icon size={32} />
+                  <span className="ftr-contact-text">
+                    <span className="ftr-contact-label">{c.label}</span>
+                    <span className="ftr-contact-value">{c.value}</span>
+                  </span>
+                </ContactLink>
+              );
+            })}
+          </div>
         </div>
       </div>
       <div className="ftr-bottom">

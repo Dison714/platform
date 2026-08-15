@@ -3,6 +3,7 @@ import { isEnabledLocale } from '../../../i18n/config.js';
 import { getDictionary } from '../../../i18n/getDictionary.js';
 import { CONTACTS, ADDRESS, HOURS, HOURS_NOTE } from '../../../lib/contacts.js';
 import ContactLink from '../../components/ContactLink.jsx';
+import { BRAND_ICONS } from '../../components/icons/BrandIcons.jsx';
 import { ogTwitter, hreflangAlternates } from '../../../lib/seo.js';
 
 export async function generateMetadata({ params }) {
@@ -37,17 +38,23 @@ export default async function AboutPage({ params }) {
 
       <h2 className="display section-h2" id="contact">{a.contact_title}</h2>
       <div className="contact-card">
-        {CONTACTS.map((c) => (
-          <ContactLink className="contact-row" key={c.key} contact={c} prefillMessage={dict.contact.prefill_message}>
-            <span className="contact-label">{c.label}</span>
-            <span className="contact-value">{c.value}</span>
-          </ContactLink>
-        ))}
+        {CONTACTS.map((c) => {
+          const Icon = BRAND_ICONS[c.key];
+          return (
+            <ContactLink className="contact-row" key={c.key} contact={c} prefillMessage={dict.contact.prefill_message} source="contacts_page">
+              <span className="contact-icon"><Icon size={22} /></span>
+              <span className="contact-label">{c.label}</span>
+              <span className="contact-value">{c.value}</span>
+            </ContactLink>
+          );
+        })}
         <div className="contact-row static">
+          <span className="contact-icon" aria-hidden="true">📍</span>
           <span className="contact-label">Address</span>
           <span className="contact-value">{ADDRESS}</span>
         </div>
         <div className="contact-row static">
+          <span className="contact-icon" aria-hidden="true">⏱</span>
           <span className="contact-label">Hours</span>
           <span className="contact-value">{HOURS}</span>
         </div>

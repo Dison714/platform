@@ -5,7 +5,8 @@
     "seo_title": "Location de motos et scooters à Bali | Motos personnalisées"
   },
   "contact": {
-    "prefill_message": "Bonjour ! 🛵 Je souhaite louer une moto."
+    "prefill_message": "Bonjour ! 🛵 Je souhaite louer une moto.",
+    "floating_invite": "Des questions ? Écrivez-nous"
   },
   "nav": {
     "home": "Accueil",
@@ -145,7 +146,8 @@
     "error": "Impossible d'envoyer la demande. Veuillez réessayer.",
     "cancel": "Retour au calculateur",
     "success_title": "Demande reçue",
-    "success_msg": "Merci ! Notre manager vous contactera sous peu sur WhatsApp ou Telegram pour confirmer les détails. Aucun paiement anticipé n'est nécessaire.",
+    "success_cta": "Confirmer la réservation sur {messenger}",
+    "success_prefill": "Bonjour ! 🛵 Je souhaite confirmer ma réservation {ref}{details}.",
     "success_ref": "Votre numéro de demande : {ref}"
   },
   "home": {

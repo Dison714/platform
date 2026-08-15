@@ -7,6 +7,7 @@ import { isEnabledLocale, enabledLocales } from '../../i18n/config.js';
 import { getDictionary } from '../../i18n/getDictionary.js';
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
+import FloatingContactButton from '../components/FloatingContactButton.jsx';
 import RouteTracker from './analytics/RouteTracker.js';
 import { organizationJsonLd } from '../../lib/organization.js';
 import { IS_PRODUCTION, SITE_URL } from '../../lib/site.js';
@@ -112,6 +113,7 @@ export default async function LocaleLayout({ children, params }) {
           <main style={{ flex: 1 }}>{children}</main>
           <Footer dict={dict} locale={locale} />
         </div>
+        <FloatingContactButton dict={dict} />
       </body>
     </html>
   );
