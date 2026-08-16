@@ -92,6 +92,11 @@ export default function BookingForm({ slug, locale, start, end, locationLink, de
           end_date: end,
         });
       }
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'conversion', {
+          send_to: 'AW-17065885486/BjtuCLjetuIcEK7-0sk_',
+        });
+      }
     } catch {
       setStatus('error'); setErrMsg(t.error);
     }

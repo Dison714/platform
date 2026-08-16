@@ -23,9 +23,20 @@ export const CHAT_KEYS = new Set(['whatsapp', 'telegram']);
 // свой event name на канал (whatsapp_click/telegram_click), не путается с
 // автосбором в отчётах GA4. source различает точку конверсии (footer,
 // floating_button, contacts_page, success_screen) для анализа воронки.
+// Google Ads conversion labels — по каналу, отдельно от GA4-событий выше.
+const CONVERSION_LABELS = {
+  whatsapp: 'onhpCJSftuIcEK7-0sk_',
+  telegram: 'uai-CKqQueIcEK7-0sk_',
+};
+
 export function trackChatClick(key, href, source) {
   if (typeof window.gtag === 'function') {
     window.gtag('event', `${key}_click`, { link_url: href, ...(source ? { source } : {}) });
+  }
+  if (typeof window.gtag === 'function' && CONVERSION_LABELS[key]) {
+    window.gtag('event', 'conversion', {
+      send_to: `AW-17065885486/${CONVERSION_LABELS[key]}`,
+    });
   }
 }
 export const ADDRESS = 'Gg. 1 Kerobokan Kelod, Kuta Utara, Badung, Bali';
