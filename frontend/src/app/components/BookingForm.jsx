@@ -27,6 +27,15 @@ function placeCursorAtEnd(e) {
   e.target.setSelectionRange(len, len);
 }
 
+// E.164 требует ведущий "+" и код страны — оба уже даёт "залипающий"
+// префикс поля WhatsApp, так что здесь только чистим разделители набора
+// и проверяем итоговую форму; лишнее (не E.164) лучше не слать вовсе.
+function normalizePhoneE164(raw) {
+  if (!raw) return null;
+  const stripped = raw.replace(/[\s\-()]/g, '');
+  return /^\+\d{7,15}$/.test(stripped) ? stripped : null;
+}
+
 // Форма заявки. Клиент шлёт ВЫБОР (продукт, даты, страховка, допы,
 // location_link) + контакты — НЕ итоговую сумму. Бэкенд пересчитывает цену,
 // делает снимок и сам пингует менеджеров в Telegram (фронт это не трогает).
@@ -90,6 +99,16 @@ export default function BookingForm({ slug, locale, start, end, locationLink, de
           product: slug,
           start_date: start,
           end_date: end,
+        });
+      }
+      // Enhanced Conversions for Leads: телефон открытым текстом — gtag.js
+      // хеширует сам на клиенте перед отправкой в Google Ads. Только если
+      // распознали строгий E.164 (см. normalizePhoneE164) — иначе пропускаем
+      // user_data, некорректный формат хуже отсутствующего.
+      const normalizedPhone = normalizePhoneE164(whatsapp);
+      if (typeof window.gtag === 'function' && normalizedPhone) {
+        window.gtag('set', 'user_data', {
+          phone_number: normalizedPhone,
         });
       }
       if (typeof window.gtag === 'function') {
