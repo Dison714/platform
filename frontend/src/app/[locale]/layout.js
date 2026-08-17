@@ -8,6 +8,7 @@ import { getDictionary } from '../../i18n/getDictionary.js';
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
 import FloatingContactButton from '../components/FloatingContactButton.jsx';
+import CookieBanner from '../components/CookieBanner.jsx';
 import RouteTracker from './analytics/RouteTracker.js';
 import { organizationJsonLd } from '../../lib/organization.js';
 import { IS_PRODUCTION, SITE_URL } from '../../lib/site.js';
@@ -84,10 +85,30 @@ export default async function LocaleLayout({ children, params }) {
         {/* LocalBusiness — глобально на каждой странице, не только на homepage. */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`} strategy="afterInteractive" />
+        {/* Consent Mode v2 — до первого gtag('js'/'config', ...) ниже, чтобы
+            gtag.js применил дефолты к самому первому запросу. Порядок вызовов
+            не влияет на результат (Google мёржит region-scoped default с
+            общим), но оба обязаны стоять раньше config/js по документации.
+            EEA/UK — deny-by-default (баннер решает, см. CookieBanner.jsx);
+            остальные регионы (включая Индонезию) — grant, баннер не нужен. */}
         <Script id="google-ads-gtag" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+              'ad_storage': 'denied',
+              'ad_user_data': 'denied',
+              'ad_personalization': 'denied',
+              'analytics_storage': 'denied',
+              'region': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE','CH','GB'],
+              'wait_for_update': 500
+            });
+            gtag('consent', 'default', {
+              'ad_storage': 'granted',
+              'ad_user_data': 'granted',
+              'ad_personalization': 'granted',
+              'analytics_storage': 'granted'
+            });
             gtag('js', new Date());
             gtag('config', '${GOOGLE_ADS_ID}');
             gtag('config', '${GA4_ID}', { send_page_view: false });
@@ -114,6 +135,7 @@ export default async function LocaleLayout({ children, params }) {
           <Footer dict={dict} locale={locale} />
         </div>
         <FloatingContactButton dict={dict} />
+        <CookieBanner locale={locale} dict={dict} />
       </body>
     </html>
   );

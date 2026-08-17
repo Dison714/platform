@@ -66,6 +66,18 @@ img { max-width: 100%; display: block; }
   .fcb-btn { width: 46px; height: 46px; }
 }
 
+/* ---------- Cookie banner (Consent Mode v2, MVP) ---------- */
+.cookie-banner { position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; background: var(--navy); color: #fff; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px; padding: 14px 16px; box-shadow: 0 -2px 12px rgba(0,0,0,0.2); }
+.cookie-banner-text { flex: 1 1 260px; max-width: 640px; margin: 0; font-size: 13.5px; }
+.cookie-banner-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.cookie-banner-btn { border-radius: 8px; padding: 9px 16px; font-size: 13.5px; font-weight: 500; cursor: pointer; }
+.cookie-banner-accept { background: var(--red); color: #fff; border: 0; }
+.cookie-banner-decline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
+@media (max-width: 480px) {
+  .cookie-banner { flex-direction: column; align-items: stretch; text-align: center; }
+  .cookie-banner-actions { justify-content: center; }
+}
+
 /* ---------- Catalog ---------- */
 .page-head { padding: 22px 0 6px; }
 .page-title { font-size: 34px; color: var(--navy); }

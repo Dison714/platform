@@ -291,5 +291,10 @@
     "address": "Gg. 1 Kerobokan Kelod, Kuta Utara, Badung, Bali",
     "rights": "全著作権所有。",
     "terms": "レンタル規約"
+  },
+  "cookie_banner": {
+    "message": "当サイトでは分析・広告のためにCookieを使用しています。必須ではないCookieは同意または拒否できます。",
+    "accept": "同意する",
+    "decline": "任意のCookieを拒否"
   }
 }
