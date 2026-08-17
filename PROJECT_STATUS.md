@@ -2692,7 +2692,7 @@ SSH (`~/.ssh/mdb_platform_new`):
   (там же зафиксирован факт «A+AAAA → Contabo» из записи «Сессия
   2026-07-30» как временно неактуальный).
 
-### Сессия 2026-08-17 — Enhanced Conversions for Leads (телефон) + Google Consent Mode v2 (ЗАВЕРШЕНО, запушено в main `fa1240f`/`75f922d`; редеплой Coolify — за Дмитрием)
+### Сессия 2026-08-17 — Enhanced Conversions for Leads (телефон) + Google Consent Mode v2 (ЗАВЕРШЕНО, запушено в main `fa1240f`/`75f922d`; задеплоено на прод — контейнер на коммите `949a5b9`, совпадает с `HEAD`)
 
 **Enhanced Conversions for Leads.** Перед существующим
 `gtag('event','conversion', {send_to:'AW-17065885486/BjtuCLjetuIcEK7-0sk_'})`
@@ -2750,6 +2750,44 @@ Conversions, коммит `fa1240f`); `frontend/src/app/[locale]/layout.js`,
 `frontend/src/app/globals.css`, `frontend/src/app/components/CookieBanner.jsx`
 (новый), `frontend/src/i18n/dictionaries/*.json` — все 8 (Consent Mode v2,
 коммит `75f922d`). Без изменений в БД/backend.
+
+---
+
+**Первый деплой упал, ретрай прошёл (в той же сессии, сразу после пуша).**
+После `git push` в Coolify вручную запущен редеплой на коммите `949a5b9`
+(HEAD, включает оба фичевых коммита выше) — первая попытка **упала**
+(`Failed`, 02m48s), вторая (сразу следом, без изменений в коде) прошла
+штатно (`Success`, 03m07s).
+
+Диагностика (SSH `~/.ssh/mdb_platform_new`, read-only): локальный
+`npm run build` на том же коммите прошёл чисто — значит, дело не в коде.
+Полный лог упавшего билда вытащен напрямую из Postgres Coolify
+(`docker exec coolify-db psql -U coolify -d coolify -c "select logs from
+application_deployment_queues where id=<N>"` — обходит обрезание, которое
+показывает UI-панель логов) и обрывается сразу после `✓ Compiled
+successfully` (24.95s), без единой строки дальше — ни «Generating static
+pages», ни текста ошибки. `docker exec` вернул `exit code 255` — типичный
+симптом того, что билд-контейнер умер снаружи, пока к нему было подключение,
+не что сам `next build` упал с ошибкой. `journalctl`/`dmesg` за это окно
+времени не показали записей OOM-killer (не удалось подтвердить впрямую), но
+на сервере **обнаружено 0 swap** при несколько сервисах на борту (Postgres,
+Traefik, Coolify, плюс сторонний Horizon/PHP-FPM) — вероятная причина:
+кратковременный скачок памяти на самом тяжёлом этапе сборки (генерация 72
+статических страниц), без swap-подушки резко убивающий процесс без следа в
+логе приложения.
+
+После успешного ретрая — сверка на живом проде: `docker ps` на сервере
+показывает образ `odke6aycqzy4zybnkutq8qbm:949a5b97607a2f7d7a8d13662b8085070528958b`
+(полный SHA = `git rev-parse HEAD` в репо, совпадает); через preview-браузер
+на `https://bikebalirent.com/de` подтверждено вживую: баннер показывается,
+`dataLayer` содержит оба `gtag('consent','default', ...)` раньше `js`/
+`config` — новый код реально работает на проде, не только задеплоен.
+
+**Рекомендация на будущее (не выполнено, решение за Дмитрием):** добавить
+2–4 GB swap на сервере как страховку от повторения — не системная авария,
+но если сбои деплоя по этому же паттерну (падает без ошибки сразу после
+`Compiled successfully`) начнут повторяться чаще одного раза, это первое,
+что стоит проверить/поправить.
 
 ---
 
