@@ -2692,6 +2692,67 @@ SSH (`~/.ssh/mdb_platform_new`):
   (там же зафиксирован факт «A+AAAA → Contabo» из записи «Сессия
   2026-07-30» как временно неактуальный).
 
+### Сессия 2026-08-17 — Enhanced Conversions for Leads (телефон) + Google Consent Mode v2 (ЗАВЕРШЕНО, запушено в main `fa1240f`/`75f922d`; редеплой Coolify — за Дмитрием)
+
+**Enhanced Conversions for Leads.** Перед существующим
+`gtag('event','conversion', {send_to:'AW-17065885486/BjtuCLjetuIcEK7-0sk_'})`
+в `BookingForm.jsx` (стрелял только после успешного `POST /api/bookings`, см.
+«Сессия 2026-08-16 (продолжение, 3)») добавлен
+`gtag('set','user_data', {phone_number: <E.164>})` — телефон открытым
+текстом, хеширует сам `gtag.js` на клиенте, вручную не хешируем. Источник —
+поле WhatsApp (`whatsapp` state), оно уже гарантированно с `+` благодаря
+«залипающему» префиксу (`sanitizePrefixed`), свой дефолт кода страны не
+нужен. `normalizePhoneE164()` убирает пробелы/дефисы/скобки и требует
+строгую форму `+`+7–15 цифр; если не подошло (поле пустое или мусор) —
+`user_data` не шлётся вовсе, это осознанно (некорректный формат хуже
+отсутствующего). Email не тронут, сам вызов `conversion` не менялся.
+
+**Google Consent Mode v2 (MVP, приближение по locale).** В
+`[locale]/layout.js`, внутри уже существующего инлайн-скрипта
+`google-ads-gtag` (там же определяется сама функция `gtag`), перед первым
+`gtag('js', ...)/gtag('config', ...)` добавлены два
+`gtag('consent','default', ...)`: deny (`ad_storage`/`ad_user_data`/
+`ad_personalization`/`analytics_storage`) с `region` — список стран
+ЕЭЗ+Швейцария+UK, `wait_for_update: 500`; и общий grant без `region` —
+применяется ко всем остальным регионам (включая Индонезию), баннер им не
+нужен. Порядок вызовов внутри `dataLayer` подтверждён в dev
+(`window.dataLayer.slice(0,6)`) — оба `consent` идут раньше `js`/`config`.
+
+Нет реальной гео-детекции на v1.0 — приближение через `locale` страницы:
+баннер показывается только на `de`/`fr`/`es`/`it` (остальные локали уже
+`granted` по умолчанию из layout). Новый клиентский компонент
+`CookieBanner.jsx`, смонтирован в layout рядом с `FloatingContactButton`:
+при отсутствии сохранённого выбора в `localStorage['mdb_consent']` и
+подходящей locale — показывает нижний баннер (не модальный оверлей, простой
+MVP); клик «Принять»/«Отклонить необязательные» пишет выбор в localStorage и
+шлёт `gtag('consent','update', {...granted|denied})`; при повторном визите с
+сохранённым выбором — `update` уходит сразу при монтировании, баннер не
+показывается повторно. Тексты `cookie_banner.{message,accept,decline}`
+добавлены во все 8 словарей (не только целевые 4 locale) для консистентности
+с остальными переводами (см. CLAUDE.md §3.8).
+
+**Верификация в dev:** проверено вживую через preview-браузер на `/de` —
+баннер показан с немецким текстом, `dataLayer` содержит оба `consent
+default` раньше `js`/`config`; клик «Akzeptieren» → `localStorage.mdb_consent
+= 'accept'`, `gtag('consent','update', {...granted})` ушёл, баннер скрылся;
+перезагрузка `/de` — баннер не появляется повторно, `update` отправлен
+автоматически при монтировании; на `/en` баннер не показан вовсе (locale вне
+списка). Консоль без ошибок.
+
+**Известный некритичный нюанс:** `CookieBanner` и `FloatingContactButton` —
+оба `position: fixed` внизу экрана; на мобильном при показанном баннере
+плавающая кнопка контактов может визуально перекрываться баннером (баннер
+выше по z-index, сам по себе не ломается). Не исправлено — не запрошено,
+чисто косметика для MVP.
+
+**Файлы:** `frontend/src/app/components/BookingForm.jsx` (Enhanced
+Conversions, коммит `fa1240f`); `frontend/src/app/[locale]/layout.js`,
+`frontend/src/app/globals.css`, `frontend/src/app/components/CookieBanner.jsx`
+(новый), `frontend/src/i18n/dictionaries/*.json` — все 8 (Consent Mode v2,
+коммит `75f922d`). Без изменений в БД/backend.
+
+---
+
 ## 5. Как запустить локально
 
 ```bash
