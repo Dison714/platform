@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { isEnabledLocale } from '../../../../i18n/config.js';
+import { isEnabledLocale, DEFAULT_LOCALE } from '../../../../i18n/config.js';
 import { getDictionary } from '../../../../i18n/getDictionary.js';
 import { apiGet } from '../../../../lib/api.js';
 import { ogTwitter } from '../../../../lib/seo.js';
@@ -17,13 +17,41 @@ async function loadPost(slug, locale) {
   }
 }
 
+async function loadTranslations(slug, locale) {
+  try {
+    return (await apiGet(`/api/blog/posts/${encodeURIComponent(slug)}/translations?lang=${encodeURIComponent(locale)}`)).data;
+  } catch {
+    return [];
+  }
+}
+
+// hreflang для статьи — не lib/seo.js hreflangAlternates() (тот строит один
+// и тот же suffix для всех локалей, годится для Product.slug, единого на
+// все языки; article_translations.slug — per-locale, см. комментарий у
+// BlogPostPage ниже). Alternates строим из /translations того же article_id
+// (уже используется клиентским языковым переключателем в Header.jsx) — то же
+// покрытие 8 языков, что и у остального сайта (ТЗ Задача 2, "не больше и не
+// меньше"), но с правильным per-locale slug на каждую локаль.
+function blogHreflangAlternates(translations) {
+  const languages = {};
+  for (const t of translations) languages[t.language_code] = `/${t.language_code}/blog/${t.slug}`;
+  if (languages[DEFAULT_LOCALE]) languages['x-default'] = languages[DEFAULT_LOCALE];
+  return languages;
+}
+
 export async function generateMetadata({ params }) {
   const post = await loadPost(params.slug, params.locale);
   if (!post) return { title: 'Blog' };
+  const translations = await loadTranslations(params.slug, params.locale);
   const title = post.seo_title || post.title;
   const description = post.seo_description || post.excerpt || undefined;
   const url = `/${params.locale}/blog/${post.slug}`;
-  return { title, description, alternates: { canonical: url }, ...ogTwitter({ title, description, url, image: post.featured_image_url, imageAlt: post.title }) };
+  return {
+    title,
+    description,
+    alternates: { canonical: url, languages: blogHreflangAlternates(translations) },
+    ...ogTwitter({ title, description, url, image: post.featured_image_url, imageAlt: post.title }),
+  };
 }
 
 // Каркас (ТЗ п.4.15): резолв по (language_code, slug) из article_translations

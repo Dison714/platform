@@ -17,6 +17,9 @@ const STATIC_PATHS = [
 export default async function sitemap() {
   // До финального DNS cutover на bikebalirent.com — пустой sitemap, не 76×2
   // URL на стейджинге/IP/дефолтном Coolify-поддомене (см. robots.js/layout).
+  // Локальная проверка: временно добавить SITE_ENV=production в
+  // frontend/.env.local (файл в .gitignore, не коммитить), curl /sitemap.xml,
+  // снять переменную после теста.
   if (!IS_PRODUCTION) return [];
 
   const locales = enabledLocales(); // ['en','ru']
@@ -52,6 +55,37 @@ export default async function sitemap() {
         lastModified: p.updated_at ? new Date(p.updated_at) : now,
         changeFrequency: 'weekly',
         priority: 0.8,
+      });
+    }
+  }
+
+  // Blog posts × локали. В отличие от Product.slug (единый на все локали),
+  // slug статьи per-locale (article_translations.slug, ТЗ п.4.9.3) — поэтому
+  // не общий /api/products-паттерн (один запрос), а по запросу на локаль,
+  // как отдаёт публичная витрина (GET /api/blog/posts?lang=xx, только
+  // status='published'). lastmod — GREATEST(articles.updated_at,
+  // article_translations.updated_at), поле есть в модели (047_blog.sql) —
+  // не дата генерации. changeFrequency/priority — по той же шкале, что и
+  // остальной sitemap: 'weekly' везде без исключений (см. STATIC_PATHS/
+  // products выше), priority 0.5 — тот же уровень, что about/faq
+  // (вспомогательный контент, не денежные страницы каталога/товара
+  // 0.8-0.9) — своей отдельной ступени под блог в существующей шкале нет.
+  const postsByLocale = await Promise.all(
+    locales.map(async (loc) => {
+      try {
+        return { loc, posts: (await apiGet(`/api/blog/posts?lang=${loc}`)).data ?? [] };
+      } catch {
+        return { loc, posts: [] };
+      }
+    })
+  );
+  for (const { loc, posts } of postsByLocale) {
+    for (const post of posts) {
+      entries.push({
+        url: `${SITE_URL}/${loc}/blog/${post.slug}`,
+        lastModified: post.updated_at ? new Date(post.updated_at) : now,
+        changeFrequency: 'weekly',
+        priority: 0.5,
       });
     }
   }

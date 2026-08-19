@@ -17,6 +17,7 @@ blogRouter.get('/blog/posts', async (req, res, next) => {
         const lang = req.query.lang || DEFAULT_LANG;
         const { rows } = await pool.query(
             `SELECT at.title, at.slug, at.excerpt, a.featured_image_url, a.published_at, a.is_pillar,
+                    GREATEST(a.updated_at, at.updated_at) AS updated_at,
                     ac.slug AS category_slug, ac.display_order AS category_display_order,
                     COALESCE(act.name, ac.slug) AS category_name, act.description AS category_description
              FROM articles a
