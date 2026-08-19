@@ -284,6 +284,11 @@
       }
     ]
   },
+  "blog": {
+    "pillar_badge": "Hier starten",
+    "pillar_inside_one": "Überblick · {n} Artikel enthalten",
+    "pillar_inside_other": "Überblick · {n} Artikel enthalten"
+  },
   "footer": {
     "get_in_touch": "Kontakt aufnehmen",
     "hours": "Geöffnet 08:00–19:00 Uhr",

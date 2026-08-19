@@ -17,13 +17,14 @@ blogRouter.get('/blog/posts', async (req, res, next) => {
         const lang = req.query.lang || DEFAULT_LANG;
         const { rows } = await pool.query(
             `SELECT at.title, at.slug, at.excerpt, a.featured_image_url, a.published_at, a.is_pillar,
-                    ac.slug AS category_slug, COALESCE(act.name, ac.slug) AS category_name
+                    ac.slug AS category_slug, ac.display_order AS category_display_order,
+                    COALESCE(act.name, ac.slug) AS category_name, act.description AS category_description
              FROM articles a
              JOIN article_translations at ON at.article_id = a.id AND at.language_code = $1
              JOIN article_categories ac ON ac.id = a.category_id
              LEFT JOIN article_category_translations act ON act.category_id = ac.id AND act.language_code = $1
              WHERE a.status = 'published'
-             ORDER BY a.published_at DESC NULLS LAST`,
+             ORDER BY ac.display_order ASC, a.is_pillar DESC, a.display_order ASC, a.published_at DESC NULLS LAST`,
             [lang]
         );
         res.json({ data: rows });

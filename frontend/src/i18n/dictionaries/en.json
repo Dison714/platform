@@ -284,6 +284,11 @@
       }
     ]
   },
+  "blog": {
+    "pillar_badge": "Start here",
+    "pillar_inside_one": "Overview · {n} article inside",
+    "pillar_inside_other": "Overview · {n} articles inside"
+  },
   "footer": {
     "get_in_touch": "Get in touch",
     "hours": "Open 08:00–19:00",

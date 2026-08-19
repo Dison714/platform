@@ -284,6 +284,11 @@
       }
     ]
   },
+  "blog": {
+    "pillar_badge": "まずはこちらから",
+    "pillar_inside_one": "概要 · {n}件の記事を収録",
+    "pillar_inside_other": "概要 · {n}件の記事を収録"
+  },
   "footer": {
     "get_in_touch": "お問い合わせ",
     "hours": "営業時間 8:00〜19:00",

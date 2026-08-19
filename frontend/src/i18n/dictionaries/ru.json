@@ -284,6 +284,11 @@
       }
     ]
   },
+  "blog": {
+    "pillar_badge": "С чего начать",
+    "pillar_inside_one": "Обзор · {n} статья внутри",
+    "pillar_inside_other": "Обзор · {n} статей внутри"
+  },
   "footer": {
     "get_in_touch": "Связаться с нами",
     "hours": "Работаем 08:00–19:00",

@@ -284,6 +284,11 @@
       }
     ]
   },
+  "blog": {
+    "pillar_badge": "ابدأ من هنا",
+    "pillar_inside_one": "نظرة عامة · مقال واحد بداخلها",
+    "pillar_inside_other": "نظرة عامة · {n} مقالات بداخلها"
+  },
   "footer": {
     "get_in_touch": "تواصل معنا",
     "hours": "ساعات العمل 08:00–19:00",
