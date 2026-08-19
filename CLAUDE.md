@@ -236,10 +236,14 @@
   Cloudflare dashboard → R2 → Manage API Tokens, никогда не хранить в
   репозитории/CLAUDE.md/PROJECT_STATUS.md). Паттерн разовой синхронизации
   данных на прод: сгенерировать SQL из `backend/scripts/gen_catalog_sync.mjs`
-  / `gen_price_sync.mjs` / `gen_blog_sync.mjs` (апсерт по бизнес-ключу
-  — `slug`, НЕ `id`: id генерируются заново на каждой стороне и никогда не
-  совпадут между dev/prod) → `scp` + `docker cp` в контейнер →
-  `psql -v ON_ERROR_STOP=1 -f`. `gen_blog_sync.mjs` используется не только
+  / `gen_price_sync.mjs` / `gen_blog_sync.mjs` / `gen_legal_blog_sync.mjs`
+  (апсерт по бизнес-ключу — `slug`, НЕ `id`: id генерируются заново на
+  каждой стороне и никогда не совпадут между dev/prod) → `scp` + `docker cp`
+  в контейнер → `psql -v ON_ERROR_STOP=1 -f`. Оба `gen_*_blog_sync.mjs`
+  валидируют `excerpt` перед генерацией SQL (падают на пустом значении или
+  на утёкшем markdown-синтаксисе — `/blog` рендерит excerpt как plain text,
+  не парсит; баг найден и закрыт guard'ом `assertCleanExcerpt()` в сессии
+  2026-08-19). `gen_blog_sync.mjs` используется не только
   для первичной публикации категории, но и для контентных апдейтов уже
   опубликованных статей (пример — WhatsApp/Telegram-линковка в
   deposit-safety, сессия 2026-08-12): `status` в апсерте `articles` —
