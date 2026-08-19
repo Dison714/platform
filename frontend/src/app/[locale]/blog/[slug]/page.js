@@ -2,8 +2,10 @@ import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { isEnabledLocale } from '../../../../i18n/config.js';
+import { getDictionary } from '../../../../i18n/getDictionary.js';
 import { apiGet } from '../../../../lib/api.js';
 import { ogTwitter } from '../../../../lib/seo.js';
+import Breadcrumb from '../../../components/Breadcrumb.jsx';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,11 +36,24 @@ export default async function BlogPostPage({ params }) {
   const { locale, slug } = params;
   if (!isEnabledLocale(locale)) notFound();
 
-  const post = await loadPost(slug, locale);
+  const [post, dict] = await Promise.all([loadPost(slug, locale), getDictionary(locale)]);
   if (!post) notFound();
+
+  // Home → Blog → [категория] → [заголовок статьи] — категория/её имя уже
+  // приходят локализованными из /api/blog/posts/:slug (article_categories +
+  // article_category_translations), тот же справочник, что группирует /blog
+  // на табы-якоря (см. BlogCategoryTabs.jsx, id={category.slug}) — не заводим
+  // отдельную таксономию под breadcrumb.
+  const trail = [
+    { name: dict.nav.home, path: `/${locale}` },
+    { name: dict.nav.blog, path: `/${locale}/blog` },
+    { name: post.category_name, path: `/${locale}/blog#${post.category_slug}` },
+    { name: post.title, path: `/${locale}/blog/${post.slug}` },
+  ];
 
   return (
     <div className="container page">
+      <Breadcrumb trail={trail} />
       <h1 className="display page-h1">{post.title}</h1>
       {/* excerpt не дублируется здесь отдельным lede — он совпадает с первым
           абзацем content (см. Задачу 2 сессии), используется как teaser в

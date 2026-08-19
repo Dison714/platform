@@ -3,13 +3,13 @@ import { isEnabledLocale } from '../../../../i18n/config.js';
 import { getDictionary } from '../../../../i18n/getDictionary.js';
 import { apiGet, formatIdr } from '../../../../lib/api.js';
 import { resolvePhotoUrl, pickHero, galleryPhotos, resolveVideoUrls } from '../../../../lib/photos.js';
-import { ogTwitter, hreflangAlternates, breadcrumbJsonLd } from '../../../../lib/seo.js';
+import { ogTwitter, hreflangAlternates } from '../../../../lib/seo.js';
 import { absoluteUrl } from '../../../../lib/site.js';
 import { resolveSpecs } from '../../../../lib/specs.js';
-import Link from 'next/link';
 import Calculator from '../../../components/Calculator.jsx';
 import ProductGallery from '../../../components/ProductGallery.jsx';
 import ProductVideo from '../../../components/ProductVideo.jsx';
+import Breadcrumb from '../../../components/Breadcrumb.jsx';
 
 export const dynamic = 'force-dynamic';
 
@@ -156,25 +156,11 @@ export default async function ProductPage({ params, searchParams }) {
     if (fam) trail.push({ name: fam.name, path: `/${locale}/bikes?group=motorcycle&model=${modelCode}` });
   }
   trail.push({ name: product.name, path: `/${locale}/bikes/${product.slug}` });
-  const breadcrumbLd = breadcrumbJsonLd(trail);
 
   return (
     <div className="container product-wrap">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
-
-      <nav className="breadcrumb" aria-label="Breadcrumb">
-        {trail.map((step, i) =>
-          i === trail.length - 1 ? (
-            <span key={step.path} className="breadcrumb-current">{step.name}</span>
-          ) : (
-            <span key={step.path} className="breadcrumb-step">
-              <Link href={step.path}>{step.name}</Link>
-              <span className="breadcrumb-sep">/</span>
-            </span>
-          )
-        )}
-      </nav>
+      <Breadcrumb trail={trail} />
 
       <div className="product-grid">
         <div className="product-media">
