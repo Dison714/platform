@@ -18,6 +18,24 @@ function esc(v) {
   return `'${String(v).replace(/'/g, "''")}'`;
 }
 
+// Last-line defense against 2026-08-19's excerpt bug: the /blog list page
+// renders excerpt as plain text, not markdown, so a raw [link](url) or
+// *emphasis* that slips into excerpt (e.g. from a naive "first paragraph of
+// content" derivation upstream) shows up unrendered on prod. Whatever wrote
+// excerpt into dev is out of this script's control — this just refuses to
+// mirror a bad value forward.
+const MD_LEFTOVER = [/\[.+\]\(.+\)/, /\*[^*]+\*/, /_[^_]+_/];
+function assertCleanExcerpt(t) {
+  if (!t.excerpt || !t.excerpt.trim()) {
+    throw new Error(`empty excerpt: ${t.article_slug} / ${t.language_code}`);
+  }
+  for (const re of MD_LEFTOVER) {
+    if (re.test(t.excerpt)) {
+      throw new Error(`excerpt contains markdown syntax (${re}): ${t.article_slug} / ${t.language_code} — "${t.excerpt}"`);
+    }
+  }
+}
+
 async function main() {
   const { rows: articles } = await pool.query(
     `SELECT a.slug, a.is_pillar, a.status
@@ -38,6 +56,7 @@ async function main() {
      ORDER BY a.slug, at.language_code`
   );
   if (translations.length !== 48) throw new Error(`expected 48 translations (6 articles x 8 langs), found ${translations.length}`);
+  for (const t of translations) assertCleanExcerpt(t);
 
   const out = [];
   out.push('-- legal_blog_sync.sql — regenerated ' + new Date().toISOString().slice(0, 10));
