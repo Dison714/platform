@@ -11,15 +11,27 @@ function esc(v) {
   return `'${String(v).replace(/'/g, "''")}'`;
 }
 
+// updated_at feeds sitemap.js lastmod (frontend/src/app/sitemap.js) — a plain
+// EXCLUDED.updated_at here would stamp prod's row with dev's timestamp on
+// every sync even when nothing about the row actually changed, corrupting
+// the freshness signal. CASE it against a real diff of the other columns so
+// prod's own updated_at (from its own live edits) survives a no-op sync.
 async function dumpTable(table, pkCol = 'id') {
   const { rows } = await pool.query(`SELECT * FROM ${table} ORDER BY created_at NULLS FIRST`);
   if (rows.length === 0) return `-- ${table}: empty, nothing to sync\n`;
   const cols = Object.keys(rows[0]);
   const updateCols = cols.filter((c) => c !== pkCol);
+  const hasUpdatedAt = cols.includes('updated_at');
+  const businessCols = updateCols.filter((c) => c !== 'created_at' && c !== 'updated_at');
+  const updatedAtSet = hasUpdatedAt && businessCols.length
+    ? `updated_at = CASE WHEN ${businessCols.map((c) => `${table}.${c} IS DISTINCT FROM EXCLUDED.${c}`).join(' OR ')} THEN EXCLUDED.updated_at ELSE ${table}.updated_at END`
+    : null;
   let sql = `-- ${table}: ${rows.length} rows\n`;
   for (const row of rows) {
     const vals = cols.map((c) => esc(row[c])).join(', ');
-    const setClause = updateCols.map((c) => `${c} = EXCLUDED.${c}`).join(', ');
+    const setClause = updateCols
+      .map((c) => (c === 'updated_at' && updatedAtSet ? updatedAtSet : `${c} = EXCLUDED.${c}`))
+      .join(', ');
     sql += `INSERT INTO ${table} (${cols.join(', ')}) VALUES (${vals})\n`;
     sql += `  ON CONFLICT (${pkCol}) DO UPDATE SET ${setClause};\n`;
   }

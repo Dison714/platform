@@ -215,7 +215,7 @@ export async function getProduct({ idOrSlug, lang } = {}) {
     const { rows } = await pool.query(
         `SELECT
             p.id, p.slug, p.color_name, p.variant, p.equipment_variant, p.is_bookable,
-            p.archived_color, p.print_name, p.need_photos,
+            p.archived_color, p.print_name, p.need_photos, p.updated_at,
             pf.id AS family_id, pf.code AS family_code, pf.brand, pf.model_name,
             vc.code AS category_code, COALESCE(vct.name, vcten.name, vc.name) AS category_name,
             COALESCE(t.title, ten.title) AS title,
@@ -281,6 +281,7 @@ export async function getProduct({ idOrSlug, lang } = {}) {
         archived_color: r.archived_color,
         print_name: r.print_name,
         need_photos: r.need_photos,
+        updated_at: r.updated_at, // для sitemap lastmod
         photos: photos.rows.map((p) => ({
             storage_path: p.storage_path,
             cdn_url: p.cdn_url,
