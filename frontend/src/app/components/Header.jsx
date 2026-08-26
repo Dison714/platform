@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { LOCALES, enabledLocales } from '../../i18n/config.js';
+import LanguageDropdown from './LanguageDropdown.jsx';
 
 // /blog/[slug] — единственный раздел с per-locale slug (article_translations.slug,
 // в отличие от единого products.slug у /bikes) — просто менять сегмент локали
@@ -74,6 +75,9 @@ export default function Header({ locale, dict }) {
         </nav>
 
         <div className="hdr-right">
+          {/* Полный список кодов языков — только на десктопе (>=860px, см. globals.css),
+              там же где и nav-desktop. На мобильном его место занимают hdr-cta + компактный
+              LanguageDropdown ниже. */}
           <span className="lang" role="group" aria-label="Language">
             {langs.map((l, i) => (
               <span key={l.code}>
@@ -88,6 +92,8 @@ export default function Header({ locale, dict }) {
               </span>
             ))}
           </span>
+          <Link href={`${base}/bikes`} className="hdr-cta">{dict.home.cta_btn}</Link>
+          <LanguageDropdown locale={locale} langs={langs} hrefFor={switchLocaleHref} />
           <button
             className="burger"
             aria-label="Menu"

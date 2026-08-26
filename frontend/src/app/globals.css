@@ -51,10 +51,39 @@ img { max-width: 100%; display: block; }
 .nav-mobile.open { display: flex; }
 .nav-mobile a { padding: 11px 16px; font-size: 16px; border-top: 1px solid rgba(255,255,255,0.08); }
 
+/* Мобильный ряд (<860px): CTA + компактный LanguageDropdown вместо полного .lang.
+   На десктопе (>=860px) — наоборот, полный .lang виден, а CTA/дропдаун скрыты. */
+.hdr-cta {
+  display: inline-flex; align-items: center;
+  background: var(--red); color: #fff; font-weight: 600; font-size: 13px;
+  padding: 8px 12px; border-radius: 8px; white-space: nowrap;
+}
+.hdr-cta:hover { background: var(--red-700); }
+
+.lang-compact { position: relative; }
+.lang-trigger {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: transparent; border: 1px solid rgba(255,255,255,0.5); border-radius: 6px;
+  color: #fff; font-size: 13px; padding: 5px 8px; cursor: pointer;
+}
+.lang-globe { flex-shrink: 0; }
+.lang-chevron { transition: transform 0.15s ease; }
+.lang-chevron.up { transform: rotate(180deg); }
+.lang-menu {
+  position: absolute; top: calc(100% + 6px); inset-inline-end: 0;
+  background: var(--navy-700); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+  padding: 6px; display: flex; flex-direction: column; min-width: 140px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 60; list-style: none; margin: 0;
+}
+.lang-menu a { display: block; padding: 8px 10px; border-radius: 6px; font-size: 14px; }
+.lang-menu a:hover { background: rgba(255,255,255,0.08); }
+
 @media (min-width: 860px) {
   .nav-desktop { display: flex; }
   .burger { display: none; }
   .nav-mobile { display: none !important; }
+  .hdr-cta { display: none; }
+  .lang-compact { display: none; }
 }
 
 /* ---------- Floating contact button ---------- */
@@ -520,3 +549,8 @@ img { max-width: 100%; display: block; }
 .lang-off { color: #aab1d6; }
 .lang-off:hover { color: #fff; }
 .lang-sep { color: rgba(255,255,255,0.4); margin: 0 4px; }
+/* Полный список кодов языков (.lang) — только на десктопе (>=860px, см. секцию
+   Header): на мобильном его место занимают .hdr-cta + компактный .lang-compact.
+   Правило намеренно стоит здесь, ПОСЛЕ базового ".lang { display: inline-flex }"
+   выше — при равной специфичности выигрывает более позднее по каскаду. */
+@media (max-width: 859px) { .lang { display: none; } }
