@@ -76,11 +76,6 @@ export default async function HomePage({ params }) {
 
   return (
     <div className="home">
-      {/* LCP quick win: .hero (globals.css) sets this as a CSS background-image,
-          which the browser can't discover until it parses the render-blocking
-          CSS. rel="preload" is valid in <body> (body-ok flag) and lets the
-          fetch start straight from the initial HTML stream instead. */}
-      <link rel="preload" as="image" href="/hero-bg.webp" fetchPriority="high" />
       <section className="hero">
         <div className="container hero-in">
           <div className="hero-text">
@@ -92,18 +87,11 @@ export default async function HomePage({ params }) {
             <div className="hero-bikes">
               <span className="hero-bikes-label">{h.available_now}</span>
               <div className="hero-bikes-grid">
-                {availableBikes.map((p, i) => (
+                {availableBikes.map((p) => (
                   <Link href={`/${locale}/bikes/${p.slug}`} className="hero-bike-card" key={p.id}>
                     <div className="hero-bike-photo">
                       {p.hero ? (
-                        <img
-                          src={resolvePhotoUrl(p.hero, 'thumb')}
-                          alt={p.name}
-                          loading="eager"
-                          fetchPriority={i === 0 ? 'high' : undefined}
-                          width="400"
-                          height="300"
-                        />
+                        <img src={resolvePhotoUrl(p.hero, 'thumb')} alt={p.name} loading="lazy" width="400" height="300" />
                       ) : (
                         <span aria-hidden="true">🏍</span>
                       )}
