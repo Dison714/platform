@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { isEnabledLocale } from '../../i18n/config.js';
@@ -77,6 +78,15 @@ export default async function HomePage({ params }) {
   return (
     <div className="home">
       <section className="hero">
+        <Image
+          src="/hero-bg.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          style={{ objectFit: 'cover', objectPosition: 'center 65%' }}
+        />
+        <div className="hero-scrim" aria-hidden="true" />
         <div className="container hero-in">
           <div className="hero-text">
             <h1 className="display hero-title">{h.hero_title}</h1>

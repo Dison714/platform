@@ -304,10 +304,13 @@ img { max-width: 100%; display: block; }
 .btn-cta:hover { background: var(--red-700); }
 .hero {
   color: #fff; position: relative; overflow: hidden;
-  background-image: linear-gradient(135deg, rgba(15,23,66,0.90) 0%, rgba(20,32,90,0.82) 45%, rgba(28,44,110,0.70) 100%), url('/hero-bg.webp');
-  background-size: cover;
-  background-position: center 65%;
 }
+/* Фото теперь рендерится через next/image (fill) как первый реальный
+   ребёнок .hero, а не CSS background-image — см. page.js. hero-scrim несёт
+   тот же градиент, что раньше был вторым слоем background-image; отдельным
+   div'ом, а не .hero::before — сгенерированный ::before красится ДО
+   реальных детей, то есть оказался бы под фото, а не поверх него. */
+.hero-scrim { position: absolute; inset: 0; background-image: linear-gradient(135deg, rgba(15,23,66,0.90) 0%, rgba(20,32,90,0.82) 45%, rgba(28,44,110,0.70) 100%); }
 .hero::after { content: ""; position: absolute; inset-inline-end: -60px; top: -60px; width: 240px; height: 240px; border-radius: 50%; background: rgba(213,33,37,0.18); }
 .hero-in { padding: 48px 16px 52px; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 28px; }
 .hero-title { font-size: 40px; color: #fff; max-width: 12ch; text-shadow: 0 2px 16px rgba(0,0,0,0.35); }
