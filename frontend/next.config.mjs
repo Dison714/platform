@@ -17,6 +17,18 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['geoip-lite'],
   },
+  // kawasaki-zx25r-biru → kawasaki-zx25r-blue (slug rename, задача 4b,
+  // сессия 2026-09-07): "biru" — индонезийское "синий", утекло на сидинге.
+  // Один regex-source покрывает все locale-префиксы разом.
+  async redirects() {
+    return [
+      {
+        source: '/:locale(en|ru|de|fr|es|it|ja|ar)/bikes/kawasaki-zx25r-biru',
+        destination: '/:locale/bikes/kawasaki-zx25r-blue',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

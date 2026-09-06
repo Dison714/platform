@@ -1,7 +1,7 @@
 import '../globals.css';
 import { Suspense } from 'react';
 import Script from 'next/script';
-import { Teko, Poppins, Noto_Sans_Arabic } from 'next/font/google';
+import { Teko, Poppins, Noto_Sans_Arabic, Oswald, Golos_Text } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { isEnabledLocale, enabledLocales } from '../../i18n/config.js';
 import { getDictionary } from '../../i18n/getDictionary.js';
@@ -36,12 +36,25 @@ const GA4_ID = 'G-S6RSSC9KFW';
 const YANDEX_METRIKA_ID = 111448067;
 
 // Шрифты бренда: Teko — дисплейные заголовки, Poppins — текст/UI (self-hosted).
-// Ни один не покрывает арабскую графику — для ar подменяем --font-poppins
-// на Noto Sans Arabic (заголовки на ar остаются без display-шрифта Teko,
-// латиница/кириллица в Teko всё равно не читается арабским пользователем).
+// Ни один не содержит ни одного кириллического глифа (проверено напрямую —
+// cmap обоих файлов, ни Teko, ни Poppins не покрывают U+0400-04FF), поэтому
+// на ru браузер молча подставлял системный шрифт для всего текста, включая
+// заголовки (Webvisor 01.09.2026 — на скриншоте title карточки байка
+// заметно "generic" начертание рядом с фирменным на других языках).
+// Oswald/Golos Text — визуально близкие аналоги с полной поддержкой
+// кириллицы: Oswald — тот же жанр узкого гротеска, что и Teko (обе восходят
+// к Alternate Gothic); Golos Text — геометрический гротеск, изначально
+// спроектированный как кириллический компаньон именно к Poppins (близкие
+// пропорции, скруглённые терминалы). Для ar аналогичная подмена
+// --font-poppins на Noto Sans Arabic уже была раньше; --font-teko на ar
+// сознательно не подменяли (латиница/кириллица в Teko всё равно нечитаема
+// для арабского пользователя, а замены для дисплейного шрифта не искали) —
+// не трогаем это здесь, вне рамок задачи.
 const teko = Teko({ subsets: ['latin'], weight: ['500', '600'], variable: '--font-teko', display: 'swap' });
+const oswaldRu = Oswald({ subsets: ['latin', 'cyrillic'], weight: ['500', '600'], variable: '--font-teko', display: 'swap' });
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
 const notoArabic = Noto_Sans_Arabic({ subsets: ['arabic'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
+const golosRu = Golos_Text({ subsets: ['latin', 'cyrillic'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
 
 export function generateStaticParams() {
   return enabledLocales().map((locale) => ({ locale }));
@@ -72,10 +85,12 @@ export default async function LocaleLayout({ children, params }) {
   if (!isEnabledLocale(locale)) notFound();
   const dict = await getDictionary(locale);
   const isRtl = locale === 'ar';
-  const bodyFont = isRtl ? notoArabic : poppins;
+  const isRu = locale === 'ru';
+  const bodyFont = isRtl ? notoArabic : isRu ? golosRu : poppins;
+  const displayFont = isRu ? oswaldRu : teko;
 
   return (
-    <html lang={locale} dir={isRtl ? 'rtl' : 'ltr'} className={`${teko.variable} ${bodyFont.variable}`}>
+    <html lang={locale} dir={isRtl ? 'rtl' : 'ltr'} className={`${displayFont.variable} ${bodyFont.variable}`}>
       <body>
         {/* Yandex.Metrika noscript — обычным JSX, не через next/script, в самое начало body. */}
         <noscript>
