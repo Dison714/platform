@@ -57,3 +57,15 @@ export function resolveVideoUrls(slug) {
     return `${PHOTO_BASE}/bikes/${slug}/${name}`;
   });
 }
+
+// Постеры для тех же слотов (video.mp4 → video-poster.webp, video-2.mp4 →
+// video-2-poster.webp, ...) — без чёрного экрана на iOS Safari до нажатия
+// play. Отсутствие файла ProductVideo не проверяет (в отличие от самого
+// видео): браузер просто не покажет постер, это не ошибка.
+export function resolveVideoPosterUrls(slug) {
+  return Array.from({ length: MAX_VIDEO_SLOTS }, (_, i) => {
+    const n = i + 1;
+    const name = n === 1 ? 'video-poster.webp' : `video-${n}-poster.webp`;
+    return `${PHOTO_BASE}/bikes/${slug}/${name}`;
+  });
+}

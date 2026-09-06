@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { isEnabledLocale } from '../../../../i18n/config.js';
 import { getDictionary } from '../../../../i18n/getDictionary.js';
 import { apiGet, formatIdr } from '../../../../lib/api.js';
-import { resolvePhotoUrl, pickHero, galleryPhotos, resolveVideoUrls } from '../../../../lib/photos.js';
+import { resolvePhotoUrl, pickHero, galleryPhotos, resolveVideoUrls, resolveVideoPosterUrls } from '../../../../lib/photos.js';
 import { ogTwitter, hreflangAlternates } from '../../../../lib/seo.js';
 import { absoluteUrl } from '../../../../lib/site.js';
 import { resolveSpecs } from '../../../../lib/specs.js';
@@ -69,6 +69,7 @@ export default async function ProductPage({ params, searchParams }) {
   const gallery = galleryPhotos(product.photos, hero, 8); // hero + до 8 в галерее
   const showPlaceholder = product.need_photos || !hero;
   const videoUrls = resolveVideoUrls(product.slug);
+  const videoPosterUrls = resolveVideoPosterUrls(product.slug);
   const resolvedSpecs = resolveSpecs(product.specs, dict); // общий резолв для UI и JSON-LD
   // Google Merchant listing (структурированные данные, GSC "Данные о товарах
   // продавца") хочет валидный google_product_category, а не наш ярлык
@@ -180,6 +181,7 @@ export default async function ProductPage({ params, searchParams }) {
             <ProductVideo
               key={`m-${src}`}
               src={src}
+              poster={videoPosterUrls[i]}
               className={`product-video-${i + 1}${i === 1 ? '' : ' video-mobile-only'}`}
             />
           ))}
@@ -227,6 +229,7 @@ export default async function ProductPage({ params, searchParams }) {
               <ProductVideo
                 key={`d-${src}`}
                 src={src}
+                poster={videoPosterUrls[i]}
                 className={`product-video-${i + 1} video-desktop-only`}
               />
             )

@@ -12,6 +12,7 @@ import CookieBanner from '../components/CookieBanner.jsx';
 import RouteTracker from './analytics/RouteTracker.js';
 import { organizationJsonLd } from '../../lib/organization.js';
 import { IS_PRODUCTION, SITE_URL } from '../../lib/site.js';
+import { EEA_UK_CH_COUNTRIES } from '../../lib/eeaCountries.js';
 
 // Google Ads conversion tag — перенесено со старого WordPress-сайта
 // (там стоял как GT-KDB22DZQ через Site Kit). Пока без привязки к
@@ -100,7 +101,7 @@ export default async function LocaleLayout({ children, params }) {
               'ad_user_data': 'denied',
               'ad_personalization': 'denied',
               'analytics_storage': 'denied',
-              'region': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE','CH','GB'],
+              'region': ${JSON.stringify(EEA_UK_CH_COUNTRIES)},
               'wait_for_update': 500
             });
             gtag('consent', 'default', {
@@ -135,7 +136,7 @@ export default async function LocaleLayout({ children, params }) {
           <Footer dict={dict} locale={locale} />
         </div>
         <FloatingContactButton dict={dict} />
-        <CookieBanner locale={locale} dict={dict} />
+        <CookieBanner dict={dict} />
       </body>
     </html>
   );

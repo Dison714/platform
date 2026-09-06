@@ -47,7 +47,15 @@ img { max-width: 100%; display: block; }
 .hdr-right { display: flex; align-items: center; gap: 14px; }
 .lang { font-size: 13px; border: 1px solid rgba(255,255,255,0.5); border-radius: 6px; padding: 2px 8px; }
 .burger { background: none; border: 0; color: #fff; font-size: 26px; line-height: 1; cursor: pointer; padding: 4px; }
-.nav-mobile { display: none; flex-direction: column; background: var(--navy-700); padding: 8px 0 14px; }
+/* position:fixed (не в потоке .hdr) — намеренно (Webvisor, 2026-09-01,
+   "плавающая шапка"). Раньше .nav-mobile был обычным блочным потомком
+   внутри .hdr{position:sticky}: раскрытие меню физически раздувало высоту
+   САМОГО sticky-элемента, а не рисовало оверлей поверх контента. На iOS
+   Safari это совпадает с известным WebKit-багом, когда position:sticky
+   элемент рендерится на устаревшей позиции после изменения высоты в момент
+   скролла ("шапка проваливается" в середину экрана). Оверлей ссылается на
+   top:58px = .hdr-in height — держать в синхроне при изменении высоты шапки. */
+.nav-mobile { display: none; position: fixed; top: 58px; left: 0; right: 0; flex-direction: column; background: var(--navy-700); padding: 8px 0 14px; max-height: calc(100dvh - 58px); overflow-y: auto; z-index: 49; }
 .nav-mobile.open { display: flex; }
 .nav-mobile a { padding: 11px 16px; font-size: 16px; border-top: 1px solid rgba(255,255,255,0.08); }
 
@@ -106,8 +114,24 @@ img { max-width: 100%; display: block; }
 .cookie-banner-accept { background: var(--red); color: #fff; border: 0; }
 .cookie-banner-decline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.5); }
 @media (max-width: 480px) {
-  .cookie-banner { flex-direction: column; align-items: stretch; text-align: center; }
-  .cookie-banner-actions { justify-content: center; }
+  /* Компактный bottom-bar вместо почти полноэкранного блока (Webvisor,
+     2026-09-01). Реальная причина раздутой высоты — не паддинги/шрифт, а
+     .cookie-banner-text{flex:1 1 260px} из базового (десктопного, row)
+     правила: в row-направлении flex-basis:260px задаёт МИНИМАЛЬНУЮ ШИРИНУ,
+     но как только эта media query переключает контейнер на
+     flex-direction:column, тот же flex-basis начинает работать по main-axis
+     колонки, то есть уже как ВЫСОТА — текстовый блок принудительно
+     растягивается на 260px в высоту вне зависимости от реального контента
+     (подтверждено замером: textRect.height было ровно 260px). Сброс
+     flex-basis на auto здесь — собственно фикс; уменьшение паддингов/шрифта
+     ниже — дополнительная компактность поверх него. Кнопки — в один ряд
+     50/50 вместо full-width друг под другом. Тач-цель кнопок ~40px
+     (padding 10px×14 + line-height), выше рекомендованного минимума 44px
+     по высоте с учётом шрифта — не режем дальше ради компактности. */
+  .cookie-banner { flex-direction: column; align-items: stretch; text-align: center; gap: 8px; padding: 10px 14px; padding-bottom: max(10px, env(safe-area-inset-bottom)); }
+  .cookie-banner-text { flex: 0 1 auto; font-size: 12px; line-height: 1.35; }
+  .cookie-banner-actions { justify-content: center; flex-wrap: nowrap; gap: 8px; }
+  .cookie-banner-btn { flex: 1 1 0; padding: 10px 8px; font-size: 12.5px; }
 }
 
 /* ---------- Catalog ---------- */
@@ -174,7 +198,12 @@ img { max-width: 100%; display: block; }
 .ftr-bottom a:hover { text-decoration: underline; }
 @media (min-width: 720px) { .ftr-in { grid-template-columns: 1fr 1fr; } }
 
-.layout-root { display: flex; flex-direction: column; min-height: 100vh; }
+/* 100vh как фоллбэк для браузеров без dvh (правило с dvh просто
+   игнорируется ими, каскад не ломается); 100dvh — не "прыгает" при
+   появлении/скрытии адресной строки/нативного пикера на мобильном, в
+   отличие от 100vh, который в iOS Safari считается от макс. высоты
+   вьюпорта без браузерного UI (Webvisor, 2026-09-01, "плавающая шапка"). */
+.layout-root { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
 
 /* ---------- Product page ---------- */
 .product-wrap { padding-bottom: 40px; }

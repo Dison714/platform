@@ -1,13 +1,14 @@
 'use client';
-// Consent Mode v2 — MVP-баннер. Нет реальной гео-детекции, поэтому locale
-// страницы используется как приближение EEA/UK (de/fr/es/it, см. layout.js
-// про gtag('consent','default', ...) — остальные регионы уже granted по
-// умолчанию, баннер им не нужен). Сохранённый выбор в localStorage
-// переигрывает default при каждом визите, баннер повторно не показывается.
+// Consent Mode v2. Показ баннера решает страна визитёра (/api/geo-consent,
+// geoip-lite по реальному IP), не locale страницы — раньше баннер завязывался
+// на de/fr/es/it и немецкоязычный турист физически на Бали видел его, хотя
+// по IP не должен (Webvisor, 2026-09-01). /api/geo-consent fail-closed: при
+// ошибке/неопределённом IP возвращает requiresConsent:false, баннер не
+// показываем. Сохранённый выбор в localStorage переигрывает default при
+// каждом визите, баннер повторно не показывается.
 import { useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'mdb_consent';
-const CONSENT_LOCALES = ['de', 'fr', 'es', 'it'];
 
 function applyConsent(choice) {
   if (typeof window.gtag !== 'function') return;
@@ -20,7 +21,7 @@ function applyConsent(choice) {
   });
 }
 
-export default function CookieBanner({ locale, dict }) {
+export default function CookieBanner({ dict }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -35,8 +36,13 @@ export default function CookieBanner({ locale, dict }) {
       applyConsent(stored);
       return;
     }
-    if (CONSENT_LOCALES.includes(locale)) setVisible(true);
-  }, [locale]);
+    let cancelled = false;
+    fetch('/api/geo-consent')
+      .then((res) => (res.ok ? res.json() : { requiresConsent: false }))
+      .then(({ requiresConsent }) => { if (!cancelled && requiresConsent) setVisible(true); })
+      .catch(() => {}); // fail-closed — сеть недоступна, баннер не показываем
+    return () => { cancelled = true; };
+  }, []);
 
   function choose(choice) {
     applyConsent(choice);

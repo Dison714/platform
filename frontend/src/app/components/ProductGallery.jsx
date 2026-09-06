@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 import Counter from 'yet-another-react-lightbox/plugins/counter';
+import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/counter.css';
 import { resolvePhotoUrl } from '../../lib/photos.js';
@@ -11,6 +12,11 @@ import { resolvePhotoUrl } from '../../lib/photos.js';
 // тач, стрелки/Esc на десктопе, клик вне — всё из коробки yet-another-react-lightbox).
 // Видео (Блок 3) сюда не входит осознанно — у него свой fullscreen в нативных
 // контролах, отдельная лента.
+//
+// Zoom-плагин (Webvisor, 2026-09-01, задача 6 — фото нельзя приблизить):
+// pinch-to-zoom на тач и колесо/даблклик на десктопе, официальный плагин
+// библиотеки — уживается со свайпом между слайдами "из коробки" (свайп
+// работает, пока не начат zoom-жест), поэтому доп. логика не нужна.
 export default function ProductGallery({ hero, gallery, productName, showPlaceholder, placeholderText }) {
   const [index, setIndex] = useState(-1); // -1 = закрыт
 
@@ -56,8 +62,9 @@ export default function ProductGallery({ hero, gallery, productName, showPlaceho
         close={() => setIndex(-1)}
         index={index}
         slides={slides}
-        plugins={[Counter]}
+        plugins={[Counter, Zoom]}
         controller={{ closeOnBackdropClick: true }}
+        zoom={{ maxZoomPixelRatio: 4, doubleTapDelay: 300, doubleClickDelay: 300, pinchZoomDistanceFactor: 100, scrollToZoom: true }}
       />
     </>
   );
