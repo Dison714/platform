@@ -24,6 +24,31 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
+/* ko/zh-Hans: системный CJK-шрифт, НАМЕРЕННО, не next/font-заглушка.
+   Диагностировано 2026-09-07 (ранее у ko стоял Noto_Sans_KR с
+   subsets:['latin'] — молчаливо ничего не чинил, см. layout.js): у
+   Google Fonts CSS API реальные глифы хангыля/иероглифов в "региональных"
+   Noto Sans-семействах (KR/JP/SC/TC) идут как ~240 @font-face блоков БЕЗ
+   именованного CSS-комментария вида «subsetname» перед блоком (в отличие
+   от arabic/devanagari — там один аккуратно помеченный блок). next/font/google
+   резолвит subsets ТОЛЬКО по этим комментариям — соответственно у него
+   физически нет способа адресовать сами иероглифы для этих семейств,
+   независимо от того, что написано в subsets: ['korean'] (билд упадёт,
+   невалидное значение) или ['latin'] (билд пройдёт, но глифов иероглифов
+   в файле нет — весь CJK-текст молча падает на system-ui). Раз
+   самостоятельный хостинг реальных глифов недоступен в принципе — честный
+   путь, а не обход: явный стек нативных CJK-шрифтов ОС (все основные ОС
+   несут качественный CJK-шрифт из коробки; сами крупные сайты, включая
+   азиатские версии Google/Apple, обычно НЕ грузят веб-шрифт на CJK body
+   text по той же причине — вес/трафик). var(--font-poppins) первым — латиница/
+   цифры ("Rp 5,500,000") остаются на бренд-шрифте, иероглифы Poppins не
+   покрывает и провалятся дальше по стеку сами. */
+html[lang="ko"] body {
+  font-family: var(--font-poppins), "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+}
+html[lang="zh-Hans"] body {
+  font-family: var(--font-poppins), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+}
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 
@@ -36,16 +61,21 @@ img { max-width: 100%; display: block; }
 
 /* ---------- Header ---------- */
 .hdr { position: sticky; top: 0; z-index: 50; background: var(--navy); color: #fff; }
-.hdr-in { display: flex; align-items: center; justify-content: space-between; height: 58px; }
+/* gap здесь обязателен (не полагаться на justify-content:space-between одной):
+   space-between распределяет только ИЗБЫТОК места, а при длинных переводах
+   (ES/DE/FR/IT — лейблы nav длиннее EN/RU) избытка не остаётся, и соседние
+   flex-дети (tagline/nav/hdr-right) визуально слипаются встык, напр.
+   "en BaliInicio", "ContactoEN" — баг вёрстки, не текста. gap гарантирует
+   минимальный отступ независимо от того, есть ли ещё свободное место. */
+.hdr-in { display: flex; align-items: center; justify-content: space-between; height: 58px; gap: 20px; }
 .logo { font-size: 26px; color: #fff; }
 .logo b { color: var(--red); font-weight: inherit; }
 .hdr-tagline { font-size: 12px; color: rgba(255,255,255,0.72); margin-inline-start: 14px; white-space: nowrap; }
 @media (max-width: 900px) { .hdr-tagline { display: none; } }
 .nav-desktop { display: none; gap: 22px; align-items: center; }
-.nav-desktop a { font-size: 15px; opacity: 0.92; }
+.nav-desktop a { font-size: 15px; opacity: 0.92; white-space: nowrap; }
 .nav-desktop a:hover { opacity: 1; }
 .hdr-right { display: flex; align-items: center; gap: 14px; }
-.lang { font-size: 13px; border: 1px solid rgba(255,255,255,0.5); border-radius: 6px; padding: 2px 8px; }
 .burger { background: none; border: 0; color: #fff; font-size: 26px; line-height: 1; cursor: pointer; padding: 4px; }
 /* position:fixed (не в потоке .hdr) — намеренно (Webvisor, 2026-09-01,
    "плавающая шапка"). Раньше .nav-mobile был обычным блочным потомком
@@ -59,8 +89,11 @@ img { max-width: 100%; display: block; }
 .nav-mobile.open { display: flex; }
 .nav-mobile a { padding: 11px 16px; font-size: 16px; border-top: 1px solid rgba(255,255,255,0.08); }
 
-/* Мобильный ряд (<860px): CTA + компактный LanguageDropdown вместо полного .lang.
-   На десктопе (>=860px) — наоборот, полный .lang виден, а CTA/дропдаун скрыты. */
+/* Мобильный ряд (<860px): CTA + компактный LanguageDropdown. CTA скрывается
+   на десктопе (>=860px, см. media ниже) — там уже есть nav-desktop + hdr-cta
+   в общем nav. LanguageDropdown (.lang-compact) — универсальный, на всех
+   ширинах (см. Задача 2, 2026-09-07: раньше на десктопе был отдельный плоский
+   список .lang, убран — рос с числом языков и упирался в nav-desktop). */
 .hdr-cta {
   display: inline-flex; align-items: center;
   background: var(--red); color: #fff; font-weight: 600; font-size: 13px;
@@ -70,9 +103,10 @@ img { max-width: 100%; display: block; }
 
 .lang-compact { position: relative; }
 .lang-trigger {
-  display: inline-flex; align-items: center; gap: 5px;
+  display: inline-flex; align-items: center; gap: 5px; justify-content: center;
   background: transparent; border: 1px solid rgba(255,255,255,0.5); border-radius: 6px;
   color: #fff; font-size: 13px; padding: 5px 8px; cursor: pointer;
+  min-width: 58px;
 }
 .lang-globe { flex-shrink: 0; }
 .lang-chevron { transition: transform 0.15s ease; }
@@ -91,7 +125,6 @@ img { max-width: 100%; display: block; }
   .burger { display: none; }
   .nav-mobile { display: none !important; }
   .hdr-cta { display: none; }
-  .lang-compact { display: none; }
 }
 
 /* ---------- Floating contact button ---------- */
@@ -577,13 +610,8 @@ img { max-width: 100%; display: block; }
 .faq-a { padding: 0 16px 16px; color: var(--ink); }
 
 /* ---------- Language switcher ---------- */
-.lang { display: inline-flex; align-items: center; gap: 6px; border: 0; padding: 0; }
+/* .lang-on/.lang-off — классы пунктов внутри .lang-menu (LanguageDropdown.jsx),
+   универсального переключателя на всех ширинах (см. Задача 2, 2026-09-07). */
 .lang-on { color: #fff; font-weight: 500; }
 .lang-off { color: #aab1d6; }
 .lang-off:hover { color: #fff; }
-.lang-sep { color: rgba(255,255,255,0.4); margin: 0 4px; }
-/* Полный список кодов языков (.lang) — только на десктопе (>=860px, см. секцию
-   Header): на мобильном его место занимают .hdr-cta + компактный .lang-compact.
-   Правило намеренно стоит здесь, ПОСЛЕ базового ".lang { display: inline-flex }"
-   выше — при равной специфичности выигрывает более позднее по каскаду. */
-@media (max-width: 859px) { .lang { display: none; } }

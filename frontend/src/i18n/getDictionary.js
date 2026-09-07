@@ -13,6 +13,8 @@ const dictionaries = {
   ja: () => import('./dictionaries/ja.json').then((m) => m.default),
   ar: () => import('./dictionaries/ar.json').then((m) => m.default),
   ko: () => import('./dictionaries/ko.json').then((m) => m.default),
+  hi: () => import('./dictionaries/hi.json').then((m) => m.default),
+  'zh-Hans': () => import('./dictionaries/zh-Hans.json').then((m) => m.default),
 };
 
 export async function getDictionary(locale) {

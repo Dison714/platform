@@ -1,0 +1,305 @@
+{
+  "brand": {
+    "name": "Bike Bali Rent",
+    "tagline": "巴厘岛摩托车租赁与定制摩托",
+    "seo_title": "巴厘岛摩托车、踏板车租赁 | 定制摩托车"
+  },
+  "contact": {
+    "prefill_message": "你好！🛵 我想租一辆摩托车。",
+    "floating_invite": "有问题吗？给我们发消息吧"
+  },
+  "nav": {
+    "home": "首页",
+    "bikes": "摩托车",
+    "blog": "博客",
+    "about": "关于我们",
+    "faq": "常见问题",
+    "contact": "联系我们"
+  },
+  "catalog": {
+    "title": "我们的摩托车",
+    "subtitle": "{count} 款车型 — 从踏板车到跑车应有尽有",
+    "all": "全部",
+    "group_scooter": "踏板车",
+    "group_motorcycle": "摩托车",
+    "from_month": "月租起价",
+    "details": "查看详情",
+    "empty": "该分类暂无摩托车。",
+    "per_month_note": "按30天计费"
+  },
+  "product": {
+    "specs_title": "技术参数",
+    "specs_soon": "技术参数即将上线。",
+    "description_title": "关于这款摩托车",
+    "more_details_title": "了解更多这款摩托车的信息",
+    "gallery_soon": "照片即将上线"
+  },
+  "badge": {
+    "rare_colour": "稀有颜色",
+    "print": "印花："
+  },
+  "placeholder": {
+    "photo_soon": "照片即将上线"
+  },
+  "spec": {
+    "engine_cc": {
+      "label": "排量",
+      "unit": "cc"
+    },
+    "power": {
+      "label": "功率",
+      "unit": "hp"
+    },
+    "top_speed": {
+      "label": "最高时速",
+      "unit": "km/h"
+    },
+    "fuel_consumption": {
+      "label": "油耗",
+      "unit": "L/100km"
+    },
+    "fuel_tank": {
+      "label": "油箱容量",
+      "unit": "L"
+    },
+    "transmission": {
+      "label": "变速箱",
+      "unit": "",
+      "cvt": "自动 (CVT)",
+      "manual": "手动",
+      "automatic": "自动"
+    },
+    "seat_height": {
+      "label": "座高",
+      "unit": "mm"
+    },
+    "seats": {
+      "label": "座位数",
+      "unit": ""
+    },
+    "curb_weight": {
+      "label": "整备质量",
+      "unit": "kg"
+    }
+  },
+  "calc": {
+    "title": "租金计算器",
+    "period": "租赁期限",
+    "start": "取车日期",
+    "end": "还车日期",
+    "days_one": "{n} 天",
+    "days_other": "{n} 天",
+    "days_invalid": "还车日期必须晚于取车日期。",
+    "location": "送车地点（可选）",
+    "location_ph": "粘贴 Google 地图链接",
+    "location_hint": "此信息仅供司机参考，不影响价格。",
+    "delivery_time": "送车时间（可选）",
+    "delivery_time_ph": "选择时间",
+    "delivery_time_hint": "送车时间为 09:00–22:00。如需其他时间，请联系客服经理。此项不影响价格。",
+    "insurance": "保险（可选）",
+    "theft": "盗抢险",
+    "damage": "损坏险",
+    "coverage": "保障范围",
+    "driver_age": "年龄",
+    "has_license": "我持有摩托车驾照",
+    "experienced": "有经验的骑手（1年以上）",
+    "helmets": "头盔",
+    "helmets_note": "已免费包含 2 顶头盔——可在下方升级。",
+    "helmet_slot": "头盔 {n}",
+    "extras": "附加选项",
+    "equipment": "添加装备",
+    "qty": "数量",
+    "summary": "预估费用",
+    "base": "租车费",
+    "delivery": "送车费",
+    "insurance_theft": "盗抢险",
+    "insurance_damage": "损坏险",
+    "free": "免费",
+    "total": "总计",
+    "deposit": "可退押金",
+    "deposit_note": "租赁期间收取，还车后退还——不计入总价。",
+    "months_note": "{n} 个月",
+    "calculating": "计算中…",
+    "error": "无法计算费用，请重试。",
+    "book": "预订这款摩托车",
+    "updating": "更新中…",
+    "retry": "重试"
+  },
+  "booking": {
+    "title": "预订这款摩托车",
+    "summary_line": "{name} · {days} 天 · 总计 {total}",
+    "name": "您的姓名",
+    "name_ph": "我们该如何称呼您",
+    "contact_hint": "请至少留下一种联系方式——客服经理会通过该方式与您联系。",
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram 用户名",
+    "payment_method": "首选付款方式",
+    "payment_cash": "现金",
+    "payment_bank_transfer": "银行转账",
+    "payment_other": "其他",
+    "comment": "备注",
+    "comment_hint": "如需告知司机或客服经理其他事项，请在此填写",
+    "contact_required": "请至少留下 WhatsApp 或 Telegram 中的一种联系方式。",
+    "name_required": "请填写您的姓名。",
+    "submit": "发送请求",
+    "sending": "发送中…",
+    "error": "请求发送失败，请重试。",
+    "cancel": "返回计算器",
+    "success_title": "请求已收到",
+    "success_cta": "在 {messenger} 上确认您的预订",
+    "success_prefill": "你好！🛵 我想确认我的预订 {ref}{details}。",
+    "success_ref": "请求编号：{ref}"
+  },
+  "home": {
+    "hero_title": "轻松租赁巴厘岛摩托车",
+    "hero_sub": "送车上门，提供头盔及配件，可选盗抢及损坏保障。几分钟即可在线预订。",
+    "hero_cta": "浏览摩托车",
+    "available_now": "现车可租",
+    "trust": [
+      {
+        "icon": "🚚",
+        "text": "送车上门"
+      },
+      {
+        "icon": "🛡️",
+        "text": "可选盗抢及损坏保险"
+      },
+      {
+        "icon": "💰",
+        "text": "押金可退"
+      },
+      {
+        "icon": "💬",
+        "text": "WhatsApp 客服支持，08:00–19:00"
+      }
+    ],
+    "steps_title": "租车流程",
+    "steps": [
+      {
+        "title": "选择您的摩托车",
+        "text": "浏览车型库，挑选心仪的车型。"
+      },
+      {
+        "title": "在线预订",
+        "text": "选择日期和附加选项，然后发送请求——无需预付款。"
+      },
+      {
+        "title": "送车上门",
+        "text": "我们会将准备好的摩托车送到您指定的地址。"
+      },
+      {
+        "title": "开始骑行",
+        "text": "按您自己的节奏探索巴厘岛。"
+      }
+    ],
+    "popular_title": "热门车型",
+    "popular_sub": "一览我们的车型阵容",
+    "reviews_title": "客户评价",
+    "reviews_sub": "真实旅程，真实车况",
+    "reviews_labels": {
+      "show_original": "查看原文",
+      "close": "关闭",
+      "screenshot_alt": "客户发来的真实 WhatsApp 消息截图",
+      "original_note": "这是原始 WhatsApp 消息。以上评价为其英文原文的翻译。",
+      "original_note_same": "这是原始 WhatsApp 消息。",
+      "show_all": "查看全部 {n} 条评价",
+      "show_less": "收起评价"
+    },
+    "why_title": "为什么选择我们",
+    "why": [
+      {
+        "title": "送车上门",
+        "text": "我们会将摩托车送到您指定的地点。租期越长越划算——详见常见问题。"
+      },
+      {
+        "title": "配件齐全",
+        "text": "租车已含头盔及安装类配件。"
+      },
+      {
+        "title": "可选保险",
+        "text": "结算时可添加盗抢险或损坏险——完全自愿。"
+      }
+    ],
+    "categories_title": "找到适合您的摩托车",
+    "categories_sub": "按车型分类浏览",
+    "faq_title": "常见问题",
+    "faq_all": "查看全部问题",
+    "cta_title": "准备好开始骑行了吗？",
+    "cta_sub": "选择您的摩托车，立即查看费用。",
+    "cta_btn": "浏览摩托车"
+  },
+  "about": {
+    "title": "关于 Bike Bali Rent",
+    "p1": "Bike Bali Rent 是巴厘岛的摩托车租赁服务。我们为游客和长住者提供保养良好的踏板车和摩托车，配合送车上门和便捷的在线预订，让您轻松畅游全岛。",
+    "p2": "我们让租车流程保持简单：明码标价、提供头盔及配件、可选盗抢及损坏保障。无需在线预付款——取车时付款即可。",
+    "offer_title": "我们提供",
+    "offer": [
+      "从 160cc 踏板车到跑车、旅行车型的多样车型",
+      "送车至您指定的地点",
+      "头盔及安装类配件",
+      "可选盗抢及损坏保障",
+      "租期灵活，从一天到一个月以上均可"
+    ],
+    "contact_title": "联系我们"
+  },
+  "faq": {
+    "title": "常见问题",
+    "intro": "预订前您需要了解的一切，都在这里。还有其他问题？请通过 WhatsApp 或 Telegram 联系我们。",
+    "items": [
+      {
+        "q": "你们提供送车服务吗？",
+        "a": "是的——我们的送车范围覆盖巴厘岛全岛，包括金巴兰(Canggu)、水明漾(Seminyak)、库塔(Kuta)、雷吉安(Legian)、登巴萨(Denpasar)、沙努尔(Sanur)、乌布(Ubud)、乌鲁瓦图(Uluwatu)、金巴兰(Jimbaran)、努沙杜瓦(Nusa Dua)、塔巴南(Tabanan)、克罗博坎(Kerobokan)、乌马拉斯(Umalas)及周边地区。其他区域可提出申请协商。送车费用取决于租期长短，租期越长费用越低——具体费用请在结算页面查看。预订时请分享 Google 地图链接，以便司机准确找到您的位置。"
+      },
+      {
+        "q": "需要押金吗？",
+        "a": "是的——租赁期间会收取可退押金，摩托车完好归还后即可退还。金额因车型而异，具体请在结算页面查看。"
+      },
+      {
+        "q": "我可以购买保险吗？",
+        "a": "可以，这是可选项。结算时您可以添加盗抢险和/或损坏险。价格取决于所选保障范围及骑手信息（年龄、骑行经验），具体费用请在结算页面查看。"
+      },
+      {
+        "q": "我可以延长租期吗？",
+        "a": "可以——只需在当前租期结束前给我们发消息即可。延长部分的费用在当前租期结束时支付。"
+      },
+      {
+        "q": "有最短或最长租期限制吗？",
+        "a": "没有最短或最长限制——从一天到您需要的任意时长，均可租赁。"
+      },
+      {
+        "q": "租车需要准备什么？",
+        "a": "只需一张护照照片——不需要其他任何材料。"
+      },
+      {
+        "q": "如何付款？可以在线支付吗？",
+        "a": "我们不支持在线支付。请在收到或提取摩托车时付款。在线预订仅用于预留车辆并将您的请求发送给我们的团队。"
+      },
+      {
+        "q": "租车包含哪些内容？",
+        "a": "每辆摩托车均免费配备 2 顶头盔。每顶头盔均可升级为 KYT 全盔，或更换为全新的 KYT 半盔或全盔（费用从 Rp 150,000 起，全新全盔从 Rp 200,000 起）。后座乘客可加装后置尾箱，费用为 Rp 200,000。请在结算页面选择您所需的选项。"
+      },
+      {
+        "q": "如何预订？",
+        "a": "选择您的摩托车，挑选日期和附加选项以查看费用，然后发送预订请求。我们的客服经理会通过 WhatsApp 或 Telegram 与您确认详情。"
+      }
+    ]
+  },
+  "blog": {
+    "pillar_badge": "从这里开始",
+    "pillar_inside_one": "概览 · {n} 篇相关文章",
+    "pillar_inside_other": "概览 · {n} 篇相关文章"
+  },
+  "footer": {
+    "get_in_touch": "联系我们",
+    "hours": "营业时间 08:00–19:00",
+    "hours_note": "提前预约可全天候提供服务",
+    "address": "Gg. 1 Kerobokan Kelod, Kuta Utara, Badung, Bali",
+    "rights": "版权所有。",
+    "terms": "租赁条款"
+  },
+  "cookie_banner": {
+    "message": "我们使用 Cookie 进行分析和广告投放。您可以接受或拒绝非必要 Cookie。",
+    "accept": "接受",
+    "decline": "拒绝非必要项"
+  }
+}

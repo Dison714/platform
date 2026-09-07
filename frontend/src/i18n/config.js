@@ -1,6 +1,12 @@
 // i18n заложен на 8 языков Phase 1 (ar добавлен 23.07.2026, RTL) + ko Phase 2
-// (добавлен 2026-09-07). Добавить язык = перенести код в `enabled` + создать
-// словарь dictionaries/<code>.json — без переделки роутинга/структуры.
+// (добавлен 2026-09-07) + hi/zh-Hans (добавлены 2026-09-07). Добавить язык =
+// перенести код в `enabled` + создать словарь dictionaries/<code>.json — без
+// переделки роутинга/структуры.
+// code для китайского — 'zh-Hans' (BCP-47, скрипт-based: Simplified), а НЕ
+// 'zh-CN' (регион-based) — сверено с languages.code в БД, где строка уже
+// была заранее заведена именно так (вместе с ещё не запущенным zh-Hant для
+// Traditional) до этой сессии. hreflang="zh-Hans" валиден и рекомендован
+// Google для контента, различающегося по письменности, а не по региону.
 export const LOCALES = [
   { code: 'en', label: 'English', enabled: true },
   { code: 'ru', label: 'Русский', enabled: true },
@@ -11,6 +17,8 @@ export const LOCALES = [
   { code: 'ja', label: '日本語', enabled: true },
   { code: 'ar', label: 'العربية', enabled: true },
   { code: 'ko', label: '한국어', enabled: true },
+  { code: 'hi', label: 'हिन्दी', enabled: true },
+  { code: 'zh-Hans', label: '简体中文', enabled: true },
 ];
 
 export const DEFAULT_LOCALE = 'en';

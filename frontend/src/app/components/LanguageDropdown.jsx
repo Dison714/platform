@@ -39,7 +39,9 @@ export default function LanguageDropdown({ locale, langs, hrefFor }) {
           <ellipse cx="8" cy="8" rx="3" ry="7" fill="none" stroke="currentColor" strokeWidth="1.3" />
           <ellipse cx="8" cy="8" rx="3" ry="7" fill="none" stroke="currentColor" strokeWidth="1.3" transform="rotate(60 8 8)" />
         </svg>
-        <span>{current.code.toUpperCase()}</span>
+        {/* Primary subtag, не полный код — для zh-Hans в триггере "ZH", а не
+            "ZH-HANS" (полный код виден в развёрнутом списке через label). */}
+        <span>{current.code.split('-')[0].toUpperCase()}</span>
         <svg className={`lang-chevron${open ? ' up' : ''}`} width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
           <path d="M1.5 3.5 5 7l3.5-3.5" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
         </svg>

@@ -1,7 +1,7 @@
 import '../globals.css';
 import { Suspense } from 'react';
 import Script from 'next/script';
-import { Teko, Poppins, Noto_Sans_Arabic, Oswald, Golos_Text, Noto_Sans_KR } from 'next/font/google';
+import { Teko, Poppins, Noto_Sans_Arabic, Oswald, Golos_Text, Noto_Sans_Devanagari } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { isEnabledLocale, enabledLocales } from '../../i18n/config.js';
 import { getDictionary } from '../../i18n/getDictionary.js';
@@ -55,12 +55,15 @@ const oswaldRu = Oswald({ subsets: ['latin', 'cyrillic'], weight: ['500', '600']
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
 const notoArabic = Noto_Sans_Arabic({ subsets: ['arabic'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
 const golosRu = Golos_Text({ subsets: ['latin', 'cyrillic'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
-// ko (2026-09-07): Poppins не покрывает хангыль (cmap не содержит
-// U+AC00-D7A3) — тот же класс проблемы, что у ru/ar, тот же паттерн подмены
-// (--font-poppins на Noto Sans KR). --font-teko (заголовки) сознательно НЕ
-// подменяли, как и для ar в своё время — вне рамок задачи, тот же
-// компромисс: хангыль в заголовках упадёт на системный шрифт браузера.
-const notoKr = Noto_Sans_KR({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
+// hi (2026-09-07): Poppins не покрывает деванагари (cmap не содержит
+// U+0900-097F) — тот же класс проблемы, что у ru/ar, тот же паттерн подмены
+// (--font-poppins на Noto Sans Devanagari). В отличие от ko/zh-Hans ниже,
+// здесь подмена РЕАЛЬНО работает: Google Fonts отдаёт деванагари как один
+// именованный `/* devanagari */`-блок (проверено прямым запросом CSS API
+// с Chrome UA) — next/font/google может его самостоятельно захостить через
+// subsets:['devanagari'], как и arabic для ar. --font-teko (заголовки)
+// сознательно НЕ подменяли, тот же компромисс, что и для ar/ko.
+const notoDevanagari = Noto_Sans_Devanagari({ subsets: ['devanagari'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
 
 export function generateStaticParams() {
   return enabledLocales().map((locale) => ({ locale }));
@@ -92,8 +95,15 @@ export default async function LocaleLayout({ children, params }) {
   const dict = await getDictionary(locale);
   const isRtl = locale === 'ar';
   const isRu = locale === 'ru';
-  const isKo = locale === 'ko';
-  const bodyFont = isRtl ? notoArabic : isRu ? golosRu : isKo ? notoKr : poppins;
+  const isHi = locale === 'hi';
+  // ko/zh-Hans НЕ подставляют next/font-объект здесь — см. комментарий у
+  // .cjk-system-font в globals.css: next/font/google структурно не может
+  // захостить сами глифы хангыля/иероглифов для этих Noto-семейств (ранее
+  // ko тихо "работал" на подмене subsets:['latin'], которая на деле не
+  // содержит ни одного глифа хангыля — баг обнаружен и исправлен 2026-09-07,
+  // см. PROJECT_STATUS.md). poppins здесь покрывает латиницу/цифры в тексте
+  // ("Rp 5,500,000" и т.п.), сами иероглифы идут через системный шрифт.
+  const bodyFont = isRtl ? notoArabic : isRu ? golosRu : isHi ? notoDevanagari : poppins;
   const displayFont = isRu ? oswaldRu : teko;
 
   return (

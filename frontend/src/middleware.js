@@ -56,11 +56,24 @@ function parseAcceptLanguage(header) {
 // домена. matched===null → покажем DEFAULT_LOCALE как раньше; browserPrimary
 // возвращается отдельно, чтобы залогировать сам факт "к нам приходил язык,
 // которого нет" даже когда redirect уходит на дефолт.
+// С добавлением zh-Hans (2026-09-07, hi/zh-Hans) код локали сам может быть
+// составным (регион/скрипт-based тег) — раньше все коды были ровно 2-буквенным
+// primary subtag'ом, и `enabled.includes(primary)` работал. Браузеры почти
+// всегда шлют "zh-CN"/"zh" (регион-based), никогда "zh-Hans" — без явного
+// сопоставления по префиксу primary subtag'а ("zh" → код, начинающийся с
+// "zh-") китайские пользователи никогда бы не попадали на /zh-Hans автодетектом,
+// падая на DEFAULT_LOCALE. Сначала точное совпадение полного тега (на случай,
+// если браузер когда-нибудь пришлёт ровно "zh-hans"), затем — primary subtag
+// как есть (двухбуквенные коды, как раньше) или как префикс составного кода.
 function detectLocale(header, enabled) {
   const parsed = parseAcceptLanguage(header);
+  const enabledLower = enabled.map((l) => l.toLowerCase());
   for (const { tag } of parsed) {
     const primary = tag.split('-')[0];
-    if (enabled.includes(primary)) return { matched: primary, browserPrimary: primary };
+    const exactIdx = enabledLower.indexOf(tag);
+    if (exactIdx !== -1) return { matched: enabled[exactIdx], browserPrimary: primary };
+    const byPrimaryIdx = enabledLower.findIndex((l) => l === primary || l.startsWith(`${primary}-`));
+    if (byPrimaryIdx !== -1) return { matched: enabled[byPrimaryIdx], browserPrimary: primary };
   }
   return { matched: null, browserPrimary: parsed[0]?.tag.split('-')[0] ?? null };
 }

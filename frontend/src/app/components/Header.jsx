@@ -10,7 +10,9 @@ import LanguageDropdown from './LanguageDropdown.jsx';
 // в пути (как для остального сайта) там даёт 404/краш (Задача 7). На странице
 // статьи резолвим slug для целевого языка через article_id (бэкенд:
 // /api/blog/posts/:slug/translations).
-const BLOG_ARTICLE_RE = /^\/[a-z]{2}\/blog\/([^/]+)$/;
+// [a-zA-Z-]+ (не жёстко [a-z]{2}) — с zh-Hans локаль перестала быть ровно
+// двумя строчными буквами (2026-09-07, hi/zh-Hans).
+const BLOG_ARTICLE_RE = /^\/[a-zA-Z-]+\/blog\/([^/]+)$/;
 
 // Шапка: логотип + меню + переключатель языка. На телефоне меню — гамбургер.
 export default function Header({ locale, dict }) {
@@ -75,23 +77,11 @@ export default function Header({ locale, dict }) {
         </nav>
 
         <div className="hdr-right">
-          {/* Полный список кодов языков — только на десктопе (>=860px, см. globals.css),
-              там же где и nav-desktop. На мобильном его место занимают hdr-cta + компактный
-              LanguageDropdown ниже. */}
-          <span className="lang" role="group" aria-label="Language">
-            {langs.map((l, i) => (
-              <span key={l.code}>
-                {i > 0 && <span className="lang-sep">·</span>}
-                <Link
-                  href={switchLocaleHref(l.code)}
-                  className={l.code === locale ? 'lang-on' : 'lang-off'}
-                  aria-current={l.code === locale ? 'true' : undefined}
-                >
-                  {l.code.toUpperCase()}
-                </Link>
-              </span>
-            ))}
-          </span>
+          {/* Языковой переключатель — единый компактный дропдаун на всех ширинах
+              (см. globals.css): фиксированная ширина (текущий код + шеврон), не
+              растёт с числом языков — раньше на десктопе был плоский список
+              EN·RU·DE·... (см. git-историю), упирался в nav-desktop при длинных
+              лейблах (ES/DE/FR/IT) и рос с каждым новым языком. */}
           <Link href={`${base}/bikes`} className="hdr-cta">{dict.home.cta_btn}</Link>
           <LanguageDropdown locale={locale} langs={langs} hrefFor={switchLocaleHref} />
           <button

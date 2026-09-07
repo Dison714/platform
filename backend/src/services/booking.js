@@ -9,7 +9,7 @@ const CONTACT_FIELDS = ['phone', 'whatsapp', 'telegram_username', 'telegram_id',
 // был ['en', 'ru'], что обрезало любой другой locale до 'en' здесь же, ещё до
 // notifyDict() (см. notifyDict.js) — то есть переведённый notifyDict для
 // de/fr/es/it/ja/ar/ko не помог бы сам по себе, реальный fallback был тут.
-const SUPPORTED_LOCALES = ['en', 'ru', 'de', 'fr', 'es', 'it', 'ja', 'ar', 'ko'];
+const SUPPORTED_LOCALES = ['en', 'ru', 'de', 'fr', 'es', 'it', 'ja', 'ar', 'ko', 'hi', 'zh-Hans'];
 const PAYMENT_METHODS = new Set(['cash', 'bank_transfer', 'other']);
 
 function badReq(message) {
