@@ -14,7 +14,7 @@ function arg(name, fallback) {
 }
 const FALLBACK = arg('fallback', 'en');
 const FORMAT = arg('format', 'table');
-const SITE_LOCALES = ['en', 'ru', 'de', 'fr', 'es', 'it', 'ja', 'ar'];
+const SITE_LOCALES = ['en', 'ru', 'de', 'fr', 'es', 'it', 'ja', 'ar', 'ko'];
 const languages = SITE_LOCALES.filter((c) => c !== FALLBACK);
 
 const { rows: families } = await pool.query(`

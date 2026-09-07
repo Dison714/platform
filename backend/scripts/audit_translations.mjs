@@ -25,9 +25,10 @@ const FORMAT = arg('format', 'table'); // table | csv
 
 // Только реально включённые на сайте локали (frontend/src/i18n/config.js
 // LOCALES enabled:true) — languages в БД уже содержит Phase 2/3 заготовки
-// (nl, pt, pl, cs, sk, ko, zh-Hans, zh-Hant), для них пустые переводы не
-// баг, эти языки ещё не запущены (ТЗ §5). Список обновлять synced с i18n/config.js.
-const SITE_LOCALES = ['en', 'ru', 'de', 'fr', 'es', 'it', 'ja', 'ar'];
+// (nl, pt, pl, cs, sk, zh-Hans, zh-Hant), для них пустые переводы не
+// баг, эти языки ещё не запущены (ТЗ §5). ko запущен 2026-09-07. Список
+// обновлять synced с i18n/config.js.
+const SITE_LOCALES = ['en', 'ru', 'de', 'fr', 'es', 'it', 'ja', 'ar', 'ko'];
 const languages = SITE_LOCALES.filter((c) => c !== FALLBACK);
 
 const { rows: products } = await pool.query(`

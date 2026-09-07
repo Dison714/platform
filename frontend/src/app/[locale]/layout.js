@@ -1,7 +1,7 @@
 import '../globals.css';
 import { Suspense } from 'react';
 import Script from 'next/script';
-import { Teko, Poppins, Noto_Sans_Arabic, Oswald, Golos_Text } from 'next/font/google';
+import { Teko, Poppins, Noto_Sans_Arabic, Oswald, Golos_Text, Noto_Sans_KR } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { isEnabledLocale, enabledLocales } from '../../i18n/config.js';
 import { getDictionary } from '../../i18n/getDictionary.js';
@@ -55,6 +55,12 @@ const oswaldRu = Oswald({ subsets: ['latin', 'cyrillic'], weight: ['500', '600']
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
 const notoArabic = Noto_Sans_Arabic({ subsets: ['arabic'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
 const golosRu = Golos_Text({ subsets: ['latin', 'cyrillic'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
+// ko (2026-09-07): Poppins не покрывает хангыль (cmap не содержит
+// U+AC00-D7A3) — тот же класс проблемы, что у ru/ar, тот же паттерн подмены
+// (--font-poppins на Noto Sans KR). --font-teko (заголовки) сознательно НЕ
+// подменяли, как и для ar в своё время — вне рамок задачи, тот же
+// компромисс: хангыль в заголовках упадёт на системный шрифт браузера.
+const notoKr = Noto_Sans_KR({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
 
 export function generateStaticParams() {
   return enabledLocales().map((locale) => ({ locale }));
@@ -86,7 +92,8 @@ export default async function LocaleLayout({ children, params }) {
   const dict = await getDictionary(locale);
   const isRtl = locale === 'ar';
   const isRu = locale === 'ru';
-  const bodyFont = isRtl ? notoArabic : isRu ? golosRu : poppins;
+  const isKo = locale === 'ko';
+  const bodyFont = isRtl ? notoArabic : isRu ? golosRu : isKo ? notoKr : poppins;
   const displayFont = isRu ? oswaldRu : teko;
 
   return (

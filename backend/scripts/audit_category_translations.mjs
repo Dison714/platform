@@ -9,7 +9,7 @@
 import { pool } from '../src/db/pool.js';
 
 const FORMAT = process.argv.includes('--format') ? process.argv[process.argv.indexOf('--format') + 1] : 'table';
-const SITE_LOCALES = ['ru', 'de', 'fr', 'es', 'it', 'ja', 'ar']; // без en — см. комментарий выше
+const SITE_LOCALES = ['ru', 'de', 'fr', 'es', 'it', 'ja', 'ar', 'ko']; // без en — см. комментарий выше
 
 const { rows: categories } = await pool.query('SELECT id, code, name AS fallback_name FROM vehicle_categories ORDER BY sort_order');
 const { rows: allTranslations } = await pool.query(

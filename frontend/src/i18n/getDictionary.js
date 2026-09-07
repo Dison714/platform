@@ -12,6 +12,7 @@ const dictionaries = {
   it: () => import('./dictionaries/it.json').then((m) => m.default),
   ja: () => import('./dictionaries/ja.json').then((m) => m.default),
   ar: () => import('./dictionaries/ar.json').then((m) => m.default),
+  ko: () => import('./dictionaries/ko.json').then((m) => m.default),
 };
 
 export async function getDictionary(locale) {

@@ -1,0 +1,305 @@
+{
+  "brand": {
+    "name": "Bike Bali Rent",
+    "tagline": "발리 오토바이 렌탈 & 커스텀 바이크",
+    "seo_title": "발리 오토바이·스쿠터 렌탈 | 커스텀 오토바이"
+  },
+  "contact": {
+    "prefill_message": "안녕하세요! 🛵 오토바이를 대여하고 싶습니다.",
+    "floating_invite": "궁금한 점이 있으신가요? 메시지 주세요"
+  },
+  "nav": {
+    "home": "홈",
+    "bikes": "바이크",
+    "blog": "블로그",
+    "about": "소개",
+    "faq": "자주 묻는 질문",
+    "contact": "문의하기"
+  },
+  "catalog": {
+    "title": "보유 바이크",
+    "subtitle": "{count}개 모델 — 스쿠터부터 스포츠 바이크까지",
+    "all": "전체",
+    "group_scooter": "스쿠터",
+    "group_motorcycle": "오토바이",
+    "from_month": "월 렌탈 시작가",
+    "details": "자세히 보기",
+    "empty": "이 카테고리에는 아직 바이크가 없습니다.",
+    "per_month_note": "30일 기준 요금"
+  },
+  "product": {
+    "specs_title": "제원",
+    "specs_soon": "제원 정보가 곧 제공됩니다.",
+    "description_title": "이 바이크에 대해",
+    "more_details_title": "이 바이크 더 알아보기",
+    "gallery_soon": "사진이 곧 제공됩니다"
+  },
+  "badge": {
+    "rare_colour": "희귀 컬러",
+    "print": "프린트: "
+  },
+  "placeholder": {
+    "photo_soon": "사진이 곧 제공됩니다"
+  },
+  "spec": {
+    "engine_cc": {
+      "label": "배기량",
+      "unit": "cc"
+    },
+    "power": {
+      "label": "출력",
+      "unit": "hp"
+    },
+    "top_speed": {
+      "label": "최고 속도",
+      "unit": "km/h"
+    },
+    "fuel_consumption": {
+      "label": "연비",
+      "unit": "L/100km"
+    },
+    "fuel_tank": {
+      "label": "연료 탱크",
+      "unit": "L"
+    },
+    "transmission": {
+      "label": "변속기",
+      "unit": "",
+      "cvt": "자동 (CVT)",
+      "manual": "수동",
+      "automatic": "자동"
+    },
+    "seat_height": {
+      "label": "시트 높이",
+      "unit": "mm"
+    },
+    "seats": {
+      "label": "탑승 인원",
+      "unit": ""
+    },
+    "curb_weight": {
+      "label": "공차 중량",
+      "unit": "kg"
+    }
+  },
+  "calc": {
+    "title": "요금 계산기",
+    "period": "대여 기간",
+    "start": "인수일",
+    "end": "반납일",
+    "days_one": "{n}일",
+    "days_other": "{n}일",
+    "days_invalid": "반납일은 인수일 이후여야 합니다.",
+    "location": "배송 위치 (선택)",
+    "location_ph": "구글 지도 링크를 붙여넣으세요",
+    "location_hint": "기사님 안내용이며, 요금에는 영향을 주지 않습니다.",
+    "delivery_time": "배송 시간 (선택)",
+    "delivery_time_ph": "시간 선택",
+    "delivery_time_hint": "배송 가능 시간은 09:00~22:00입니다. 그 외 시간이 필요하시면 매니저에게 문의하세요. 요금에는 영향을 주지 않습니다.",
+    "insurance": "보험 (선택)",
+    "theft": "도난 보장",
+    "damage": "손상 보장",
+    "coverage": "보장 범위",
+    "driver_age": "나이",
+    "has_license": "오토바이 면허가 있습니다",
+    "experienced": "경력 라이더 (1년 이상)",
+    "helmets": "헬멧",
+    "helmets_note": "헬멧 2개가 무료로 포함되어 있습니다 — 아래에서 업그레이드할 수 있습니다.",
+    "helmet_slot": "헬멧 {n}",
+    "extras": "추가 옵션",
+    "equipment": "장비 추가",
+    "qty": "수량",
+    "summary": "예상 요금",
+    "base": "바이크 대여료",
+    "delivery": "배송비",
+    "insurance_theft": "도난 보장",
+    "insurance_damage": "손상 보장",
+    "free": "무료",
+    "total": "총 결제 금액",
+    "deposit": "환급 보증금",
+    "deposit_note": "대여 기간 동안 보관되며 반납 시 환급됩니다 — 총액에 포함되지 않습니다.",
+    "months_note": "{n}개월",
+    "calculating": "계산 중…",
+    "error": "요금을 계산할 수 없습니다. 다시 시도해 주세요.",
+    "book": "이 바이크 예약하기",
+    "updating": "업데이트 중…",
+    "retry": "다시 시도"
+  },
+  "booking": {
+    "title": "이 바이크 예약 요청",
+    "summary_line": "{name} · {days}일 · 총액 {total}",
+    "name": "성함",
+    "name_ph": "어떻게 불러드릴까요",
+    "contact_hint": "연락 가능한 방법을 최소 하나 남겨주세요 — 매니저가 그쪽으로 연락드립니다.",
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram 아이디",
+    "payment_method": "선호하는 결제 방법",
+    "payment_cash": "현금",
+    "payment_bank_transfer": "계좌 이체",
+    "payment_other": "기타",
+    "comment": "추가 메모",
+    "comment_hint": "기사님이나 매니저에게 전달할 사항이 있다면 적어주세요",
+    "contact_required": "WhatsApp 또는 Telegram 중 최소 하나의 연락처를 남겨주세요.",
+    "name_required": "성함을 입력해 주세요.",
+    "submit": "요청 보내기",
+    "sending": "전송 중…",
+    "error": "요청을 보낼 수 없습니다. 다시 시도해 주세요.",
+    "cancel": "계산기로 돌아가기",
+    "success_title": "요청이 접수되었습니다",
+    "success_cta": "{messenger}에서 예약을 확정하세요",
+    "success_prefill": "안녕하세요! 🛵 제 예약 {ref}{details}을(를) 확정하고 싶습니다.",
+    "success_ref": "요청 번호: {ref}"
+  },
+  "home": {
+    "hero_title": "발리에서 쉽고 간편하게 오토바이 대여하기",
+    "hero_sub": "문 앞 배송, 헬멧 및 액세서리 제공, 선택적 도난·손상 보장까지. 몇 분 만에 온라인으로 예약하세요.",
+    "hero_cta": "바이크 둘러보기",
+    "available_now": "지금 바로 이용 가능",
+    "trust": [
+      {
+        "icon": "🚚",
+        "text": "문 앞 배송"
+      },
+      {
+        "icon": "🛡️",
+        "text": "도난·손상 보험 이용 가능"
+      },
+      {
+        "icon": "💰",
+        "text": "환급 보증금"
+      },
+      {
+        "icon": "💬",
+        "text": "WhatsApp 상담, 08:00~19:00"
+      }
+    ],
+    "steps_title": "이용 방법",
+    "steps": [
+      {
+        "title": "바이크 선택",
+        "text": "카탈로그를 둘러보고 원하는 모델을 고르세요."
+      },
+      {
+        "title": "온라인 예약",
+        "text": "날짜와 추가 옵션을 선택하고 요청을 보내세요 — 선결제는 없습니다."
+      },
+      {
+        "title": "배송",
+        "text": "바이크가 준비된 상태로 지정하신 주소로 배송됩니다."
+      },
+      {
+        "title": "라이딩",
+        "text": "원하는 일정대로 발리를 탐험하세요."
+      }
+    ],
+    "popular_title": "인기 모델",
+    "popular_sub": "다양한 라인업을 살펴보세요",
+    "reviews_title": "고객 후기",
+    "reviews_sub": "실제 여행, 실제 바이크",
+    "reviews_labels": {
+      "show_original": "원문 보기",
+      "close": "닫기",
+      "screenshot_alt": "고객이 보내준 실제 WhatsApp 메시지 스크린샷",
+      "original_note": "원본 WhatsApp 메시지입니다. 위 후기는 영어 원문을 번역한 것입니다.",
+      "original_note_same": "원본 WhatsApp 메시지입니다.",
+      "show_all": "전체 후기 {n}개 보기",
+      "show_less": "후기 간략히 보기"
+    },
+    "why_title": "저희와 함께 라이딩해야 하는 이유",
+    "why": [
+      {
+        "title": "문 앞 배송",
+        "text": "원하는 장소로 바이크를 배송해 드립니다. 장기 대여일수록 더 유리합니다 — 자주 묻는 질문을 확인하세요."
+      },
+      {
+        "title": "장비 포함",
+        "text": "대여 시 헬멧과 장착용 액세서리를 이용하실 수 있습니다."
+      },
+      {
+        "title": "선택적 보험",
+        "text": "결제 단계에서 도난 또는 손상 보장을 추가할 수 있습니다 — 선택은 자유입니다."
+      }
+    ],
+    "categories_title": "원하는 바이크 찾기",
+    "categories_sub": "유형별로 둘러보기",
+    "faq_title": "자주 묻는 질문",
+    "faq_all": "전체 질문 보기",
+    "cta_title": "라이딩을 시작할 준비가 되셨나요?",
+    "cta_sub": "바이크를 선택하고 바로 요금을 확인해 보세요.",
+    "cta_btn": "바이크 둘러보기"
+  },
+  "about": {
+    "title": "Bike Bali Rent 소개",
+    "p1": "Bike Bali Rent는 발리의 오토바이 렌탈 서비스입니다. 잘 관리된 스쿠터와 오토바이로 섬 곳곳을 편리하게 이동하실 수 있도록, 여행자와 장기 체류자를 위해 문 앞 배송과 간편한 온라인 예약을 제공합니다.",
+    "p2": "저희는 대여 과정을 단순하게 유지합니다: 명확한 사전 가격 안내, 헬멧과 액세서리 제공, 선택적 도난·손상 보장까지. 온라인 선결제는 없으며, 바이크를 인도받으실 때 결제하시면 됩니다.",
+    "offer_title": "제공 서비스",
+    "offer": [
+      "160cc 스쿠터부터 스포츠·투어링 모델까지 다양한 바이크",
+      "원하는 장소로 배송",
+      "헬멧 및 장착용 액세서리",
+      "선택적 도난·손상 보장",
+      "하루부터 한 달 이상까지 유연한 대여 기간"
+    ],
+    "contact_title": "문의하기"
+  },
+  "faq": {
+    "title": "자주 묻는 질문",
+    "intro": "예약 전에 알아두어야 할 모든 것을 정리했습니다. 다른 질문이 있으신가요? WhatsApp 또는 Telegram으로 메시지 주세요.",
+    "items": [
+      {
+        "q": "바이크를 배송해 주시나요?",
+        "a": "네 — 창구(Canggu), 스미냑(Seminyak), 꾸따(Kuta), 레기안(Legian), 덴파사르(Denpasar), 사누르(Sanur), 우붓(Ubud), 울루와뚜(Uluwatu), 지마바란(Jimbaran), 누사두아(Nusa Dua), 따바난(Tabanan), 크로보칸(Kerobokan), 우말라스(Umalas) 및 인근 지역을 포함해 발리 전역에 배송해 드립니다. 그 외 지역은 요청 시 상담해 드립니다. 배송비는 대여 기간에 따라 달라지며, 장기 대여일수록 더 유리합니다 — 정확한 요금은 결제 단계에서 확인하실 수 있습니다. 예약 시 구글 지도 링크를 공유해 주시면 기사님이 위치를 정확히 파악할 수 있습니다."
+      },
+      {
+        "q": "보증금이 있나요?",
+        "a": "네 — 환급 가능한 보증금을 대여 기간 동안 보관하며, 바이크를 양호한 상태로 반납하시면 환급해 드립니다. 금액은 모델에 따라 다르며, 결제 단계에서 확인하실 수 있습니다."
+      },
+      {
+        "q": "보험에 가입할 수 있나요?",
+        "a": "네, 선택 사항입니다. 결제 단계에서 도난 보장 및/또는 손상 보장을 추가하실 수 있습니다. 가격은 선택하신 보장 범위와 라이더 프로필(나이, 라이딩 경력)에 따라 달라지며, 정확한 요금은 결제 단계에서 확인하실 수 있습니다."
+      },
+      {
+        "q": "대여 기간을 연장할 수 있나요?",
+        "a": "네 — 현재 대여 기간이 끝나기 전에 메시지만 주시면 됩니다. 연장 요금은 현재 기간이 끝날 때 결제하시면 됩니다."
+      },
+      {
+        "q": "최소 또는 최대 대여 기간이 있나요?",
+        "a": "최소·최대 제한이 없습니다 — 하루부터 원하시는 기간까지 자유롭게 대여하실 수 있습니다."
+      },
+      {
+        "q": "대여하려면 무엇이 필요한가요?",
+        "a": "여권 사진 한 장이면 충분합니다 — 그 외에는 필요 없습니다."
+      },
+      {
+        "q": "결제는 어떻게 하나요? 온라인 결제가 가능한가요?",
+        "a": "온라인 결제는 지원하지 않습니다. 바이크를 배송받거나 인도받을 때 결제하시면 됩니다. 온라인 예약은 바이크를 예약하고 요청을 저희 팀에 전달하는 역할만 합니다."
+      },
+      {
+        "q": "바이크에는 무엇이 포함되어 있나요?",
+        "a": "모든 바이크에는 헬멧 2개가 무료로 제공됩니다. 각 헬멧은 KYT 풀페이스 헬멧으로 업그레이드하거나, 신품 KYT 하프페이스 또는 풀페이스 헬멧으로 Rp 150,000부터(신품 풀페이스는 Rp 200,000) 교체하실 수 있습니다. 동승자를 위한 리어 탑박스는 Rp 200,000에 이용 가능합니다. 결제 단계에서 필요하신 것을 선택해 주세요."
+      },
+      {
+        "q": "예약은 어떻게 하나요?",
+        "a": "바이크를 선택하고, 날짜와 추가 옵션을 골라 요금을 확인한 뒤 요청을 보내주세요. 저희 매니저가 WhatsApp 또는 Telegram으로 세부 사항을 안내해 드립니다."
+      }
+    ]
+  },
+  "blog": {
+    "pillar_badge": "여기서 시작하세요",
+    "pillar_inside_one": "개요 · 관련 글 {n}개",
+    "pillar_inside_other": "개요 · 관련 글 {n}개"
+  },
+  "footer": {
+    "get_in_touch": "문의하기",
+    "hours": "운영 시간 08:00~19:00",
+    "hours_note": "사전 요청 시 24시간 대응",
+    "address": "Gg. 1 Kerobokan Kelod, Kuta Utara, Badung, Bali",
+    "rights": "All rights reserved.",
+    "terms": "대여 약관"
+  },
+  "cookie_banner": {
+    "message": "분석 및 광고를 위해 쿠키를 사용합니다. 필수가 아닌 쿠키는 수락하거나 거부하실 수 있습니다.",
+    "accept": "수락",
+    "decline": "필수 외 거부"
+  }
+}
