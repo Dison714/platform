@@ -68,14 +68,23 @@ img { max-width: 100%; display: block; }
    "en BaliInicio", "ContactoEN" — баг вёрстки, не текста. gap гарантирует
    минимальный отступ независимо от того, есть ли ещё свободное место. */
 .hdr-in { display: flex; align-items: center; justify-content: space-between; height: 58px; gap: 20px; }
-.logo { font-size: 26px; color: #fff; }
+/* flex-shrink:0 на всём, КРОМЕ .hdr-tagline (см. ниже) — гарантирует, что при
+   нехватке места сжимается/обрезается только необязательный таглайн, а не
+   overflow всей строки (было 2026-09-07: gap выше убрал коллизию текста, но
+   на 901-~1000px с длинным переводом таглайна — ES/DE/FR/IT — сумма ширин
+   всё равно превышала контейнер, и .hdr-in вместе со всей страницей
+   реально уезжал вбок на живом проде, а не просто визуально слипался). */
+.logo { font-size: 26px; color: #fff; flex-shrink: 0; }
 .logo b { color: var(--red); font-weight: inherit; }
-.hdr-tagline { font-size: 12px; color: rgba(255,255,255,0.72); margin-inline-start: 14px; white-space: nowrap; }
+.hdr-tagline {
+  font-size: 12px; color: rgba(255,255,255,0.72); margin-inline-start: 14px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+}
 @media (max-width: 900px) { .hdr-tagline { display: none; } }
-.nav-desktop { display: none; gap: 22px; align-items: center; }
+.nav-desktop { display: none; gap: 22px; align-items: center; flex-shrink: 0; }
 .nav-desktop a { font-size: 15px; opacity: 0.92; white-space: nowrap; }
 .nav-desktop a:hover { opacity: 1; }
-.hdr-right { display: flex; align-items: center; gap: 14px; }
+.hdr-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
 .burger { background: none; border: 0; color: #fff; font-size: 26px; line-height: 1; cursor: pointer; padding: 4px; }
 /* position:fixed (не в потоке .hdr) — намеренно (Webvisor, 2026-09-01,
    "плавающая шапка"). Раньше .nav-mobile был обычным блочным потомком
