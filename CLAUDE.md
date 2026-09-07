@@ -172,7 +172,10 @@
 | v1.5 | AI Operations Manager | AI Customer Manager стабилен |
 
 Включать модули через `feature_flags`, не комментировать/удалять код. Языки —
-по `languages.launch_phase` (Phase 1: en, ru, de, fr, es, it, ja).
+по `languages.launch_phase` (Phase 1: en, ru, de, fr, es, it, ja; ar добавлен
+23.07.2026 вне исходного плана Phase 1; ko запущен 2026-09-07, первый язык
+Phase 2). Фактически живые на сайте на сегодня — все 9: en, ru, de, fr, es,
+it, ja, ar, ko.
 
 ## 6. Технические договорённости
 
