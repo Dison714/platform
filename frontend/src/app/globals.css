@@ -563,6 +563,7 @@ img { max-width: 100%; display: block; }
 .product-long-content ul { padding-inline-start: 22px; display: grid; gap: 8px; margin: 0 0 16px; color: var(--ink); }
 .product-long-content li { line-height: 1.5; }
 .product-long-content strong { color: var(--navy); }
+.product-long-content a { color: var(--red); text-decoration: underline; }
 .contact-label { color: var(--muted); }
 .contact-value { flex: 1; font-weight: 500; color: var(--navy); text-align: end; }
 .contact-row.static .contact-value { color: var(--ink); font-weight: 400; }
