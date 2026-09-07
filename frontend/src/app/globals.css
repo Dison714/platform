@@ -84,8 +84,17 @@ img { max-width: 100%; display: block; }
 .nav-desktop { display: none; gap: 22px; align-items: center; flex-shrink: 0; }
 .nav-desktop a { font-size: 15px; opacity: 0.92; white-space: nowrap; }
 .nav-desktop a:hover { opacity: 1; }
-.hdr-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
-.burger { background: none; border: 0; color: #fff; font-size: 26px; line-height: 1; cursor: pointer; padding: 4px; }
+/* flex-shrink:1 (не 0) здесь намеренно — в отличие от .logo/.nav-desktop,
+   этот блок ДОЛЖЕН сжиматься на мобильном: иначе на длинных переводах CTA
+   (DE "Motorräder ansehen" и т.п.) сумма ширин .logo + .hdr-right превышает
+   375-430px viewport, и бургер физически уезжает за правый край экрана —
+   на реальном телефоне это не "просто некрасиво", а недоступное меню
+   (баг найден 2026-09-07, той же природы, что overflow десктоп-шапки с
+   таглайном: .hdr-cta ниже — единственный ребёнок, которому разрешено
+   реально сжиматься, .lang-compact/.burger внутри зафиксированы
+   flex-shrink:0, чтобы язык/меню не пострадали). */
+.hdr-right { display: flex; align-items: center; gap: 10px; flex-shrink: 1; min-width: 0; }
+.burger { background: none; border: 0; color: #fff; font-size: 26px; line-height: 1; cursor: pointer; padding: 4px; flex-shrink: 0; }
 /* position:fixed (не в потоке .hdr) — намеренно (Webvisor, 2026-09-01,
    "плавающая шапка"). Раньше .nav-mobile был обычным блочным потомком
    внутри .hdr{position:sticky}: раскрытие меню физически раздувало высоту
@@ -107,10 +116,16 @@ img { max-width: 100%; display: block; }
   display: inline-flex; align-items: center;
   background: var(--red); color: #fff; font-weight: 600; font-size: 13px;
   padding: 8px 12px; border-radius: 8px; white-space: nowrap;
+  /* min-width:0 переопределяет дефолтный min-width:auto флекс-айтема (который
+     иначе равен полной ширине nowrap-текста и делает flex-shrink ниже
+     бесполезным) — см. комментарий у .hdr-right выше. min-width:32px —
+     пол, чтобы кнопка не схлопывалась до невидимой полоски на самых узких
+     экранах, ellipsis — чтобы обрезанный текст не наезжал на .lang-compact. */
+  flex-shrink: 1; min-width: 32px; overflow: hidden; text-overflow: ellipsis;
 }
 .hdr-cta:hover { background: var(--red-700); }
 
-.lang-compact { position: relative; }
+.lang-compact { position: relative; flex-shrink: 0; }
 .lang-trigger {
   display: inline-flex; align-items: center; gap: 5px; justify-content: center;
   background: transparent; border: 1px solid rgba(255,255,255,0.5); border-radius: 6px;
