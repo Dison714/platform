@@ -26,8 +26,8 @@ export const COLOR_PHRASES = {
   'Chameleon V1': { ru: 'Хамелеон V1', de: 'Chamäleon V1', fr: 'Caméléon V1', es: 'Camaleón V1', it: 'Camaleonte V1', ja: 'カメレオン V1', ar: 'حرباء V1' },
   'Pink-purple': { ru: 'Розово-фиолетовый', de: 'Pink-Lila', fr: 'Rose-Violet', es: 'Rosa-Morado', it: 'Rosa-Viola', ja: 'ピンクパープル', ar: 'وردي-بنفسجي' },
   'Turbo Pink-purple': { ru: 'Turbo Розово-фиолетовый', de: 'Turbo Pink-Lila', fr: 'Turbo Rose-Violet', es: 'Turbo Rosa-Morado', it: 'Turbo Rosa-Viola', ja: 'ターボピンクパープル', ar: 'توربو وردي-بنفسجي' },
-  'Total black': { ru: 'Тотал Чёрный', de: 'Total Schwarz', fr: 'Noir total', es: 'Negro total', it: 'Nero totale', ja: 'トータルブラック', ar: 'أسود كامل' },
-  'Total Black': { ru: 'Тотал Чёрный', de: 'Total Schwarz', fr: 'Noir total', es: 'Negro total', it: 'Nero totale', ja: 'トータルブラック', ar: 'أسود كامل' },
+  'Total black': { ru: 'Полностью чёрный', de: 'Total Schwarz', fr: 'Noir total', es: 'Negro total', it: 'Nero totale', ja: 'トータルブラック', ar: 'أسود كامل' },
+  'Total Black': { ru: 'Полностью чёрный', de: 'Total Schwarz', fr: 'Noir total', es: 'Negro total', it: 'Nero totale', ja: 'トータルブラック', ar: 'أسود كامل' },
   'Turquoise': { ru: 'Бирюзовый', de: 'Türkis', fr: 'Turquoise', es: 'Turquesa', it: 'Turchese', ja: 'ターコイズ', ar: 'فيروزي' },
   'Green': { ru: 'Зелёный', de: 'Grün', fr: 'Vert', es: 'Verde', it: 'Verde', ja: 'グリーン', ar: 'أخضر' },
   'White Blue': { ru: 'Бело-синий', de: 'Weiß-Blau', fr: 'Blanc-Bleu', es: 'Blanco-Azul', it: 'Bianco-Blu', ja: 'ホワイト×ブルー', ar: 'أبيض-أزرق' },
@@ -58,7 +58,7 @@ export const COLOR_PHRASES = {
   'Grey': { ru: 'Серый', de: 'Grau', fr: 'Gris', es: 'Gris', it: 'Grigio', ja: 'グレー', ar: 'رمادي' },
   'Pink': { ru: 'Розовый', de: 'Pink', fr: 'Rose', es: 'Rosa', it: 'Rosa', ja: 'ピンク', ar: 'وردي' },
   'Black Original New': { ru: 'Чёрный Оригинал Новый', de: 'Schwarz Original Neu', fr: 'Noir Original Nouveau', es: 'Negro Original Nuevo', it: 'Nero Originale Nuovo', ja: 'ブラック オリジナル ニュー', ar: 'أسود أصلي جديد' },
-  'Custom Black': { ru: 'Кастом Чёрный', de: 'Custom Schwarz', fr: 'Noir Custom', es: 'Negro Custom', it: 'Nero Custom', ja: 'カスタムブラック', ar: 'أسود كاستم' },
+  'Custom Black': { ru: 'Custom Чёрный', de: 'Custom Schwarz', fr: 'Noir Custom', es: 'Negro Custom', it: 'Nero Custom', ja: 'Custom ブラック', ar: 'Custom أسود' },
 };
 
 // DESCRIPTIONS: EN-текст (как хранится в product_translations.description,
