@@ -52,6 +52,17 @@ const YANDEX_METRIKA_ID = 111448067;
 // не трогаем это здесь, вне рамок задачи.
 const teko = Teko({ subsets: ['latin'], weight: ['500', '600'], variable: '--font-teko', display: 'swap' });
 const oswaldRu = Oswald({ subsets: ['latin', 'cyrillic'], weight: ['500', '600'], variable: '--font-teko', display: 'swap' });
+// --font-teko-brand: сам логотип "BIKE BALI RENT" — всегда латиница, никогда
+// не переводится, кириллическое покрытие ему не нужно. Без отдельной
+// переменной .logo (className="display logo") наследовал бы --font-teko от
+// .display и вместе с ним подмену на Oswald на ru — тот же текст, тот же
+// font-size, но у Oswald объективно шире метрики контура, поэтому лого на
+// ru визуально крупнее, чем на остальных языках (найдено 2026-09-08).
+// Отдельная переменная, всегда = настоящий Teko, независимо от locale —
+// подставляется в html className безусловно, ниже. Не переиспользовать
+// --font-teko здесь: он ИСКОМО подменяется на ru (см. displayFont) для
+// заголовков/переводимого текста, которым кириллица нужна.
+const tekoBrand = Teko({ subsets: ['latin'], weight: ['500', '600'], variable: '--font-teko-brand', display: 'swap' });
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
 const notoArabic = Noto_Sans_Arabic({ subsets: ['arabic'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
 const golosRu = Golos_Text({ subsets: ['latin', 'cyrillic'], weight: ['400', '500'], variable: '--font-poppins', display: 'swap' });
@@ -107,7 +118,7 @@ export default async function LocaleLayout({ children, params }) {
   const displayFont = isRu ? oswaldRu : teko;
 
   return (
-    <html lang={locale} dir={isRtl ? 'rtl' : 'ltr'} className={`${displayFont.variable} ${bodyFont.variable}`}>
+    <html lang={locale} dir={isRtl ? 'rtl' : 'ltr'} className={`${displayFont.variable} ${bodyFont.variable} ${tekoBrand.variable}`}>
       <body>
         {/* Yandex.Metrika noscript — обычным JSX, не через next/script, в самое начало body. */}
         <noscript>

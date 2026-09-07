@@ -82,7 +82,9 @@ export default function Header({ locale, dict }) {
               растёт с числом языков — раньше на десктопе был плоский список
               EN·RU·DE·... (см. git-историю), упирался в nav-desktop при длинных
               лейблах (ES/DE/FR/IT) и рос с каждым новым языком. */}
-          <Link href={`${base}/bikes`} className="hdr-cta">{dict.home.cta_btn}</Link>
+          <Link href={`${base}/bikes`} className="hdr-cta">
+            <span className="hdr-cta-text">{dict.home.cta_btn}</span>
+          </Link>
           <LanguageDropdown locale={locale} langs={langs} hrefFor={switchLocaleHref} />
           <button
             className="burger"

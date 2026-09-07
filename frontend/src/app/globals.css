@@ -74,7 +74,14 @@ img { max-width: 100%; display: block; }
    на 901-~1000px с длинным переводом таглайна — ES/DE/FR/IT — сумма ширин
    всё равно превышала контейнер, и .hdr-in вместе со всей страницей
    реально уезжал вбок на живом проде, а не просто визуально слипался). */
-.logo { font-size: 26px; color: #fff; flex-shrink: 0; }
+/* font-family явно, не наследовать var(--font-teko) от .display — та
+   переменная сознательно подменяется на Oswald на ru (кириллица нужна
+   заголовкам/переводимому тексту), а "BIKE BALI RENT" всегда латиница и
+   с настоящим Teko у Oswald другие метрики контура — тот же текст и
+   font-size визуально крупнее на ru, чем на остальных языках (найдено
+   2026-09-08). --font-teko-brand — своя переменная, всегда настоящий Teko
+   независимо от locale (см. [locale]/layout.js). */
+.logo { font-family: var(--font-teko-brand), sans-serif; font-size: 26px; color: #fff; flex-shrink: 0; }
 .logo b { color: var(--red); font-weight: inherit; }
 .hdr-tagline {
   font-size: 12px; color: rgba(255,255,255,0.72); margin-inline-start: 14px;
@@ -115,15 +122,24 @@ img { max-width: 100%; display: block; }
 .hdr-cta {
   display: inline-flex; align-items: center;
   background: var(--red); color: #fff; font-weight: 600; font-size: 13px;
-  padding: 8px 12px; border-radius: 8px; white-space: nowrap;
+  padding: 8px 12px; border-radius: 8px;
   /* min-width:0 переопределяет дефолтный min-width:auto флекс-айтема (который
      иначе равен полной ширине nowrap-текста и делает flex-shrink ниже
      бесполезным) — см. комментарий у .hdr-right выше. min-width:32px —
      пол, чтобы кнопка не схлопывалась до невидимой полоски на самых узких
-     экранах, ellipsis — чтобы обрезанный текст не наезжал на .lang-compact. */
-  flex-shrink: 1; min-width: 32px; overflow: hidden; text-overflow: ellipsis;
+     экранах. text-overflow:ellipsis НЕ вешать на сам .hdr-cta (2026-09-08:
+     на живом проде рендерился жёсткий обрез без точек, без ellipsis вовсе —
+     text-overflow игнорируется браузером на элементе, который сам является
+     flex/inline-flex контейнером своего текстового содержимого; подтверждено
+     эмпирически, не только в спеке). Обрезка — на .hdr-cta-text ниже,
+     обычном block-элементе внутри. */
+  flex-shrink: 1; min-width: 32px;
 }
 .hdr-cta:hover { background: var(--red-700); }
+.hdr-cta-text {
+  display: block; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; min-width: 0;
+}
 
 .lang-compact { position: relative; flex-shrink: 0; }
 .lang-trigger {
