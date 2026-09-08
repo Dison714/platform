@@ -68,6 +68,17 @@ img { max-width: 100%; display: block; }
    "en BaliInicio", "ContactoEN" — баг вёрстки, не текста. gap гарантирует
    минимальный отступ независимо от того, есть ли ещё свободное место. */
 .hdr-in { display: flex; align-items: center; justify-content: space-between; height: 58px; gap: 20px; }
+/* Мобильный (<860px) padding/gap урезаны до минимума намеренно (2026-09-08,
+   "CTA забирает место первым") — единственная цель освободившихся px:
+   отдать их .hdr-cta-text на полный текст кнопки. .container даёт 16px по
+   умолчанию везде на сайте — здесь переопределяем только для строки шапки,
+   не трогая сам класс .container (используется по всему сайту). Десктопные
+   20px gap/16px padding (см. правило выше) специально не трогаем — там нет
+   дефицита места и есть исторический баг с "слипанием" текста (см.
+   комментарий у .hdr-in выше), из-за которого gap там и был введён. */
+@media (max-width: 859px) {
+  .hdr-in { padding-left: 8px; padding-right: 8px; gap: 8px; }
+}
 /* flex-shrink:0 на всём, КРОМЕ .hdr-tagline (см. ниже) — гарантирует, что при
    нехватке места сжимается/обрезается только необязательный таглайн, а не
    overflow всей строки (было 2026-09-07: gap выше убрал коллизию текста, но
@@ -100,7 +111,7 @@ img { max-width: 100%; display: block; }
    таглайном: .hdr-cta ниже — единственный ребёнок, которому разрешено
    реально сжиматься, .lang-compact/.burger внутри зафиксированы
    flex-shrink:0, чтобы язык/меню не пострадали). */
-.hdr-right { display: flex; align-items: center; gap: 10px; flex-shrink: 1; min-width: 0; }
+.hdr-right { display: flex; align-items: center; gap: 6px; flex-shrink: 1; min-width: 0; }
 .burger { background: none; border: 0; color: #fff; font-size: 26px; line-height: 1; cursor: pointer; padding: 4px; flex-shrink: 0; }
 /* position:fixed (не в потоке .hdr) — намеренно (Webvisor, 2026-09-01,
    "плавающая шапка"). Раньше .nav-mobile был обычным блочным потомком
@@ -122,7 +133,10 @@ img { max-width: 100%; display: block; }
 .hdr-cta {
   display: inline-flex; align-items: center;
   background: var(--red); color: #fff; font-weight: 600; font-size: 13px;
-  padding: 8px 12px; border-radius: 8px;
+  /* 8px 8px, не 8px 12px — hdr-cta невидим на десктопе (>=860px, media
+     ниже), горизонтальный padding урезан безусловно в пользу текста
+     кнопки (2026-09-08, см. .hdr-in выше), это не затрагивает десктоп. */
+  padding: 8px 8px; border-radius: 8px;
   /* min-width:0 переопределяет дефолтный min-width:auto флекс-айтема (который
      иначе равен полной ширине nowrap-текста и делает flex-shrink ниже
      бесполезным) — см. комментарий у .hdr-right выше. min-width:32px —
