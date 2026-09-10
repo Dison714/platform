@@ -12,6 +12,8 @@
     "home": "ホーム",
     "bikes": "バイク一覧",
     "blog": "ブログ",
+    "districts": "バリ島のエリア",
+    "districts_guides": "バリのルート＆ガイド",
     "about": "会社概要",
     "faq": "よくある質問",
     "contact": "お問い合わせ"
@@ -288,6 +290,25 @@
     "pillar_badge": "まずはこちらから",
     "pillar_inside_one": "概要 · {n}件の記事を収録",
     "pillar_inside_other": "概要 · {n}件の記事を収録"
+  },
+  "location_page": {
+    "book_whatsapp": "WhatsAppで予約",
+    "book_telegram": "Telegramで予約",
+    "see_all_bikes": "バイク一覧を見る",
+    "browse_all_bikes": "バイク一覧を見る",
+    "delivery_title": "{district}への配送",
+    "getting_around_title": "{district}での移動",
+    "distances_title": "{district}からの距離",
+    "distances_note": "{district}での所要時間を決めるのは距離ではなく交通状況です — 可能な限り上記2つのラッシュ時間帯を避けて日帰り旅行を計画してください。",
+    "col_destination": "目的地",
+    "col_distance": "距離",
+    "col_light_traffic": "スクーター・空いている時",
+    "col_peak_hours": "スクーター・ラッシュ時",
+    "which_bike_title": "{district}に合うバイクは",
+    "route_title": "{district}からの人気ルート",
+    "popular_locations_title": "{district}の人気スポット",
+    "faq_title": "よくある質問 — {district}のスクーターレンタル",
+    "cta_title": "予約の準備はできましたか？"
   },
   "footer": {
     "get_in_touch": "お問い合わせ",

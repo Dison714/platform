@@ -12,6 +12,8 @@
     "home": "الرئيسية",
     "bikes": "الدراجات",
     "blog": "المدونة",
+    "districts": "مناطق بالي",
+    "districts_guides": "طرق وأدلة بالي",
     "about": "من نحن",
     "faq": "الأسئلة الشائعة",
     "contact": "تواصل معنا"
@@ -288,6 +290,25 @@
     "pillar_badge": "ابدأ من هنا",
     "pillar_inside_one": "نظرة عامة · مقال واحد بداخلها",
     "pillar_inside_other": "نظرة عامة · {n} مقالات بداخلها"
+  },
+  "location_page": {
+    "book_whatsapp": "احجز عبر واتساب",
+    "book_telegram": "احجز عبر تيليجرام",
+    "see_all_bikes": "عرض كل الدراجات",
+    "browse_all_bikes": "تصفح كل الدراجات",
+    "delivery_title": "التوصيل إلى {district}",
+    "getting_around_title": "التنقل في {district}",
+    "distances_title": "المسافات من {district}",
+    "distances_note": "الازدحام، وليس المسافة، هو ما يحدد فعليًا وقت رحلتك في {district} — خطّط لرحلاتك اليومية خارج فترتي الذروة المذكورتين أعلاه قدر الإمكان.",
+    "col_destination": "الوجهة",
+    "col_distance": "المسافة",
+    "col_light_traffic": "دراجة نارية، حركة مرور خفيفة",
+    "col_peak_hours": "دراجة نارية، ساعة الذروة",
+    "which_bike_title": "ما هي الدراجة الأنسب لـ {district}",
+    "route_title": "مسار شائع من {district}",
+    "popular_locations_title": "أماكن شائعة في {district}",
+    "faq_title": "الأسئلة الشائعة — تأجير سكوتر في {district}",
+    "cta_title": "هل أنت مستعد للحجز؟"
   },
   "footer": {
     "get_in_touch": "تواصل معنا",

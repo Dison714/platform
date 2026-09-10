@@ -12,6 +12,8 @@
     "home": "Startseite",
     "bikes": "Motorräder",
     "blog": "Blog",
+    "districts": "Bali-Bezirke",
+    "districts_guides": "Bali Routen & Guides",
     "about": "Über uns",
     "faq": "FAQ",
     "contact": "Kontakt"
@@ -288,6 +290,25 @@
     "pillar_badge": "Hier starten",
     "pillar_inside_one": "Überblick · {n} Artikel enthalten",
     "pillar_inside_other": "Überblick · {n} Artikel enthalten"
+  },
+  "location_page": {
+    "book_whatsapp": "Auf WhatsApp buchen",
+    "book_telegram": "Auf Telegram buchen",
+    "see_all_bikes": "Alle Bikes ansehen",
+    "browse_all_bikes": "Alle Bikes durchsehen",
+    "delivery_title": "Lieferung nach {district}",
+    "getting_around_title": "Unterwegs in {district}",
+    "distances_title": "Entfernungen ab {district}",
+    "distances_note": "Nicht die Entfernung, sondern der Verkehr entscheidet über deine Fahrzeit in {district} — plane Tagesausflüge möglichst außerhalb der beiden oben genannten Stoßzeiten.",
+    "col_destination": "Ziel",
+    "col_distance": "Entfernung",
+    "col_light_traffic": "Roller, wenig Verkehr",
+    "col_peak_hours": "Roller, Stoßzeit",
+    "which_bike_title": "Welches Bike passt am besten zu {district}",
+    "route_title": "Beliebte Route ab {district}",
+    "popular_locations_title": "Beliebte Orte in {district}",
+    "faq_title": "FAQ — Rollerverleih in {district}",
+    "cta_title": "Bereit zu buchen?"
   },
   "footer": {
     "get_in_touch": "Kontakt aufnehmen",

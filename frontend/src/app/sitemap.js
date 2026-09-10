@@ -90,5 +90,31 @@ export default async function sitemap() {
     }
   }
 
+  // Районные SEO-страницы (/scooter-rental-<district>) × локали. Slug не
+  // per-locale (в отличие от блога) — тот же суффикс на любом языке, но всё
+  // равно запрашиваем per-locale список (не берём константный DISTRICTS из
+  // lib/districts.js), чтобы sitemap не сослался на URL без реального
+  // перевода — тот же принцип, что у продуктов/блога: источник правды БД,
+  // не код (ТЗ п.4.9.4 дух правила про переводы).
+  const locationPagesByLocale = await Promise.all(
+    locales.map(async (loc) => {
+      try {
+        return { loc, pages: (await apiGet(`/api/location-pages?lang=${loc}`)).data ?? [] };
+      } catch {
+        return { loc, pages: [] };
+      }
+    })
+  );
+  for (const { loc, pages } of locationPagesByLocale) {
+    for (const page of pages) {
+      entries.push({
+        url: `${SITE_URL}/${loc}/scooter-rental-${page.slug}`,
+        lastModified: page.updated_at ? new Date(page.updated_at) : now,
+        changeFrequency: 'weekly',
+        priority: 0.6,
+      });
+    }
+  }
+
   return entries;
 }

@@ -3,7 +3,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { LOCALES, enabledLocales } from '../../i18n/config.js';
+import { DISTRICTS } from '../../lib/districts.js';
 import LanguageDropdown from './LanguageDropdown.jsx';
+import DistrictsDropdown from './DistrictsDropdown.jsx';
 
 // /blog/[slug] — единственный раздел с per-locale slug (article_translations.slug,
 // в отличие от единого products.slug у /bikes) — просто менять сегмент локали
@@ -17,6 +19,7 @@ const BLOG_ARTICLE_RE = /^\/[a-zA-Z-]+\/blog\/([^/]+)$/;
 // Шапка: логотип + меню + переключатель языка. На телефоне меню — гамбургер.
 export default function Header({ locale, dict }) {
   const [open, setOpen] = useState(false);
+  const [districtsOpen, setDistrictsOpen] = useState(false);
   const pathname = usePathname() || `/${locale}`;
   const base = `/${locale}`;
 
@@ -53,10 +56,15 @@ export default function Header({ locale, dict }) {
     return parts.join('/') || `/${target}`;
   };
   const langs = LOCALES.filter((l) => enabledLocales().includes(l.code));
-  const links = [
+  // "Bali Routes & Guides" — временно на /blog (см. ЗАДАЧА п.2), заменить на
+  // /blog/routes, когда появится эта категория блога.
+  const guidesHref = `${base}/blog`;
+  const linksBefore = [
     { href: `${base}`, label: dict.nav.home },
     { href: `${base}/bikes`, label: dict.nav.bikes },
     { href: `${base}/blog`, label: dict.nav.blog },
+  ];
+  const linksAfter = [
     { href: `${base}/about`, label: dict.nav.about },
     { href: `${base}/faq`, label: dict.nav.faq },
     { href: `${base}/about#contact`, label: dict.nav.contact },
@@ -71,7 +79,11 @@ export default function Header({ locale, dict }) {
         <span className="hdr-tagline">{dict.brand.tagline}</span>
 
         <nav className="nav-desktop" aria-label="Main">
-          {links.map((l) => (
+          {linksBefore.map((l) => (
+            <Link key={l.href} href={l.href}>{l.label}</Link>
+          ))}
+          <DistrictsDropdown locale={locale} label={dict.nav.districts} guidesLabel={dict.nav.districts_guides} guidesHref={guidesHref} />
+          {linksAfter.map((l) => (
             <Link key={l.href} href={l.href}>{l.label}</Link>
           ))}
         </nav>
@@ -98,7 +110,32 @@ export default function Header({ locale, dict }) {
       </div>
 
       <nav className={`nav-mobile ${open ? 'open' : ''}`} aria-label="Mobile">
-        {links.map((l) => (
+        {linksBefore.map((l) => (
+          <Link key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}</Link>
+        ))}
+        {/* Мобильный "Bali Districts" — не попап (тому негде открыться поверх
+            fixed-панели меню), а инлайн-раскрытие подсписка, тот же паттерн
+            toggle, что у бургера самой шапки. */}
+        <button
+          type="button"
+          className="nav-mobile-districts-toggle"
+          aria-expanded={districtsOpen}
+          onClick={() => setDistrictsOpen((v) => !v)}
+        >
+          {dict.nav.districts}
+          <svg className={`lang-chevron${districtsOpen ? ' up' : ''}`} width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+            <path d="M1.5 3.5 5 7l3.5-3.5" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+        {districtsOpen && (
+          <div className="nav-mobile-districts-list">
+            {DISTRICTS.map((d) => (
+              <Link key={d.slug} href={`${base}/scooter-rental-${d.slug}`} onClick={() => setOpen(false)}>{d.name}</Link>
+            ))}
+            <Link href={guidesHref} onClick={() => setOpen(false)}>{dict.nav.districts_guides}</Link>
+          </div>
+        )}
+        {linksAfter.map((l) => (
           <Link key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}</Link>
         ))}
       </nav>

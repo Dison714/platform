@@ -12,6 +12,8 @@
     "home": "होम",
     "bikes": "बाइक्स",
     "blog": "ब्लॉग",
+    "districts": "बाली के क्षेत्र",
+    "districts_guides": "बाली रूट्स और गाइड",
     "about": "हमारे बारे में",
     "faq": "सामान्य प्रश्न",
     "contact": "संपर्क करें"
@@ -288,6 +290,25 @@
     "pillar_badge": "यहाँ से शुरू करें",
     "pillar_inside_one": "ओवरव्यू · {n} संबंधित लेख",
     "pillar_inside_other": "ओवरव्यू · {n} संबंधित लेख"
+  },
+  "location_page": {
+    "book_whatsapp": "WhatsApp पर बुक करें",
+    "book_telegram": "Telegram पर बुक करें",
+    "see_all_bikes": "सभी बाइक्स देखें",
+    "browse_all_bikes": "सभी बाइक्स देखें",
+    "delivery_title": "{district} में डिलीवरी",
+    "getting_around_title": "{district} में घूमना-फिरना",
+    "distances_title": "{district} से दूरियाँ",
+    "distances_note": "{district} में आपकी यात्रा का समय दूरी नहीं, बल्कि ट्रैफ़िक तय करता है — जहाँ तक हो सके, ऊपर बताए गए दोनों पीक-आवर समय के बाहर अपनी डे-ट्रिप प्लान करें।",
+    "col_destination": "गंतव्य",
+    "col_distance": "दूरी",
+    "col_light_traffic": "स्कूटर, हल्का ट्रैफ़िक",
+    "col_peak_hours": "स्कूटर, पीक आवर",
+    "which_bike_title": "{district} के लिए कौन-सी बाइक सही रहेगी",
+    "route_title": "{district} से लोकप्रिय रूट",
+    "popular_locations_title": "{district} में लोकप्रिय जगहें",
+    "faq_title": "सामान्य प्रश्न — {district} में स्कूटर रेंटल",
+    "cta_title": "बुक करने के लिए तैयार हैं?"
   },
   "footer": {
     "get_in_touch": "संपर्क करें",

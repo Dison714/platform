@@ -12,6 +12,8 @@
     "home": "Home",
     "bikes": "Moto",
     "blog": "Blog",
+    "districts": "Zone di Bali",
+    "districts_guides": "Percorsi e guide di Bali",
     "about": "Chi siamo",
     "faq": "FAQ",
     "contact": "Contatti"
@@ -288,6 +290,25 @@
     "pillar_badge": "Inizia da qui",
     "pillar_inside_one": "Panoramica · {n} articolo incluso",
     "pillar_inside_other": "Panoramica · {n} articoli inclusi"
+  },
+  "location_page": {
+    "book_whatsapp": "Prenota su WhatsApp",
+    "book_telegram": "Prenota su Telegram",
+    "see_all_bikes": "Vedi tutte le moto",
+    "browse_all_bikes": "Sfoglia tutte le moto",
+    "delivery_title": "Consegna a {district}",
+    "getting_around_title": "Spostarsi a {district}",
+    "distances_title": "Distanze da {district}",
+    "distances_note": "È il traffico, non la distanza, a decidere davvero i tempi di percorrenza a {district} — pianifica le tue gite fuori dalle due fasce orarie di punta indicate sopra, quando possibile.",
+    "col_destination": "Destinazione",
+    "col_distance": "Distanza",
+    "col_light_traffic": "Scooter, traffico scorrevole",
+    "col_peak_hours": "Scooter, ora di punta",
+    "which_bike_title": "Qual è la moto giusta per {district}",
+    "route_title": "Percorso popolare da {district}",
+    "popular_locations_title": "Luoghi popolari a {district}",
+    "faq_title": "FAQ — Noleggio scooter a {district}",
+    "cta_title": "Pronto a prenotare?"
   },
   "footer": {
     "get_in_touch": "Contattaci",

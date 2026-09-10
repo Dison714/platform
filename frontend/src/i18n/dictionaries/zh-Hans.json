@@ -12,6 +12,8 @@
     "home": "首页",
     "bikes": "摩托车",
     "blog": "博客",
+    "districts": "巴厘岛地区",
+    "districts_guides": "巴厘岛路线与指南",
     "about": "关于我们",
     "faq": "常见问题",
     "contact": "联系我们"
@@ -288,6 +290,25 @@
     "pillar_badge": "从这里开始",
     "pillar_inside_one": "概览 · {n} 篇相关文章",
     "pillar_inside_other": "概览 · {n} 篇相关文章"
+  },
+  "location_page": {
+    "book_whatsapp": "通过 WhatsApp 预订",
+    "book_telegram": "通过 Telegram 预订",
+    "see_all_bikes": "查看全部车型",
+    "browse_all_bikes": "浏览全部车型",
+    "delivery_title": "配送至{district}",
+    "getting_around_title": "在{district}出行",
+    "distances_title": "从{district}出发的距离",
+    "distances_note": "决定您在{district}实际行程时间的是路况，而非距离——请尽量把行程安排在上述两个高峰时段之外。",
+    "col_destination": "目的地",
+    "col_distance": "距离",
+    "col_light_traffic": "摩托车，路况顺畅",
+    "col_peak_hours": "摩托车，高峰时段",
+    "which_bike_title": "{district}适合哪款车型",
+    "route_title": "从{district}出发的热门路线",
+    "popular_locations_title": "{district}热门地点",
+    "faq_title": "常见问题 — {district}摩托车租赁",
+    "cta_title": "准备好预订了吗？"
   },
   "footer": {
     "get_in_touch": "联系我们",

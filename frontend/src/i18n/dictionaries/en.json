@@ -12,6 +12,8 @@
     "home": "Home",
     "bikes": "Bikes",
     "blog": "Blog",
+    "districts": "Bali Districts",
+    "districts_guides": "Bali Routes & Guides",
     "about": "About",
     "faq": "FAQ",
     "contact": "Contact"
@@ -288,6 +290,25 @@
     "pillar_badge": "Start here",
     "pillar_inside_one": "Overview · {n} article inside",
     "pillar_inside_other": "Overview · {n} articles inside"
+  },
+  "location_page": {
+    "book_whatsapp": "Book on WhatsApp",
+    "book_telegram": "Book on Telegram",
+    "see_all_bikes": "See all bikes",
+    "browse_all_bikes": "Browse all bikes",
+    "delivery_title": "Delivery to {district}",
+    "getting_around_title": "Getting Around {district}",
+    "distances_title": "Distances from {district}",
+    "distances_note": "Traffic, not distance, is what actually decides your travel time in {district} — plan day trips outside the two rush-hour windows above wherever you can.",
+    "col_destination": "Destination",
+    "col_distance": "Distance",
+    "col_light_traffic": "Scooter, light traffic",
+    "col_peak_hours": "Scooter, peak hours",
+    "which_bike_title": "Which Bike Fits {district} Best",
+    "route_title": "Popular Route from {district}",
+    "popular_locations_title": "Popular Locations in {district}",
+    "faq_title": "FAQ — Scooter Rental in {district}",
+    "cta_title": "Ready to Book?"
   },
   "footer": {
     "get_in_touch": "Get in touch",

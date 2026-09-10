@@ -12,6 +12,8 @@
     "home": "홈",
     "bikes": "바이크",
     "blog": "블로그",
+    "districts": "발리 지역",
+    "districts_guides": "발리 루트 & 가이드",
     "about": "소개",
     "faq": "자주 묻는 질문",
     "contact": "문의하기"
@@ -288,6 +290,25 @@
     "pillar_badge": "여기서 시작하세요",
     "pillar_inside_one": "개요 · 관련 글 {n}개",
     "pillar_inside_other": "개요 · 관련 글 {n}개"
+  },
+  "location_page": {
+    "book_whatsapp": "WhatsApp으로 예약",
+    "book_telegram": "Telegram으로 예약",
+    "see_all_bikes": "전체 바이크 보기",
+    "browse_all_bikes": "전체 바이크 보기",
+    "delivery_title": "{district} 배송",
+    "getting_around_title": "{district}에서 이동하기",
+    "distances_title": "{district}에서의 거리",
+    "distances_note": "{district}에서 실제 이동 시간을 결정하는 건 거리가 아니라 교통 상황입니다 — 가능하면 위에 표시된 두 러시아워 시간대를 피해 일정을 계획하세요.",
+    "col_destination": "목적지",
+    "col_distance": "거리",
+    "col_light_traffic": "스쿠터, 한산할 때",
+    "col_peak_hours": "스쿠터, 혼잡할 때",
+    "which_bike_title": "{district}에 맞는 바이크는",
+    "route_title": "{district}에서 인기 있는 루트",
+    "popular_locations_title": "{district} 인기 명소",
+    "faq_title": "자주 묻는 질문 — {district} 스쿠터 대여",
+    "cta_title": "예약할 준비가 되셨나요?"
   },
   "footer": {
     "get_in_touch": "문의하기",
