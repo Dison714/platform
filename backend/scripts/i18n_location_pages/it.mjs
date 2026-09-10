@@ -28,10 +28,10 @@ export default {
 <li><strong>7–14 giorni:</strong> costo fisso di consegna di Rp 100.000, ovunque a Canggu.</li>
 <li>Noleggi più brevi (sotto i 7 giorni): costo fisso di <strong>Rp 150.000</strong>, ovunque a Canggu.</li>
 <li>Orario di consegna e punto d'incontro esatto vengono confermati su WhatsApp dopo la prenotazione.</li>
-<li>Consegniamo dal nostro deposito a Kerobokan, a pochi minuti da Canggu — è disponibile l'intero catalogo, senza suddivisione dell'inventario per zona.</li>
+<li>Consegniamo dal nostro deposito a Kerobokan, a pochi minuti da Canggu.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: подтвердить — зона доставки одинаковая для всего Canggu (включая Pererenan/Echo Beach на севере) или там другая логика? В одном из источников эти районы упоминаются как "дальше на север" от основного Canggu.]</p>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
+<p>La zona di consegna a Canggu è la stessa per tutta l'area, compresi Pererenan ed Echo Beach a nord — non ci sono restrizioni particolari.</p>
+<p>Possiamo consegnare quasi a qualsiasi ora — le consegne serali o notturne fuori dall'orario abituale sono a pagamento e vanno concordate in anticipo.</p>`,
       gettingAroundHtml: `<p>Le strade di Canggu sono state costruite per un villaggio di pescatori, non per l'attuale numero di scooter, auto e furgoni per le consegne. Aspettati traffico vero e proprio <strong>tra le 8–10 del mattino e le 16–19</strong>, soprattutto su Jalan Raya Canggu, intorno a Kerobokan e sul Canggu Shortcut che collega Berawa a Batu Bolong — un tratto stretto che può bloccarsi seriamente nelle ore di punta.</p>
 <p>Uno scooter resta comunque il modo più veloce per spostarsi: puoi infilarti nel traffico lento e parcheggiare dove un'auto semplicemente non entra. Il parcheggio si complica proprio al tramonto vicino ai principali beach club (Batu Bolong / Old Man's, Berawa / Finns) — arriva un po' prima se ci vai per il tramonto.</p>`,
       faqQ1: 'Consegnate ovunque a Canggu, incluse Pererenan ed Echo Beach?',
@@ -50,11 +50,10 @@ export default {
 <li>Consegna gratuita per noleggi di <strong>3 giorni o più</strong>.</li>
 <li>Noleggi più brevi: costo fisso di <strong>Rp 150.000</strong>, ovunque a Seminyak.</li>
 <li>Orario di consegna e punto d'incontro esatto vengono confermati su WhatsApp dopo la prenotazione.</li>
-<li>Consegniamo dal nostro deposito a Kerobokan, a pochi minuti da Seminyak — è disponibile l'intero catalogo, senza suddivisione dell'inventario per zona.</li>
+<li>Consegniamo dal nostro deposito a Kerobokan, a pochi minuti da Seminyak.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Le strade di Seminyak sono pianeggianti e percorribili a piedi in alcuni tratti, ma Jalan Kayu Aya (Oberoi) e Jalan Laksmana (Petitenget) diventano seriamente congestionate nel tardo pomeriggio quando aumenta il traffico verso i beach club, con scooter delle consegne e auto in competizione per le stesse corsie strette. Uno scooter batte comunque quel traffico: puoi infilarti e parcheggiare più vicino agli ingressi della spiaggia di qualsiasi auto.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Possiamo consegnare quasi a qualsiasi ora — le consegne serali o notturne fuori dall'orario abituale sono a pagamento e vanno concordate in anticipo.</p>`,
+      gettingAroundHtml: `<p>Le strade di Seminyak sono pianeggianti e percorribili a piedi in alcuni tratti, ma Jalan Kayu Aya (Oberoi) e Jalan Laksmana (Petitenget) diventano seriamente congestionate nel tardo pomeriggio quando aumenta il traffico verso i beach club, con scooter delle consegne e auto in competizione per le stesse corsie strette. Uno scooter batte comunque quel traffico: puoi infilarti e parcheggiare più vicino agli ingressi della spiaggia di qualsiasi auto.</p>`,
       faqQ1: 'Consegnate ovunque a Seminyak?',
       faqA1: 'Sì — la consegna copre tutta Seminyak. Gratuita da 3 giorni, Rp 150.000 fisso per soggiorni più brevi.',
       faqQ4: 'Basta uno scooter, o dovrei noleggiare qualcosa di più grande?',
@@ -71,11 +70,10 @@ export default {
 <li>Consegna gratuita per noleggi di <strong>30 giorni (1 mese) o più</strong>.</li>
 <li>Noleggi più brevi: costo fisso di <strong>Rp 150.000</strong>, ovunque a Ubud.</li>
 <li>Orario di consegna e punto d'incontro esatto vengono confermati su WhatsApp dopo la prenotazione.</li>
-<li>Consegniamo da un unico deposito a Kerobokan — lo stesso catalogo completo è disponibile per Ubud, senza suddivisione dell'inventario per zona.</li>
+<li>Consegniamo da un unico deposito a Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>L'arteria principale di Ubud, Jalan Raya Ubud, si blocca vicino al mercato e a Monkey Forest Road soprattutto a mezzogiorno e in prima serata — una delle strade più congestionate di Bali fuori dal sud. Lontano da quel tratto, le strade tra le risaie e il Campuhan Ridge sono più tranquille ma davvero collinari, quindi una moto un po' più potente (ADV o Xmax) si guida più facilmente rispetto a un piccolo scooter urbano.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Possiamo consegnare quasi a qualsiasi ora — le consegne serali o notturne fuori dall'orario abituale sono a pagamento e vanno concordate in anticipo.</p>`,
+      gettingAroundHtml: `<p>L'arteria principale di Ubud, Jalan Raya Ubud, si blocca vicino al mercato e a Monkey Forest Road soprattutto a mezzogiorno e in prima serata — una delle strade più congestionate di Bali fuori dal sud. Lontano da quel tratto, le strade tra le risaie e il Campuhan Ridge sono più tranquille ma davvero collinari, quindi una moto un po' più potente (ADV o Xmax) si guida più facilmente rispetto a un piccolo scooter urbano.</p>`,
       faqQ1: 'Consegnate ovunque a Ubud?',
       faqA1: 'Sì — la consegna copre tutta Ubud. Gratuita da 30 giorni (1 mese), Rp 150.000 fisso per soggiorni più brevi.',
       faqQ4: 'Basta uno scooter, o dovrei noleggiare qualcosa di più grande?',
@@ -92,11 +90,10 @@ export default {
 <li>Consegna gratuita per noleggi di <strong>14 giorni (2 settimane) o più</strong>.</li>
 <li>Noleggi più brevi: costo fisso di <strong>Rp 150.000</strong>, in tutta la zona di Uluwatu.</li>
 <li>Orario di consegna e punto d'incontro esatto vengono confermati su WhatsApp dopo la prenotazione.</li>
-<li>Consegniamo da un unico deposito a Kerobokan — lo stesso catalogo completo è disponibile per Uluwatu, senza suddivisione dell'inventario per zona.</li>
+<li>Consegniamo da un unico deposito a Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Le strade della penisola del Bukit intorno a Uluwatu sono più collinari e disperse rispetto a qualsiasi altro posto in questa lista — andare da una spiaggia all'altra (Padang Padang, Bingin, Balangan) spesso significa una vera salita, non una guida in piano. Il traffico in sé è più leggero rispetto a Canggu o Seminyak, ma il terreno fa sì che una moto con più coppia si guidi in modo decisamente più comodo.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Possiamo consegnare quasi a qualsiasi ora — le consegne serali o notturne fuori dall'orario abituale sono a pagamento e vanno concordate in anticipo.</p>`,
+      gettingAroundHtml: `<p>Le strade della penisola del Bukit intorno a Uluwatu sono più collinari e disperse rispetto a qualsiasi altro posto in questa lista — andare da una spiaggia all'altra (Padang Padang, Bingin, Balangan) spesso significa una vera salita, non una guida in piano. Il traffico in sé è più leggero rispetto a Canggu o Seminyak, ma il terreno fa sì che una moto con più coppia si guidi in modo decisamente più comodo.</p>`,
       faqQ1: 'Consegnate in tutta la zona di Uluwatu?',
       faqA1: 'Sì — la consegna copre tutta la zona di Uluwatu. Gratuita da 14 giorni (2 settimane), Rp 150.000 fisso per soggiorni più brevi.',
       faqQ4: 'Basta uno scooter, o dovrei noleggiare qualcosa di più grande?',
@@ -113,11 +110,10 @@ export default {
 <li>Consegna gratuita per noleggi di <strong>14 giorni (2 settimane) o più</strong>.</li>
 <li>Noleggi più brevi: costo fisso di <strong>Rp 150.000</strong>, ovunque a Jimbaran.</li>
 <li>Orario di consegna e punto d'incontro esatto vengono confermati su WhatsApp dopo la prenotazione.</li>
-<li>Consegniamo da un unico deposito a Kerobokan — lo stesso catalogo completo è disponibile per Jimbaran, senza suddivisione dell'inventario per zona.</li>
+<li>Consegniamo da un unico deposito a Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Jimbaran in sé è piuttosto tranquilla rispetto ai punti surf più affollati del sud, con la strada della baia e quella di accesso a GWK come arterie principali — il traffico aumenta soprattutto al tramonto, quando i warung di pesce si riempiono. Uno scooter è il modo facile per percorrere la baia o salire verso GWK e il Bukit senza cercare parcheggio.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Possiamo consegnare quasi a qualsiasi ora — le consegne serali o notturne fuori dall'orario abituale sono a pagamento e vanno concordate in anticipo.</p>`,
+      gettingAroundHtml: `<p>Jimbaran in sé è piuttosto tranquilla rispetto ai punti surf più affollati del sud, con la strada della baia e quella di accesso a GWK come arterie principali — il traffico aumenta soprattutto al tramonto, quando i warung di pesce si riempiono. Uno scooter è il modo facile per percorrere la baia o salire verso GWK e il Bukit senza cercare parcheggio.</p>`,
       faqQ1: 'Consegnate ovunque a Jimbaran?',
       faqA1: 'Sì — la consegna copre tutta Jimbaran. Gratuita da 14 giorni (2 settimane), Rp 150.000 fisso per soggiorni più brevi.',
       faqQ4: 'Basta uno scooter, o dovrei noleggiare qualcosa di più grande?',
@@ -134,11 +130,10 @@ export default {
 <li>Consegna gratuita per noleggi di <strong>7 giorni (1 settimana) o più</strong>.</li>
 <li>Noleggi più brevi: costo fisso di <strong>Rp 150.000</strong>, ovunque a Sanur.</li>
 <li>Orario di consegna e punto d'incontro esatto vengono confermati su WhatsApp dopo la prenotazione.</li>
-<li>Consegniamo da un unico deposito a Kerobokan — lo stesso catalogo completo è disponibile per Sanur, senza suddivisione dell'inventario per zona.</li>
+<li>Consegniamo da un unico deposito a Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Sanur è uno dei distretti più tranquilli in cui guidare — il lungomare è rilassato e adatto agli scooter, e le strade verso l'interno in direzione di Denpasar hanno più traffico della costa stessa, ma niente rispetto all'ora di punta di Kuta o Seminyak. Un posto comodo per abituarsi a guidare a Bali prima di spingersi oltre.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Possiamo consegnare quasi a qualsiasi ora — le consegne serali o notturne fuori dall'orario abituale sono a pagamento e vanno concordate in anticipo.</p>`,
+      gettingAroundHtml: `<p>Sanur è uno dei distretti più tranquilli in cui guidare — il lungomare è rilassato e adatto agli scooter, e le strade verso l'interno in direzione di Denpasar hanno più traffico della costa stessa, ma niente rispetto all'ora di punta di Kuta o Seminyak. Un posto comodo per abituarsi a guidare a Bali prima di spingersi oltre.</p>`,
       faqQ1: 'Consegnate ovunque a Sanur?',
       faqA1: 'Sì — la consegna copre tutta Sanur. Gratuita da 7 giorni (1 settimana), Rp 150.000 fisso per soggiorni più brevi.',
       faqQ4: 'Basta uno scooter, o dovrei noleggiare qualcosa di più grande?',
@@ -155,11 +150,10 @@ export default {
 <li>Consegna gratuita per noleggi di <strong>7 giorni (1 settimana) o più</strong>.</li>
 <li>Noleggi più brevi: costo fisso di <strong>Rp 150.000</strong>, ovunque a Kuta.</li>
 <li>Orario di consegna e punto d'incontro esatto vengono confermati su WhatsApp dopo la prenotazione.</li>
-<li>Consegniamo da un unico deposito a Kerobokan — lo stesso catalogo completo è disponibile per Kuta, senza suddivisione dell'inventario per zona.</li>
+<li>Consegniamo da un unico deposito a Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Kuta e Legian sono tra le strade più congestionate di Bali — Jalan Legian e le strade intorno al centro commerciale Beachwalk si bloccano per buona parte del pomeriggio e della sera, aggravato dalla densità di pedoni, taxi e scooter delle consegne. Uno scooter resta comunque più veloce di un'auto, e la vicinanza di Kuta all'aeroporto è comoda per arrivi mattutini o partenze serali.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Possiamo consegnare quasi a qualsiasi ora — le consegne serali o notturne fuori dall'orario abituale sono a pagamento e vanno concordate in anticipo.</p>`,
+      gettingAroundHtml: `<p>Kuta e Legian sono tra le strade più congestionate di Bali — Jalan Legian e le strade intorno al centro commerciale Beachwalk si bloccano per buona parte del pomeriggio e della sera, aggravato dalla densità di pedoni, taxi e scooter delle consegne. Uno scooter resta comunque più veloce di un'auto, e la vicinanza di Kuta all'aeroporto è comoda per arrivi mattutini o partenze serali.</p>`,
       faqQ1: 'Consegnate ovunque a Kuta?',
       faqA1: 'Sì — la consegna copre tutta Kuta. Gratuita da 7 giorni (1 settimana), Rp 150.000 fisso per soggiorni più brevi.',
       faqQ4: 'Basta uno scooter, o dovrei noleggiare qualcosa di più grande?',
@@ -176,11 +170,10 @@ export default {
 <li>Consegna gratuita per noleggi di <strong>14 giorni (2 settimane) o più</strong>.</li>
 <li>Noleggi più brevi: costo fisso di <strong>Rp 150.000</strong>, ovunque a Nusa Dua.</li>
 <li>Orario di consegna e punto d'incontro esatto vengono confermati su WhatsApp dopo la prenotazione.</li>
-<li>Consegniamo da un unico deposito a Kerobokan — lo stesso catalogo completo è disponibile per Nusa Dua, senza suddivisione dell'inventario per zona.</li>
+<li>Consegniamo da un unico deposito a Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>All'interno dell'enclave resort ITDC, le strade sono larghe, tranquille e ben tenute — davvero la guida più facile di questa lista. Il traffico aumenta soprattutto dove il cancello principale di Nusa Dua incontra la strada verso Benoa e il resto di Bali, e quel tratto può bloccarsi negli orari di pendolarismo.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Possiamo consegnare quasi a qualsiasi ora — le consegne serali o notturne fuori dall'orario abituale sono a pagamento e vanno concordate in anticipo.</p>`,
+      gettingAroundHtml: `<p>All'interno dell'enclave resort ITDC, le strade sono larghe, tranquille e ben tenute — davvero la guida più facile di questa lista. Il traffico aumenta soprattutto dove il cancello principale di Nusa Dua incontra la strada verso Benoa e il resto di Bali, e quel tratto può bloccarsi negli orari di pendolarismo.</p>`,
       faqQ1: 'Consegnate ovunque a Nusa Dua?',
       faqA1: 'Sì — la consegna copre tutta Nusa Dua. Gratuita da 14 giorni (2 settimane), Rp 150.000 fisso per soggiorni più brevi.',
       faqQ4: 'Basta uno scooter, o dovrei noleggiare qualcosa di più grande?',
@@ -197,11 +190,10 @@ export default {
 <li>Consegna gratuita per noleggi di <strong>7 giorni (1 settimana) o più</strong>.</li>
 <li>Noleggi più brevi: costo fisso di <strong>Rp 150.000</strong>, ovunque a Denpasar.</li>
 <li>Orario di consegna e punto d'incontro esatto vengono confermati su WhatsApp dopo la prenotazione.</li>
-<li>Consegniamo da un unico deposito a Kerobokan — lo stesso catalogo completo è disponibile per Denpasar, senza suddivisione dell'inventario per zona.</li>
+<li>Consegniamo da un unico deposito a Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Denpasar ha il traffico più denso e cittadino di tutti i distretti in questa lista — le arterie principali sono davvero congestionate per quasi tutta la giornata lavorativa, più vicino all'ora di punta di una capitale regionale che all'ingorgo pomeridiano di una località balneare. Qui uno scooter è meno opzionale che altrove — infilarsi nel traffico lento è spesso l'unico modo realistico per muoversi velocemente.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Possiamo consegnare quasi a qualsiasi ora — le consegne serali o notturne fuori dall'orario abituale sono a pagamento e vanno concordate in anticipo.</p>`,
+      gettingAroundHtml: `<p>Denpasar ha il traffico più denso e cittadino di tutti i distretti in questa lista — le arterie principali sono davvero congestionate per quasi tutta la giornata lavorativa, più vicino all'ora di punta di una capitale regionale che all'ingorgo pomeridiano di una località balneare. Qui uno scooter è meno opzionale che altrove — infilarsi nel traffico lento è spesso l'unico modo realistico per muoversi velocemente.</p>`,
       faqQ1: 'Consegnate ovunque a Denpasar?',
       faqA1: 'Sì — la consegna copre tutta Denpasar. Gratuita da 7 giorni (1 settimana), Rp 150.000 fisso per soggiorni più brevi.',
       faqQ4: 'Basta uno scooter, o dovrei noleggiare qualcosa di più grande?',

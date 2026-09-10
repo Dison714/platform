@@ -30,10 +30,10 @@ export default {
 <li><strong>7–14 Tage:</strong> Pauschalgebühr von Rp 100.000, überallhin in Canggu.</li>
 <li>Kürzere Mieten (unter 7 Tagen): Pauschalgebühr von <strong>Rp 150.000</strong>, überallhin in Canggu.</li>
 <li>Lieferzeit und genauer Treffpunkt werden nach der Buchung per WhatsApp bestätigt.</li>
-<li>Wir liefern aus unserem Depot in Kerobokan, nur Minuten von Canggu entfernt — der volle Katalog ist verfügbar, keine standortbasierte Bestandsaufteilung.</li>
+<li>Wir liefern aus unserem Depot in Kerobokan, nur Minuten von Canggu entfernt.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: подтвердить — зона доставки одинаковая для всего Canggu (включая Pererenan/Echo Beach на севере) или там другая логика? В одном из источников эти районы упоминаются как "дальше на север" от основного Canggu.]</p>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
+<p>Das Liefergebiet in Canggu ist für die gesamte Gegend gleich, einschließlich Pererenan und Echo Beach im Norden — es gibt keine besonderen Einschränkungen.</p>
+<p>Wir können fast jederzeit liefern — Lieferungen am Abend oder in der Nacht außerhalb der üblichen Zeiten sind gegen Aufpreis möglich und müssen vorher abgesprochen werden.</p>`,
       gettingAroundHtml: `<p>Canggus Straßen wurden für ein Fischerdorf gebaut, nicht für die heutige Menge an Rollern, Autos und Lieferwagen. Echter Stau ist zu erwarten <strong>zwischen 8–10 Uhr und 16–19 Uhr</strong>, besonders auf der Jalan Raya Canggu, rund um Kerobokan und auf dem Canggu Shortcut zwischen Berawa und Batu Bolong — eine enge Strecke, die zu Stoßzeiten stark verstopfen kann.</p>
 <p>Ein Roller bleibt trotzdem die schnellste Art, sich fortzubewegen: Du kannst dich durch langsamen Verkehr schlängeln und dort parken, wo ein Auto einfach nicht hinkommt. Kurz vor Sonnenuntergang wird es eng bei den großen Beachclubs (Batu Bolong / Old Man's, Berawa / Finns) — komm etwas früher, wenn du zum Sonnenuntergang dorthin willst.</p>`,
       faqQ1: 'Liefert ihr überallhin in Canggu, auch nach Pererenan und Echo Beach?',
@@ -52,11 +52,10 @@ export default {
 <li>Kostenlose Lieferung bei Miete <strong>ab 3 Tagen</strong>.</li>
 <li>Kürzere Mieten: Pauschalgebühr von <strong>Rp 150.000</strong>, überallhin in Seminyak.</li>
 <li>Lieferzeit und genauer Treffpunkt werden nach der Buchung per WhatsApp bestätigt.</li>
-<li>Wir liefern aus unserem Depot in Kerobokan, nur Minuten von Seminyak entfernt — der volle Katalog ist verfügbar, keine standortbasierte Bestandsaufteilung.</li>
+<li>Wir liefern aus unserem Depot in Kerobokan, nur Minuten von Seminyak entfernt.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Seminyaks Straßen sind streckenweise flach und begehbar, aber die Jalan Kayu Aya (Oberoi) und die Jalan Laksmana (Petitenget) sind am späten Nachmittag stark verstopft, wenn der Beachclub-Verkehr zunimmt — Lieferroller und Autos kämpfen um dieselben engen Fahrspuren. Ein Roller schlägt diesen Stau trotzdem: Du kannst dich durchschlängeln und näher an den Stranteingängen parken als jedes Auto.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Wir können fast jederzeit liefern — Lieferungen am Abend oder in der Nacht außerhalb der üblichen Zeiten sind gegen Aufpreis möglich und müssen vorher abgesprochen werden.</p>`,
+      gettingAroundHtml: `<p>Seminyaks Straßen sind streckenweise flach und begehbar, aber die Jalan Kayu Aya (Oberoi) und die Jalan Laksmana (Petitenget) sind am späten Nachmittag stark verstopft, wenn der Beachclub-Verkehr zunimmt — Lieferroller und Autos kämpfen um dieselben engen Fahrspuren. Ein Roller schlägt diesen Stau trotzdem: Du kannst dich durchschlängeln und näher an den Stranteingängen parken als jedes Auto.</p>`,
       faqQ1: 'Liefert ihr überallhin in Seminyak?',
       faqA1: 'Ja — die Lieferung deckt ganz Seminyak ab. Kostenlos ab 3 Tagen, Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
@@ -73,11 +72,10 @@ export default {
 <li>Kostenlose Lieferung bei Miete <strong>ab 30 Tagen (1 Monat)</strong>.</li>
 <li>Kürzere Mieten: Pauschalgebühr von <strong>Rp 150.000</strong>, überallhin in Ubud.</li>
 <li>Lieferzeit und genauer Treffpunkt werden nach der Buchung per WhatsApp bestätigt.</li>
-<li>Wir liefern aus einem zentralen Depot in Kerobokan — derselbe volle Katalog ist auch für Ubud verfügbar, keine standortbasierte Bestandsaufteilung.</li>
+<li>Wir liefern aus einem zentralen Depot in Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Ubuds Hauptader, die Jalan Raya Ubud, staut sich rund um den Markt und die Monkey Forest Road besonders mittags und am frühen Abend — eine der am stärksten befahrenen einzelnen Straßen Balis außerhalb des Südens. Abseits davon sind die Straßen durch die Reisterrassen und den Campuhan Ridge ruhiger, aber wirklich hügelig, sodass ein etwas stärkeres Bike (ADV oder Xmax) sich dort leichter fährt als ein kleiner Stadtroller.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Wir können fast jederzeit liefern — Lieferungen am Abend oder in der Nacht außerhalb der üblichen Zeiten sind gegen Aufpreis möglich und müssen vorher abgesprochen werden.</p>`,
+      gettingAroundHtml: `<p>Ubuds Hauptader, die Jalan Raya Ubud, staut sich rund um den Markt und die Monkey Forest Road besonders mittags und am frühen Abend — eine der am stärksten befahrenen einzelnen Straßen Balis außerhalb des Südens. Abseits davon sind die Straßen durch die Reisterrassen und den Campuhan Ridge ruhiger, aber wirklich hügelig, sodass ein etwas stärkeres Bike (ADV oder Xmax) sich dort leichter fährt als ein kleiner Stadtroller.</p>`,
       faqQ1: 'Liefert ihr überallhin in Ubud?',
       faqA1: 'Ja — die Lieferung deckt ganz Ubud ab. Kostenlos ab 30 Tagen (1 Monat), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
@@ -94,11 +92,10 @@ export default {
 <li>Kostenlose Lieferung bei Miete <strong>ab 14 Tagen (2 Wochen)</strong>.</li>
 <li>Kürzere Mieten: Pauschalgebühr von <strong>Rp 150.000</strong>, überallhin um Uluwatu.</li>
 <li>Lieferzeit und genauer Treffpunkt werden nach der Buchung per WhatsApp bestätigt.</li>
-<li>Wir liefern aus einem zentralen Depot in Kerobokan — derselbe volle Katalog ist auch für Uluwatu verfügbar, keine standortbasierte Bestandsaufteilung.</li>
+<li>Wir liefern aus einem zentralen Depot in Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Die Straßen auf der Bukit-Halbinsel rund um Uluwatu sind hügeliger und weiter verteilt als überall sonst auf dieser Liste — von einem Strand zum nächsten (Padang Padang, Bingin, Balangan) bedeutet oft einen echten Anstieg, kein flaches Cruisen. Der Verkehr selbst ist leichter als in Canggu oder Seminyak, aber das Gelände bedeutet, dass ein Roller mit mehr Drehmoment sich deutlich komfortabler fährt.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Wir können fast jederzeit liefern — Lieferungen am Abend oder in der Nacht außerhalb der üblichen Zeiten sind gegen Aufpreis möglich und müssen vorher abgesprochen werden.</p>`,
+      gettingAroundHtml: `<p>Die Straßen auf der Bukit-Halbinsel rund um Uluwatu sind hügeliger und weiter verteilt als überall sonst auf dieser Liste — von einem Strand zum nächsten (Padang Padang, Bingin, Balangan) bedeutet oft einen echten Anstieg, kein flaches Cruisen. Der Verkehr selbst ist leichter als in Canggu oder Seminyak, aber das Gelände bedeutet, dass ein Roller mit mehr Drehmoment sich deutlich komfortabler fährt.</p>`,
       faqQ1: 'Liefert ihr überallhin um Uluwatu?',
       faqA1: 'Ja — die Lieferung deckt das gesamte Uluwatu-Gebiet ab. Kostenlos ab 14 Tagen (2 Wochen), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
@@ -115,11 +112,10 @@ export default {
 <li>Kostenlose Lieferung bei Miete <strong>ab 14 Tagen (2 Wochen)</strong>.</li>
 <li>Kürzere Mieten: Pauschalgebühr von <strong>Rp 150.000</strong>, überallhin in Jimbaran.</li>
 <li>Lieferzeit und genauer Treffpunkt werden nach der Buchung per WhatsApp bestätigt.</li>
-<li>Wir liefern aus einem zentralen Depot in Kerobokan — derselbe volle Katalog ist auch für Jimbaran verfügbar, keine standortbasierte Bestandsaufteilung.</li>
+<li>Wir liefern aus einem zentralen Depot in Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Jimbaran selbst ist recht entspannt im Vergleich zu den belebteren Surf-Hotspots im Süden — die Straße entlang der Bucht und die Zufahrt zum GWK sind die Hauptadern, der Verkehr nimmt vor allem zum Sonnenuntergang zu, wenn sich die Fisch-Warungs füllen. Ein Roller ist die einfache Art, entlang der Bucht oder hoch zum GWK und zum Bukit zu fahren, ohne nach Parkplätzen zu suchen.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Wir können fast jederzeit liefern — Lieferungen am Abend oder in der Nacht außerhalb der üblichen Zeiten sind gegen Aufpreis möglich und müssen vorher abgesprochen werden.</p>`,
+      gettingAroundHtml: `<p>Jimbaran selbst ist recht entspannt im Vergleich zu den belebteren Surf-Hotspots im Süden — die Straße entlang der Bucht und die Zufahrt zum GWK sind die Hauptadern, der Verkehr nimmt vor allem zum Sonnenuntergang zu, wenn sich die Fisch-Warungs füllen. Ein Roller ist die einfache Art, entlang der Bucht oder hoch zum GWK und zum Bukit zu fahren, ohne nach Parkplätzen zu suchen.</p>`,
       faqQ1: 'Liefert ihr überallhin in Jimbaran?',
       faqA1: 'Ja — die Lieferung deckt ganz Jimbaran ab. Kostenlos ab 14 Tagen (2 Wochen), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
@@ -136,11 +132,10 @@ export default {
 <li>Kostenlose Lieferung bei Miete <strong>ab 7 Tagen (1 Woche)</strong>.</li>
 <li>Kürzere Mieten: Pauschalgebühr von <strong>Rp 150.000</strong>, überallhin in Sanur.</li>
 <li>Lieferzeit und genauer Treffpunkt werden nach der Buchung per WhatsApp bestätigt.</li>
-<li>Wir liefern aus einem zentralen Depot in Kerobokan — derselbe volle Katalog ist auch für Sanur verfügbar, keine standortbasierte Bestandsaufteilung.</li>
+<li>Wir liefern aus einem zentralen Depot in Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Sanur ist einer der ruhigeren Bezirke zum Fahren — die Strandpromenade ist entspannt und rollerfreundlich, und die Straßen ins Landesinnere Richtung Denpasar haben mehr Verkehr als die Küste selbst, aber nichts wie der Stoßzeit-Andrang in Kuta oder Seminyak. Ein angenehmer Ort, um sich ans Fahren auf Bali zu gewöhnen, bevor es weiter weggeht.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Wir können fast jederzeit liefern — Lieferungen am Abend oder in der Nacht außerhalb der üblichen Zeiten sind gegen Aufpreis möglich und müssen vorher abgesprochen werden.</p>`,
+      gettingAroundHtml: `<p>Sanur ist einer der ruhigeren Bezirke zum Fahren — die Strandpromenade ist entspannt und rollerfreundlich, und die Straßen ins Landesinnere Richtung Denpasar haben mehr Verkehr als die Küste selbst, aber nichts wie der Stoßzeit-Andrang in Kuta oder Seminyak. Ein angenehmer Ort, um sich ans Fahren auf Bali zu gewöhnen, bevor es weiter weggeht.</p>`,
       faqQ1: 'Liefert ihr überallhin in Sanur?',
       faqA1: 'Ja — die Lieferung deckt ganz Sanur ab. Kostenlos ab 7 Tagen (1 Woche), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
@@ -157,11 +152,10 @@ export default {
 <li>Kostenlose Lieferung bei Miete <strong>ab 7 Tagen (1 Woche)</strong>.</li>
 <li>Kürzere Mieten: Pauschalgebühr von <strong>Rp 150.000</strong>, überallhin in Kuta.</li>
 <li>Lieferzeit und genauer Treffpunkt werden nach der Buchung per WhatsApp bestätigt.</li>
-<li>Wir liefern aus einem zentralen Depot in Kerobokan — derselbe volle Katalog ist auch für Kuta verfügbar, keine standortbasierte Bestandsaufteilung.</li>
+<li>Wir liefern aus einem zentralen Depot in Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Kuta und Legian gehören zu den am stärksten befahrenen Straßen Balis — die Jalan Legian und die Straßen rund um die Beachwalk Mall stauen sich den größten Teil des Nachmittags und Abends, verschärft durch die Dichte an Fußgängern, Taxis und Lieferrollern. Ein Roller kommt trotzdem schneller durch als ein Auto, und Kutas Nähe zum Flughafen ist praktisch für frühe Ankünfte oder späte Abflüge.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Wir können fast jederzeit liefern — Lieferungen am Abend oder in der Nacht außerhalb der üblichen Zeiten sind gegen Aufpreis möglich und müssen vorher abgesprochen werden.</p>`,
+      gettingAroundHtml: `<p>Kuta und Legian gehören zu den am stärksten befahrenen Straßen Balis — die Jalan Legian und die Straßen rund um die Beachwalk Mall stauen sich den größten Teil des Nachmittags und Abends, verschärft durch die Dichte an Fußgängern, Taxis und Lieferrollern. Ein Roller kommt trotzdem schneller durch als ein Auto, und Kutas Nähe zum Flughafen ist praktisch für frühe Ankünfte oder späte Abflüge.</p>`,
       faqQ1: 'Liefert ihr überallhin in Kuta?',
       faqA1: 'Ja — die Lieferung deckt ganz Kuta ab. Kostenlos ab 7 Tagen (1 Woche), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
@@ -178,11 +172,10 @@ export default {
 <li>Kostenlose Lieferung bei Miete <strong>ab 14 Tagen (2 Wochen)</strong>.</li>
 <li>Kürzere Mieten: Pauschalgebühr von <strong>Rp 150.000</strong>, überallhin in Nusa Dua.</li>
 <li>Lieferzeit und genauer Treffpunkt werden nach der Buchung per WhatsApp bestätigt.</li>
-<li>Wir liefern aus einem zentralen Depot in Kerobokan — derselbe volle Katalog ist auch für Nusa Dua verfügbar, keine standortbasierte Bestandsaufteilung.</li>
+<li>Wir liefern aus einem zentralen Depot in Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Innerhalb der ITDC-Resortenklave sind die Straßen breit, ruhig und gut instand gehalten — wirklich das einfachste Fahren auf dieser Liste. Der Verkehr nimmt vor allem dort zu, wo das Haupttor von Nusa Dua auf die Straße Richtung Benoa und den Rest Balis trifft, und dieser Abschnitt kann sich zu den Pendelzeiten stauen.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Wir können fast jederzeit liefern — Lieferungen am Abend oder in der Nacht außerhalb der üblichen Zeiten sind gegen Aufpreis möglich und müssen vorher abgesprochen werden.</p>`,
+      gettingAroundHtml: `<p>Innerhalb der ITDC-Resortenklave sind die Straßen breit, ruhig und gut instand gehalten — wirklich das einfachste Fahren auf dieser Liste. Der Verkehr nimmt vor allem dort zu, wo das Haupttor von Nusa Dua auf die Straße Richtung Benoa und den Rest Balis trifft, und dieser Abschnitt kann sich zu den Pendelzeiten stauen.</p>`,
       faqQ1: 'Liefert ihr überallhin in Nusa Dua?',
       faqA1: 'Ja — die Lieferung deckt ganz Nusa Dua ab. Kostenlos ab 14 Tagen (2 Wochen), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
@@ -199,11 +192,10 @@ export default {
 <li>Kostenlose Lieferung bei Miete <strong>ab 7 Tagen (1 Woche)</strong>.</li>
 <li>Kürzere Mieten: Pauschalgebühr von <strong>Rp 150.000</strong>, überallhin in Denpasar.</li>
 <li>Lieferzeit und genauer Treffpunkt werden nach der Buchung per WhatsApp bestätigt.</li>
-<li>Wir liefern aus einem zentralen Depot in Kerobokan — derselbe volle Katalog ist auch für Denpasar verfügbar, keine standortbasierte Bestandsaufteilung.</li>
+<li>Wir liefern aus einem zentralen Depot in Kerobokan.</li>
 </ul>
-<p class="loc-todo">[TODO — Дмитрий: часы работы доставки (можно ли ночью/рано утром?) — не знаю, не пишу]</p>`,
-      gettingAroundHtml: `<p>Denpasar hat den dichtesten, wirklich großstädtischsten Verkehr aller Bezirke auf dieser Liste — die Hauptadern sind fast den ganzen Arbeitstag über wirklich verstopft, eher wie die Stoßzeit einer regionalen Hauptstadt als der nachmittägliche Stau eines Strandorts. Ein Roller ist hier weniger optional als überall sonst — sich durch den langsamen Verkehr zu schlängeln ist oft die einzig realistische Art, schnell voranzukommen.</p>
-<p class="loc-todo">[TODO — заблокировано анкетой водителям (Hari/Stefan/Saiban), которую ещё не отправили: точные часы пик и маршруты объезда подтвердим их словами, не придумываю.]</p>`,
+<p>Wir können fast jederzeit liefern — Lieferungen am Abend oder in der Nacht außerhalb der üblichen Zeiten sind gegen Aufpreis möglich und müssen vorher abgesprochen werden.</p>`,
+      gettingAroundHtml: `<p>Denpasar hat den dichtesten, wirklich großstädtischsten Verkehr aller Bezirke auf dieser Liste — die Hauptadern sind fast den ganzen Arbeitstag über wirklich verstopft, eher wie die Stoßzeit einer regionalen Hauptstadt als der nachmittägliche Stau eines Strandorts. Ein Roller ist hier weniger optional als überall sonst — sich durch den langsamen Verkehr zu schlängeln ist oft die einzig realistische Art, schnell voranzukommen.</p>`,
       faqQ1: 'Liefert ihr überallhin in Denpasar?',
       faqA1: 'Ja — die Lieferung deckt ganz Denpasar ab. Kostenlos ab 7 Tagen (1 Woche), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
