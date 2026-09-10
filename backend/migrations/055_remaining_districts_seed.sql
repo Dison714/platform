@@ -236,7 +236,7 @@ INSERT INTO location_page_translations (
     'Scooter Rental Sanur, Bali — Free Delivery & Best Bikes | BikeBaliRent',
     'Scooter & motorbike rental in Sanur with fast delivery along the beachfront and harbor area. Free delivery on weekly rentals, transparent pricing, 60+ bikes.',
     'Scooter & Motorbike Rental in Sanur',
-    'Sanur is Bali''s calmest beach town — a long paved beachfront promenade, shallow water and a slower pace than the busier south, popular with families and the fast-boat crowd heading to Nusa Penida and the Gilis. Streets are flatter and less congested than the south's surf hubs, making it an easy place to start riding. We deliver anywhere in Sanur — the beachfront, the harbor area, and inland toward Denpasar — and set you up with a bike that matches your plans, whether that''s the promenade or a day trip further afield.',
+    'Sanur is Bali''s calmest beach town — a long paved beachfront promenade, shallow water and a slower pace than the busier south, popular with families and the fast-boat crowd heading to Nusa Penida and the Gilis. Streets are flatter and less congested than the south''s surf hubs, making it an easy place to start riding. We deliver anywhere in Sanur — the beachfront, the harbor area, and inland toward Denpasar — and set you up with a bike that matches your plans, whether that''s the promenade or a day trip further afield.',
     'Free delivery on rentals of 15+ days · Rp 100,000 for 7–14 days · Rp 150,000 flat under a week — anywhere in Sanur.',
     $html$<ul>
 <li>Free delivery on rentals of <strong>15 days or longer</strong>.</li>
