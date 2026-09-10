@@ -3,12 +3,13 @@
 // устоявшегося немецкого экзонима, transliteration не нужна.
 export default {
   whichBikeHtml: `<ul>
-<li><strong>Stadtfahrten</strong> (Cafés, Geschäfte, kurze Strecken): eine <strong>Honda PCX 160</strong> oder <strong>Yamaha Nmax 155</strong> — vollautomatisch, leicht zu parken, völlig ausreichend für flache Straßen vor Ort.</li>
-<li><strong>Hügel / leichtes Abenteuer</strong>: eine <strong>Honda ADV 160</strong> — mehr Bodenfreiheit, ebenfalls automatisch, sicherer an Steigungen als ein Stadtroller.</li>
-<li><strong>Lange Tagesausflüge</strong> quer durch Bali: eine <strong>Yamaha Xmax 250</strong> — stärkerer Motor, stabiler bei Autobahntempo, komfortabler auf langen Strecken.</li>
-<li><strong>Beifahrer + Gepäck</strong> / mehrtägige Touren: eine <strong>Suzuki V-Strom 250</strong> oder <strong>Kawasaki Versys</strong> — Reiseenduros mit Schaltung, ausgelegt für zwei Personen mit Gepäck, am besten für erfahrenere Fahrer.</li>
+<li><strong>Stadtfahrten</strong> (Cafés, Geschäfte, kurze Strecken): eine <strong><a href="/de/bikes?category=honda_pcx160">Honda PCX 160</a></strong> oder <strong><a href="/de/bikes?category=yamaha_nmax155">Yamaha Nmax 155</a></strong> — vollautomatisch, leicht zu parken, völlig ausreichend für flache Straßen vor Ort.</li>
+<li><strong>Hügel / leichtes Abenteuer</strong>: eine <strong><a href="/de/bikes?category=honda_adv160">Honda ADV 160</a></strong> — mehr Bodenfreiheit, ebenfalls automatisch, sicherer an Steigungen als ein Stadtroller.</li>
+<li><strong>Lange Tagesausflüge</strong> quer durch Bali: eine <strong><a href="/de/bikes?category=yamaha_xmax250">Yamaha Xmax 250</a></strong> — stärkerer Motor, stabiler bei Autobahntempo, komfortabler auf langen Strecken.</li>
+<li><strong>Beifahrer + Gepäck</strong> / mehrtägige Touren: eine <strong><a href="/de/bikes?group=motorcycle&amp;model=suzuki_vstrom250">Suzuki V-Strom 250</a></strong> oder <strong><a href="/de/bikes?group=motorcycle&amp;model=kawasaki_versys">Kawasaki Versys</a></strong> — Reiseenduros mit Schaltung, ausgelegt für zwei Personen mit Gepäck, am besten für erfahrenere Fahrer.</li>
 </ul>`,
   deliveryDisclaimer: 'Die oben genannten Preise sind Richtwerte — die genauen Lieferkosten für deine Daten und Zeiten bitte mit unserem Team bestätigen.',
+  faqBiggerBikeLinkLabel: "Motorräder",
   faqMinRental: { q: 'Gibt es eine Mindestmietdauer?', a: 'Es gibt kein Minimum — nur die Liefergebühr ändert sich mit der Mietdauer.' },
   faqIdpQ: (district, prep) => `Brauche ich einen internationalen Führerschein, um ${prep} ${district} zu fahren?`,
   faqIdpA: 'Ja, zusätzlich zu deinem Heimatführerschein — unseren vollständigen Guide findest du hier:',
@@ -39,7 +40,8 @@ export default {
       faqQ1: 'Liefert ihr überallhin in Canggu, auch nach Pererenan und Echo Beach?',
       faqA1: 'Ja — die Lieferung deckt ganz Canggu ab. Kostenlos ab 15 Tagen, Rp 100.000 für 7–14 Tage, Rp 150.000 Pauschale unter einer Woche.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
-      faqA4: 'Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Canggu" oben. Wenn du hauptsächlich in Canggu bleibst, reicht ein Roller; für Tagesausflüge nach Ubud/Uluwatu ist eine NMAX oder ADV komfortabler.',
+      faqA4: "Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Canggu\" oben. Wenn du hauptsächlich in Canggu bleibst, reicht ein Roller; für Tagesausflüge nach Ubud/Uluwatu ist eine NMAX oder ADV komfortabler. Möchtest du ein größeres Motorrad? Gerne schlagen wir dir Optionen vor:",
+      whichBikeExtra: "<p>Nicht nur ankommen, sondern stilvoll ankommen? Café-Racer — <strong><a href=\"/de/bikes?group=motorcycle&amp;model=yamaha_xsr\">XSR</a></strong> und <strong><a href=\"/de/bikes?group=motorcycle&amp;model=tvs_ronin225\">Ronin</a></strong> — und sportliche Modelle passen perfekt zu Canggu und Seminyak: wendig im Verkehr, auffällig an der Strandpromenade und vor deinem Lieblingscafé. Wenn dir nicht nur Komfort, sondern auch Stil wichtig ist, ist das genau dein Bike.</p>",
     },
     seminyak: {
       name: 'Seminyak', prep: 'in',
@@ -59,7 +61,8 @@ export default {
       faqQ1: 'Liefert ihr überallhin in Seminyak?',
       faqA1: 'Ja — die Lieferung deckt ganz Seminyak ab. Kostenlos ab 3 Tagen, Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
-      faqA4: 'Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Seminyak" oben. Für Fahrten vor Ort reicht ein Roller; für längere Touren quer durch Bali ist eine Xmax, V-Strom oder Versys komfortabler.',
+      faqA4: "Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Seminyak\" oben. Für Fahrten vor Ort reicht ein Roller; für längere Touren quer durch Bali ist eine Xmax, V-Strom oder Versys komfortabler. Möchtest du ein größeres Motorrad? Gerne schlagen wir dir Optionen vor:",
+      whichBikeExtra: "<p>Nicht nur ankommen, sondern stilvoll ankommen? Café-Racer — <strong><a href=\"/de/bikes?group=motorcycle&amp;model=yamaha_xsr\">XSR</a></strong> und <strong><a href=\"/de/bikes?group=motorcycle&amp;model=tvs_ronin225\">Ronin</a></strong> — und sportliche Modelle passen perfekt zu Canggu und Seminyak: wendig im Verkehr, auffällig an der Strandpromenade und vor deinem Lieblingscafé. Wenn dir nicht nur Komfort, sondern auch Stil wichtig ist, ist das genau dein Bike.</p>",
     },
     ubud: {
       name: 'Ubud', prep: 'in',
@@ -79,7 +82,7 @@ export default {
       faqQ1: 'Liefert ihr überallhin in Ubud?',
       faqA1: 'Ja — die Lieferung deckt ganz Ubud ab. Kostenlos ab 30 Tagen (1 Monat), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
-      faqA4: 'Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Ubud" oben. Ubuds Hügel profitieren von etwas mehr Leistung als ein flacher Küstenstadtroller, besonders wenn es weiter zu den Reisterrassen geht.',
+      faqA4: "Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Ubud\" oben. Ubuds Hügel profitieren von etwas mehr Leistung als ein flacher Küstenstadtroller, besonders wenn es weiter zu den Reisterrassen geht. Möchtest du ein größeres Motorrad? Gerne schlagen wir dir Optionen vor:",
     },
     uluwatu: {
       name: 'Uluwatu', prep: 'um',
@@ -99,7 +102,7 @@ export default {
       faqQ1: 'Liefert ihr überallhin um Uluwatu?',
       faqA1: 'Ja — die Lieferung deckt das gesamte Uluwatu-Gebiet ab. Kostenlos ab 14 Tagen (2 Wochen), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
-      faqA4: 'Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Uluwatu" oben. Die Hügel des Bukit profitieren von etwas mehr Leistung als ein flacher Küstenstadtroller.',
+      faqA4: "Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Uluwatu\" oben. Die Hügel des Bukit profitieren von etwas mehr Leistung als ein flacher Küstenstadtroller. Möchtest du ein größeres Motorrad? Gerne schlagen wir dir Optionen vor:",
     },
     jimbaran: {
       name: 'Jimbaran', prep: 'in',
@@ -119,7 +122,7 @@ export default {
       faqQ1: 'Liefert ihr überallhin in Jimbaran?',
       faqA1: 'Ja — die Lieferung deckt ganz Jimbaran ab. Kostenlos ab 14 Tagen (2 Wochen), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
-      faqA4: 'Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Jimbaran" oben. Für die Bucht selbst reicht ein Roller; Richtung Bukit oder GWK geht es mit mehr Leistung leichter.',
+      faqA4: "Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Jimbaran\" oben. Für die Bucht selbst reicht ein Roller; Richtung Bukit oder GWK geht es mit mehr Leistung leichter. Möchtest du ein größeres Motorrad? Gerne schlagen wir dir Optionen vor:",
     },
     sanur: {
       name: 'Sanur', prep: 'in',
@@ -139,7 +142,7 @@ export default {
       faqQ1: 'Liefert ihr überallhin in Sanur?',
       faqA1: 'Ja — die Lieferung deckt ganz Sanur ab. Kostenlos ab 7 Tagen (1 Woche), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
-      faqA4: 'Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Sanur" oben. Sanur selbst ist flach und einfach mit einem Stadtroller; für Tagesausflüge weiter weg ist eine Xmax, V-Strom oder Versys komfortabler.',
+      faqA4: "Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Sanur\" oben. Sanur selbst ist flach und einfach mit einem Stadtroller; für Tagesausflüge weiter weg ist eine Xmax, V-Strom oder Versys komfortabler. Möchtest du ein größeres Motorrad? Gerne schlagen wir dir Optionen vor:",
     },
     kuta: {
       name: 'Kuta', prep: 'in',
@@ -159,7 +162,7 @@ export default {
       faqQ1: 'Liefert ihr überallhin in Kuta?',
       faqA1: 'Ja — die Lieferung deckt ganz Kuta ab. Kostenlos ab 7 Tagen (1 Woche), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
-      faqA4: 'Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Kuta" oben. Für den Streifen selbst reicht ein Roller; für längere Touren quer durch Bali ist eine Xmax, V-Strom oder Versys komfortabler.',
+      faqA4: "Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Kuta\" oben. Für den Streifen selbst reicht ein Roller; für längere Touren quer durch Bali ist eine Xmax, V-Strom oder Versys komfortabler. Möchtest du ein größeres Motorrad? Gerne schlagen wir dir Optionen vor:",
     },
     'nusa-dua': {
       name: 'Nusa Dua', prep: 'in',
@@ -179,7 +182,7 @@ export default {
       faqQ1: 'Liefert ihr überallhin in Nusa Dua?',
       faqA1: 'Ja — die Lieferung deckt ganz Nusa Dua ab. Kostenlos ab 14 Tagen (2 Wochen), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
-      faqA4: 'Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Nusa Dua" oben. Innerhalb der Enklave reicht ein Roller; für längere Touren quer durch Bali ist eine Xmax, V-Strom oder Versys komfortabler.',
+      faqA4: "Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Nusa Dua\" oben. Innerhalb der Enklave reicht ein Roller; für längere Touren quer durch Bali ist eine Xmax, V-Strom oder Versys komfortabler. Möchtest du ein größeres Motorrad? Gerne schlagen wir dir Optionen vor:",
     },
     denpasar: {
       name: 'Denpasar', prep: 'in',
@@ -199,7 +202,23 @@ export default {
       faqQ1: 'Liefert ihr überallhin in Denpasar?',
       faqA1: 'Ja — die Lieferung deckt ganz Denpasar ab. Kostenlos ab 7 Tagen (1 Woche), Rp 150.000 Pauschale bei kürzeren Aufenthalten.',
       faqQ4: 'Reicht ein Roller, oder sollte ich etwas Größeres mieten?',
-      faqA4: 'Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Denpasar" oben. Für Stadtfahrten reicht ein Roller; für längere Touren quer durch Bali ist eine Xmax, V-Strom oder Versys komfortabler.',
+      faqA4: "Kommt auf deine Pläne an — siehe „Welches Bike passt am besten zu Denpasar\" oben. Für Stadtfahrten reicht ein Roller; für längere Touren quer durch Bali ist eine Xmax, V-Strom oder Versys komfortabler. Möchtest du ein größeres Motorrad? Gerne schlagen wir dir Optionen vor:",
     },
+    airport: {
+        "name": "Flughafen",
+        "prep": "am",
+        "h1": "Roller- & Motorradverleih mit Lieferung zum Flughafen",
+        "intro": "Gerade auf Bali gelandet und willst direkt losfahren? Wir treffen dich ein paar Minuten vom Ankunftsausgang entfernt und übergeben dein Bike, bevor du überhaupt ein Taxi gefunden hättest. Lieferung zum Flughafen ist fast jederzeit möglich, und wir geben dir ein Bike, das zu deinen weiteren Plänen auf Bali passt.",
+        "seoTitle": "Rollerverleih am Flughafen Bali (DPS) — Wir holen dich ab | BikeBaliRent",
+        "seoDescription": "Roller- & Motorradverleih mit Lieferung zum Flughafen Ngurah Rai (DPS), Bali. Wir treffen dich 1–3 Minuten vom Ankunftsausgang entfernt, transparente Preise, 60+ Bikes.",
+        "deliverySummary": "Kostenlose Lieferung bei Miete ab 7 Tagen (1 Woche) · Rp 150.000 Pauschale bei kürzerer Miete — zum Flughafenterminal.",
+        "deliveryHtml": "<ul>\n<li>Kostenlose Lieferung bei Miete <strong>ab 7 Tagen (1 Woche)</strong>.</li>\n<li>Kürzere Miete: Pauschale Liefergebühr von <strong>Rp 150.000</strong>.</li>\n<li>Genaue Zeit und Treffpunkt werden nach der Buchung per WhatsApp bestätigt.</li>\n</ul>\n<p>Wir können fast jederzeit liefern — Lieferungen am Abend oder in der Nacht außerhalb der üblichen Zeiten sind gegen Aufpreis möglich und müssen vorher abgesprochen werden.</p>\n<p>Plane etwas Zeit für den Weg durch den Terminal ein — eine Wartezeit von 1,5 bis 3 Stunden auf einen Kunden ist keine Seltenheit.</p>\n<p>Wir warten nicht direkt am Ausgang — dort ist viel Betrieb, und langes Warten kann ein Bußgeld nach sich ziehen. Wir treffen dich 1–3 Gehminuten vom Ausgang entfernt, am Bike-Parkplatz.</p>",
+        "gettingAroundHtml": null,
+        "faqQ1": "Holt ihr Ankommende am Flughafen Ngurah Rai ab?",
+        "faqA1": "Ja — wir treffen dich 1–3 Gehminuten vom Ankunftsausgang entfernt, am Bike-Parkplatz. Plane nach der Landung etwas Puffer ein — eine Wartezeit von 1,5 bis 3 Stunden auf einen Kunden ist keine Seltenheit.",
+        "faqIdpQOverride": "Brauche ich einen internationalen Führerschein, um mit einem gemieteten Bike auf Bali zu fahren?",
+        "faqQ4": "Welches Bike passt, wenn ich gerade gelandet bin?",
+        "faqA4": "Kommt auf deine weiteren Pläne auf Bali an — siehe „Welches Bike passt\" oben: ein Roller für die Stadt, eine ADV oder Xmax für längere Strecken, ein Tourenbike, wenn ihr zu zweit mit Gepäck unterwegs seid. Möchtest du ein größeres Motorrad? Gerne schlagen wir dir Optionen vor:"
+  },
   },
 };

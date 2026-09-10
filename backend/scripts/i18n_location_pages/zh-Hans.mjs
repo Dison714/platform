@@ -2,12 +2,13 @@
 // упрощённым китайским (общепринятая практика).
 export default {
   whichBikeHtml: `<ul>
-<li><strong>市区骑行</strong>（咖啡馆、商店、短途出行）：<strong>Honda PCX 160</strong> 或 <strong>Yamaha Nmax 155</strong> — 全自动挡，停车方便，完全能应付平坦的当地道路。</li>
-<li><strong>丘陵地带／轻度越野</strong>：<strong>Honda ADV 160</strong> — 离地间隙更高，同样是自动挡，上坡时比市区踏板车更稳。</li>
-<li><strong>巴厘岛内长途出行</strong>：<strong>Yamaha Xmax 250</strong> — 动力更强，高速行驶更稳定，长途更舒适。</li>
-<li><strong>载人＋行李／多日骑行</strong>：<strong>Suzuki V-Strom 250</strong> 或 <strong>Kawasaki Versys</strong> — 手动挡旅行车型，专为双人载行李设计，更适合经验丰富的骑手。</li>
+<li><strong>市区骑行</strong>（咖啡馆、商店、短途出行）：<strong><a href="/zh-Hans/bikes?category=honda_pcx160">Honda PCX 160</a></strong> 或 <strong><a href="/zh-Hans/bikes?category=yamaha_nmax155">Yamaha Nmax 155</a></strong> — 全自动挡，停车方便，完全能应付平坦的当地道路。</li>
+<li><strong>丘陵地带／轻度越野</strong>：<strong><a href="/zh-Hans/bikes?category=honda_adv160">Honda ADV 160</a></strong> — 离地间隙更高，同样是自动挡，上坡时比市区踏板车更稳。</li>
+<li><strong>巴厘岛内长途出行</strong>：<strong><a href="/zh-Hans/bikes?category=yamaha_xmax250">Yamaha Xmax 250</a></strong> — 动力更强，高速行驶更稳定，长途更舒适。</li>
+<li><strong>载人＋行李／多日骑行</strong>：<strong><a href="/zh-Hans/bikes?group=motorcycle&amp;model=suzuki_vstrom250">Suzuki V-Strom 250</a></strong> 或 <strong><a href="/zh-Hans/bikes?group=motorcycle&amp;model=kawasaki_versys">Kawasaki Versys</a></strong> — 手动挡旅行车型，专为双人载行李设计，更适合经验丰富的骑手。</li>
 </ul>`,
   deliveryDisclaimer: '以上价格仅供参考——具体配送费用请务必与我们的团队确认您的日期和时间。',
+  faqBiggerBikeLinkLabel: "摩托车",
   faqMinRental: { q: '租车有最短期限吗？', a: '没有最短期限——只有配送费会随租期长短变化。' },
   faqIdpQ: (district) => `在${district}骑行需要国际驾照吗？`,
   faqIdpA: '需要，需和您本国驾照一起使用——请查看我们的完整指南：',
@@ -38,7 +39,8 @@ export default {
       faqQ1: '你们配送到芝安古的所有地方吗，包括Pererenan和Echo Beach？',
       faqA1: '是的——配送覆盖整个芝安古。15天以上免费，7–14天Rp 100,000，不足一周固定Rp 150,000。',
       faqQ4: '踏板车够用吗，还是需要租更大的车型？',
-      faqA4: '取决于您的计划——请见上方"芝安古适合哪款车型"。如果您主要待在芝安古，踏板车完全够用；前往乌布/乌鲁瓦图的一日游，NMAX或ADV会更舒适。',
+      faqA4: "取决于您的计划——请见上方\"芝安古适合哪款车型\"。如果您主要待在芝安古，踏板车完全够用；前往乌布/乌鲁瓦图的一日游，NMAX或ADV会更舒适。 想要更大排量的车型？我们很乐意为您推荐：",
+      whichBikeExtra: "<p>不只是到达，更想骑得有型？Café Racer车型——<strong><a href=\"/zh-Hans/bikes?group=motorcycle&amp;model=yamaha_xsr\">XSR</a></strong>和<strong><a href=\"/zh-Hans/bikes?group=motorcycle&amp;model=tvs_ronin225\">Ronin</a></strong>——以及运动款非常适合芝安古和水明漾：车流中灵活穿梭，海边大道和心仪咖啡馆前格外拉风。如果您在意的不只是舒适，还有风格，这就是您的选择。</p>",
     },
     seminyak: {
       name: '水明漾', prep: '',
@@ -58,7 +60,8 @@ export default {
       faqQ1: '你们配送到水明漾的所有地方吗？',
       faqA1: '是的——配送覆盖整个水明漾。3天以上免费，短期入住固定Rp 150,000。',
       faqQ4: '踏板车够用吗，还是需要租更大的车型？',
-      faqA4: '取决于您的计划——请见上方"水明漾适合哪款车型"。市内出行踏板车足够；巴厘岛内长途出行，Xmax、V-Strom或Versys会更舒适。',
+      faqA4: "取决于您的计划——请见上方\"水明漾适合哪款车型\"。市内出行踏板车足够；巴厘岛内长途出行，Xmax、V-Strom或Versys会更舒适。 想要更大排量的车型？我们很乐意为您推荐：",
+      whichBikeExtra: "<p>不只是到达，更想骑得有型？Café Racer车型——<strong><a href=\"/zh-Hans/bikes?group=motorcycle&amp;model=yamaha_xsr\">XSR</a></strong>和<strong><a href=\"/zh-Hans/bikes?group=motorcycle&amp;model=tvs_ronin225\">Ronin</a></strong>——以及运动款非常适合芝安古和水明漾：车流中灵活穿梭，海边大道和心仪咖啡馆前格外拉风。如果您在意的不只是舒适，还有风格，这就是您的选择。</p>",
     },
     ubud: {
       name: '乌布', prep: '',
@@ -78,7 +81,7 @@ export default {
       faqQ1: '你们配送到乌布的所有地方吗？',
       faqA1: '是的——配送覆盖整个乌布。30天（1个月）以上免费，短期入住固定Rp 150,000。',
       faqQ4: '踏板车够用吗，还是需要租更大的车型？',
-      faqA4: '取决于您的计划——请见上方"乌布适合哪款车型"。乌布的丘陵地形比平坦海岸的市区踏板车更适合动力稍强的车型，尤其是如果您要前往更远的梯田地区。',
+      faqA4: "取决于您的计划——请见上方\"乌布适合哪款车型\"。乌布的丘陵地形比平坦海岸的市区踏板车更适合动力稍强的车型，尤其是如果您要前往更远的梯田地区。 想要更大排量的车型？我们很乐意为您推荐：",
     },
     uluwatu: {
       name: '乌鲁瓦图', prep: '',
@@ -98,7 +101,7 @@ export default {
       faqQ1: '你们配送到乌鲁瓦图周边的所有地方吗？',
       faqA1: '是的——配送覆盖整个乌鲁瓦图地区。14天（2周）以上免费，短期入住固定Rp 150,000。',
       faqQ4: '踏板车够用吗，还是需要租更大的车型？',
-      faqA4: '取决于您的计划——请见上方"乌鲁瓦图适合哪款车型"。布吉的丘陵地形比平坦海岸的市区踏板车更适合动力稍强的车型。',
+      faqA4: "取决于您的计划——请见上方\"乌鲁瓦图适合哪款车型\"。布吉的丘陵地形比平坦海岸的市区踏板车更适合动力稍强的车型。 想要更大排量的车型？我们很乐意为您推荐：",
     },
     jimbaran: {
       name: '金巴兰', prep: '',
@@ -118,7 +121,7 @@ export default {
       faqQ1: '你们配送到金巴兰的所有地方吗？',
       faqA1: '是的——配送覆盖整个金巴兰。14天（2周）以上免费，短期入住固定Rp 150,000。',
       faqQ4: '踏板车够用吗，还是需要租更大的车型？',
-      faqA4: '取决于您的计划——请见上方"金巴兰适合哪款车型"。海湾内踏板车足够；前往布吉或GWK方向，动力更强的车型会更轻松。',
+      faqA4: "取决于您的计划——请见上方\"金巴兰适合哪款车型\"。海湾内踏板车足够；前往布吉或GWK方向，动力更强的车型会更轻松。 想要更大排量的车型？我们很乐意为您推荐：",
     },
     sanur: {
       name: '沙努尔', prep: '',
@@ -138,7 +141,7 @@ export default {
       faqQ1: '你们配送到沙努尔的所有地方吗？',
       faqA1: '是的——配送覆盖整个沙努尔。7天（1周）以上免费，短期入住固定Rp 150,000。',
       faqQ4: '踏板车够用吗，还是需要租更大的车型？',
-      faqA4: '取决于您的计划——请见上方"沙努尔适合哪款车型"。沙努尔本身平坦，市区踏板车即可轻松应对；前往更远的一日游，Xmax、V-Strom或Versys会更舒适。',
+      faqA4: "取决于您的计划——请见上方\"沙努尔适合哪款车型\"。沙努尔本身平坦，市区踏板车即可轻松应对；前往更远的一日游，Xmax、V-Strom或Versys会更舒适。 想要更大排量的车型？我们很乐意为您推荐：",
     },
     kuta: {
       name: '库塔', prep: '',
@@ -158,7 +161,7 @@ export default {
       faqQ1: '你们配送到库塔的所有地方吗？',
       faqA1: '是的——配送覆盖整个库塔。7天（1周）以上免费，短期入住固定Rp 150,000。',
       faqQ4: '踏板车够用吗，还是需要租更大的车型？',
-      faqA4: '取决于您的计划——请见上方"库塔适合哪款车型"。该区域内踏板车足够；巴厘岛内长途出行，Xmax、V-Strom或Versys会更舒适。',
+      faqA4: "取决于您的计划——请见上方\"库塔适合哪款车型\"。该区域内踏板车足够；巴厘岛内长途出行，Xmax、V-Strom或Versys会更舒适。 想要更大排量的车型？我们很乐意为您推荐：",
     },
     'nusa-dua': {
       name: '努沙杜瓦', prep: '',
@@ -178,7 +181,7 @@ export default {
       faqQ1: '你们配送到努沙杜瓦的所有地方吗？',
       faqA1: '是的——配送覆盖整个努沙杜瓦。14天（2周）以上免费，短期入住固定Rp 150,000。',
       faqQ4: '踏板车够用吗，还是需要租更大的车型？',
-      faqA4: '取决于您的计划——请见上方"努沙杜瓦适合哪款车型"。飞地内踏板车足够；巴厘岛内长途出行，Xmax、V-Strom或Versys会更舒适。',
+      faqA4: "取决于您的计划——请见上方\"努沙杜瓦适合哪款车型\"。飞地内踏板车足够；巴厘岛内长途出行，Xmax、V-Strom或Versys会更舒适。 想要更大排量的车型？我们很乐意为您推荐：",
     },
     denpasar: {
       name: '登巴萨', prep: '',
@@ -198,7 +201,23 @@ export default {
       faqQ1: '你们配送到登巴萨的所有地方吗？',
       faqA1: '是的——配送覆盖整个登巴萨。7天（1周）以上免费，短期入住固定Rp 150,000。',
       faqQ4: '踏板车够用吗，还是需要租更大的车型？',
-      faqA4: '取决于您的计划——请见上方"登巴萨适合哪款车型"。市内骑行踏板车足够；巴厘岛内长途出行，Xmax、V-Strom或Versys会更舒适。',
+      faqA4: "取决于您的计划——请见上方\"登巴萨适合哪款车型\"。市内骑行踏板车足够；巴厘岛内长途出行，Xmax、V-Strom或Versys会更舒适。 想要更大排量的车型？我们很乐意为您推荐：",
     },
+    airport: {
+        "name": "机场",
+        "prep": "",
+        "h1": "支持机场配送的踏板车/摩托车租赁",
+        "intro": "刚抵达巴厘岛就想直接骑车出发？我们会在抵达出口几分钟车程处接您，比您叫到出租车还快把车交到您手上。机场配送几乎全天可安排，并会根据您在巴厘岛的后续行程为您准备合适的车型。",
+        "seoTitle": "巴厘岛机场(DPS)踏板车租赁 — 抵达即接机 | BikeBaliRent",
+        "seoDescription": "配送至巴厘岛伍拉赖机场(DPS)的踏板车/摩托车租赁。抵达出口1–3分钟内接机，价格透明，60多款车型可选。",
+        "deliverySummary": "租期7天以上（1周）免费配送 · 更短租期统一收取Rp 150,000 — 直达机场航站楼。",
+        "deliveryHtml": "<ul>\n<li>租期<strong>7天以上（1周）</strong>免费配送。</li>\n<li>更短租期：统一配送费<strong>Rp 150,000</strong>。</li>\n<li>确切时间和接头地点将在预订后通过WhatsApp确认。</li>\n</ul>\n<p>我们几乎全天候可配送——非营业时间的傍晚及夜间配送需额外收费，且必须提前协商确定。</p>\n<p>请预留一些时间走出航站楼——有时接客户需要等待1.5到3小时，这属于正常情况。</p>\n<p>我们不会直接在出口等候——那里人流量大，长时间等待可能被罚款。我们会在距出口步行1–3分钟的车辆停放区接您。</p>",
+        "gettingAroundHtml": null,
+        "faqQ1": "你们会在伍拉赖机场接机吗？",
+        "faqA1": "会的——我们会在抵达出口步行1–3分钟的车辆停放区接您。降落后请预留一点时间——有时接客户需要等待1.5到3小时，这属于正常情况。",
+        "faqIdpQOverride": "在巴厘岛骑租赁车辆需要国际驾照吗？",
+        "faqQ4": "刚落地应该选哪款车型？",
+        "faqA4": "取决于您在巴厘岛的后续行程——见上方\"车型如何选择\"：市内骑行选踏板车，长途选ADV或Xmax，两人带行李选旅行摩托。想要更大排量的车型？我们很乐意为您推荐："
+  },
   },
 };

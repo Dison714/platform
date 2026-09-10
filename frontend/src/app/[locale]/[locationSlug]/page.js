@@ -133,16 +133,21 @@ export default async function LocationPage({ params }) {
           <ContactLink className="btn-cta loc-cta-btn loc-cta-secondary" contact={telegram} prefillMessage={dict.contact.prefill_message} source={`location_page_${district}`}>
             <TelegramIcon size={18} /> {lp.book_telegram}
           </ContactLink>
-          <Link className="btn-cta loc-cta-btn loc-cta-outline" href={`/${locale}/bikes`}>{lp.see_all_bikes}</Link>
         </div>
+        {lp.see_all_bikes_note && <p className="loc-see-all-note">{lp.see_all_bikes_note}</p>}
+        <Link className="btn-cta loc-cta-btn loc-cta-outline" href={`/${locale}/bikes`}>{lp.see_all_bikes}</Link>
       </div>
 
       <h2 className="display section-h2">{fill(lp.delivery_title, name)}</h2>
       {page.delivery_html && <div className="article-body" dangerouslySetInnerHTML={{ __html: page.delivery_html }} />}
       {page.delivery_disclaimer && <p className="loc-disclaimer">{page.delivery_disclaimer}</p>}
 
-      <h2 className="display section-h2">{fill(lp.getting_around_title, name)}</h2>
-      {page.getting_around_html && <div className="article-body" dangerouslySetInnerHTML={{ __html: page.getting_around_html }} />}
+      {page.getting_around_html && (
+        <>
+          <h2 className="display section-h2">{fill(lp.getting_around_title, name)}</h2>
+          <div className="article-body" dangerouslySetInnerHTML={{ __html: page.getting_around_html }} />
+        </>
+      )}
 
       {page.distances?.length > 0 && (
         <>

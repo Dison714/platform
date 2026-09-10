@@ -32,18 +32,37 @@ async function main() {
   );
   if (rows.length === 0) throw new Error('no rows found for given languages');
 
+  // Real upsert (INSERT ... ON CONFLICT), not a plain UPDATE — a plain
+  // UPDATE silently affects 0 rows for a (location_page_id, language_code)
+  // pair that doesn't exist yet on prod (found 2026-09-10: the airport
+  // page's 10 non-EN rows didn't exist on prod before this script ran, so
+  // the earlier UPDATE-only version no-op'd on all of them without error —
+  // `psql` still printed "UPDATE 1" for the OTHER 9 districts' real
+  // updates, so the silent no-ops on airport went unnoticed until a
+  // separate row-count check). location_page_id is resolved via the
+  // subquery on prod's own location_pages, same reasoning as the plain
+  // UPDATE version (dev/prod ids never match).
   const stmts = rows.map((r) => `
-UPDATE location_page_translations lpt SET
-    seo_title = ${esc(r.seo_title)}, seo_description = ${esc(r.seo_description)},
-    h1 = ${esc(r.h1)}, intro = ${esc(r.intro)},
-    delivery_summary = ${esc(r.delivery_summary)}, delivery_html = ${esc(r.delivery_html)},
-    delivery_disclaimer = ${esc(r.delivery_disclaimer)}, getting_around_html = ${esc(r.getting_around_html)},
-    distances = ${jsonEsc(r.distances)}, which_bike_html = ${esc(r.which_bike_html)},
-    route_html = ${esc(r.route_html)}, photos_note = ${esc(r.photos_note)},
-    popular_locations = ${jsonEsc(r.popular_locations)}, faq = ${jsonEsc(r.faq)},
-    cta_text = ${esc(r.cta_text)}, updated_at = now()
-FROM location_pages lp
-WHERE lp.id = lpt.location_page_id AND lp.slug = ${esc(r.slug)} AND lpt.language_code = ${esc(r.language_code)};`.trim());
+INSERT INTO location_page_translations (
+    location_page_id, language_code, seo_title, seo_description, h1, intro,
+    delivery_summary, delivery_html, delivery_disclaimer, getting_around_html, distances,
+    which_bike_html, route_html, photos_note, popular_locations, faq, cta_text
+) VALUES (
+    (SELECT id FROM location_pages WHERE slug = ${esc(r.slug)}), ${esc(r.language_code)},
+    ${esc(r.seo_title)}, ${esc(r.seo_description)}, ${esc(r.h1)}, ${esc(r.intro)},
+    ${esc(r.delivery_summary)}, ${esc(r.delivery_html)}, ${esc(r.delivery_disclaimer)}, ${esc(r.getting_around_html)},
+    ${jsonEsc(r.distances)}, ${esc(r.which_bike_html)}, ${esc(r.route_html)}, ${esc(r.photos_note)},
+    ${jsonEsc(r.popular_locations)}, ${jsonEsc(r.faq)}, ${esc(r.cta_text)}
+)
+ON CONFLICT (location_page_id, language_code) DO UPDATE SET
+    seo_title = EXCLUDED.seo_title, seo_description = EXCLUDED.seo_description,
+    h1 = EXCLUDED.h1, intro = EXCLUDED.intro,
+    delivery_summary = EXCLUDED.delivery_summary, delivery_html = EXCLUDED.delivery_html,
+    delivery_disclaimer = EXCLUDED.delivery_disclaimer, getting_around_html = EXCLUDED.getting_around_html,
+    distances = EXCLUDED.distances, which_bike_html = EXCLUDED.which_bike_html,
+    route_html = EXCLUDED.route_html, photos_note = EXCLUDED.photos_note,
+    popular_locations = EXCLUDED.popular_locations, faq = EXCLUDED.faq,
+    cta_text = EXCLUDED.cta_text, updated_at = now();`.trim());
 
   const sql = stmts.join('\n\n') + '\n';
   await writeFile('/tmp/location_i18n_sync.sql', sql);

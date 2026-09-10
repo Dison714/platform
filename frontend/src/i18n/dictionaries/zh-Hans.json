@@ -295,6 +295,7 @@
     "book_whatsapp": "通过 WhatsApp 预订",
     "book_telegram": "通过 Telegram 预订",
     "see_all_bikes": "查看全部车型",
+    "see_all_bikes_note": "建议您提前浏览我们的全部车型，并在线完成预订。",
     "browse_all_bikes": "浏览全部车型",
     "delivery_title": "配送至{district}",
     "getting_around_title": "在{district}出行",

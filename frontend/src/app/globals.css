@@ -715,6 +715,7 @@ img { max-width: 100%; display: block; }
 .loc-cta-secondary:hover { background: var(--navy-700); }
 .loc-cta-outline { background: transparent; color: var(--navy); border: 1px solid var(--border); }
 .loc-cta-outline:hover { background: var(--surface); }
+.loc-see-all-note { color: var(--muted); font-size: 14px; margin: 12px 0 10px; }
 .loc-todo { color: var(--muted); font-size: 13.5px; font-style: italic; border-inline-start: 3px solid var(--border); padding: 6px 12px; margin: 0 0 14px; }
 .loc-disclaimer { color: var(--muted); font-size: 13px; margin: -6px 0 14px; }
 .loc-table-wrap { overflow-x: auto; }

@@ -1,13 +1,16 @@
-// Переводы 9 районных страниц (Delivery/Getting Around/Which Bike Fits/
+// Переводы районных страниц (Delivery/Getting Around/Which Bike Fits/
 // Popular Locations/FAQ/CTA) на 10 локалей, кроме en (уже есть) — задача
-// Дмитрия 2026-09-10, после ревью видимости Route/Distances.
+// Дмитрия 2026-09-10, после ревью видимости Route/Distances. Изначально 9
+// районов; 10-й (airport) добавлен тем же днём отдельной задачей — тот же
+// пайплайн, DISTRICT_META (meta.mjs) — единственное место, где перечислен
+// список slug'ов.
 //
 // Popular Locations: названия мест НЕ переводятся ни на одном языке —
 // это реальные топонимы/имена заведений с прямой ссылкой на Google Maps
 // (как products.slug), перевод сделал бы их нераспознаваемыми на месте.
-// Distances у Canggu (единственный район с реальными данными) — тот же
-// массив на всех языках: цифры + км/мин универсальны, названия
-// направлений (Ngurah Rai Airport, Seminyak, Uluwatu, Ubud) — топонимы.
+// Distances — есть только у Canggu и Airport (остальные районы: NULL,
+// секция скрыта), тот же массив на всех языках: цифры + км/мин
+// универсальны, названия направлений — топонимы (EN — источник).
 // Route — NULL везде (скрыт, нечего переводить, см. 058).
 import { pool } from '../src/db/pool.js';
 import { DISTRICT_META } from './i18n_location_pages/meta.mjs';
@@ -20,6 +23,10 @@ if (LANGS.length === 0) {
 
 const IDP_HREF = '/en/blog/riding-in-bali-without-a-license-the-real-risks';
 const DEPOSIT_HREF = '/en/blog#deposit-safety';
+// task item 4 (2026-09-10 session): "want something bigger?" link on the
+// scooter-vs-bigger-bike FAQ, same {href,label} pattern as IDP/Deposit above
+// — points at the motorcycle-group catalog view, not a specific model.
+const biggerBikeHref = (lang) => `/${lang}/bikes?group=motorcycle`;
 
 const { rows: pages } = await pool.query('SELECT id, slug FROM location_pages');
 const pageIdBySlug = Object.fromEntries(pages.map((p) => [p.slug, p.id]));
@@ -53,8 +60,14 @@ for (const lang of LANGS) {
         const faq = [
             { q: d.faqQ1, a: d.faqA1 },
             { q: data.faqMinRental.q, a: data.faqMinRental.a },
-            { q: data.faqIdpQ(d.name, d.prep), a: data.faqIdpA, link: { href: IDP_HREF, label: data.faqIdpLinkLabel } },
-            { q: d.faqQ4, a: d.faqA4 },
+            // faqIdpQOverride: airport's d.name/d.prep ("from the airport")
+            // reads fine in ctaBody ("pickup spot from the airport" is odd
+            // too actually — see ctaTextOverride below) but produces a
+            // nonsensical "ride from the airport?" IDP question; airport
+            // supplies its own full question text instead of the templated
+            // "ride {prep} {district}" one.
+            { q: d.faqIdpQOverride ?? data.faqIdpQ(d.name, d.prep), a: data.faqIdpA, link: { href: IDP_HREF, label: data.faqIdpLinkLabel } },
+            { q: d.faqQ4, a: d.faqA4, link: { href: biggerBikeHref(lang), label: data.faqBiggerBikeLinkLabel } },
             { q: data.faqDepositQ, a: data.faqDepositA, link: { href: DEPOSIT_HREF, label: data.faqDepositLinkLabel } },
         ];
 
@@ -75,8 +88,12 @@ for (const lang of LANGS) {
             [
                 pageId, lang, d.seoTitle, d.seoDescription, d.h1, d.intro,
                 d.deliverySummary, d.deliveryHtml, data.deliveryDisclaimer, d.gettingAroundHtml,
-                slug === 'canggu' ? JSON.stringify(en.distances) : null,
-                data.whichBikeHtml,
+                en.distances ? JSON.stringify(en.distances) : null,
+                // task item 6 (2026-09-10 session): cafe-racer/sport block,
+                // canggu + seminyak only — appended via a per-district
+                // whichBikeExtra override, shared whichBikeHtml unchanged
+                // for the other 7 districts.
+                d.whichBikeExtra ? `${data.whichBikeHtml}\n${d.whichBikeExtra}` : data.whichBikeHtml,
                 JSON.stringify(en.popular_locations),
                 JSON.stringify(faq),
                 data.ctaBody(d.name, d.prep),
@@ -84,7 +101,7 @@ for (const lang of LANGS) {
         );
         total++;
     }
-    console.log(`${lang}: 9 districts upserted.`);
+    console.log(`${lang}: ${Object.keys(DISTRICT_META).length} districts upserted.`);
 }
 console.log(`Done. ${total} rows upserted across ${LANGS.length} language(s).`);
 await pool.end();

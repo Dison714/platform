@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { DISTRICTS } from '../../lib/districts.js';
+import { DISTRICTS, districtName } from '../../lib/districts.js';
 
 // Десктопный дропдаун "Bali Districts" в nav-desktop — по образцу
 // LanguageDropdown.jsx (клик-тоггл, закрытие по клику вовне/Escape).
@@ -43,7 +43,7 @@ export default function DistrictsDropdown({ locale, label, guidesLabel, guidesHr
         <ul className="districts-menu" role="menu">
           {DISTRICTS.map((d) => (
             <li key={d.slug} role="none">
-              <Link role="menuitem" href={`/${locale}/scooter-rental-${d.slug}`} onClick={() => setOpen(false)}>{d.name}</Link>
+              <Link role="menuitem" href={`/${locale}/scooter-rental-${d.slug}`} onClick={() => setOpen(false)}>{districtName(d.slug, locale)}</Link>
             </li>
           ))}
           <li className="districts-menu-sep" role="none">

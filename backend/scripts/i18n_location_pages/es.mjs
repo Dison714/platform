@@ -1,12 +1,13 @@
 // Перевод 9 районных страниц — es. Топонимы остаются на латинице.
 export default {
   whichBikeHtml: `<ul>
-<li><strong>Circular por la ciudad</strong> (cafés, tiendas, trayectos cortos): una <strong>Honda PCX 160</strong> o <strong>Yamaha Nmax 155</strong> — totalmente automática, fácil de aparcar, más que suficiente para carreteras locales llanas.</li>
-<li><strong>Colinas / aventura ligera</strong>: una <strong>Honda ADV 160</strong> — mayor altura libre al suelo, también automática, más segura en cuestas que un scooter urbano.</li>
-<li><strong>Excursiones largas</strong> por Bali: una <strong>Yamaha Xmax 250</strong> — motor más potente, más estable a velocidad de carretera, más cómoda en distancias largas.</li>
-<li><strong>Pasajero + equipaje</strong> / turismo de varios días: una <strong>Suzuki V-Strom 250</strong> o <strong>Kawasaki Versys</strong> — motos touring con marchas manuales, pensadas para ir de dos con carga, mejor para motoristas con más experiencia.</li>
+<li><strong>Circular por la ciudad</strong> (cafés, tiendas, trayectos cortos): una <strong><a href="/es/bikes?category=honda_pcx160">Honda PCX 160</a></strong> o <strong><a href="/es/bikes?category=yamaha_nmax155">Yamaha Nmax 155</a></strong> — totalmente automática, fácil de aparcar, más que suficiente para carreteras locales llanas.</li>
+<li><strong>Colinas / aventura ligera</strong>: una <strong><a href="/es/bikes?category=honda_adv160">Honda ADV 160</a></strong> — mayor altura libre al suelo, también automática, más segura en cuestas que un scooter urbano.</li>
+<li><strong>Excursiones largas</strong> por Bali: una <strong><a href="/es/bikes?category=yamaha_xmax250">Yamaha Xmax 250</a></strong> — motor más potente, más estable a velocidad de carretera, más cómoda en distancias largas.</li>
+<li><strong>Pasajero + equipaje</strong> / turismo de varios días: una <strong><a href="/es/bikes?group=motorcycle&amp;model=suzuki_vstrom250">Suzuki V-Strom 250</a></strong> o <strong><a href="/es/bikes?group=motorcycle&amp;model=kawasaki_versys">Kawasaki Versys</a></strong> — motos touring con marchas manuales, pensadas para ir de dos con carga, mejor para motoristas con más experiencia.</li>
 </ul>`,
   deliveryDisclaimer: 'Los precios anteriores son orientativos — confirma el coste exacto de la entrega para tus fechas y horarios con nuestro equipo.',
+  faqBiggerBikeLinkLabel: "Motos",
   faqMinRental: { q: '¿Hay una duración mínima de alquiler?', a: 'No hay mínimo — solo la tarifa de entrega cambia según la duración del alquiler.' },
   faqIdpQ: (district, prep) => `¿Necesito un permiso de conducir internacional para circular ${prep} ${district}?`,
   faqIdpA: 'Sí, junto con tu carné de tu país — consulta nuestra guía completa:',
@@ -37,7 +38,8 @@ export default {
       faqQ1: '¿Entregáis en cualquier punto de Canggu, incluyendo Pererenan y Echo Beach?',
       faqA1: 'Sí — la entrega cubre todo Canggu. Gratis desde 15 días, Rp 100.000 para 7–14 días, Rp 150.000 fijo por menos de una semana.',
       faqQ4: '¿Basta con un scooter, o debería alquilar algo más grande?',
-      faqA4: 'Depende de tus planes — mira "Qué moto elegir en Canggu" más arriba. Si te quedas sobre todo en Canggu, un scooter es suficiente; para excursiones a Ubud/Uluwatu, una NMAX o ADV es más cómoda.',
+      faqA4: "Depende de tus planes — mira \"Qué moto elegir en Canggu\" más arriba. Si te quedas sobre todo en Canggu, un scooter es suficiente; para excursiones a Ubud/Uluwatu, una NMAX o ADV es más cómoda. ¿Quieres algo más grande? Con gusto te sugerimos otras opciones:",
+      whichBikeExtra: "<p>¿Quieres llegar con estilo, no solo llegar? Las café racer — <strong><a href=\"/es/bikes?group=motorcycle&amp;model=yamaha_xsr\">XSR</a></strong> y <strong><a href=\"/es/bikes?group=motorcycle&amp;model=tvs_ronin225\">Ronin</a></strong> — y los modelos deportivos encajan perfecto en Canggu y Seminyak: ágiles en el tráfico, vistosas en el paseo marítimo y frente a tu café favorito. Si el estilo te importa tanto como la comodidad, esta es tu opción.</p>",
     },
     seminyak: {
       name: 'Seminyak', prep: 'en',
@@ -57,7 +59,8 @@ export default {
       faqQ1: '¿Entregáis en cualquier punto de Seminyak?',
       faqA1: 'Sí — la entrega cubre todo Seminyak. Gratis desde 3 días, Rp 150.000 fijo en estancias más cortas.',
       faqQ4: '¿Basta con un scooter, o debería alquilar algo más grande?',
-      faqA4: 'Depende de tus planes — mira "Qué moto elegir en Seminyak" más arriba. Para moverte localmente un scooter es suficiente; para trayectos más largos por Bali, una Xmax, V-Strom o Versys es más cómoda.',
+      faqA4: "Depende de tus planes — mira \"Qué moto elegir en Seminyak\" más arriba. Para moverte localmente un scooter es suficiente; para trayectos más largos por Bali, una Xmax, V-Strom o Versys es más cómoda. ¿Quieres algo más grande? Con gusto te sugerimos otras opciones:",
+      whichBikeExtra: "<p>¿Quieres llegar con estilo, no solo llegar? Las café racer — <strong><a href=\"/es/bikes?group=motorcycle&amp;model=yamaha_xsr\">XSR</a></strong> y <strong><a href=\"/es/bikes?group=motorcycle&amp;model=tvs_ronin225\">Ronin</a></strong> — y los modelos deportivos encajan perfecto en Canggu y Seminyak: ágiles en el tráfico, vistosas en el paseo marítimo y frente a tu café favorito. Si el estilo te importa tanto como la comodidad, esta es tu opción.</p>",
     },
     ubud: {
       name: 'Ubud', prep: 'en',
@@ -77,7 +80,7 @@ export default {
       faqQ1: '¿Entregáis en cualquier punto de Ubud?',
       faqA1: 'Sí — la entrega cubre todo Ubud. Gratis desde 30 días (1 mes), Rp 150.000 fijo en estancias más cortas.',
       faqQ4: '¿Basta con un scooter, o debería alquilar algo más grande?',
-      faqA4: 'Depende de tus planes — mira "Qué moto elegir en Ubud" más arriba. Las colinas de Ubud piden algo más de potencia que un scooter urbano de costa llana, sobre todo si vas más allá, hacia los arrozales.',
+      faqA4: "Depende de tus planes — mira \"Qué moto elegir en Ubud\" más arriba. Las colinas de Ubud piden algo más de potencia que un scooter urbano de costa llana, sobre todo si vas más allá, hacia los arrozales. ¿Quieres algo más grande? Con gusto te sugerimos otras opciones:",
     },
     uluwatu: {
       name: 'Uluwatu', prep: 'en',
@@ -97,7 +100,7 @@ export default {
       faqQ1: '¿Entregáis en toda la zona de Uluwatu?',
       faqA1: 'Sí — la entrega cubre toda la zona de Uluwatu. Gratis desde 14 días (2 semanas), Rp 150.000 fijo en estancias más cortas.',
       faqQ4: '¿Basta con un scooter, o debería alquilar algo más grande?',
-      faqA4: 'Depende de tus planes — mira "Qué moto elegir en Uluwatu" más arriba. Las colinas del Bukit piden algo más de potencia que un scooter urbano de costa llana.',
+      faqA4: "Depende de tus planes — mira \"Qué moto elegir en Uluwatu\" más arriba. Las colinas del Bukit piden algo más de potencia que un scooter urbano de costa llana. ¿Quieres algo más grande? Con gusto te sugerimos otras opciones:",
     },
     jimbaran: {
       name: 'Jimbaran', prep: 'en',
@@ -117,7 +120,7 @@ export default {
       faqQ1: '¿Entregáis en cualquier punto de Jimbaran?',
       faqA1: 'Sí — la entrega cubre todo Jimbaran. Gratis desde 14 días (2 semanas), Rp 150.000 fijo en estancias más cortas.',
       faqQ4: '¿Basta con un scooter, o debería alquilar algo más grande?',
-      faqA4: 'Depende de tus planes — mira "Qué moto elegir en Jimbaran" más arriba. Para la bahía en sí, un scooter es suficiente; subir hacia el Bukit o GWK es más fácil con más potencia.',
+      faqA4: "Depende de tus planes — mira \"Qué moto elegir en Jimbaran\" más arriba. Para la bahía en sí, un scooter es suficiente; subir hacia el Bukit o GWK es más fácil con más potencia. ¿Quieres algo más grande? Con gusto te sugerimos otras opciones:",
     },
     sanur: {
       name: 'Sanur', prep: 'en',
@@ -137,7 +140,7 @@ export default {
       faqQ1: '¿Entregáis en cualquier punto de Sanur?',
       faqA1: 'Sí — la entrega cubre todo Sanur. Gratis desde 7 días (1 semana), Rp 150.000 fijo en estancias más cortas.',
       faqQ4: '¿Basta con un scooter, o debería alquilar algo más grande?',
-      faqA4: 'Depende de tus planes — mira "Qué moto elegir en Sanur" más arriba. Sanur en sí es llano y fácil con un scooter urbano; para excursiones más lejanas, una Xmax, V-Strom o Versys es más cómoda.',
+      faqA4: "Depende de tus planes — mira \"Qué moto elegir en Sanur\" más arriba. Sanur en sí es llano y fácil con un scooter urbano; para excursiones más lejanas, una Xmax, V-Strom o Versys es más cómoda. ¿Quieres algo más grande? Con gusto te sugerimos otras opciones:",
     },
     kuta: {
       name: 'Kuta', prep: 'en',
@@ -157,7 +160,7 @@ export default {
       faqQ1: '¿Entregáis en cualquier punto de Kuta?',
       faqA1: 'Sí — la entrega cubre todo Kuta. Gratis desde 7 días (1 semana), Rp 150.000 fijo en estancias más cortas.',
       faqQ4: '¿Basta con un scooter, o debería alquilar algo más grande?',
-      faqA4: 'Depende de tus planes — mira "Qué moto elegir en Kuta" más arriba. Para la franja en sí, un scooter es suficiente; para trayectos más largos por Bali, una Xmax, V-Strom o Versys es más cómoda.',
+      faqA4: "Depende de tus planes — mira \"Qué moto elegir en Kuta\" más arriba. Para la franja en sí, un scooter es suficiente; para trayectos más largos por Bali, una Xmax, V-Strom o Versys es más cómoda. ¿Quieres algo más grande? Con gusto te sugerimos otras opciones:",
     },
     'nusa-dua': {
       name: 'Nusa Dua', prep: 'en',
@@ -177,7 +180,7 @@ export default {
       faqQ1: '¿Entregáis en cualquier punto de Nusa Dua?',
       faqA1: 'Sí — la entrega cubre todo Nusa Dua. Gratis desde 14 días (2 semanas), Rp 150.000 fijo en estancias más cortas.',
       faqQ4: '¿Basta con un scooter, o debería alquilar algo más grande?',
-      faqA4: 'Depende de tus planes — mira "Qué moto elegir en Nusa Dua" más arriba. Dentro del enclave un scooter es suficiente; para trayectos más largos por Bali, una Xmax, V-Strom o Versys es más cómoda.',
+      faqA4: "Depende de tus planes — mira \"Qué moto elegir en Nusa Dua\" más arriba. Dentro del enclave un scooter es suficiente; para trayectos más largos por Bali, una Xmax, V-Strom o Versys es más cómoda. ¿Quieres algo más grande? Con gusto te sugerimos otras opciones:",
     },
     denpasar: {
       name: 'Denpasar', prep: 'en',
@@ -197,7 +200,23 @@ export default {
       faqQ1: '¿Entregáis en cualquier punto de Denpasar?',
       faqA1: 'Sí — la entrega cubre todo Denpasar. Gratis desde 7 días (1 semana), Rp 150.000 fijo en estancias más cortas.',
       faqQ4: '¿Basta con un scooter, o debería alquilar algo más grande?',
-      faqA4: 'Depende de tus planes — mira "Qué moto elegir en Denpasar" más arriba. Para moverte por la ciudad un scooter es suficiente; para trayectos más largos por Bali, una Xmax, V-Strom o Versys es más cómoda.',
+      faqA4: "Depende de tus planes — mira \"Qué moto elegir en Denpasar\" más arriba. Para moverte por la ciudad un scooter es suficiente; para trayectos más largos por Bali, una Xmax, V-Strom o Versys es más cómoda. ¿Quieres algo más grande? Con gusto te sugerimos otras opciones:",
     },
+    airport: {
+        "name": "aeropuerto",
+        "prep": "en el",
+        "h1": "Alquiler de scooters y motos con entrega en el aeropuerto",
+        "intro": "¿Acabas de aterrizar en Bali y quieres salir directo en moto? Te recibimos a un par de minutos de la salida de llegadas y te entregamos la moto antes de que consigas un taxi. La entrega en el aeropuerto está disponible casi a cualquier hora, y te preparamos una moto acorde a tus planes en Bali.",
+        "seoTitle": "Alquiler de scooter en el aeropuerto de Bali (DPS) — Te recibimos al llegar | BikeBaliRent",
+        "seoDescription": "Alquiler de scooters y motos con entrega en el aeropuerto Ngurah Rai (DPS), Bali. Te recibimos a 1–3 minutos de la salida de llegadas, precios transparentes, 60+ motos.",
+        "deliverySummary": "Entrega gratis en alquileres de 7+ días (1 semana) · Rp 150.000 fijo para alquileres más cortos — hasta la terminal del aeropuerto.",
+        "deliveryHtml": "<ul>\n<li>Entrega gratis en alquileres de <strong>7 días o más (1 semana)</strong>.</li>\n<li>Alquileres más cortos: tarifa fija de entrega de <strong>Rp 150.000</strong>.</li>\n<li>La hora exacta y el punto de encuentro se confirman por WhatsApp tras la reserva.</li>\n</ul>\n<p>Podemos entregar casi a cualquier hora — las entregas por la tarde-noche o de madrugada fuera del horario habitual tienen un coste adicional y deben acordarse con antelación.</p>\n<p>Ten en cuenta que salir de la terminal lleva su tiempo — esperar al cliente entre 1,5 y 3 horas no es raro.</p>\n<p>No esperamos justo en la salida — hay mucho movimiento y una espera larga ahí puede costarnos una multa. Te recibimos a 1–3 minutos a pie de la salida, en la zona de aparcamiento de motos.</p>",
+        "gettingAroundHtml": null,
+        "faqQ1": "¿Reciben a los pasajeros en el aeropuerto Ngurah Rai?",
+        "faqA1": "Sí — te recibimos a 1–3 minutos a pie de la salida de llegadas, en la zona de aparcamiento de motos. Ten en cuenta un margen después de aterrizar — esperar al cliente entre 1,5 y 3 horas no es raro.",
+        "faqIdpQOverride": "¿Necesito un permiso de conducir internacional para circular por Bali con una moto alquilada?",
+        "faqQ4": "¿Qué moto elegir si acabo de aterrizar?",
+        "faqA4": "Depende de tus planes en Bali — mira \"Qué moto elegir\" más arriba: un scooter para la ciudad, una ADV o Xmax para trayectos más largos, una moto de touring si van dos con equipaje. ¿Quieres algo más grande? Con gusto te sugerimos otras opciones:"
+  },
   },
 };

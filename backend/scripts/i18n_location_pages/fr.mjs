@@ -1,12 +1,13 @@
 // Перевод 9 районных страниц — fr. Топонимы остаются на латинице.
 export default {
   whichBikeHtml: `<ul>
-<li><strong>Trajets en ville</strong> (cafés, boutiques, courts trajets locaux) : une <strong>Honda PCX 160</strong> ou <strong>Yamaha Nmax 155</strong> — automatique, facile à garer, largement suffisante pour des routes locales plates.</li>
-<li><strong>Collines / aventure légère</strong> : une <strong>Honda ADV 160</strong> — garde au sol plus élevée, toujours automatique, plus rassurante en côte qu'un scooter urbain.</li>
-<li><strong>Longues excursions</strong> à travers Bali : une <strong>Yamaha Xmax 250</strong> — moteur plus puissant, plus stable à vitesse routière, plus confortable sur de longues distances.</li>
-<li><strong>Passager + bagages</strong> / tourisme sur plusieurs jours : une <strong>Suzuki V-Strom 250</strong> ou <strong>Kawasaki Versys</strong> — routières tout-terrain à boîte manuelle, conçues pour rouler à deux avec du chargement, plutôt pour les motards expérimentés.</li>
+<li><strong>Trajets en ville</strong> (cafés, boutiques, courts trajets locaux) : une <strong><a href="/fr/bikes?category=honda_pcx160">Honda PCX 160</a></strong> ou <strong><a href="/fr/bikes?category=yamaha_nmax155">Yamaha Nmax 155</a></strong> — automatique, facile à garer, largement suffisante pour des routes locales plates.</li>
+<li><strong>Collines / aventure légère</strong> : une <strong><a href="/fr/bikes?category=honda_adv160">Honda ADV 160</a></strong> — garde au sol plus élevée, toujours automatique, plus rassurante en côte qu'un scooter urbain.</li>
+<li><strong>Longues excursions</strong> à travers Bali : une <strong><a href="/fr/bikes?category=yamaha_xmax250">Yamaha Xmax 250</a></strong> — moteur plus puissant, plus stable à vitesse routière, plus confortable sur de longues distances.</li>
+<li><strong>Passager + bagages</strong> / tourisme sur plusieurs jours : une <strong><a href="/fr/bikes?group=motorcycle&amp;model=suzuki_vstrom250">Suzuki V-Strom 250</a></strong> ou <strong><a href="/fr/bikes?group=motorcycle&amp;model=kawasaki_versys">Kawasaki Versys</a></strong> — routières tout-terrain à boîte manuelle, conçues pour rouler à deux avec du chargement, plutôt pour les motards expérimentés.</li>
 </ul>`,
   deliveryDisclaimer: 'Les prix ci-dessus sont indicatifs — merci de confirmer le coût exact de la livraison pour vos dates et horaires avec notre équipe.',
+  faqBiggerBikeLinkLabel: "Motos",
   faqMinRental: { q: 'Y a-t-il une durée de location minimale ?', a: "Il n'y a pas de minimum — seuls les frais de livraison changent selon la durée de location." },
   faqIdpQ: (district, prep) => `Ai-je besoin d'un permis de conduire international pour rouler ${prep} ${district} ?`,
   faqIdpA: 'Oui, en complément de votre permis national — consultez notre guide complet :',
@@ -37,7 +38,8 @@ export default {
       faqQ1: 'Livrez-vous partout à Canggu, y compris Pererenan et Echo Beach ?',
       faqA1: 'Oui — la livraison couvre tout Canggu. Gratuite à partir de 15 jours, Rp 100 000 pour 7–14 jours, Rp 150 000 forfaitaire en dessous d\'une semaine.',
       faqQ4: 'Un scooter suffit-il, ou dois-je louer quelque chose de plus grand ?',
-      faqA4: 'Cela dépend de vos plans — voir « Quel bike choisir à Canggu » ci-dessus. Si vous restez surtout à Canggu, un scooter suffit largement ; pour des excursions à Ubud/Uluwatu, une NMAX ou une ADV est plus confortable.',
+      faqA4: "Cela dépend de vos plans — voir « Quel bike choisir à Canggu » ci-dessus. Si vous restez surtout à Canggu, un scooter suffit largement ; pour des excursions à Ubud/Uluwatu, une NMAX ou une ADV est plus confortable. Vous voulez quelque chose de plus gros ? Nous vous proposerons volontiers d'autres options :",
+      whichBikeExtra: "<p>Envie d'arriver avec style, pas seulement d'arriver&nbsp;? Les café-racers — <strong><a href=\"/fr/bikes?group=motorcycle&amp;model=yamaha_xsr\">XSR</a></strong> et <strong><a href=\"/fr/bikes?group=motorcycle&amp;model=tvs_ronin225\">Ronin</a></strong> — et les modèles sportifs sont parfaits pour Canggu et Seminyak&nbsp;: maniables dans la circulation, du plus bel effet sur le front de mer et devant votre café préféré. Si le style compte autant que le confort, c'est votre option.</p>",
     },
     seminyak: {
       name: 'Seminyak', prep: 'à',
@@ -57,7 +59,8 @@ export default {
       faqQ1: 'Livrez-vous partout à Seminyak ?',
       faqA1: 'Oui — la livraison couvre tout Seminyak. Gratuite à partir de 3 jours, Rp 150 000 forfaitaire pour les séjours plus courts.',
       faqQ4: 'Un scooter suffit-il, ou dois-je louer quelque chose de plus grand ?',
-      faqA4: 'Cela dépend de vos plans — voir « Quel bike choisir à Seminyak » ci-dessus. Pour rouler localement, un scooter suffit ; pour de plus longs trajets à travers Bali, une Xmax, V-Strom ou Versys est plus confortable.',
+      faqA4: "Cela dépend de vos plans — voir « Quel bike choisir à Seminyak » ci-dessus. Pour rouler localement, un scooter suffit ; pour de plus longs trajets à travers Bali, une Xmax, V-Strom ou Versys est plus confortable. Vous voulez quelque chose de plus gros ? Nous vous proposerons volontiers d'autres options :",
+      whichBikeExtra: "<p>Envie d'arriver avec style, pas seulement d'arriver&nbsp;? Les café-racers — <strong><a href=\"/fr/bikes?group=motorcycle&amp;model=yamaha_xsr\">XSR</a></strong> et <strong><a href=\"/fr/bikes?group=motorcycle&amp;model=tvs_ronin225\">Ronin</a></strong> — et les modèles sportifs sont parfaits pour Canggu et Seminyak&nbsp;: maniables dans la circulation, du plus bel effet sur le front de mer et devant votre café préféré. Si le style compte autant que le confort, c'est votre option.</p>",
     },
     ubud: {
       name: 'Ubud', prep: 'à',
@@ -77,7 +80,7 @@ export default {
       faqQ1: 'Livrez-vous partout à Ubud ?',
       faqA1: 'Oui — la livraison couvre tout Ubud. Gratuite à partir de 30 jours (1 mois), Rp 150 000 forfaitaire pour les séjours plus courts.',
       faqQ4: 'Un scooter suffit-il, ou dois-je louer quelque chose de plus grand ?',
-      faqA4: 'Cela dépend de vos plans — voir « Quel bike choisir à Ubud » ci-dessus. Les collines d\'Ubud demandent un peu plus de puissance qu\'un scooter urbain de bord de mer, surtout si vous poussez jusqu\'aux rizières.',
+      faqA4: "Cela dépend de vos plans — voir « Quel bike choisir à Ubud » ci-dessus. Les collines d'Ubud demandent un peu plus de puissance qu'un scooter urbain de bord de mer, surtout si vous poussez jusqu'aux rizières. Vous voulez quelque chose de plus gros ? Nous vous proposerons volontiers d'autres options :",
     },
     uluwatu: {
       name: 'Uluwatu', prep: 'autour d\'',
@@ -97,7 +100,7 @@ export default {
       faqQ1: 'Livrez-vous partout autour d\'Uluwatu ?',
       faqA1: 'Oui — la livraison couvre toute la zone d\'Uluwatu. Gratuite à partir de 14 jours (2 semaines), Rp 150 000 forfaitaire pour les séjours plus courts.',
       faqQ4: 'Un scooter suffit-il, ou dois-je louer quelque chose de plus grand ?',
-      faqA4: 'Cela dépend de vos plans — voir « Quel bike choisir à Uluwatu » ci-dessus. Les collines du Bukit demandent un peu plus de puissance qu\'un scooter urbain de bord de mer.',
+      faqA4: "Cela dépend de vos plans — voir « Quel bike choisir à Uluwatu » ci-dessus. Les collines du Bukit demandent un peu plus de puissance qu'un scooter urbain de bord de mer. Vous voulez quelque chose de plus gros ? Nous vous proposerons volontiers d'autres options :",
     },
     jimbaran: {
       name: 'Jimbaran', prep: 'à',
@@ -117,7 +120,7 @@ export default {
       faqQ1: 'Livrez-vous partout à Jimbaran ?',
       faqA1: 'Oui — la livraison couvre tout Jimbaran. Gratuite à partir de 14 jours (2 semaines), Rp 150 000 forfaitaire pour les séjours plus courts.',
       faqQ4: 'Un scooter suffit-il, ou dois-je louer quelque chose de plus grand ?',
-      faqA4: 'Cela dépend de vos plans — voir « Quel bike choisir à Jimbaran » ci-dessus. Pour la baie elle-même, un scooter suffit ; monter vers le Bukit ou GWK est plus facile avec plus de puissance.',
+      faqA4: "Cela dépend de vos plans — voir « Quel bike choisir à Jimbaran » ci-dessus. Pour la baie elle-même, un scooter suffit ; monter vers le Bukit ou GWK est plus facile avec plus de puissance. Vous voulez quelque chose de plus gros ? Nous vous proposerons volontiers d'autres options :",
     },
     sanur: {
       name: 'Sanur', prep: 'à',
@@ -137,7 +140,7 @@ export default {
       faqQ1: 'Livrez-vous partout à Sanur ?',
       faqA1: 'Oui — la livraison couvre tout Sanur. Gratuite à partir de 7 jours (1 semaine), Rp 150 000 forfaitaire pour les séjours plus courts.',
       faqQ4: 'Un scooter suffit-il, ou dois-je louer quelque chose de plus grand ?',
-      faqA4: 'Cela dépend de vos plans — voir « Quel bike choisir à Sanur » ci-dessus. Sanur elle-même est plate et facile avec un scooter urbain ; pour des excursions plus lointaines, une Xmax, V-Strom ou Versys est plus confortable.',
+      faqA4: "Cela dépend de vos plans — voir « Quel bike choisir à Sanur » ci-dessus. Sanur elle-même est plate et facile avec un scooter urbain ; pour des excursions plus lointaines, une Xmax, V-Strom ou Versys est plus confortable. Vous voulez quelque chose de plus gros ? Nous vous proposerons volontiers d'autres options :",
     },
     kuta: {
       name: 'Kuta', prep: 'à',
@@ -157,7 +160,7 @@ export default {
       faqQ1: 'Livrez-vous partout à Kuta ?',
       faqA1: 'Oui — la livraison couvre tout Kuta. Gratuite à partir de 7 jours (1 semaine), Rp 150 000 forfaitaire pour les séjours plus courts.',
       faqQ4: 'Un scooter suffit-il, ou dois-je louer quelque chose de plus grand ?',
-      faqA4: 'Cela dépend de vos plans — voir « Quel bike choisir à Kuta » ci-dessus. Pour la bande touristique elle-même, un scooter suffit ; pour de plus longs trajets à travers Bali, une Xmax, V-Strom ou Versys est plus confortable.',
+      faqA4: "Cela dépend de vos plans — voir « Quel bike choisir à Kuta » ci-dessus. Pour la bande touristique elle-même, un scooter suffit ; pour de plus longs trajets à travers Bali, une Xmax, V-Strom ou Versys est plus confortable. Vous voulez quelque chose de plus gros ? Nous vous proposerons volontiers d'autres options :",
     },
     'nusa-dua': {
       name: 'Nusa Dua', prep: 'à',
@@ -177,7 +180,7 @@ export default {
       faqQ1: 'Livrez-vous partout à Nusa Dua ?',
       faqA1: 'Oui — la livraison couvre tout Nusa Dua. Gratuite à partir de 14 jours (2 semaines), Rp 150 000 forfaitaire pour les séjours plus courts.',
       faqQ4: 'Un scooter suffit-il, ou dois-je louer quelque chose de plus grand ?',
-      faqA4: 'Cela dépend de vos plans — voir « Quel bike choisir à Nusa Dua » ci-dessus. À l\'intérieur de l\'enclave, un scooter suffit ; pour de plus longs trajets à travers Bali, une Xmax, V-Strom ou Versys est plus confortable.',
+      faqA4: "Cela dépend de vos plans — voir « Quel bike choisir à Nusa Dua » ci-dessus. À l'intérieur de l'enclave, un scooter suffit ; pour de plus longs trajets à travers Bali, une Xmax, V-Strom ou Versys est plus confortable. Vous voulez quelque chose de plus gros ? Nous vous proposerons volontiers d'autres options :",
     },
     denpasar: {
       name: 'Denpasar', prep: 'à',
@@ -197,7 +200,23 @@ export default {
       faqQ1: 'Livrez-vous partout à Denpasar ?',
       faqA1: 'Oui — la livraison couvre tout Denpasar. Gratuite à partir de 7 jours (1 semaine), Rp 150 000 forfaitaire pour les séjours plus courts.',
       faqQ4: 'Un scooter suffit-il, ou dois-je louer quelque chose de plus grand ?',
-      faqA4: 'Cela dépend de vos plans — voir « Quel bike choisir à Denpasar » ci-dessus. Pour rouler en ville, un scooter suffit ; pour de plus longs trajets à travers Bali, une Xmax, V-Strom ou Versys est plus confortable.',
+      faqA4: "Cela dépend de vos plans — voir « Quel bike choisir à Denpasar » ci-dessus. Pour rouler en ville, un scooter suffit ; pour de plus longs trajets à travers Bali, une Xmax, V-Strom ou Versys est plus confortable. Vous voulez quelque chose de plus gros ? Nous vous proposerons volontiers d'autres options :",
     },
+    airport: {
+        "name": "aéroport",
+        "prep": "à l'",
+        "h1": "Location de scooters et motos avec livraison à l'aéroport",
+        "intro": "Vous venez d'atterrir à Bali et voulez partir directement en scooter ? On vous accueille à quelques minutes de la sortie arrivées et on vous remet votre bike avant même que vous ayez trouvé un taxi. La livraison à l'aéroport est possible presque à toute heure, et on vous équipe d'un bike adapté à la suite de votre séjour à Bali.",
+        "seoTitle": "Location de scooter à l'aéroport de Bali (DPS) — On vous accueille à l'arrivée | BikeBaliRent",
+        "seoDescription": "Location de scooters et motos avec livraison à l'aéroport Ngurah Rai (DPS), Bali. Accueil à 1–3 minutes de la sortie arrivées, tarifs transparents, 60+ bikes.",
+        "deliverySummary": "Livraison gratuite pour les locations de 7 jours ou plus (1 semaine) · Rp 150 000 fixe pour les locations plus courtes — jusqu'au terminal de l'aéroport.",
+        "deliveryHtml": "<ul>\n<li>Livraison gratuite pour les locations de <strong>7 jours ou plus (1 semaine)</strong>.</li>\n<li>Locations plus courtes : frais de livraison fixes de <strong>Rp 150 000</strong>.</li>\n<li>Heure exacte et point de rendez-vous confirmés par WhatsApp après la réservation.</li>\n</ul>\n<p>Nous pouvons livrer presque à toute heure — les livraisons en soirée ou de nuit en dehors des horaires habituels sont payantes et doivent être convenues à l'avance.</p>\n<p>Prévoyez un peu de temps pour sortir du terminal — attendre un client entre 1h30 et 3h n'a rien d'inhabituel.</p>\n<p>Nous n'attendons pas directement à la sortie — c'est très fréquenté, et une longue attente là-bas peut nous valoir une amende. On vous accueille à 1–3 minutes à pied de la sortie, au parking des bikes.</p>",
+        "gettingAroundHtml": null,
+        "faqQ1": "Accueillez-vous les arrivants à l'aéroport Ngurah Rai ?",
+        "faqA1": "Oui — on vous accueille à 1–3 minutes à pied de la sortie arrivées, au parking des bikes. Prévoyez un peu de marge après l'atterrissage — attendre un client entre 1h30 et 3h n'a rien d'inhabituel.",
+        "faqIdpQOverride": "Ai-je besoin d'un permis de conduire international pour rouler à Bali avec un bike loué ?",
+        "faqQ4": "Quel bike choisir si je viens d'atterrir ?",
+        "faqA4": "Cela dépend de la suite de votre séjour à Bali — voir « Quel bike choisir » ci-dessus : un scooter pour la ville, une ADV ou Xmax pour les trajets plus longs, un bike de tourisme si vous êtes deux avec des bagages. Vous voulez quelque chose de plus gros ? Nous vous proposerons volontiers d'autres options :"
+  },
   },
 };
