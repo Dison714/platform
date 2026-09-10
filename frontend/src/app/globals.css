@@ -60,7 +60,22 @@ img { max-width: 100%; display: block; }
 }
 
 /* ---------- Header ---------- */
-.hdr { position: sticky; top: 0; z-index: 50; background: var(--navy); color: #fff; }
+/* position:fixed, не sticky — тот же WebKit-баг, что уже был диагностирован и
+   пофикшен для .nav-mobile 2026-09-01 (см. комментарий у .nav-mobile ниже),
+   только теперь на самом .hdr: запись Яндекс.Метрики (сессия 2026-09-10,
+   iOS 26 Mobile Safari) — вся шапка "проваливалась" в середину формы
+   бронирования на калькуляторе, между полями Delivery location/Delivery
+   time, в момент открытия клавиатуры + автозаполнения на фокусе поля
+   Delivery location (type="url"). Изменение высоты вьюпорта от клавиатуры
+   во время скролла — тот же класс события, что раскрытие мобильного меню
+   раньше: sticky-элемент рендерится на устаревшей позиции. .hdr всегда был
+   58px высотой на всех брейкпоинтах (см. .hdr-in ниже) — при position:fixed
+   он больше не резервирует место в потоке, поэтому компенирующий
+   padding-top:58px добавлен на .layout-root (см. ниже). left:0;right:0 —
+   обязательны: у fixed-блока без них ширина shrink-to-fit по контенту
+   вместо полной ширины вьюпорта, а .hdr держит фон и центрирует .container
+   изнутри. */
+.hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: var(--navy); color: #fff; }
 /* gap здесь обязателен (не полагаться на justify-content:space-between одной):
    space-between распределяет только ИЗБЫТОК места, а при длинных переводах
    (ES/DE/FR/IT — лейблы nav длиннее EN/RU) избытка не остаётся, и соседние
@@ -290,7 +305,10 @@ img { max-width: 100%; display: block; }
    появлении/скрытии адресной строки/нативного пикера на мобильном, в
    отличие от 100vh, который в iOS Safari считается от макс. высоты
    вьюпорта без браузерного UI (Webvisor, 2026-09-01, "плавающая шапка"). */
-.layout-root { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
+/* padding-top:58px — компенсация под .hdr{position:fixed} (см. комментарий
+   у .hdr выше, сессия 2026-09-10): фикс-элемент больше не резервирует место
+   в потоке сам, раньше это делал position:sticky. */
+.layout-root { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; padding-top: 58px; }
 
 /* ---------- Product page ---------- */
 .product-wrap { padding-bottom: 40px; }
@@ -662,6 +680,22 @@ img { max-width: 100%; display: block; }
 .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #fff; border: 0; text-align: start; font: inherit; font-weight: 500; color: var(--navy); padding: 15px 16px; cursor: pointer; }
 .faq-mark { color: var(--red); font-size: 22px; line-height: 1; }
 .faq-a { padding: 0 16px 16px; color: var(--ink); }
+
+/* ---------- Location pages (scooter-rental-<district>) ---------- */
+/* .page ограничивает ширину 760px (тексты about/faq/blog) — для этого типа
+   страницы шире не нужно, hero/таблица укладываются в тот же контейнер. */
+.loc-hero { padding: 4px 0 18px; }
+.loc-delivery-stat { display: inline-block; background: var(--surface); color: var(--navy); font-weight: 500; font-size: 14.5px; padding: 10px 14px; border-radius: 10px; margin: 4px 0 16px; }
+.loc-hero-ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+.loc-cta-btn { display: inline-flex; align-items: center; gap: 8px; }
+.loc-cta-secondary { background: var(--navy); }
+.loc-cta-secondary:hover { background: var(--navy-700); }
+.loc-cta-outline { background: transparent; color: var(--navy); border: 1px solid var(--border); }
+.loc-cta-outline:hover { background: var(--surface); }
+.loc-todo { color: var(--muted); font-size: 13.5px; font-style: italic; border-inline-start: 3px solid var(--border); padding: 6px 12px; margin: 0 0 14px; }
+.loc-table-wrap { overflow-x: auto; }
+.loc-cta-final { border-radius: var(--radius); margin-top: 30px; }
+.loc-cta-final-btns { justify-content: center; margin-top: 4px; }
 
 /* ---------- Language switcher ---------- */
 /* .lang-on/.lang-off — классы пунктов внутри .lang-menu (LanguageDropdown.jsx),
