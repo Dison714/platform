@@ -211,13 +211,14 @@ export default {
         "seoTitle": "巴厘岛机场(DPS)踏板车租赁 — 抵达即接机 | BikeBaliRent",
         "seoDescription": "配送至巴厘岛伍拉赖机场(DPS)的踏板车/摩托车租赁。抵达出口1–3分钟内接机，价格透明，60多款车型可选。",
         "deliverySummary": "租期7天以上（1周）免费配送 · 更短租期统一收取Rp 150,000 — 直达机场航站楼。",
-        "deliveryHtml": "<ul>\n<li>租期<strong>7天以上（1周）</strong>免费配送。</li>\n<li>更短租期：统一配送费<strong>Rp 150,000</strong>。</li>\n<li>确切时间和接头地点将在预订后通过WhatsApp确认。</li>\n</ul>\n<p>我们几乎全天候可配送——非营业时间的傍晚及夜间配送需额外收费，且必须提前协商确定。</p>\n<p>请预留一些时间走出航站楼——有时接客户需要等待1.5到3小时，这属于正常情况。</p>\n<p>我们不会直接在出口等候——那里人流量大，长时间等待可能被罚款。我们会在距出口步行1–3分钟的车辆停放区接您。</p>",
+        "deliveryHtml": "<ul>\n<li>租期<strong>7天以上（1周）</strong>免费配送。</li>\n<li>更短租期：统一配送费<strong>Rp 150,000</strong>。</li>\n<li>确切时间和接头地点将在预订后通过WhatsApp确认。</li>\n</ul>\n<p>我们几乎全天候可配送——非营业时间的傍晚及夜间配送需额外收费，且必须提前协商确定。</p>\n<p>请合理预估走出航站楼所需的时间——包括提取行李、护照检查和海关手续。这样我们的司机就不会等您太久。</p>\n<p>我们不会直接在出口等候——那里人流量大，长时间等待可能被罚款。我们会在距出口步行1–3分钟的车辆停放区接您。</p>\n<p><a class=\"btn-cta loc-cta-btn loc-cta-outline\" href=\"https://maps.app.goo.gl/3cmkLZEnQ1zisxPA8?g_st=atm\" target=\"_blank\" rel=\"noopener noreferrer\">机场接机地点</a></p>\n<div class=\"loc-see-all-row\"><p class=\"loc-see-all-note\" style=\"margin:0\">我们可以将车队中的任意车型配送至机场。</p><a class=\"btn-cta loc-cta-btn\" href=\"/zh-Hans/bikes\">浏览全部车型</a></div>",
         "gettingAroundHtml": null,
         "faqQ1": "你们会在伍拉赖机场接机吗？",
-        "faqA1": "会的——我们会在抵达出口步行1–3分钟的车辆停放区接您。降落后请预留一点时间——有时接客户需要等待1.5到3小时，这属于正常情况。",
+        "faqA1": "会的——我们会在抵达出口步行1–3分钟的车辆停放区接您。请合理预估走出航站楼所需的时间——包括提取行李、护照检查和海关手续。这样我们的司机就不会等您太久。",
         "faqIdpQOverride": "在巴厘岛骑租赁车辆需要国际驾照吗？",
         "faqQ4": "刚落地应该选哪款车型？",
-        "faqA4": "取决于您在巴厘岛的后续行程——见上方\"车型如何选择\"：市内骑行选踏板车，长途选ADV或Xmax，两人带行李选旅行摩托。想要更大排量的车型？我们很乐意为您推荐："
+        "faqA4": "取决于您在巴厘岛的后续行程：市内骑行选踏板车，长途选ADV或Xmax，两人带行李选旅行摩托。想要更大排量的车型？我们很乐意为您推荐：",
+        "whichBikeHtmlOverride": null
   },
   },
 };

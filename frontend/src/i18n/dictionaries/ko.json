@@ -300,6 +300,7 @@
     "delivery_title": "{district} 배송",
     "getting_around_title": "{district}에서 이동하기",
     "distances_title": "{district}에서의 거리",
+    "distances_title_airport": "공항에서의 거리",
     "distances_note": "{district}에서 실제 이동 시간을 결정하는 건 거리가 아니라 교통 상황입니다 — 가능하면 위에 표시된 두 러시아워 시간대를 피해 일정을 계획하세요.",
     "col_destination": "목적지",
     "col_distance": "거리",

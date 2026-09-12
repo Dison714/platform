@@ -134,8 +134,10 @@ export default async function LocationPage({ params }) {
             <TelegramIcon size={18} /> {lp.book_telegram}
           </ContactLink>
         </div>
-        {lp.see_all_bikes_note && <p className="loc-see-all-note">{lp.see_all_bikes_note}</p>}
-        <Link className="btn-cta loc-cta-btn loc-cta-outline" href={`/${locale}/bikes`}>{lp.see_all_bikes}</Link>
+        <div className="loc-see-all-row">
+          {lp.see_all_bikes_note && <p className="loc-see-all-note">{lp.see_all_bikes_note}</p>}
+          <Link className="btn-cta loc-cta-btn" href={`/${locale}/bikes`}>{lp.see_all_bikes}</Link>
+        </div>
       </div>
 
       <h2 className="display section-h2">{fill(lp.delivery_title, name)}</h2>
@@ -151,7 +153,7 @@ export default async function LocationPage({ params }) {
 
       {page.distances?.length > 0 && (
         <>
-          <h2 className="display section-h2">{fill(lp.distances_title, name)}</h2>
+          <h2 className="display section-h2">{district === 'airport' && lp.distances_title_airport ? lp.distances_title_airport : fill(lp.distances_title, name)}</h2>
           <div className="article-body loc-table-wrap">
             <table>
               <thead>
@@ -178,8 +180,12 @@ export default async function LocationPage({ params }) {
         </>
       )}
 
-      <h2 className="display section-h2">{fill(lp.which_bike_title, name)}</h2>
-      {page.which_bike_html && <div className="article-body" dangerouslySetInnerHTML={{ __html: page.which_bike_html }} />}
+      {page.which_bike_html && (
+        <>
+          <h2 className="display section-h2">{fill(lp.which_bike_title, name)}</h2>
+          <div className="article-body" dangerouslySetInnerHTML={{ __html: page.which_bike_html }} />
+        </>
+      )}
 
       {page.route_html && (
         <>

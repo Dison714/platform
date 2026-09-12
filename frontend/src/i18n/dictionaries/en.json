@@ -300,6 +300,7 @@
     "delivery_title": "Delivery to {district}",
     "getting_around_title": "Getting Around {district}",
     "distances_title": "Distances from {district}",
+    "distances_title_airport": "Distances from the Airport",
     "distances_note": "Traffic, not distance, is what actually decides your travel time in {district} — plan day trips outside the two rush-hour windows above wherever you can.",
     "col_destination": "Destination",
     "col_distance": "Distance",

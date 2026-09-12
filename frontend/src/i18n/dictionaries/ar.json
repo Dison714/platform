@@ -300,6 +300,7 @@
     "delivery_title": "التوصيل إلى {district}",
     "getting_around_title": "التنقل في {district}",
     "distances_title": "المسافات من {district}",
+    "distances_title_airport": "المسافات من المطار",
     "distances_note": "الازدحام، وليس المسافة، هو ما يحدد فعليًا وقت رحلتك في {district} — خطّط لرحلاتك اليومية خارج فترتي الذروة المذكورتين أعلاه قدر الإمكان.",
     "col_destination": "الوجهة",
     "col_distance": "المسافة",

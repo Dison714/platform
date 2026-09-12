@@ -300,6 +300,7 @@
     "delivery_title": "配送至{district}",
     "getting_around_title": "在{district}出行",
     "distances_title": "从{district}出发的距离",
+    "distances_title_airport": "距机场的距离",
     "distances_note": "决定您在{district}实际行程时间的是路况，而非距离——请尽量把行程安排在上述两个高峰时段之外。",
     "col_destination": "目的地",
     "col_distance": "距离",

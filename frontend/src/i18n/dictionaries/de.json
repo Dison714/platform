@@ -300,6 +300,7 @@
     "delivery_title": "Lieferung nach {district}",
     "getting_around_title": "Unterwegs in {district}",
     "distances_title": "Entfernungen ab {district}",
+    "distances_title_airport": "Entfernungen vom Flughafen",
     "distances_note": "Nicht die Entfernung, sondern der Verkehr entscheidet über deine Fahrzeit in {district} — plane Tagesausflüge möglichst außerhalb der beiden oben genannten Stoßzeiten.",
     "col_destination": "Ziel",
     "col_distance": "Entfernung",

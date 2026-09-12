@@ -93,7 +93,17 @@ for (const lang of LANGS) {
                 // canggu + seminyak only — appended via a per-district
                 // whichBikeExtra override, shared whichBikeHtml unchanged
                 // for the other 7 districts.
-                d.whichBikeExtra ? `${data.whichBikeHtml}\n${d.whichBikeExtra}` : data.whichBikeHtml,
+                //
+                // whichBikeHtmlOverride (2026-09-12 follow-up task, airport
+                // only): the shared 4-tier "which bike fits" list doesn't
+                // apply to a pickup-at-arrival page — Дмитрий asked for that
+                // whole section removed, not just reworded, and page.js
+                // now hides the heading too when which_bike_html is falsy.
+                // 'in' check (not ?? or truthiness) so an explicit NULL
+                // override actually suppresses the section instead of
+                // falling through to the shared block.
+                'whichBikeHtmlOverride' in d ? d.whichBikeHtmlOverride
+                    : d.whichBikeExtra ? `${data.whichBikeHtml}\n${d.whichBikeExtra}` : data.whichBikeHtml,
                 JSON.stringify(en.popular_locations),
                 JSON.stringify(faq),
                 data.ctaBody(d.name, d.prep),

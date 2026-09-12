@@ -300,6 +300,7 @@
     "delivery_title": "{district} में डिलीवरी",
     "getting_around_title": "{district} में घूमना-फिरना",
     "distances_title": "{district} से दूरियाँ",
+    "distances_title_airport": "एयरपोर्ट से दूरियाँ",
     "distances_note": "{district} में आपकी यात्रा का समय दूरी नहीं, बल्कि ट्रैफ़िक तय करता है — जहाँ तक हो सके, ऊपर बताए गए दोनों पीक-आवर समय के बाहर अपनी डे-ट्रिप प्लान करें।",
     "col_destination": "गंतव्य",
     "col_distance": "दूरी",

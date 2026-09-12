@@ -300,6 +300,7 @@
     "delivery_title": "Доставка в {district}",
     "getting_around_title": "Передвижение по {district}",
     "distances_title": "Расстояния от {district}",
+    "distances_title_airport": "Расстояния от Аэропорта",
     "distances_note": "Не расстояние, а трафик решает, сколько займёт дорога в {district} — планируйте поездки вне двух часов пик, указанных выше.",
     "col_destination": "Направление",
     "col_distance": "Расстояние",
