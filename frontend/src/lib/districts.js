@@ -1,4 +1,4 @@
-// 9 SEO-районных страниц (/scooter-rental-<slug>) — общий источник правды
+// 10 SEO-районных страниц (/scooter-rental-<slug>) — общий источник правды
 // для Header.jsx (дропдаун "Bali Districts") и [locationSlug]/page.js
 // (отображаемое имя района). slug — не всегда однословный (nusa-dua), поэтому
 // простой capitalize() первой буквы (как было для одного canggu) больше не
