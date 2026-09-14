@@ -9,9 +9,16 @@ import BlogCategoryTabs from '../../components/BlogCategoryTabs.jsx';
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }) {
+  const dict = await getDictionary(params.locale);
   const title = 'Blog';
+  const description = dict.blog.meta_description;
   const url = `/${params.locale}/blog`;
-  return { title, alternates: { canonical: url }, ...ogTwitter({ title, url }) };
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    ...ogTwitter({ title, description, url }),
+  };
 }
 
 // Секции по категориям (ТЗ п.4.15): пилар + сетка кластерных статей,

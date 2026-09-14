@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { isEnabledLocale } from '../../../i18n/config.js';
 import { getDictionary } from '../../../i18n/getDictionary.js';
-import { hreflangAlternates } from '../../../lib/seo.js';
+import { hreflangAlternates, ogTwitter } from '../../../lib/seo.js';
 import { TERMS } from '../../../data/terms.js';
 
 // Условия аренды — тот же текст, что renter подписывает на бумаге при
@@ -16,10 +16,13 @@ export async function generateMetadata({ params }) {
   const dict = await getDictionary(params.locale);
   const t = TERMS[params.locale] ?? TERMS.en;
   const title = `${t.title} — ${dict.brand.name}`;
+  const description = t.intro;
   const url = `/${params.locale}/terms`;
   return {
     title,
+    description,
     alternates: { canonical: url, languages: hreflangAlternates('/terms') },
+    ...ogTwitter({ title, description, url }),
   };
 }
 
