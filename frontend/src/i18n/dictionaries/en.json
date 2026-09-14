@@ -283,6 +283,10 @@
       {
         "q": "How do I book?",
         "a": "Pick a bike, choose your dates and extras to see the price, then send a request. Our manager confirms the details with you on WhatsApp or Telegram."
+      },
+      {
+        "q": "Which bike should I choose?",
+        "a": "Scooters (Honda ADV, PCX, Yamaha Nmax, Xmax) are the easiest option for most riders — automatic, light, and simple to handle on Bali's roads. If you want more power or a different riding style, browse our motorcycles — Yamaha MT-25, XSR, Kawasaki ZX-25R, Suzuki V-Strom and more. Still not sure? Message us and we'll help you pick."
       }
     ]
   },
