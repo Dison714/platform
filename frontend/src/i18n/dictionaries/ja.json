@@ -21,6 +21,8 @@
   "catalog": {
     "title": "バイク一覧",
     "subtitle": "{count}台のモデル — スクーターからスポーツバイクまで",
+    "model_hub_title": "バリ島で{model}をレンタル",
+    "model_hub_description": "バリ島で{model}をレンタル — カラーを選んで、リアルタイムの料金を確認し、数分でオンライン予約できます。",
     "all": "すべて",
     "group_scooter": "スクーター",
     "group_motorcycle": "バイク",

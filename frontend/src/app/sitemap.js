@@ -1,6 +1,7 @@
 import { apiGet } from '../lib/api.js';
 import { SITE_URL, IS_PRODUCTION } from '../lib/site.js';
 import { enabledLocales } from '../i18n/config.js';
+import { categoriesInGroup, SINGLE_MODEL_CATEGORIES } from '../lib/categoryGroups.js';
 
 // Нативный App Router sitemap (→ /sitemap.xml). Живые данные из API, поэтому
 // не кэшируем на билде. hreflang-связки между локалями сюда НЕ добавляются
@@ -55,6 +56,45 @@ export default async function sitemap() {
         lastModified: p.updated_at ? new Date(p.updated_at) : now,
         changeFrequency: 'weekly',
         priority: 0.8,
+      });
+    }
+  }
+
+  // Модель-хаб URL (?category=<скутер-модель> / ?group=motorcycle&model=<family>)
+  // × локали — та же логика "это однозначная модель" и то же условие
+  // product_count > 0, что в bikes/page.js (resolveModelHub); product_count
+  // не зависит от языка, поэтому список категорий/семей запрашивается один
+  // раз, не по локали, как products/posts/location-pages выше.
+  let hubQueries = [];
+  try {
+    const [{ data: allCategories }, { data: allFamilies }] = await Promise.all([
+      apiGet('/api/categories'),
+      apiGet('/api/families'),
+    ]);
+    const categoryHubs = allCategories
+      .filter((c) => SINGLE_MODEL_CATEGORIES.includes(c.code) && c.product_count > 0)
+      .map((c) => `category=${c.code}`);
+    const motorcycleCodes = categoriesInGroup('motorcycle');
+    // Next's built-in sitemap route (resolve-route-data.js) writes
+    // `<loc>${url}</loc>` with NO XML-escaping at all — verified directly in
+    // node_modules, not assumed. A raw `&` between query params (unlike the
+    // single-param category= hubs above) breaks the XML (Googlebot/any
+    // strict parser chokes on an un-escaped `&`), so it has to be escaped
+    // here, once, ourselves.
+    const modelHubs = allFamilies
+      .filter((f) => motorcycleCodes.includes(f.category.code) && f.product_count > 0)
+      .map((f) => `group=motorcycle&amp;model=${f.code}`);
+    hubQueries = [...categoryHubs, ...modelHubs];
+  } catch {
+    // API недоступен — просто без хабов в sitemap, не падаем.
+  }
+  for (const loc of locales) {
+    for (const query of hubQueries) {
+      entries.push({
+        url: `${SITE_URL}/${loc}/bikes?${query}`,
+        lastModified: now,
+        changeFrequency: 'weekly',
+        priority: 0.7,
       });
     }
   }

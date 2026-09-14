@@ -21,6 +21,8 @@
   "catalog": {
     "title": "Nos motos",
     "subtitle": "{count} modèles — du scooter à la sportive",
+    "model_hub_title": "Location {model} à Bali",
+    "model_hub_description": "Louez une {model} à Bali — choisissez votre couleur, consultez le prix en direct et réservez en ligne en quelques minutes.",
     "all": "Tous",
     "group_scooter": "Scooters",
     "group_motorcycle": "Motos",

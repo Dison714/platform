@@ -21,6 +21,8 @@
   "catalog": {
     "title": "Le nostre moto",
     "subtitle": "{count} modelli — dagli scooter alle sportive",
+    "model_hub_title": "Noleggio {model} a Bali",
+    "model_hub_description": "Noleggia una {model} a Bali — scegli il colore, vedi il prezzo in tempo reale e prenota online in pochi minuti.",
     "all": "Tutte",
     "group_scooter": "Scooter",
     "group_motorcycle": "Moto",

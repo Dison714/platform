@@ -21,6 +21,8 @@
   "catalog": {
     "title": "보유 바이크",
     "subtitle": "{count}개 모델 — 스쿠터부터 스포츠 바이크까지",
+    "model_hub_title": "발리에서 {model} 렌탈",
+    "model_hub_description": "발리에서 {model}를 렌탈하세요 — 색상을 선택하고, 실시간 요금을 확인하고, 몇 분 만에 온라인으로 예약하세요.",
     "all": "전체",
     "group_scooter": "스쿠터",
     "group_motorcycle": "오토바이",

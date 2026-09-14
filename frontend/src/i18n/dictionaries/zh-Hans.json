@@ -21,6 +21,8 @@
   "catalog": {
     "title": "我们的摩托车",
     "subtitle": "{count} 款车型 — 从踏板车到跑车应有尽有",
+    "model_hub_title": "在巴厘岛租赁{model}",
+    "model_hub_description": "在巴厘岛租赁{model}——选择颜色，实时查看价格，几分钟内即可在线预订。",
     "all": "全部",
     "group_scooter": "踏板车",
     "group_motorcycle": "摩托车",

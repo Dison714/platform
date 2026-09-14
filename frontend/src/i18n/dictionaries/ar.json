@@ -21,6 +21,8 @@
   "catalog": {
     "title": "دراجاتنا النارية",
     "subtitle": "{count} طراز — من السكوتر إلى الدراجات الرياضية",
+    "model_hub_title": "تأجير {model} في بالي",
+    "model_hub_description": "استأجر {model} في بالي — اختر اللون، شاهد السعر مباشرة، واحجز أونلاين خلال دقائق.",
     "all": "الكل",
     "group_scooter": "سكوتر",
     "group_motorcycle": "دراجات نارية",

@@ -21,6 +21,8 @@
   "catalog": {
     "title": "Наши байки",
     "subtitle": "{count} моделей — от скутеров до спорта",
+    "model_hub_title": "Аренда {model} на Бали",
+    "model_hub_description": "Арендуйте {model} на Бали — выберите цвет, смотрите цену онлайн и бронируйте за пару минут.",
     "all": "Все",
     "group_scooter": "Скутеры",
     "group_motorcycle": "Мотоциклы",

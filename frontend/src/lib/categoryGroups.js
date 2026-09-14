@@ -20,3 +20,11 @@ export function groupOfCategory(code) {
 export function categoriesInGroup(group) {
   return CATEGORY_GROUPS[group] ?? null;
 }
+
+// Каждая категория в "Скутеры" — ровно одна модель (та самая разбивка
+// scooter_filter_split, миграция 028) — в отличие от "Мотоциклы", где одна
+// категория = несколько разных моделей. Так что ?category=<scooter code> —
+// однозначный по модели URL (кандидат на self-referencing canonical/hub-
+// страницу, см. bikes/page.js), а ?category=<motorcycle code> — нет, там
+// однозначность даёт только отдельная ось ?model= (ModelFilter).
+export const SINGLE_MODEL_CATEGORIES = CATEGORY_GROUPS.scooter;

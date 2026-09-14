@@ -21,6 +21,8 @@
   "catalog": {
     "title": "Unsere Motorräder",
     "subtitle": "{count} Modelle — vom Roller bis zum Sportbike",
+    "model_hub_title": "{model} mieten auf Bali",
+    "model_hub_description": "Mieten Sie eine {model} auf Bali — wählen Sie die Farbe, sehen Sie den Preis live und buchen Sie in wenigen Minuten online.",
     "all": "Alle",
     "group_scooter": "Roller",
     "group_motorcycle": "Motorräder",

@@ -21,6 +21,8 @@
   "catalog": {
     "title": "Our bikes",
     "subtitle": "{count} models — scooters to sport",
+    "model_hub_title": "{model} Rental in Bali",
+    "model_hub_description": "Rent a {model} in Bali — pick your color, see live pricing, and book online in minutes.",
     "all": "All",
     "group_scooter": "Scooters",
     "group_motorcycle": "Motorcycles",
