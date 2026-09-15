@@ -1,0 +1,227 @@
+[
+  {
+    "file": "honda-pcx160.md",
+    "baseSlug": "honda-pcx160-review",
+    "familyCode": "honda_pcx",
+    "reuseExisting": null,
+    "title": {
+      "ru": "Honda PCX160 — комфорт и вместительность на каждый день"
+    },
+    "excerpt": {
+      "ru": "Honda PCX160 — самый универсальный выбор для тех, кто хочет комфортный скутер без компромиссов по багажнику. Модель, которую чаще всего берут пары и путешественники с чемоданом."
+    },
+    "seo_description": {
+      "ru": "Характеристики, расход топлива, отзывы владельцев и допы для Honda PCX160 в аренде на Бали — куда подходит и кому стоит брать."
+    }
+  },
+  {
+    "file": "honda-adv160.md",
+    "baseSlug": "honda-adv-review",
+    "familyCode": "honda_adv",
+    "reuseExisting": "honda-adv-review",
+    "title": {
+      "ru": "Honda ADV160 — для неровных дорог и дальних вылазок"
+    },
+    "excerpt": {
+      "ru": "Honda ADV160 — тот же надёжный двигатель, что у PCX160, но в другом корпусе: выше посадка, больше дорожный просвет, увереннее на разбитом асфальте и грунтовых участках."
+    },
+    "seo_description": {
+      "ru": "Характеристики, расход топлива и отзывы владельцев Honda ADV160 в аренде на Бали — где раскрывается городской адвенчур-стайлинг."
+    }
+  },
+  {
+    "file": "yamaha-nmax.md",
+    "baseSlug": "yamaha-nmax-review",
+    "familyCode": "yamaha_nmax",
+    "reuseExisting": "yamaha-nmax-review",
+    "title": {
+      "ru": "Yamaha Nmax — New (Gen 2), Neo (Gen 3) и Turbo"
+    },
+    "excerpt": {
+      "ru": "Nmax в парке — не одна модель, а несколько поколений и триммов под одним именем: New, Neo и Turbo. Разбираемся, чем они отличаются на самом деле."
+    },
+    "seo_description": {
+      "ru": "Yamaha Nmax в аренде на Бали: чем отличаются New, Neo и Turbo, характеристики и реальные отзывы владельцев."
+    }
+  },
+  {
+    "file": "yamaha-xmax250.md",
+    "baseSlug": "yamaha-xmax250-review",
+    "familyCode": "yamaha_xmax",
+    "reuseExisting": null,
+    "title": {
+      "ru": "Yamaha XMAX250 — Connected и Tech Max: одна механика, разный уровень отделки"
+    },
+    "excerpt": {
+      "ru": "Yamaha XMAX250 — самый мощный скутер в линейке, хорош и на дальние расстояния, и в городе. В парке — версии Connected и Tech Max с одинаковой механикой."
+    },
+    "seo_description": {
+      "ru": "Yamaha XMAX250 в аренде на Бали: разница между Connected и Tech Max, характеристики, приложение Y-Connect и маршруты по острову."
+    }
+  },
+  {
+    "file": "yamaha-mt25.md",
+    "baseSlug": "yamaha-mt25-review",
+    "familyCode": "yamaha_mt25",
+    "reuseExisting": null,
+    "title": {
+      "ru": "Yamaha MT-25 — Gen 2 и Gen 3: разный внешний вид, тот же мотор"
+    },
+    "excerpt": {
+      "ru": "Yamaha MT-25 — компактный стритфайтер для тех, кто хочет почувствовать разгон и отклик мотоцикла. В парке встречаются байки Gen 2 и Gen 3 после рестайлинга 2025 года."
+    },
+    "seo_description": {
+      "ru": "Yamaha MT-25 в аренде на Бали: разница между Gen 2 и Gen 3, характеристики двигателя и где раскрывается характер стритфайтера."
+    }
+  },
+  {
+    "file": "kawasaki-zx25r.md",
+    "baseSlug": "kawasaki-ninja-zx-25r-review",
+    "familyCode": "kawasaki_zx25r",
+    "reuseExisting": null,
+    "title": {
+      "ru": "Kawasaki Ninja ZX-25R — единственный серийный 250-кубовый спортбайк с рядной четвёркой"
+    },
+    "excerpt": {
+      "ru": "Kawasaki Ninja ZX-25R — единственный серийный спортбайк 250cc с рядным 4-цилиндровым двигателем. Высокооборотистый характер и заводской квикшифтер."
+    },
+    "seo_description": {
+      "ru": "Kawasaki Ninja ZX-25R в аренде на Бали: редкий рядный 4-цилиндровый мотор 250cc, квикшифтер и кому подойдёт этот спортбайк."
+    }
+  },
+  {
+    "file": "yamaha-xsr155.md",
+    "baseSlug": "yamaha-xsr-155-review-retro-style",
+    "familyCode": "yamaha_xsr",
+    "reuseExisting": "yamaha-xsr-155-review-retro-style",
+    "title": {
+      "ru": "Yamaha XSR155 — кафе-рейсер с ретро-характером"
+    },
+    "excerpt": {
+      "ru": "Yamaha XSR155 — неоретро-байк с круглой фарой, низким рулём и посадкой кафе-рейсера на семейном 155-кубовом моторе, настроенном мощнее под механику."
+    },
+    "seo_description": {
+      "ru": "Yamaha XSR155 в аренде на Бали: характеристики, отзывы владельцев и кому подойдёт этот неоретро-байк с механической коробкой."
+    }
+  },
+  {
+    "file": "kawasaki-versys-x250.md",
+    "baseSlug": "kawasaki-versys-x250-review",
+    "familyCode": "kawasaki_versys",
+    "reuseExisting": null,
+    "title": {
+      "ru": "Kawasaki Versys-X 250 — туринг с запасом на грунтовку"
+    },
+    "excerpt": {
+      "ru": "Kawasaki Versys-X 250 — эндуро-туринг с высокой посадкой, длинноходной подвеской и увеличенным баком для тех, кто хочет исследовать боковые дороги острова."
+    },
+    "seo_description": {
+      "ru": "Kawasaki Versys-X 250 в аренде на Бали: характеристики, запас хода, отзывы владельцев и лучшие маршруты для эндуро-туринга."
+    }
+  },
+  {
+    "file": "suzuki-vstrom250.md",
+    "baseSlug": "suzuki-v-strom-250-review",
+    "familyCode": "suzuki_vstrom250",
+    "reuseExisting": null,
+    "title": {
+      "ru": "Suzuki V-Strom 250 — туринг с акцентом на комфорт и ветрозащиту"
+    },
+    "excerpt": {
+      "ru": "Suzuki V-Strom 250 — адвенчур-туринг с акцентом на комфорт при длительной езде: широкое ветровое стекло, вертикальная посадка, мягкая подвеска."
+    },
+    "seo_description": {
+      "ru": "Suzuki V-Strom 250 в аренде на Бали: характеристики, реальный расход топлива и отзывы арендаторов о дальних поездках по острову."
+    }
+  },
+  {
+    "file": "tvs-ronin225.md",
+    "baseSlug": "tvs-ronin-225-review",
+    "familyCode": "tvs_ronin225",
+    "reuseExisting": null,
+    "title": {
+      "ru": "TVS Ronin 225 — неоретро на грани скрэмблера"
+    },
+    "excerpt": {
+      "ru": "TVS Ronin 225 — модерн-классик со скрэмблерными нотками: круглая LED-фара, высокая посадка руля и уверенность как в городе, так и на грунтовых съездах."
+    },
+    "seo_description": {
+      "ru": "TVS Ronin 225 в аренде на Бали: характеристики, надёжность и отзывы владельцев о неоретро-байке со скрэмблерным характером."
+    }
+  },
+  {
+    "file": "keeway-road-falcon250.md",
+    "baseSlug": "keeway-road-falcon-250-review",
+    "familyCode": "keeway_roadfalcon250",
+    "reuseExisting": null,
+    "title": {
+      "ru": "Keeway Road Falcon 250 — классический круизер по цене входа в класс"
+    },
+    "excerpt": {
+      "ru": "Keeway Road Falcon 250 — классический круизер с длинным силуэтом и низкой посадкой по цене входа в класс. Новая модель на рынке — вышла в 2026 году."
+    },
+    "seo_description": {
+      "ru": "Keeway Road Falcon 250 в аренде на Бали: характеристики, сравнение с Honda Rebel и кому подойдёт этот круизер."
+    }
+  },
+  {
+    "file": "morbidelli-c252v.md",
+    "baseSlug": "morbidelli-c252v-review",
+    "familyCode": "morbidelli_c252v",
+    "reuseExisting": null,
+    "title": {
+      "ru": "Morbidelli C252V — V-twin круизер с итальянским именем"
+    },
+    "excerpt": {
+      "ru": "Morbidelli C252V — второй круизер в парке, но с настоящим V-образным двухцилиндровым мотором вместо параллельной двойки и ремённым приводом."
+    },
+    "seo_description": {
+      "ru": "Morbidelli C252V в аренде на Бали: V-twin мотор, ремённый привод, характеристики и чем круизер отличается от Road Falcon."
+    }
+  },
+  {
+    "file": "honda-cbr250rr.md",
+    "baseSlug": "honda-cbr250rr-review",
+    "familyCode": "honda_cbr250rr",
+    "reuseExisting": null,
+    "title": {
+      "ru": "Honda CBR250RR — полный обтекатель и самый «трековый» из фейринговых спортбайков парка"
+    },
+    "excerpt": {
+      "ru": "Honda CBR250RR — единственный полностью обтекаемый спортбайк в парке, топовая версия с квикшифтером и ABS. Один из технологических лидеров класса 250cc в Индонезии."
+    },
+    "seo_description": {
+      "ru": "Honda CBR250RR в аренде на Бали: топовая версия с квикшифтером, характеристики и кому подойдёт полный спортбайк-опыт."
+    }
+  },
+  {
+    "file": "honda-cb150x.md",
+    "baseSlug": "honda-cb150x-review",
+    "familyCode": "honda_cb150x",
+    "reuseExisting": null,
+    "title": {
+      "ru": "Honda CB150X — доступный адвенчур-вид на базе 150-кубового мотора"
+    },
+    "excerpt": {
+      "ru": "Honda CB150X — доступный вход в адвенчур-стилистику на 150-кубовом моторе с серьёзными для класса ходовыми и самым лёгким весом среди мотоциклов парка."
+    },
+    "seo_description": {
+      "ru": "Honda CB150X в аренде на Бали: характеристики, дорожный просвет и кому подойдёт бюджетный адвенчур-байк."
+    }
+  },
+  {
+    "file": "pcx-adv-nmax-comparison.md",
+    "baseSlug": "pcx160-vs-adv160-vs-nmax-how-to-choose",
+    "familyCode": null,
+    "reuseExisting": null,
+    "title": {
+      "ru": "PCX160 vs ADV160 vs Nmax — как выбрать между тройкой"
+    },
+    "excerpt": {
+      "ru": "PCX160, ADV160 и Nmax — как выбрать между тремя самыми популярными скутерами парка: в чём разница по багажнику, динамике и посадке."
+    },
+    "seo_description": {
+      "ru": "Сравнение Honda PCX160, Honda ADV160 и Yamaha Nmax в аренде на Бали — какой скутер выбрать под свои задачи."
+    }
+  }
+]

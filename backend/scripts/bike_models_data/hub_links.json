@@ -1,0 +1,16 @@
+{
+  "honda_pcx": "bikes?category=honda_pcx160",
+  "honda_adv": "bikes?category=honda_adv160",
+  "yamaha_nmax": "bikes?category=yamaha_nmax155",
+  "yamaha_xmax": "bikes?category=yamaha_xmax250",
+  "yamaha_mt25": "bikes?group=motorcycle&model=yamaha_mt25",
+  "kawasaki_zx25r": "bikes?group=motorcycle&model=kawasaki_zx25r",
+  "yamaha_xsr": "bikes?group=motorcycle&model=yamaha_xsr",
+  "kawasaki_versys": "bikes?group=motorcycle&model=kawasaki_versys",
+  "suzuki_vstrom250": "bikes?group=motorcycle&model=suzuki_vstrom250",
+  "tvs_ronin225": "bikes?group=motorcycle&model=tvs_ronin225",
+  "keeway_roadfalcon250": "bikes?group=motorcycle&model=keeway_roadfalcon250",
+  "morbidelli_c252v": "bikes?group=motorcycle&model=morbidelli_c252v",
+  "honda_cbr250rr": "bikes?group=motorcycle&model=honda_cbr250rr",
+  "honda_cb150x": "bikes?group=motorcycle&model=honda_cb150x"
+}

@@ -1,0 +1,21 @@
+{
+  "_readme": "Bali/Lombok/Flores place names that appear in the bike-models articles but are NOT covered by frontend/src/lib/districts.js (that file only covers the 10 SEO district pages: Canggu/Seminyak/Ubud/Uluwatu/Jimbaran/Sanur/Kuta/Nusa Dua/Denpasar/Airport — reuse ITS namesByLocale for those 9 real districts if they appear here too, don't retranslate them). For de/es/fr/it: keep all these names in Latin script unchanged (same convention as districts.js — no established exonym). For ja/ko/zh-Hans/ar/hi: use the transliteration given below so the same place reads consistently across all 15 articles. GWK and Virgin Beach/Pandawa Beach are tourist-brand names, not traditional toponyms — GWK stays as the Latin acronym 'GWK' in every language.",
+  "Kintamani": { "ja": "キンタマーニ", "ko": "킨타마니", "zh-Hans": "金塔玛尼", "ar": "كينتاماني", "hi": "किंतामणि" },
+  "Batur (volcano/lake)": { "ja": "バトゥール", "ko": "바투르", "zh-Hans": "巴杜尔", "ar": "باتور", "hi": "बातूर" },
+  "Munduk": { "ja": "ムンドゥック", "ko": "문둑", "zh-Hans": "文都", "ar": "موندوك", "hi": "मुंडुक" },
+  "Amed": { "ja": "アメッド", "ko": "아메드", "zh-Hans": "阿梅德", "ar": "أميد", "hi": "अमेड" },
+  "Lovina": { "ja": "ロビナ", "ko": "로비나", "zh-Hans": "洛维娜", "ar": "لوفينا", "hi": "लोविना" },
+  "Sidemen": { "ja": "シドゥメン", "ko": "시드멘", "zh-Hans": "西德门", "ar": "سيدمين", "hi": "सिडेमेन" },
+  "Tulamben": { "ja": "トゥランベン", "ko": "툴람벤", "zh-Hans": "图蓝奔", "ar": "تولامبين", "hi": "तुलामबेन" },
+  "Besakih": { "ja": "ブサキ", "ko": "브사키", "zh-Hans": "佩萨基", "ar": "بيساكيه", "hi": "बेसाकिह" },
+  "Klungkung": { "ja": "クルンクン", "ko": "클룽쿵", "zh-Hans": "格隆隆", "ar": "كلونكونغ", "hi": "क्लुंगकुंग" },
+  "Gianyar": { "ja": "ギアニャール", "ko": "기아냐르", "zh-Hans": "吉安雅", "ar": "جيانيار", "hi": "गियानयार" },
+  "Candidasa": { "ja": "チャンディダサ", "ko": "찬디다사", "zh-Hans": "昌迪达萨", "ar": "كانديداسا", "hi": "कैंडिडासा" },
+  "Lombok (island)": { "ja": "ロンボク", "ko": "롬복", "zh-Hans": "龙目岛", "ar": "لومبوك", "hi": "लोम्बोक" },
+  "Mandalika (circuit)": { "ja": "マンダリカ", "ko": "만달리카", "zh-Hans": "曼达利卡", "ar": "مانداليكا", "hi": "मंदालिका" },
+  "Flores (island)": { "ja": "フローレス", "ko": "플로레스", "zh-Hans": "弗洛勒斯", "ar": "فلوريس", "hi": "फ्लोरेस" },
+  "Bukit (peninsula)": { "ja": "ブキット半島", "ko": "부킷 반도", "zh-Hans": "布吉半岛", "ar": "شبه جزيرة بوكيت", "hi": "बुकित प्रायद्वीप" },
+  "Virgin Beach": { "ja": "ヴァージンビーチ", "ko": "버진 비치", "zh-Hans": "处女海滩", "ar": "شاطئ فيرجن", "hi": "वर्जिन बीच" },
+  "Pandawa Beach": { "ja": "パンダワビーチ", "ko": "판다와 비치", "zh-Hans": "潘达瓦海滩", "ar": "شاطئ باندوا", "hi": "पंडावा बीच" },
+  "GWK": { "all_languages": "GWK (keep Latin acronym unchanged everywhere)" }
+}

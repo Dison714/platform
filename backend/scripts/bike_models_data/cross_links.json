@@ -1,0 +1,34 @@
+{
+  "comfort_box_article": {
+    "note": "Used in honda-pcx160-review and honda-adv-review 'Допы' section, linking to the SHAD top-box article",
+    "slugs": {
+      "en": "rental-extras-worth-adding-helmets-and-the-comfort-box",
+      "ru": "dopolnitelnye-optsii-pri-arende-shlemy-i-udobnyy-boks",
+      "de": "sinnvolle-mietextras-helme-und-die-komfort-box",
+      "es": "extras-de-alquiler-que-merecen-la-pena-cascos-y-el-baul-comodo",
+      "fr": "options-de-location-qui-valent-la-peine-casques-et-top-case-confort",
+      "it": "extra-a-noleggio-che-vale-la-pena-aggiungere-caschi-e-il-bauletto-comfort",
+      "ja": "rental-extras-worth-adding-helmets-and-the-comfort-box",
+      "ko": "rental-extras-worth-adding-helmets-and-the-comfort-box",
+      "ar": "rental-extras-worth-adding-helmets-and-the-comfort-box",
+      "hi": "rental-extras-worth-adding-helmets-and-the-comfort-box",
+      "zh-Hans": "rental-extras-worth-adding-helmets-and-the-comfort-box"
+    }
+  },
+  "smart_key_article": {
+    "note": "Used in honda-pcx160-review 'Что говорят владельцы' section, linking to the smart-key how-to article (covers HOW the smart key works, does NOT cover lost-key replacement cost — anchor text must not promise cost details)",
+    "slugs": {
+      "en": "how-to-start-and-use-your-rental-scooters-smart-key",
+      "ru": "kak-zavesti-bayk-i-polzovatsya-klyuchom-brelokom",
+      "de": "wie-man-den-smart-key-des-mietrollers-startet-und-benutzt",
+      "es": "como-arrancar-y-usar-el-smart-key-de-tu-scooter-de-alquiler",
+      "fr": "comment-demarrer-et-utiliser-le-smart-key-de-votre-scooter-de-location",
+      "it": "come-avviare-e-usare-lo-smart-key-del-vostro-scooter-a-noleggio",
+      "ja": "how-to-start-and-use-your-rental-scooters-smart-key",
+      "ko": "how-to-start-and-use-your-rental-scooters-smart-key",
+      "ar": "how-to-start-and-use-your-rental-scooters-smart-key",
+      "hi": "how-to-start-and-use-your-rental-scooters-smart-key",
+      "zh-Hans": "how-to-start-and-use-your-rental-scooters-smart-key"
+    }
+  }
+}
