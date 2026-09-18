@@ -67,7 +67,7 @@ export async function generateMetadata({ params }) {
     title,
     description,
     alternates: { canonical: url, languages: locationHreflangAlternates(district, translations) },
-    ...ogTwitter({ title, description, url }),
+    ...ogTwitter({ title, description, url, image: page.hero_image_url, imageAlt: page.h1 }),
   };
 }
 
@@ -123,6 +123,19 @@ export default async function LocationPage({ params }) {
       <Breadcrumb trail={trail} />
 
       <div className="loc-hero">
+        {/* Урок из блога (2026-09): поле в БД без рендера в шаблоне — молча
+            остаётся пустым местом на сайте, даже когда данные заполнены.
+            Рендерим сразу вместе с добавлением hero_image_url в схему
+            (063_location_page_hero_image.sql), до заливки самих фото. */}
+        {page.hero_image_url && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={page.hero_image_url}
+            alt={page.h1}
+            loading="lazy"
+            className="loc-hero-image"
+          />
+        )}
         <h1 className="display page-h1">{page.h1}</h1>
         <p className="lede">{page.intro}</p>
         <p className="loc-delivery-stat">{page.delivery_summary}</p>

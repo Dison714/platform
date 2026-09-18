@@ -31,7 +31,8 @@ locationPagesRouter.get('/location-pages/:slug', async (req, res, next) => {
     try {
         const lang = req.query.lang || DEFAULT_LANG;
         const { rows } = await pool.query(
-            `SELECT lpt.seo_title, lpt.seo_description, lpt.h1, lpt.intro, lpt.delivery_summary,
+            `SELECT lp.hero_image_url,
+                    lpt.seo_title, lpt.seo_description, lpt.h1, lpt.intro, lpt.delivery_summary,
                     lpt.delivery_html, lpt.delivery_disclaimer, lpt.getting_around_html, lpt.distances,
                     lpt.which_bike_html, lpt.route_html, lpt.popular_locations, lpt.faq, lpt.cta_text
              FROM location_pages lp
