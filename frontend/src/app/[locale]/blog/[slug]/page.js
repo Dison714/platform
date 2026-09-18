@@ -83,6 +83,20 @@ export default async function BlogPostPage({ params }) {
     <div className="container page">
       <Breadcrumb trail={trail} />
       <h1 className="display page-h1">{post.title}</h1>
+      {/* featured_image_url раньше уходил только в OG/Twitter meta (см.
+          generateMetadata выше) и нигде не рендерился на самой странице —
+          статьи без картинки в content (часть Legal/Deposit&Safety, где на
+          фото есть только featured, без отдельного embed) визуально
+          оставались совсем без фото. */}
+      {post.featured_image_url && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={post.featured_image_url}
+          alt={post.title}
+          loading="lazy"
+          className="article-featured-image"
+        />
+      )}
       {/* excerpt не дублируется здесь отдельным lede — он совпадает с первым
           абзацем content (см. Задачу 2 сессии), используется как teaser в
           /blog и как фолбэк seo_description в generateMetadata выше. */}

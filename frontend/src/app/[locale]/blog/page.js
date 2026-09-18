@@ -74,6 +74,15 @@ export default async function BlogIndexPage({ params }) {
 
               {category.pillar && (
                 <article className="blog-pillar">
+                  {category.pillar.featured_image_url && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={category.pillar.featured_image_url}
+                      alt={category.pillar.title}
+                      loading="lazy"
+                      className="blog-pillar-image"
+                    />
+                  )}
                   <span className="blog-pillar-badge">{t.blog.pillar_badge}</span>
                   <h2>
                     <Link href={`/${locale}/blog/${category.pillar.slug}`}>{category.pillar.title}</Link>
@@ -92,6 +101,15 @@ export default async function BlogIndexPage({ params }) {
                 <div className="blog-cluster-grid">
                   {category.clusters.map((post) => (
                     <Link key={post.slug} href={`/${locale}/blog/${post.slug}`} className="blog-cluster-card">
+                      {post.featured_image_url && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={post.featured_image_url}
+                          alt={post.title}
+                          loading="lazy"
+                          className="blog-cluster-card-image"
+                        />
+                      )}
                       <h3>{post.title}</h3>
                       {post.excerpt && <p>{post.excerpt}</p>}
                     </Link>
