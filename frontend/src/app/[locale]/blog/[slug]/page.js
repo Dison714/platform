@@ -5,7 +5,21 @@ import { isEnabledLocale, DEFAULT_LOCALE } from '../../../../i18n/config.js';
 import { getDictionary } from '../../../../i18n/getDictionary.js';
 import { apiGet } from '../../../../lib/api.js';
 import { ogTwitter } from '../../../../lib/seo.js';
+import { SINGLE_MODEL_CATEGORIES } from '../../../../lib/categoryGroups.js';
 import Breadcrumb from '../../../components/Breadcrumb.jsx';
+
+// Bike Models articles (+ a couple of Deposit&Safety ones whose photo is a
+// specific bike, e.g. smart-key/Xmax, rental-extras/ADV) carry
+// related_product_family_id → family_code/category_code from the API. Same
+// hub-URL rule as sitemap.js/bikes/page.js (SINGLE_MODEL_CATEGORIES = one
+// scooter category is exactly one model; motorcycle categories need
+// ?model= to pick one out of several).
+function catalogHubPath(locale, familyCode, categoryCode) {
+  if (!familyCode || !categoryCode) return null;
+  return SINGLE_MODEL_CATEGORIES.includes(categoryCode)
+    ? `/${locale}/bikes?category=${categoryCode}`
+    : `/${locale}/bikes?group=motorcycle&model=${familyCode}`;
+}
 
 export const dynamic = 'force-dynamic';
 
@@ -67,6 +81,8 @@ export default async function BlogPostPage({ params }) {
   const [post, dict] = await Promise.all([loadPost(slug, locale), getDictionary(locale)]);
   if (!post) notFound();
 
+  const catalogHref = catalogHubPath(locale, post.family_code, post.category_code);
+
   // Home → Blog → [категория] → [заголовок статьи] — категория/её имя уже
   // приходят локализованными из /api/blog/posts/:slug (article_categories +
   // article_category_translations), тот же справочник, что группирует /blog
@@ -87,8 +103,21 @@ export default async function BlogPostPage({ params }) {
           generateMetadata выше) и нигде не рендерился на самой странице —
           статьи без картинки в content (часть Legal/Deposit&Safety, где на
           фото есть только featured, без отдельного embed) визуально
-          оставались совсем без фото. */}
-      {post.featured_image_url && (
+          оставались совсем без фото. Оборачиваем в ссылку на модель-хаб,
+          только когда known catalogHref (related_product_family_id
+          проставлен) — фото со стоком (Legal/большая часть Deposit&Safety)
+          остаётся просто картинкой, не пустой ссылкой в никуда. */}
+      {post.featured_image_url && (catalogHref ? (
+        <a href={catalogHref}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={post.featured_image_url}
+            alt={post.title}
+            loading="lazy"
+            className="article-featured-image"
+          />
+        </a>
+      ) : (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={post.featured_image_url}
@@ -96,7 +125,7 @@ export default async function BlogPostPage({ params }) {
           loading="lazy"
           className="article-featured-image"
         />
-      )}
+      ))}
       {/* excerpt не дублируется здесь отдельным lede — он совпадает с первым
           абзацем content (см. Задачу 2 сессии), используется как teaser в
           /blog и как фолбэк seo_description в generateMetadata выше. */}

@@ -39,11 +39,14 @@ blogRouter.get('/blog/posts/:slug', async (req, res, next) => {
         const { rows } = await pool.query(
             `SELECT at.title, at.slug, at.excerpt, at.content, at.seo_title, at.seo_description,
                     a.featured_image_url, a.published_at, a.author, a.is_pillar,
-                    ac.slug AS category_slug, COALESCE(act.name, ac.slug) AS category_name
+                    ac.slug AS category_slug, COALESCE(act.name, ac.slug) AS category_name,
+                    pf.code AS family_code, vc.code AS category_code
              FROM articles a
              JOIN article_translations at ON at.article_id = a.id AND at.language_code = $2
              JOIN article_categories ac ON ac.id = a.category_id
              LEFT JOIN article_category_translations act ON act.category_id = ac.id AND act.language_code = $2
+             LEFT JOIN product_families pf ON pf.id = a.related_product_family_id
+             LEFT JOIN vehicle_categories vc ON vc.id = pf.category_id
              WHERE a.status = 'published' AND at.slug = $1`,
             [req.params.slug, lang]
         );
