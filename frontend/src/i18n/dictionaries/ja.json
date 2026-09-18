@@ -166,11 +166,11 @@
       },
       {
         "icon": "🛡️",
-        "text": "盗難・破損保険あり"
+        "text": "<a href=\"/ja/blog/bike-insurance-whats-covered-and-whats-not\">盗難・破損保険あり</a>"
       },
       {
         "icon": "💰",
-        "text": "返金可能なデポジット"
+        "text": "<a href=\"/ja/blog/how-the-deposit-works-when-renting-a-bike-in-bali\">返金可能なデポジット</a>"
       },
       {
         "icon": "💬",
@@ -181,7 +181,7 @@
     "steps": [
       {
         "title": "バイクを選ぶ",
-        "text": "カタログからモデルをお選びください。"
+        "text": "<a href=\"/ja/bikes\">カタログ</a>からモデルをお選びください。"
       },
       {
         "title": "オンライン予約",
@@ -213,15 +213,15 @@
     "why": [
       {
         "title": "宿泊先まで配達",
-        "text": "ご指定の場所までバイクをお届け。長期レンタルほどお得です — 詳しくはよくある質問をご覧ください。"
+        "text": "ご指定の場所までバイクをお届け。長期レンタルほどお得です — 詳しくは<a href=\"/ja/faq\">よくある質問</a>をご覧ください。"
       },
       {
         "title": "備品付き",
-        "text": "ヘルメットや取り付けアクセサリーをレンタルに含めることができます。"
+        "text": "<a href=\"/ja/blog/rental-extras-worth-adding-helmets-and-the-comfort-box\">ヘルメットや取り付けアクセサリーをレンタルに含めることができます。</a>"
       },
       {
         "title": "任意保険",
-        "text": "予約時に盗難補償・破損補償を追加できます — 選択は自由です。"
+        "text": "<a href=\"/ja/blog/bike-insurance-whats-covered-and-whats-not\">予約時に盗難補償・破損補償を追加できます — 選択は自由です。</a>"
       }
     ],
     "categories_title": "ぴったりの1台を探す",
@@ -235,13 +235,13 @@
   "about": {
     "title": "Bike Bali Rentについて",
     "p1": "Bike Bali Rentはバリ島のバイクレンタルサービスです。旅行者や長期滞在のお客様が、状態の良いスクーターやバイクで島内を移動できるようサポートしています。宿泊先までの配達と、シンプルなオンライン予約が特徴です。",
-    "p2": "レンタルはシンプルに：料金は事前に明確にご提示し、ヘルメットやアクセサリーもご用意、盗難・破損補償もオプションで追加できます。オンラインでの前払いはなく、バイクが届いた際にお支払いいただきます。",
+    "p2": "レンタルはシンプルに：<a href=\"/ja/bikes\">料金は事前に明確にご提示し</a>、<a href=\"/ja/blog/rental-extras-worth-adding-helmets-and-the-comfort-box\">ヘルメットやアクセサリーもご用意</a>、<a href=\"/ja/blog/bike-insurance-whats-covered-and-whats-not\">盗難・破損補償もオプションで追加できます</a>。オンラインでの前払いはなく、バイクが届いた際にお支払いいただきます。",
     "offer_title": "サービス内容",
     "offer": [
-      "160ccスクーターからスポーツ・ツーリングモデルまで幅広いラインナップ",
+      "160ccスクーターからスポーツ・ツーリングモデルまで<a href=\"/ja/bikes\">幅広いラインナップ</a>",
       "ご指定場所への配達",
-      "ヘルメット・取り付けアクセサリー",
-      "盗難・破損補償（オプション）",
+      "<a href=\"/ja/blog/rental-extras-worth-adding-helmets-and-the-comfort-box\">ヘルメット・取り付けアクセサリー</a>",
+      "<a href=\"/ja/blog/bike-insurance-whats-covered-and-whats-not\">盗難・破損補償（オプション）</a>",
       "1日から数ヶ月以上まで柔軟なレンタル期間"
     ],
     "contact_title": "お問い合わせ"
@@ -256,11 +256,11 @@
       },
       {
         "q": "デポジットは必要ですか？",
-        "a": "はい — 返金可能なデポジットをレンタル期間中お預かりし、バイクを良好な状態でご返却いただいた際にお戻しします。金額はモデルによって異なり、予約手続き時にご確認いただけます。"
+        "a": "はい — <a href=\"/ja/blog/how-the-deposit-works-when-renting-a-bike-in-bali\">返金可能なデポジット</a>をレンタル期間中お預かりし、バイクを良好な状態でご返却いただいた際にお戻しします。金額はモデルによって異なり、予約手続き時にご確認いただけます。"
       },
       {
         "q": "保険は利用できますか？",
-        "a": "はい、オプションでご利用いただけます。予約手続き時に盗難補償・破損補償を追加できます。料金は選択する補償レベルとお客様の運転者プロフィール（年齢・運転経験）によって異なり、正確な料金は予約手続き時にご確認いただけます。"
+        "a": "はい、オプションでご利用いただけます。予約手続き時に<a href=\"/ja/blog/bike-insurance-whats-covered-and-whats-not\">盗難補償・破損補償</a>を追加できます。料金は選択する補償レベルとお客様の運転者プロフィール（年齢・運転経験）によって異なり、正確な料金は予約手続き時にご確認いただけます。"
       },
       {
         "q": "レンタル期間を延長できますか？",
@@ -280,7 +280,7 @@
       },
       {
         "q": "バイクには何が付属していますか？",
-        "a": "すべてのバイクにヘルメット2個が無料で付属します。各枠はKYTフルフェイスヘルメット、または新品のKYTハーフフェイス／フルフェイスヘルメットにアップグレードできます — Rp 150,000から(新品フルフェイスはRp 200,000)。同乗者用のリアトップボックスもRp 200,000でご用意しています。予約手続き時に必要なものをお選びください。"
+        "a": "すべてのバイクにヘルメット2個が無料で付属します。各枠はKYTフルフェイスヘルメット、または新品のKYTハーフフェイス／フルフェイスヘルメットにアップグレードできます — Rp 150,000から(新品フルフェイスはRp 200,000)。<a href=\"/ja/blog/rental-extras-worth-adding-helmets-and-the-comfort-box\">同乗者用のリアトップボックス</a>もRp 200,000でご用意しています。予約手続き時に必要なものをお選びください。"
       },
       {
         "q": "予約方法を教えてください",
@@ -288,7 +288,7 @@
       },
       {
         "q": "どのバイクを選べばいいですか？",
-        "a": "スクーター（Honda ADV、PCX、Yamaha Nmax、Xmax）は、オートマチックで軽く、バリの道路でも扱いやすいため、多くの方に最適な選択肢です。もっとパワーが欲しい方や違う乗り方をしたい方は、Yamaha MT-25、XSR、Kawasaki ZX-25R、Suzuki V-Stromなどのバイクもご覧ください。迷ったらお気軽にメッセージください、選び方をお手伝いします。"
+        "a": "スクーター（<a href=\"/ja/blog/honda-adv-review\">Honda ADV</a>、<a href=\"/ja/blog/honda-pcx160-review\">PCX</a>、<a href=\"/ja/blog/yamaha-nmax-review\">Yamaha Nmax</a>、<a href=\"/ja/blog/yamaha-xmax250-review\">Xmax</a>）は、オートマチックで軽く、バリの道路でも扱いやすいため、多くの方に最適な選択肢です。もっとパワーが欲しい方や違う乗り方をしたい方は、<a href=\"/ja/blog/yamaha-mt25-review\">Yamaha MT-25</a>、<a href=\"/ja/blog/yamaha-xsr-155-review-retro-style\">XSR</a>、<a href=\"/ja/blog/kawasaki-ninja-zx-25r-review\">Kawasaki ZX-25R</a>、<a href=\"/ja/blog/suzuki-v-strom-250-review\">Suzuki V-Strom</a>などのバイクもご覧ください。迷ったらお気軽にメッセージください、選び方をお手伝いします。"
       }
     ]
   },

@@ -714,6 +714,11 @@ img { max-width: 100%; display: block; }
 .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #fff; border: 0; text-align: start; font: inherit; font-weight: 500; color: var(--navy); padding: 15px 16px; cursor: pointer; }
 .faq-mark { color: var(--red); font-size: 22px; line-height: 1; }
 .faq-a { padding: 0 16px 16px; color: var(--ink); }
+/* Inline <a> hand-inserted into i18n dictionary / DB text (FAQ answers,
+   About page copy) — same red/underline as .article-body a, for the few
+   spots that render that kind of text but aren't themselves .article-body. */
+.lede a, .ticks li a, .faq-a a, .faq-mini-item p a, .why-card p a, .step-card p a { color: var(--red); text-decoration: underline; }
+.trust-item a { color: #ff9d9d; text-decoration: underline; }
 
 /* ---------- Location pages (scooter-rental-<district>) ---------- */
 /* .page ограничивает ширину 760px (тексты about/faq/blog) — для этого типа

@@ -29,11 +29,13 @@ export default async function AboutPage({ params }) {
     <div className="container page">
       <h1 className="display page-h1">{a.title}</h1>
       <p className="lede">{a.p1}</p>
-      <p className="lede">{a.p2}</p>
+      {/* p2/offer содержат вручную вставленные <a> на каталог/статьи блога
+          (без переписывания текста) — рендерим как HTML, не как строку. */}
+      <p className="lede" dangerouslySetInnerHTML={{ __html: a.p2 }} />
 
       <h2 className="display section-h2">{a.offer_title}</h2>
       <ul className="ticks">
-        {a.offer.map((item, i) => <li key={i}>{item}</li>)}
+        {a.offer.map((item, i) => <li key={i} dangerouslySetInnerHTML={{ __html: item }} />)}
       </ul>
 
       <h2 className="display section-h2" id="contact">{a.contact_title}</h2>

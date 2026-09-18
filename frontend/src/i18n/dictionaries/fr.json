@@ -166,11 +166,11 @@
       },
       {
         "icon": "🛡️",
-        "text": "Assurance vol et dommages disponible"
+        "text": "<a href=\"/fr/blog/assurance-moto-ce-qui-est-couvert-et-ce-qui-ne-lest-pas\">Assurance vol et dommages disponible</a>"
       },
       {
         "icon": "💰",
-        "text": "Caution remboursable"
+        "text": "<a href=\"/fr/blog/comment-fonctionne-la-caution-pour-la-location-dun-scooter-a-bali-le-guide-complet\">Caution remboursable</a>"
       },
       {
         "icon": "💬",
@@ -181,7 +181,7 @@
     "steps": [
       {
         "title": "Choisissez votre moto",
-        "text": "Parcourez le catalogue et choisissez un modèle."
+        "text": "Parcourez <a href=\"/fr/bikes\">le catalogue</a> et choisissez un modèle."
       },
       {
         "title": "Réservez en ligne",
@@ -213,15 +213,15 @@
     "why": [
       {
         "title": "Livraison à domicile",
-        "text": "Nous apportons la moto jusqu'à vous. Meilleur rapport qualité-prix pour les locations longues — voir la FAQ."
+        "text": "Nous apportons la moto jusqu'à vous. Meilleur rapport qualité-prix pour les locations longues — voir <a href=\"/fr/faq\">la FAQ</a>."
       },
       {
         "title": "Équipement inclus",
-        "text": "Casques et accessoires de montage disponibles avec votre location."
+        "text": "<a href=\"/fr/blog/options-de-location-qui-valent-la-peine-casques-et-top-case-confort\">Casques et accessoires de montage disponibles avec votre location.</a>"
       },
       {
         "title": "Assurance optionnelle",
-        "text": "Ajoutez une protection vol ou dommages au moment de la réservation — à vous de choisir."
+        "text": "<a href=\"/fr/blog/assurance-moto-ce-qui-est-couvert-et-ce-qui-ne-lest-pas\">Ajoutez une protection vol ou dommages au moment de la réservation — à vous de choisir.</a>"
       }
     ],
     "categories_title": "Trouvez votre moto",
@@ -235,13 +235,13 @@
   "about": {
     "title": "À propos de Bike Bali Rent",
     "p1": "Bike Bali Rent est un service de location de motos à Bali. Nous aidons les voyageurs et les résidents de longue durée à se déplacer sur l'île avec un scooter ou une moto bien entretenus, livrés à domicile et réservés simplement en ligne.",
-    "p2": "Nous gardons la location simple : un prix clair dès le départ, casques et accessoires disponibles, ainsi qu'une protection optionnelle contre le vol et les dommages. Il n'y a pas de prépaiement en ligne — vous payez à la livraison de votre moto.",
+    "p2": "Nous gardons la location simple : <a href=\"/fr/bikes\">un prix clair dès le départ</a>, <a href=\"/fr/blog/options-de-location-qui-valent-la-peine-casques-et-top-case-confort\">casques et accessoires disponibles</a>, ainsi qu'<a href=\"/fr/blog/assurance-moto-ce-qui-est-couvert-et-ce-qui-ne-lest-pas\">une protection optionnelle contre le vol et les dommages</a>. Il n'y a pas de prépaiement en ligne — vous payez à la livraison de votre moto.",
     "offer_title": "Ce que nous proposons",
     "offer": [
-      "Une gamme de motos — des scooters 160 cm³ aux modèles sportifs et routiers",
+      "<a href=\"/fr/bikes\">Une gamme de motos</a> — des scooters 160 cm³ aux modèles sportifs et routiers",
       "Livraison à votre emplacement",
-      "Casques et accessoires de montage",
-      "Protection optionnelle contre le vol et les dommages",
+      "<a href=\"/fr/blog/options-de-location-qui-valent-la-peine-casques-et-top-case-confort\">Casques et accessoires de montage</a>",
+      "<a href=\"/fr/blog/assurance-moto-ce-qui-est-couvert-et-ce-qui-ne-lest-pas\">Protection optionnelle contre le vol et les dommages</a>",
       "Durée de location flexible, du jour au mois et au-delà"
     ],
     "contact_title": "Contactez-nous"
@@ -256,11 +256,11 @@
       },
       {
         "q": "Y a-t-il une caution ?",
-        "a": "Oui — une caution remboursable est retenue pendant la location et restituée lorsque vous rendez la moto en bon état. Le montant dépend du modèle et s'affiche au moment de la réservation."
+        "a": "Oui — <a href=\"/fr/blog/comment-fonctionne-la-caution-pour-la-location-dun-scooter-a-bali-le-guide-complet\">une caution remboursable</a> est retenue pendant la location et restituée lorsque vous rendez la moto en bon état. Le montant dépend du modèle et s'affiche au moment de la réservation."
       },
       {
         "q": "L'assurance est-elle disponible ?",
-        "a": "Oui, en option. Vous pouvez ajouter une protection vol et/ou dommages au moment de la réservation. Le prix dépend du niveau de couverture choisi et de votre profil de conducteur (âge et expérience de conduite) — vous verrez le prix exact au moment de la réservation."
+        "a": "Oui, en option. Vous pouvez ajouter <a href=\"/fr/blog/assurance-moto-ce-qui-est-couvert-et-ce-qui-ne-lest-pas\">une protection vol et/ou dommages</a> au moment de la réservation. Le prix dépend du niveau de couverture choisi et de votre profil de conducteur (âge et expérience de conduite) — vous verrez le prix exact au moment de la réservation."
       },
       {
         "q": "Puis-je prolonger ma location ?",
@@ -280,7 +280,7 @@
       },
       {
         "q": "Qu'est-ce qui est inclus avec la moto ?",
-        "a": "Chaque moto est livrée avec 2 casques gratuits. Vous pouvez surclasser chaque emplacement vers un casque intégral KYT, ou vers un casque KYT jet ou intégral tout neuf — à partir de Rp 150 000 (Rp 200 000 pour le nouvel intégral). Un top case arrière pour un passager est disponible pour Rp 200 000. Choisissez simplement ce dont vous avez besoin au moment de la réservation."
+        "a": "Chaque moto est livrée avec 2 casques gratuits. Vous pouvez surclasser chaque emplacement vers un casque intégral KYT, ou vers un casque KYT jet ou intégral tout neuf — à partir de Rp 150 000 (Rp 200 000 pour le nouvel intégral). <a href=\"/fr/blog/options-de-location-qui-valent-la-peine-casques-et-top-case-confort\">Un top case arrière pour un passager</a> est disponible pour Rp 200 000. Choisissez simplement ce dont vous avez besoin au moment de la réservation."
       },
       {
         "q": "Comment réserver ?",
@@ -288,7 +288,7 @@
       },
       {
         "q": "Quelle moto choisir ?",
-        "a": "Les scooters (Honda ADV, PCX, Yamaha Nmax, Xmax) sont l'option la plus simple pour la plupart des gens — automatiques, légers et faciles à conduire sur les routes de Bali. Pour plus de puissance ou un style de conduite différent, regardez nos motos — Yamaha MT-25, XSR, Kawasaki ZX-25R, Suzuki V-Strom et plus. Toujours indécis ? Écrivez-nous, on vous aide à choisir."
+        "a": "Les scooters (<a href=\"/fr/blog/honda-adv160-pour-les-routes-accidentees-et-les-longues-echappees\">Honda ADV</a>, <a href=\"/fr/blog/honda-pcx160-confort-et-volume-de-rangement-au-quotidien\">PCX</a>, <a href=\"/fr/blog/yamaha-nmax-new-neo-et-turbo-les-differences\">Yamaha Nmax</a>, <a href=\"/fr/blog/yamaha-xmax250-connected-et-tech-max-les-differences\">Xmax</a>) sont l'option la plus simple pour la plupart des gens — automatiques, légers et faciles à conduire sur les routes de Bali. Pour plus de puissance ou un style de conduite différent, regardez nos motos — <a href=\"/fr/blog/yamaha-mt25-gen-2-et-gen-3-look-different-meme-moteur\">Yamaha MT-25</a>, <a href=\"/fr/blog/yamaha-xsr155-un-cafe-racer-au-caractere-retro\">XSR</a>, <a href=\"/fr/blog/kawasaki-ninja-zx-25r-le-seul-4-cylindres-en-ligne-250cc\">Kawasaki ZX-25R</a>, <a href=\"/fr/blog/suzuki-v-strom-250-un-trail-routier-axe-confort-et-protection-au-vent\">Suzuki V-Strom</a> et plus. Toujours indécis ? Écrivez-nous, on vous aide à choisir."
       }
     ]
   },

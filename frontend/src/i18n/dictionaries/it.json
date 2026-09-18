@@ -166,11 +166,11 @@
       },
       {
         "icon": "🛡️",
-        "text": "Assicurazione furto e danni disponibile"
+        "text": "<a href=\"/it/blog/assicurazione-moto-cosa-copre-e-cosa-no\">Assicurazione furto e danni disponibile</a>"
       },
       {
         "icon": "💰",
-        "text": "Deposito rimborsabile"
+        "text": "<a href=\"/it/blog/come-funziona-la-cauzione-per-il-noleggio-di-uno-scooter-a-bali-guida-completa\">Deposito rimborsabile</a>"
       },
       {
         "icon": "💬",
@@ -181,7 +181,7 @@
     "steps": [
       {
         "title": "Scegli la tua moto",
-        "text": "Sfoglia il catalogo e scegli un modello."
+        "text": "Sfoglia <a href=\"/it/bikes\">il catalogo</a> e scegli un modello."
       },
       {
         "title": "Prenota online",
@@ -213,15 +213,15 @@
     "why": [
       {
         "title": "Consegna a domicilio",
-        "text": "Portiamo la moto da te. Miglior rapporto qualità-prezzo per noleggi lunghi — consulta le FAQ."
+        "text": "Portiamo la moto da te. Miglior rapporto qualità-prezzo per noleggi lunghi — consulta <a href=\"/it/faq\">le FAQ</a>."
       },
       {
         "title": "Accessori inclusi",
-        "text": "Caschi e accessori di montaggio disponibili con il tuo noleggio."
+        "text": "<a href=\"/it/blog/extra-a-noleggio-che-vale-la-pena-aggiungere-caschi-e-il-bauletto-comfort\">Caschi e accessori di montaggio disponibili con il tuo noleggio.</a>"
       },
       {
         "title": "Assicurazione facoltativa",
-        "text": "Aggiungi la protezione furto o danni al momento della prenotazione — a tua scelta."
+        "text": "<a href=\"/it/blog/assicurazione-moto-cosa-copre-e-cosa-no\">Aggiungi la protezione furto o danni al momento della prenotazione — a tua scelta.</a>"
       }
     ],
     "categories_title": "Trova la tua moto",
@@ -235,13 +235,13 @@
   "about": {
     "title": "Chi è Bike Bali Rent",
     "p1": "Bike Bali Rent è un servizio di noleggio moto a Bali. Aiutiamo viaggiatori e ospiti di lungo periodo a spostarsi sull'isola con uno scooter o una moto ben tenuti, con consegna a domicilio e una semplice prenotazione online.",
-    "p2": "Manteniamo il noleggio semplice: un prezzo chiaro fin dall'inizio, caschi e accessori disponibili, e protezione facoltativa contro furto e danni. Non c'è pagamento anticipato online — paghi quando la moto viene consegnata.",
+    "p2": "Manteniamo il noleggio semplice: <a href=\"/it/bikes\">un prezzo chiaro fin dall'inizio</a>, <a href=\"/it/blog/extra-a-noleggio-che-vale-la-pena-aggiungere-caschi-e-il-bauletto-comfort\">caschi e accessori disponibili</a>, e <a href=\"/it/blog/assicurazione-moto-cosa-copre-e-cosa-no\">protezione facoltativa contro furto e danni</a>. Non c'è pagamento anticipato online — paghi quando la moto viene consegnata.",
     "offer_title": "Cosa offriamo",
     "offer": [
-      "Una gamma di moto — da scooter 160cc a modelli sportivi e da turismo",
+      "<a href=\"/it/bikes\">Una gamma di moto</a> — da scooter 160cc a modelli sportivi e da turismo",
       "Consegna nel luogo desiderato",
-      "Caschi e accessori di montaggio",
-      "Protezione facoltativa contro furto e danni",
+      "<a href=\"/it/blog/extra-a-noleggio-che-vale-la-pena-aggiungere-caschi-e-il-bauletto-comfort\">Caschi e accessori di montaggio</a>",
+      "<a href=\"/it/blog/assicurazione-moto-cosa-copre-e-cosa-no\">Protezione facoltativa contro furto e danni</a>",
       "Durata di noleggio flessibile, da un giorno a un mese e oltre"
     ],
     "contact_title": "Contattaci"
@@ -256,11 +256,11 @@
       },
       {
         "q": "C'è un deposito?",
-        "a": "Sì — un deposito rimborsabile viene trattenuto durante il noleggio e restituito quando riporti la moto in buone condizioni. L'importo dipende dal modello e lo vedrai al momento della prenotazione."
+        "a": "Sì — <a href=\"/it/blog/come-funziona-la-cauzione-per-il-noleggio-di-uno-scooter-a-bali-guida-completa\">un deposito rimborsabile</a> viene trattenuto durante il noleggio e restituito quando riporti la moto in buone condizioni. L'importo dipende dal modello e lo vedrai al momento della prenotazione."
       },
       {
         "q": "È disponibile l'assicurazione?",
-        "a": "Sì, facoltativamente. Puoi aggiungere protezione furto e/o danni al momento della prenotazione. Il prezzo dipende dal livello di copertura scelto e dal tuo profilo di guidatore (età ed esperienza) — vedrai il prezzo esatto al momento della prenotazione."
+        "a": "Sì, facoltativamente. Puoi aggiungere <a href=\"/it/blog/assicurazione-moto-cosa-copre-e-cosa-no\">protezione furto e/o danni</a> al momento della prenotazione. Il prezzo dipende dal livello di copertura scelto e dal tuo profilo di guidatore (età ed esperienza) — vedrai il prezzo esatto al momento della prenotazione."
       },
       {
         "q": "Posso prolungare il noleggio?",
@@ -280,7 +280,7 @@
       },
       {
         "q": "Cosa è incluso con la moto?",
-        "a": "Ogni moto è dotata di 2 caschi gratuiti. Puoi migliorare ciascun posto a un casco integrale KYT, oppure a un casco KYT jet o integrale nuovo di zecca, a partire da Rp 150.000 (Rp 200.000 per il nuovo integrale). È disponibile un bauletto posteriore per un passeggero a Rp 200.000. Scegli semplicemente ciò che ti serve al momento della prenotazione."
+        "a": "Ogni moto è dotata di 2 caschi gratuiti. Puoi migliorare ciascun posto a un casco integrale KYT, oppure a un casco KYT jet o integrale nuovo di zecca, a partire da Rp 150.000 (Rp 200.000 per il nuovo integrale). È disponibile <a href=\"/it/blog/extra-a-noleggio-che-vale-la-pena-aggiungere-caschi-e-il-bauletto-comfort\">un bauletto posteriore per un passeggero</a> a Rp 200.000. Scegli semplicemente ciò che ti serve al momento della prenotazione."
       },
       {
         "q": "Come prenoto?",
@@ -288,7 +288,7 @@
       },
       {
         "q": "Quale moto dovrei scegliere?",
-        "a": "Gli scooter (Honda ADV, PCX, Yamaha Nmax, Xmax) sono l'opzione più semplice per la maggior parte delle persone — automatici, leggeri e facili da guidare sulle strade di Bali. Se vuoi più potenza o uno stile di guida diverso, guarda le nostre moto — Yamaha MT-25, XSR, Kawasaki ZX-25R, Suzuki V-Strom e altre. Ancora indeciso? Scrivici e ti aiutiamo a scegliere."
+        "a": "Gli scooter (<a href=\"/it/blog/honda-adv160-recensione-per-strade-sconnesse-e-gite-fuori-porta\">Honda ADV</a>, <a href=\"/it/blog/honda-pcx160-recensione-comfort-e-capacita-di-carico\">PCX</a>, <a href=\"/it/blog/yamaha-nmax-new-neo-e-turbo-recensione\">Yamaha Nmax</a>, <a href=\"/it/blog/yamaha-xmax250-connected-e-tech-max-recensione\">Xmax</a>) sono l'opzione più semplice per la maggior parte delle persone — automatici, leggeri e facili da guidare sulle strade di Bali. Se vuoi più potenza o uno stile di guida diverso, guarda le nostre moto — <a href=\"/it/blog/yamaha-mt-25-gen-2-e-gen-3-recensione\">Yamaha MT-25</a>, <a href=\"/it/blog/yamaha-xsr155-recensione-cafe-racer-dal-carattere-retro\">XSR</a>, <a href=\"/it/blog/kawasaki-ninja-zx-25r-recensione-quattro-cilindri-in-linea\">Kawasaki ZX-25R</a>, <a href=\"/it/blog/suzuki-v-strom-250-recensione-comfort-e-protezione-dal-vento\">Suzuki V-Strom</a> e altre. Ancora indeciso? Scrivici e ti aiutiamo a scegliere."
       }
     ]
   },

@@ -121,7 +121,7 @@ export default async function HomePage({ params }) {
           {h.trust.map((t, i) => (
             <div className="trust-item" key={i}>
               <span aria-hidden="true">{t.icon}</span>
-              <span>{t.text}</span>
+              <span dangerouslySetInnerHTML={{ __html: t.text }} />
             </div>
           ))}
         </div>
@@ -134,7 +134,7 @@ export default async function HomePage({ params }) {
             <div className="step-card" key={i}>
               <span className="why-num display" aria-hidden="true">{i + 1}</span>
               <h3>{s.title}</h3>
-              <p>{s.text}</p>
+              <p dangerouslySetInnerHTML={{ __html: s.text }} />
             </div>
           ))}
         </div>
@@ -147,7 +147,7 @@ export default async function HomePage({ params }) {
             <div className="why-card" key={i}>
               <span className="why-num display" aria-hidden="true">{i + 1}</span>
               <h3>{w.title}</h3>
-              <p>{w.text}</p>
+              <p dangerouslySetInnerHTML={{ __html: w.text }} />
             </div>
           ))}
         </div>
@@ -186,7 +186,7 @@ export default async function HomePage({ params }) {
           {faqTop.map((f, i) => (
             <div className="faq-mini-item" key={i}>
               <h3>{f.q}</h3>
-              <p>{f.a}</p>
+              <p dangerouslySetInnerHTML={{ __html: f.a }} />
             </div>
           ))}
         </div>

@@ -23,14 +23,17 @@ export default async function FaqPage({ params }) {
   const dict = await getDictionary(locale);
   const items = dict.faq.items ?? [];
 
-  // FAQPage structured data для SEO (Google rich result).
+  // FAQPage structured data для SEO (Google rich result) — schema.org ждёт
+  // plain text, а it.a теперь может содержать вручную вставленные <a>
+  // (Задача B), поэтому в text тегами не пользуемся.
+  const stripTags = (html) => html.replace(/<[^>]+>/g, '');
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: items.map((it) => ({
       '@type': 'Question',
       name: it.q,
-      acceptedAnswer: { '@type': 'Answer', text: it.a },
+      acceptedAnswer: { '@type': 'Answer', text: stripTags(it.a) },
     })),
   };
 

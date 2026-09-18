@@ -166,11 +166,11 @@
       },
       {
         "icon": "🛡️",
-        "text": "Theft & damage insurance available"
+        "text": "<a href=\"/en/blog/bike-insurance-whats-covered-and-whats-not\">Theft & damage insurance available</a>"
       },
       {
         "icon": "💰",
-        "text": "Refundable deposit"
+        "text": "<a href=\"/en/blog/how-the-deposit-works-when-renting-a-bike-in-bali\">Refundable deposit</a>"
       },
       {
         "icon": "💬",
@@ -181,7 +181,7 @@
     "steps": [
       {
         "title": "Choose your bike",
-        "text": "Browse the catalog and pick a model."
+        "text": "Browse <a href=\"/en/bikes\">the catalog</a> and pick a model."
       },
       {
         "title": "Book online",
@@ -213,15 +213,15 @@
     "why": [
       {
         "title": "Doorstep delivery",
-        "text": "We bring the bike to your location. Better value on longer rentals — see the FAQ."
+        "text": "We bring the bike to your location. Better value on longer rentals — see <a href=\"/en/faq\">the FAQ</a>."
       },
       {
         "title": "Gear included",
-        "text": "Helmets and mounting accessories are available with your rental."
+        "text": "<a href=\"/en/blog/rental-extras-worth-adding-helmets-and-the-comfort-box\">Helmets and mounting accessories are available with your rental.</a>"
       },
       {
         "title": "Optional insurance",
-        "text": "Add theft or damage protection at checkout — your choice."
+        "text": "<a href=\"/en/blog/bike-insurance-whats-covered-and-whats-not\">Add theft or damage protection at checkout — your choice.</a>"
       }
     ],
     "categories_title": "Find your ride",
@@ -235,13 +235,13 @@
   "about": {
     "title": "About Bike Bali Rent",
     "p1": "Bike Bali Rent is a motorbike rental service in Bali. We help travellers and long-stay guests get around the island on a well-kept scooter or motorbike, with delivery to your door and a simple online booking.",
-    "p2": "We keep the rental straightforward: a clear price up front, helmets and accessories available, and optional theft and damage protection. There's no online prepayment — you pay when your bike is delivered.",
+    "p2": "We keep the rental straightforward: <a href=\"/en/bikes\">a clear price up front</a>, <a href=\"/en/blog/rental-extras-worth-adding-helmets-and-the-comfort-box\">helmets and accessories available</a>, and <a href=\"/en/blog/bike-insurance-whats-covered-and-whats-not\">optional theft and damage protection</a>. There's no online prepayment — you pay when your bike is delivered.",
     "offer_title": "What we offer",
     "offer": [
-      "A range of bikes — from 160cc scooters to sport and touring models",
+      "<a href=\"/en/bikes\">A range of bikes</a> — from 160cc scooters to sport and touring models",
       "Delivery to your location",
-      "Helmets and mounting accessories",
-      "Optional theft and damage protection",
+      "<a href=\"/en/blog/rental-extras-worth-adding-helmets-and-the-comfort-box\">Helmets and mounting accessories</a>",
+      "<a href=\"/en/blog/bike-insurance-whats-covered-and-whats-not\">Optional theft and damage protection</a>",
       "Flexible rental length, day to month and beyond"
     ],
     "contact_title": "Contact us"
@@ -256,11 +256,11 @@
       },
       {
         "q": "Is there a deposit?",
-        "a": "Yes — a refundable deposit is held during the rental and returned when you bring the bike back in good condition. The amount depends on the model, and you'll see it at checkout."
+        "a": "Yes — <a href=\"/en/blog/how-the-deposit-works-when-renting-a-bike-in-bali\">a refundable deposit</a> is held during the rental and returned when you bring the bike back in good condition. The amount depends on the model, and you'll see it at checkout."
       },
       {
         "q": "Is insurance available?",
-        "a": "Yes, optionally. You can add theft protection and/or damage protection at checkout. The price depends on the coverage level you choose and your rider profile (age and riding experience) — you'll see the exact price at checkout."
+        "a": "Yes, optionally. You can add <a href=\"/en/blog/bike-insurance-whats-covered-and-whats-not\">theft protection and/or damage protection</a> at checkout. The price depends on the coverage level you choose and your rider profile (age and riding experience) — you'll see the exact price at checkout."
       },
       {
         "q": "Can I extend my rental?",
@@ -280,7 +280,7 @@
       },
       {
         "q": "What's included with the bike?",
-        "a": "Every bike comes with 2 helmets free. You can upgrade either slot to a KYT full-face helmet, or to a brand-new KYT half-face or full-face helmet, from Rp 150,000 (Rp 200,000 for the new full-face). A rear top box for a passenger is available for Rp 200,000. Just pick what you need at checkout."
+        "a": "Every bike comes with 2 helmets free. You can upgrade either slot to a KYT full-face helmet, or to a brand-new KYT half-face or full-face helmet, from Rp 150,000 (Rp 200,000 for the new full-face). <a href=\"/en/blog/rental-extras-worth-adding-helmets-and-the-comfort-box\">A rear top box for a passenger</a> is available for Rp 200,000. Just pick what you need at checkout."
       },
       {
         "q": "How do I book?",
@@ -288,7 +288,7 @@
       },
       {
         "q": "Which bike should I choose?",
-        "a": "Scooters (Honda ADV, PCX, Yamaha Nmax, Xmax) are the easiest option for most riders — automatic, light, and simple to handle on Bali's roads. If you want more power or a different riding style, browse our motorcycles — Yamaha MT-25, XSR, Kawasaki ZX-25R, Suzuki V-Strom and more. Still not sure? Message us and we'll help you pick."
+        "a": "Scooters (<a href=\"/en/blog/honda-adv-review\">Honda ADV</a>, <a href=\"/en/blog/honda-pcx160-review\">PCX</a>, <a href=\"/en/blog/yamaha-nmax-review\">Yamaha Nmax</a>, <a href=\"/en/blog/yamaha-xmax250-review\">Xmax</a>) are the easiest option for most riders — automatic, light, and simple to handle on Bali's roads. If you want more power or a different riding style, browse our motorcycles — <a href=\"/en/blog/yamaha-mt25-review\">Yamaha MT-25</a>, <a href=\"/en/blog/yamaha-xsr-155-review-retro-style\">XSR</a>, <a href=\"/en/blog/kawasaki-ninja-zx-25r-review\">Kawasaki ZX-25R</a>, <a href=\"/en/blog/suzuki-v-strom-250-review\">Suzuki V-Strom</a> and more. Still not sure? Message us and we'll help you pick."
       }
     ]
   },

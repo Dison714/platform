@@ -166,11 +166,11 @@
       },
       {
         "icon": "🛡️",
-        "text": "可选盗抢及损坏保险"
+        "text": "<a href=\"/zh-Hans/blog/bike-insurance-whats-covered-and-whats-not\">可选盗抢及损坏保险</a>"
       },
       {
         "icon": "💰",
-        "text": "押金可退"
+        "text": "<a href=\"/zh-Hans/blog/how-the-deposit-works-when-renting-a-bike-in-bali\">押金可退</a>"
       },
       {
         "icon": "💬",
@@ -181,7 +181,7 @@
     "steps": [
       {
         "title": "选择您的摩托车",
-        "text": "浏览车型库，挑选心仪的车型。"
+        "text": "浏览<a href=\"/zh-Hans/bikes\">车型库</a>，挑选心仪的车型。"
       },
       {
         "title": "在线预订",
@@ -213,15 +213,15 @@
     "why": [
       {
         "title": "送车上门",
-        "text": "我们会将摩托车送到您指定的地点。租期越长越划算——详见常见问题。"
+        "text": "我们会将摩托车送到您指定的地点。租期越长越划算——详见<a href=\"/zh-Hans/faq\">常见问题</a>。"
       },
       {
         "title": "配件齐全",
-        "text": "租车已含头盔及安装类配件。"
+        "text": "<a href=\"/zh-Hans/blog/rental-extras-worth-adding-helmets-and-the-comfort-box\">租车已含头盔及安装类配件。</a>"
       },
       {
         "title": "可选保险",
-        "text": "结算时可添加盗抢险或损坏险——完全自愿。"
+        "text": "<a href=\"/zh-Hans/blog/bike-insurance-whats-covered-and-whats-not\">结算时可添加盗抢险或损坏险——完全自愿。</a>"
       }
     ],
     "categories_title": "找到适合您的摩托车",
@@ -235,13 +235,13 @@
   "about": {
     "title": "关于 Bike Bali Rent",
     "p1": "Bike Bali Rent 是巴厘岛的摩托车租赁服务。我们为游客和长住者提供保养良好的踏板车和摩托车，配合送车上门和便捷的在线预订，让您轻松畅游全岛。",
-    "p2": "我们让租车流程保持简单：明码标价、提供头盔及配件、可选盗抢及损坏保障。无需在线预付款——取车时付款即可。",
+    "p2": "我们让租车流程保持简单：<a href=\"/zh-Hans/bikes\">明码标价</a>、<a href=\"/zh-Hans/blog/rental-extras-worth-adding-helmets-and-the-comfort-box\">提供头盔及配件</a>、<a href=\"/zh-Hans/blog/bike-insurance-whats-covered-and-whats-not\">可选盗抢及损坏保障</a>。无需在线预付款——取车时付款即可。",
     "offer_title": "我们提供",
     "offer": [
-      "从 160cc 踏板车到跑车、旅行车型的多样车型",
+      "从 160cc 踏板车到跑车、旅行车型的<a href=\"/zh-Hans/bikes\">多样车型</a>",
       "送车至您指定的地点",
-      "头盔及安装类配件",
-      "可选盗抢及损坏保障",
+      "<a href=\"/zh-Hans/blog/rental-extras-worth-adding-helmets-and-the-comfort-box\">头盔及安装类配件</a>",
+      "<a href=\"/zh-Hans/blog/bike-insurance-whats-covered-and-whats-not\">可选盗抢及损坏保障</a>",
       "租期灵活，从一天到一个月以上均可"
     ],
     "contact_title": "联系我们"
@@ -256,11 +256,11 @@
       },
       {
         "q": "需要押金吗？",
-        "a": "是的——租赁期间会收取可退押金，摩托车完好归还后即可退还。金额因车型而异，具体请在结算页面查看。"
+        "a": "是的——租赁期间会收取<a href=\"/zh-Hans/blog/how-the-deposit-works-when-renting-a-bike-in-bali\">可退押金</a>，摩托车完好归还后即可退还。金额因车型而异，具体请在结算页面查看。"
       },
       {
         "q": "我可以购买保险吗？",
-        "a": "可以，这是可选项。结算时您可以添加盗抢险和/或损坏险。价格取决于所选保障范围及骑手信息（年龄、骑行经验），具体费用请在结算页面查看。"
+        "a": "可以，这是可选项。结算时您可以添加<a href=\"/zh-Hans/blog/bike-insurance-whats-covered-and-whats-not\">盗抢险和/或损坏险</a>。价格取决于所选保障范围及骑手信息（年龄、骑行经验），具体费用请在结算页面查看。"
       },
       {
         "q": "我可以延长租期吗？",
@@ -280,7 +280,7 @@
       },
       {
         "q": "租车包含哪些内容？",
-        "a": "每辆摩托车均免费配备 2 顶头盔。每顶头盔均可升级为 KYT 全盔，或更换为全新的 KYT 半盔或全盔（费用从 Rp 150,000 起，全新全盔从 Rp 200,000 起）。后座乘客可加装后置尾箱，费用为 Rp 200,000。请在结算页面选择您所需的选项。"
+        "a": "每辆摩托车均免费配备 2 顶头盔。每顶头盔均可升级为 KYT 全盔，或更换为全新的 KYT 半盔或全盔（费用从 Rp 150,000 起，全新全盔从 Rp 200,000 起）。后座乘客可加装<a href=\"/zh-Hans/blog/rental-extras-worth-adding-helmets-and-the-comfort-box\">后置尾箱</a>，费用为 Rp 200,000。请在结算页面选择您所需的选项。"
       },
       {
         "q": "如何预订？",
@@ -288,7 +288,7 @@
       },
       {
         "q": "我应该选择哪款车？",
-        "a": "踏板车（Honda ADV、PCX、Yamaha Nmax、Xmax）对大多数人来说是最简单的选择——自动挡、轻便，在巴厘岛的道路上也容易操控。如果想要更大动力或不同的骑行风格，可以看看我们的摩托车——Yamaha MT-25、XSR、Kawasaki ZX-25R、Suzuki V-Strom等。还没决定？给我们留言，我们帮您挑选。"
+        "a": "踏板车（<a href=\"/zh-Hans/blog/honda-adv-review\">Honda ADV</a>、<a href=\"/zh-Hans/blog/honda-pcx160-review\">PCX</a>、<a href=\"/zh-Hans/blog/yamaha-nmax-review\">Yamaha Nmax</a>、<a href=\"/zh-Hans/blog/yamaha-xmax250-review\">Xmax</a>）对大多数人来说是最简单的选择——自动挡、轻便，在巴厘岛的道路上也容易操控。如果想要更大动力或不同的骑行风格，可以看看我们的摩托车——<a href=\"/zh-Hans/blog/yamaha-mt25-review\">Yamaha MT-25</a>、<a href=\"/zh-Hans/blog/yamaha-xsr-155-review-retro-style\">XSR</a>、<a href=\"/zh-Hans/blog/kawasaki-ninja-zx-25r-review\">Kawasaki ZX-25R</a>、<a href=\"/zh-Hans/blog/suzuki-v-strom-250-review\">Suzuki V-Strom</a>等。还没决定？给我们留言，我们帮您挑选。"
       }
     ]
   },

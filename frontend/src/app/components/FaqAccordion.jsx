@@ -20,7 +20,11 @@ export default function FaqAccordion({ items }) {
               <span>{it.q}</span>
               <span className="faq-mark" aria-hidden="true">{isOpen ? '−' : '+'}</span>
             </button>
-            <div className="faq-a" hidden={!isOpen}>{it.a}</div>
+            {typeof it.a === 'string' ? (
+              <div className="faq-a" hidden={!isOpen} dangerouslySetInnerHTML={{ __html: it.a }} />
+            ) : (
+              <div className="faq-a" hidden={!isOpen}>{it.a}</div>
+            )}
           </div>
         );
       })}

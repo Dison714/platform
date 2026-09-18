@@ -166,11 +166,11 @@
       },
       {
         "icon": "🛡️",
-        "text": "Diebstahl- und Schadenversicherung verfügbar"
+        "text": "<a href=\"/de/blog/motorradversicherung-was-gedeckt-ist-und-was-nicht\">Diebstahl- und Schadenversicherung verfügbar</a>"
       },
       {
         "icon": "💰",
-        "text": "Rückerstattbare Kaution"
+        "text": "<a href=\"/de/blog/wie-die-kaution-bei-der-motorradvermietung-auf-bali-funktioniert-der-komplette-guide\">Rückerstattbare Kaution</a>"
       },
       {
         "icon": "💬",
@@ -181,7 +181,7 @@
     "steps": [
       {
         "title": "Motorrad wählen",
-        "text": "Katalog durchstöbern und ein Modell auswählen."
+        "text": "<a href=\"/de/bikes\">Katalog</a> durchstöbern und ein Modell auswählen."
       },
       {
         "title": "Online buchen",
@@ -213,15 +213,15 @@
     "why": [
       {
         "title": "Lieferung bis vor die Tür",
-        "text": "Wir bringen das Motorrad zu Ihnen. Besseres Preis-Leistungs-Verhältnis bei längeren Mietzeiten — siehe FAQ."
+        "text": "Wir bringen das Motorrad zu Ihnen. Besseres Preis-Leistungs-Verhältnis bei längeren Mietzeiten — siehe <a href=\"/de/faq\">FAQ</a>."
       },
       {
         "title": "Zubehör inklusive",
-        "text": "Helme und Montagezubehör sind bei Ihrer Miete erhältlich."
+        "text": "<a href=\"/de/blog/sinnvolle-mietextras-helme-und-die-komfort-box\">Helme und Montagezubehör sind bei Ihrer Miete erhältlich.</a>"
       },
       {
         "title": "Optionale Versicherung",
-        "text": "Fügen Sie beim Checkout Diebstahl- oder Schadenschutz hinzu — Ihre Wahl."
+        "text": "<a href=\"/de/blog/motorradversicherung-was-gedeckt-ist-und-was-nicht\">Fügen Sie beim Checkout Diebstahl- oder Schadenschutz hinzu — Ihre Wahl.</a>"
       }
     ],
     "categories_title": "Finden Sie Ihr Motorrad",
@@ -235,13 +235,13 @@
   "about": {
     "title": "Über Bike Bali Rent",
     "p1": "Bike Bali Rent ist ein Motorradverleih auf Bali. Wir helfen Reisenden und Langzeitgästen, die Insel auf einem gepflegten Roller oder Motorrad zu erkunden — mit Lieferung bis vor die Tür und einfacher Online-Buchung.",
-    "p2": "Wir halten die Miete unkompliziert: ein klarer Preis von Anfang an, Helme und Zubehör verfügbar sowie optionaler Diebstahl- und Schadenschutz. Es gibt keine Online-Vorauszahlung — Sie zahlen, wenn Ihr Motorrad geliefert wird.",
+    "p2": "Wir halten die Miete unkompliziert: <a href=\"/de/bikes\">ein klarer Preis von Anfang an</a>, <a href=\"/de/blog/sinnvolle-mietextras-helme-und-die-komfort-box\">Helme und Zubehör verfügbar</a> sowie <a href=\"/de/blog/motorradversicherung-was-gedeckt-ist-und-was-nicht\">optionaler Diebstahl- und Schadenschutz</a>. Es gibt keine Online-Vorauszahlung — Sie zahlen, wenn Ihr Motorrad geliefert wird.",
     "offer_title": "Was wir bieten",
     "offer": [
-      "Eine Auswahl an Motorrädern — von 160-ccm-Rollern bis zu Sport- und Tourenmodellen",
+      "<a href=\"/de/bikes\">Eine Auswahl an Motorrädern</a> — von 160-ccm-Rollern bis zu Sport- und Tourenmodellen",
       "Lieferung an Ihren Standort",
-      "Helme und Montagezubehör",
-      "Optionaler Diebstahl- und Schadenschutz",
+      "<a href=\"/de/blog/sinnvolle-mietextras-helme-und-die-komfort-box\">Helme und Montagezubehör</a>",
+      "<a href=\"/de/blog/motorradversicherung-was-gedeckt-ist-und-was-nicht\">Optionaler Diebstahl- und Schadenschutz</a>",
       "Flexible Mietdauer, von einem Tag bis zu mehreren Monaten und darüber hinaus"
     ],
     "contact_title": "Kontaktieren Sie uns"
@@ -256,11 +256,11 @@
       },
       {
         "q": "Gibt es eine Kaution?",
-        "a": "Ja — eine rückerstattbare Kaution wird während der Mietzeit einbehalten und zurückgezahlt, wenn Sie das Motorrad in gutem Zustand zurückbringen. Die Höhe hängt vom Modell ab und wird beim Checkout angezeigt."
+        "a": "Ja — <a href=\"/de/blog/wie-die-kaution-bei-der-motorradvermietung-auf-bali-funktioniert-der-komplette-guide\">eine rückerstattbare Kaution</a> wird während der Mietzeit einbehalten und zurückgezahlt, wenn Sie das Motorrad in gutem Zustand zurückbringen. Die Höhe hängt vom Modell ab und wird beim Checkout angezeigt."
       },
       {
         "q": "Ist eine Versicherung verfügbar?",
-        "a": "Ja, optional. Sie können beim Checkout Diebstahlschutz und/oder Schadenschutz hinzufügen. Der Preis hängt von der gewählten Deckungshöhe und Ihrem Fahrerprofil (Alter und Fahrerfahrung) ab — den genauen Preis sehen Sie beim Checkout."
+        "a": "Ja, optional. Sie können beim Checkout <a href=\"/de/blog/motorradversicherung-was-gedeckt-ist-und-was-nicht\">Diebstahlschutz und/oder Schadenschutz</a> hinzufügen. Der Preis hängt von der gewählten Deckungshöhe und Ihrem Fahrerprofil (Alter und Fahrerfahrung) ab — den genauen Preis sehen Sie beim Checkout."
       },
       {
         "q": "Kann ich meine Miete verlängern?",
@@ -280,7 +280,7 @@
       },
       {
         "q": "Was ist im Lieferumfang enthalten?",
-        "a": "Jedes Motorrad wird mit 2 kostenlosen Helmen geliefert. Sie können jeden Platz auf einen KYT-Integralhelm upgraden, oder auf einen brandneuen KYT-Halbschalen- oder Integralhelm — ab Rp 150.000 (Rp 200.000 für den neuen Integralhelm). Ein hinterer Topcase für einen Beifahrer ist für Rp 200.000 erhältlich. Wählen Sie einfach, was Sie beim Checkout benötigen."
+        "a": "Jedes Motorrad wird mit 2 kostenlosen Helmen geliefert. Sie können jeden Platz auf einen KYT-Integralhelm upgraden, oder auf einen brandneuen KYT-Halbschalen- oder Integralhelm — ab Rp 150.000 (Rp 200.000 für den neuen Integralhelm). <a href=\"/de/blog/sinnvolle-mietextras-helme-und-die-komfort-box\">Ein hinterer Topcase für einen Beifahrer</a> ist für Rp 200.000 erhältlich. Wählen Sie einfach, was Sie beim Checkout benötigen."
       },
       {
         "q": "Wie buche ich?",
@@ -288,7 +288,7 @@
       },
       {
         "q": "Welches Bike sollte ich wählen?",
-        "a": "Roller (Honda ADV, PCX, Yamaha Nmax, Xmax) sind für die meisten die einfachste Wahl — automatisch, leicht und einfach zu fahren auf Balis Straßen. Wenn Sie mehr Leistung oder einen anderen Fahrstil wollen, schauen Sie sich unsere Motorräder an — Yamaha MT-25, XSR, Kawasaki ZX-25R, Suzuki V-Strom und mehr. Immer noch unsicher? Schreiben Sie uns, wir helfen bei der Wahl."
+        "a": "Roller (<a href=\"/de/blog/honda-adv160-test-fuer-schlechte-strassen-und-ausfluege\">Honda ADV</a>, <a href=\"/de/blog/honda-pcx160-test-komfort-und-stauraum-im-alltag\">PCX</a>, <a href=\"/de/blog/yamaha-nmax-test-new-neo-und-turbo-im-vergleich\">Yamaha Nmax</a>, <a href=\"/de/blog/yamaha-xmax250-test-connected-und-tech-max-im-vergleich\">Xmax</a>) sind für die meisten die einfachste Wahl — automatisch, leicht und einfach zu fahren auf Balis Straßen. Wenn Sie mehr Leistung oder einen anderen Fahrstil wollen, schauen Sie sich unsere Motorräder an — <a href=\"/de/blog/yamaha-mt-25-test-gen-2-und-gen-3-im-vergleich\">Yamaha MT-25</a>, <a href=\"/de/blog/yamaha-xsr155-test-cafe-racer-mit-retro-charakter\">XSR</a>, <a href=\"/de/blog/kawasaki-ninja-zx-25r-test-der-einzige-vierzylinder-250er\">Kawasaki ZX-25R</a>, <a href=\"/de/blog/suzuki-v-strom-250-test-komfort-und-windschutz-auf-langstrecken\">Suzuki V-Strom</a> und mehr. Immer noch unsicher? Schreiben Sie uns, wir helfen bei der Wahl."
       }
     ]
   },
