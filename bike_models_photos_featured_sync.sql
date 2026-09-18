@@ -1,0 +1,18 @@
+BEGIN;
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/honda-adv-white/hero/30.webp' WHERE slug = 'honda-adv-review';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/yamaha-nmax-blue/hero/01.webp' WHERE slug = 'yamaha-nmax-review';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/yamaha-xmax-grey/hero/08.webp' WHERE slug = 'yamaha-xmax250-review';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/yamaha-mt25-black/hero/05.webp' WHERE slug = 'yamaha-mt25-review';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/kawasaki-zx25r-blue/hero/04.webp' WHERE slug = 'kawasaki-ninja-zx-25r-review';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/yamaha-xsr-black-original/hero/03.webp' WHERE slug = 'yamaha-xsr-155-review-retro-style';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/kawasaki-versys-black/hero/01.webp' WHERE slug = 'kawasaki-versys-x250-review';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/suzuki-vstrom250-black/hero/01.webp' WHERE slug = 'suzuki-v-strom-250-review';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/tvs-ronin225-total-black/hero/05.webp' WHERE slug = 'tvs-ronin-225-review';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/keeway-road-falcon-250-black/hero/02.webp' WHERE slug = 'keeway-road-falcon-250-review';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/morbidelli-c252v-black/hero/02.webp' WHERE slug = 'morbidelli-c252v-review';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/honda-cbr250rr-white-blue/hero/01.webp' WHERE slug = 'honda-cbr250rr-review';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/honda-cb150x-black/hero/03.webp' WHERE slug = 'honda-cb150x-review';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/yamaha-xmax-grey/hero/08.webp' WHERE slug = 'how-to-start-and-use-your-rental-scooters-smart-key';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/honda-adv-turquoise-box/hero/01.webp' WHERE slug = 'rental-extras-worth-adding-helmets-and-the-comfort-box';
+UPDATE articles SET featured_image_url = 'https://cdn.bikebalirent.com/bikes/honda-adv-white/hero/30.webp' WHERE slug = 'pcx160-vs-adv160-vs-nmax-how-to-choose';
+COMMIT;
