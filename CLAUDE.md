@@ -546,6 +546,60 @@ Phase 2; hi + zh-Hans запущены тем же днём, 2026-09-07). Фак
   deploy) под конкретный `POST /api/v1/deploy?uuid=<app_uuid>` через
   curl.** UUID приложений: `mdb-platform-frontend` =
   `odke6aycqzy4zybnkutq8qbm`, `mdb-platform-backend` = `uy845drxpx5z6t5qf0c8voa8`.
+- **Новое поле под контент — схема и рендер одним изменением, не отдельными
+  шагами.** Инцидент 2026-09-19: `articles.featured_image_url` существовал в
+  БД, но ни `[locale]/blog/[slug]/page.js`, ни `[locale]/blog/page.js`
+  никогда не рендерили его как `<img>` (только в `ogTwitter()` meta-тег) —
+  фото залили на 14+ статей, Дмитрий не увидел ни одной картинки на живом
+  сайте. Правило: добавляя колонку под контент (фото, любое новое поле),
+  сразу писать код, который его показывает, ДО заливки самих данных —
+  не полагаться на то, что "поле есть, значит где-то используется".
+  Применено сразу же к `location_pages.hero_image_url` (миграция 063) —
+  схема и `.loc-hero-image` в `[locationSlug]/page.js` одним коммитом
+  (`a831ba7`), фото залиты отдельным шагом позже.
+- **`article_translations.content` — Markdown через `react-markdown` БЕЗ
+  `rehype-raw`**, не сырой HTML (в отличие от `family_content_translations.
+  content_html`/district-блоков, которые идут через
+  `dangerouslySetInnerHTML`). Любое фото/ссылка внутри текста статьи блога —
+  `![alt](url)`/`[текст](url)`, литеральный `<img>`/`<a>` в этом поле не
+  отрисуется вообще, просто останется текстом на странице.
+- **i18n-словари (`frontend/src/i18n/dictionaries/*.json`, поля
+  `faq.items[].a`, `about.p2`, `about.offer[]`, `home.trust[].text`,
+  `home.steps[].text`, `home.why[].text`) могут содержать вручную
+  вставленные `<a href="...">`** (сессия 2026-09-19, ссылки на статьи
+  блога/каталог) — компоненты (`FaqAccordion.jsx`, `about/page.js`,
+  `[locale]/page.js`) рендерят их через `dangerouslySetInnerHTML`, не как
+  React children. Редактируя эти строки вручную — сохранять существующую
+  разметку `<a>`, не экранировать её как текст. Массовые точечные правки
+  таких строк — программно (`json.load`→`str.replace`→`json.dump(indent=2,
+  ensure_ascii=False)`, round-trip даёт побайтовую идентичность при
+  отсутствии изменений — проверено), не ручной перепечаткой, особенно для
+  не-латинских языков (риск опечатки в CJK/арабском/деванагари). Единственное
+  исключение — `home.hero_sub`: он же meta-description страницы, HTML туда
+  не добавлять.
+- **Официальные брендовые SVG-иконки — из проверенной библиотеки
+  (simple-icons/lucide/Font Awesome brand), не перерисовывать от руки.**
+  Прецедент — Instagram-иконка в `BrandIcons.jsx` (сессия 2026-09-19):
+  версия, нарисованная вручную при создании набора, визуально разошлась с
+  реальным логотипом. Заменена на официальный path из `simple-icons`
+  (`cdn.jsdelivr.net/npm/simple-icons@latest/icons/<name>.svg`, CC0),
+  вписанный в тот же цветной кружок через `<g transform="translate(...)
+  scale(...)">`, а не перепечатана на глаз.
+- **Пользовательские фото, вставленные прямо в чат** (не файл на диске) —
+  достаются из `~/.claude/projects/<project-slug>/<session-id>.jsonl`:
+  найти последнее сообщение `type: "user"`, где `message.content` содержит
+  блоки `type: "image"` НЕ обёрнутые в `tool_result` (обёрнутые — это
+  скриншот инструмента, не фото от человека), декодировать `source.data`
+  (base64) в файл. Правки/замазывание перед публикацией — Python `Pillow`
+  локально, фото не уходят на сторонний сервис до заливки в R2.
+- **Сток-фото для блога (Unsplash/Pexels) — скачивать и заливать в R2, не
+  хотлинкать чужой домен на проде.** Разовые батчи (не product photos) —
+  `aws s3 sync <локальная-папка> s3://mdb-platform-media/<префикс>/
+  --profile r2 --endpoint-url https://3c3d58a73ee90534807282e5c9c708be.
+  r2.cloudflarestorage.com`, без Node-импортера. Действующие префиксы:
+  `bikes/` (product photos, свои size-поддиректории thumb/gallery/hero),
+  `blog/` (featured/embed-фото статей, плоские файлы без размеров),
+  `districts/` (district hero-фото, плоские файлы).
 
 ## 7. Источники для сидирования
 
