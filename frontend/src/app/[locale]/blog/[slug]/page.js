@@ -7,6 +7,20 @@ import { apiGet } from '../../../../lib/api.js';
 import { ogTwitter } from '../../../../lib/seo.js';
 import { SINGLE_MODEL_CATEGORIES } from '../../../../lib/categoryGroups.js';
 import Breadcrumb from '../../../components/Breadcrumb.jsx';
+import ProductVideo from '../../../components/ProductVideo.jsx';
+
+// Markdown has no native video syntax, so embedded clips reuse the image
+// syntax: ![alt](.../file.mp4 "poster-url"). remark parses the optional
+// quoted string after the URL into the img node's `title` — that's the only
+// slot Markdown offers for a second value, so it doubles as the poster src.
+// Anything not ending in .mp4/.webm renders as a normal <img>, unchanged.
+function ArticleMedia({ src, alt, title }) {
+  if (/\.(mp4|webm)$/i.test(src || '')) {
+    return <ProductVideo src={src} poster={title} className="article-video" />;
+  }
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={src} alt={alt} loading="lazy" />;
+}
 
 // Bike Models articles (+ a couple of Deposit&Safety ones whose photo is a
 // specific bike, e.g. smart-key/Xmax, rental-extras/ADV) carry
@@ -130,7 +144,7 @@ export default async function BlogPostPage({ params }) {
           абзацем content (см. Задачу 2 сессии), используется как teaser в
           /blog и как фолбэк seo_description в generateMetadata выше. */}
       <div className="article-body">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content ?? ''}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} components={{ img: ArticleMedia }}>{post.content ?? ''}</ReactMarkdown>
       </div>
     </div>
   );
