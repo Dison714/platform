@@ -16,20 +16,48 @@ import { useEffect, useRef, useState } from 'react';
 // слушатель уже активен к началу загрузки.
 export default function ProductVideo({ src, poster, className }) {
   const [hidden, setHidden] = useState(false);
+  const [inView, setInView] = useState(false);
+  const containerRef = useRef(null);
   const videoRef = useRef(null);
 
+  // Найдено PSI 2026-09-19: со статьёй из 12 клипов подряд браузер ставит
+  // ВСЕ 12 постеров (и, судя по network-логу PSI, начинает диапазонные
+  // запросы к самим .mp4 при preload="metadata") в очередь сразу при
+  // разборе HTML — они конкурируют за полосу с featured-фото статьи
+  // (LCP-элементом) на throttled-мобильной сети, хотя сами находятся ниже
+  // сгиба. IntersectionObserver откладывает и poster, и src до реального
+  // приближения к вьюпорту — на карточках товара (обычно в первом экране)
+  // это сработает почти сразу, разницы не будет.
   useEffect(() => {
-    if (videoRef.current) videoRef.current.src = src;
-  }, [src]);
+    if (!containerRef.current || typeof IntersectionObserver === 'undefined') {
+      setInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (inView && videoRef.current) videoRef.current.src = src;
+  }, [inView, src]);
 
   if (hidden) return null;
   return (
-    <div className={className ? `product-video ${className}` : 'product-video'}>
+    <div ref={containerRef} className={className ? `product-video ${className}` : 'product-video'}>
       <video
         ref={videoRef}
         controls
-        preload="metadata"
-        poster={poster}
+        preload="none"
+        poster={inView ? poster : undefined}
         playsInline
         onError={() => setHidden(true)}
       />

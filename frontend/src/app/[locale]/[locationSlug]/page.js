@@ -127,12 +127,16 @@ export default async function LocationPage({ params }) {
             остаётся пустым местом на сайте, даже когда данные заполнены.
             Рендерим сразу вместе с добавлением hero_image_url в схему
             (063_location_page_hero_image.sql), до заливки самих фото. */}
+        {/* loading="lazy" was wrong here (found via PSI, 2026-09-19): this
+            is the LCP candidate on every district page. fetchPriority="high"
+            matches the same fix applied to the homepage hero (3e17d12) and
+            the blog featured image. */}
         {page.hero_image_url && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={page.hero_image_url}
             alt={page.h1}
-            loading="lazy"
+            fetchPriority="high"
             className="loc-hero-image"
           />
         )}

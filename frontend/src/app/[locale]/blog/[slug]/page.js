@@ -121,13 +121,18 @@ export default async function BlogPostPage({ params }) {
           только когда known catalogHref (related_product_family_id
           проставлен) — фото со стоком (Legal/большая часть Deposit&Safety)
           остаётся просто картинкой, не пустой ссылкой в никуда. */}
+      {/* loading="lazy" was wrong here (found via PSI, 2026-09-19): this is
+          the first visual element on every article — usually the LCP
+          candidate — so lazy-loading it only delays its own paint.
+          fetchPriority="high" matches the same fix already applied to the
+          homepage hero image in 3e17d12. */}
       {post.featured_image_url && (catalogHref ? (
         <a href={catalogHref}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={post.featured_image_url}
             alt={post.title}
-            loading="lazy"
+            fetchPriority="high"
             className="article-featured-image"
           />
         </a>
@@ -136,7 +141,7 @@ export default async function BlogPostPage({ params }) {
         <img
           src={post.featured_image_url}
           alt={post.title}
-          loading="lazy"
+          fetchPriority="high"
           className="article-featured-image"
         />
       ))}
