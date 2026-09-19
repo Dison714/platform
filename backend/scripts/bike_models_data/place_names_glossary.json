@@ -2,6 +2,7 @@
   "_readme": "Bali/Lombok/Flores place names that appear in the bike-models articles but are NOT covered by frontend/src/lib/districts.js (that file only covers the 10 SEO district pages: Canggu/Seminyak/Ubud/Uluwatu/Jimbaran/Sanur/Kuta/Nusa Dua/Denpasar/Airport — reuse ITS namesByLocale for those 9 real districts if they appear here too, don't retranslate them). For de/es/fr/it: keep all these names in Latin script unchanged (same convention as districts.js — no established exonym). For ja/ko/zh-Hans/ar/hi: use the transliteration given below so the same place reads consistently across all 15 articles. GWK and Virgin Beach/Pandawa Beach are tourist-brand names, not traditional toponyms — GWK stays as the Latin acronym 'GWK' in every language.",
   "Kintamani": { "ja": "キンタマーニ", "ko": "킨타마니", "zh-Hans": "金塔玛尼", "ar": "كينتاماني", "hi": "किंतामणि" },
   "Batur (volcano/lake)": { "ja": "バトゥール", "ko": "바투르", "zh-Hans": "巴杜尔", "ar": "باتور", "hi": "बातूर" },
+  "Mount Batur (resolved mountain/volcano word choice, per that language's own Wikipedia article title — chosen 2026-09-19, see CLAUDE.md §3.8)": { "zh-Hans": "巴杜尔火山", "ar": "جبل باتور", "hi": "बातूर पर्वत" },
   "Munduk": { "ja": "ムンドゥック", "ko": "문둑", "zh-Hans": "文都", "ar": "موندوك", "hi": "मुंडुक" },
   "Amed": { "ja": "アメッド", "ko": "아메드", "zh-Hans": "阿梅德", "ar": "أميد", "hi": "अमेड" },
   "Lovina": { "ja": "ロビナ", "ko": "로비나", "zh-Hans": "洛维娜", "ar": "لوفينا", "hi": "लोविना" },

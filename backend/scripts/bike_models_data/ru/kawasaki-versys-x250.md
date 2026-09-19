@@ -1,3 +1,5 @@
+[![Kawasaki Versys-X 250, мотоцикл напрокат на Бали — вид сбоку](https://cdn.bikebalirent.com/bikes/kawasaki-versys-black/gallery/03.webp)](/ru/bikes/kawasaki-versys-black)
+
 Kawasaki Versys-X 250 — эндуро-туринг: высокая посадка, длинноходная подвеска, увеличенный бак. Байк для тех, кто планирует не просто доехать по асфальту, а исследовать боковые дороги острова. [Смотреть Kawasaki Versys-X 250 в каталоге](/ru/bikes?group=motorcycle&model=kawasaki_versys).
 
 **Характеристики:**
@@ -14,3 +16,29 @@ Kawasaki Versys-X 250 — эндуро-туринг: высокая посадк
 **Кому подойдёт:** для многодневных маршрутов по острову и тем, кто хочет уверенности на грунтовых или разбитых участках. Подробные маршруты — в статьях блога: «Восточный Бали на байке», «Кинтамани: рассвет на вулкане Батур», «Бедугул — Мундук — Ловина».
 
 **Где на Бали хорошо себя показывает:** дальние маршруты — Кинтамани, север и восток острова (включая Амед и Туламбен), боковые дороги за пределами основных туристических трасс.
+
+Один из наших клиентов, арендовавший этот Versys-X250, поделился этим видео со своей поездки по восточному побережью Бали.
+
+![Видео клиента, Kawasaki Versys-X250, восточное побережье Бали (клип 1 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-01.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-01-poster.webp")
+
+![Видео клиента, Kawasaki Versys-X250, восточное побережье Бали (клип 2 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-02.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-02-poster.webp")
+
+![Видео клиента, Kawasaki Versys-X250, восточное побережье Бали (клип 3 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-03.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-03-poster.webp")
+
+![Видео клиента, Kawasaki Versys-X250, восточное побережье Бали (клип 4 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-04.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-04-poster.webp")
+
+![Видео клиента, Kawasaki Versys-X250, восточное побережье Бали (клип 5 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-05.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-05-poster.webp")
+
+![Видео клиента, Kawasaki Versys-X250, восточное побережье Бали (клип 6 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-06.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-06-poster.webp")
+
+![Видео клиента, Kawasaki Versys-X250, восточное побережье Бали (клип 7 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-07.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-07-poster.webp")
+
+![Видео клиента, Kawasaki Versys-X250, восточное побережье Бали (клип 8 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-08.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-08-poster.webp")
+
+![Видео клиента, Kawasaki Versys-X250, восточное побережье Бали (клип 9 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-09.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-09-poster.webp")
+
+![Видео клиента, Kawasaki Versys-X250, восточное побережье Бали (клип 10 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-10.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-10-poster.webp")
+
+![Видео клиента, Kawasaki Versys-X250, восточное побережье Бали (клип 11 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-11.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-11-poster.webp")
+
+![Видео клиента, Kawasaki Versys-X250, восточное побережье Бали (клип 12 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-12.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-12-poster.webp")
