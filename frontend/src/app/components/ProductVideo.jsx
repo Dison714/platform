@@ -51,8 +51,19 @@ export default function ProductVideo({ src, poster, className }) {
   }, [inView, src]);
 
   if (hidden) return null;
+  // <span>, not <div>: when this renders inside article Markdown content
+  // (ArticleMedia in blog/[slug]/page.js), remark-gfm wraps a lone image
+  // node in a <p> — a <div> there is invalid (flow content inside a
+  // phrasing-content-only parent), so the browser's HTML parser silently
+  // closes the <p> early, restructuring the parsed DOM out from under
+  // React's hydration and throwing #418/#423 on every one of the 12 Versys
+  // clips (found live, 2026-09-20: src/poster stuck empty forever — React
+  // gives up hydrating a mismatched subtree, so the mount effect that sets
+  // them never runs). <span> is phrasing content, valid in both this
+  // context and the plain product-page usage; `display: block` in
+  // globals.css keeps the same box behavior a <div> had.
   return (
-    <div ref={containerRef} className={className ? `product-video ${className}` : 'product-video'}>
+    <span ref={containerRef} className={className ? `product-video ${className}` : 'product-video'}>
       <video
         ref={videoRef}
         controls
@@ -61,6 +72,6 @@ export default function ProductVideo({ src, poster, className }) {
         playsInline
         onError={() => setHidden(true)}
       />
-    </div>
+    </span>
   );
 }
