@@ -1,0 +1,66 @@
+[
+  {
+    "file": "blog-r00-routes-pillar-ru.md",
+    "baseSlug": "best-bike-routes-in-bali-curated-list",
+    "isPillar": true,
+    "excerpt": {
+      "ru": "Гид по семи маршрутам Бали на байке от водителей и клиентов MDB Motor Rental — восток острова, водопады, вулканы, горные переходы и южное побережье, с реальными точками и советом по байку под каждое направление."
+    }
+  },
+  {
+    "file": "blog-r01-east-bali-amed-ru.md",
+    "baseSlug": "east-bali-amed-route",
+    "isPillar": false,
+    "excerpt": {
+      "ru": "Маршрут через Лаханган Свит, водные дворцы Тирта Гангга и Таман Уджунг, храм Лемпуянг и побережье Амеда с чёрным вулканическим песком — один длинный день или два-три дня с ночёвкой."
+    }
+  },
+  {
+    "file": "blog-r02-sekumpul-waterfalls-ru.md",
+    "baseSlug": "sekumpul-waterfalls-route",
+    "isPillar": false,
+    "excerpt": {
+      "ru": "Секумпул — самый большой водопад Бали в окружении джунглей центрального севера острова, с ценами, временем в пути и честным предупреждением о спуске, который проходят не все."
+    }
+  },
+  {
+    "file": "blog-r03-kintamani-sunrise-ru.md",
+    "baseSlug": "kintamani-sunrise-route",
+    "isPillar": false,
+    "excerpt": {
+      "ru": "Регулярный ранний маршрут к рассвету на вулкане Батур — во сколько выезжать, что взять с собой и где по пути горячие источники и лавовые поля."
+    }
+  },
+  {
+    "file": "blog-r04-ubud-one-day-ru.md",
+    "baseSlug": "ubud-route-rice-terraces-and-temples",
+    "isPillar": false,
+    "excerpt": {
+      "ru": "Рисовые террасы, водопады и храмы Убуда за один день на скутере — без гор и серпантинов, самый простой формат маршрута для новичков."
+    }
+  },
+  {
+    "file": "blog-r05-bedugul-munduk-lovina-ru.md",
+    "baseSlug": "bedugul-munduk-lovina-route",
+    "isPillar": false,
+    "excerpt": {
+      "ru": "Двухдневный переход через горы на север Бали — озеро Братан, водопады Мундука и рассветные дельфины Ловины."
+    }
+  },
+  {
+    "file": "blog-r06-bukit-peninsula-ru.md",
+    "baseSlug": "bukit-peninsula-route",
+    "isPillar": false,
+    "excerpt": {
+      "ru": "Улувату, Джимбаран, Нуса-Дуа и закатные точки полуострова Букит — короткие поездки без выезда на север острова."
+    }
+  },
+  {
+    "file": "blog-r07-volcano-treks-logistics-ru.md",
+    "baseSlug": "bali-volcano-treks-route",
+    "isPillar": false,
+    "excerpt": {
+      "ru": "Как доехать до старта треккинга на вулканы Агунг, Абанг и Батукару — где реально парковать байк и что говорят сами участники восхождений."
+    }
+  }
+]
