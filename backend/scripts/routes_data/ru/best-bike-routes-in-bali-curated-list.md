@@ -20,8 +20,8 @@
 
 - **Скутер-автомат** ([Honda PCX 160](/bikes?category=honda_pcx160), [Yamaha Nmax 155](/bikes?category=yamaha_nmax155)) — Убуд одним днём, полуостров Букит, короткие прибрежные поездки.
 - **Макси-скутер** ([Yamaha Xmax 250](/bikes?category=yamaha_xmax250)) — те же маршруты, но с запасом мощности для гор и длинных перегонов, всё ещё в полном автомате.
-- **Турэндуро** ([Suzuki V-Strom 250](/bikes?group=motorcycle&model=suzuki_vstrom250), [Kawasaki Versys](/bikes?group=motorcycle&model=kawasaki_versys), [Keeway Road Falcon 250](/bikes?group=motorcycle&model=keeway_roadfalcon250)) — восточный Бали, переход Бедугул — Мундук — Ловина, любой маршрут на несколько дней подряд.
-- **Adventure-скутер** ([Honda ADV](/bikes?category=honda_adv160)) и трейл на механике ([Honda CB150X](/bikes?group=motorcycle&model=honda_cb150x)) — для тех же направлений, если хочется байк с более серьёзной посадкой на разбитых и гравийных участках.
+- **Турэндуро** ([Suzuki V-Strom 250](/bikes?group=motorcycle&model=suzuki_vstrom250), [Kawasaki Versys-X 250](/bikes?group=motorcycle&model=kawasaki_versys), [Keeway Road Falcon 250](/bikes?group=motorcycle&model=keeway_roadfalcon250)) — восточный Бали, переход Бедугул — Мундук — Ловина, любой маршрут на несколько дней подряд.
+- **Adventure-скутер** ([Honda ADV 160](/bikes?category=honda_adv160)) и трейл на механике ([Honda CB150X](/bikes?group=motorcycle&model=honda_cb150x)) — для тех же направлений, если хочется байк с более серьёзной посадкой на разбитых и гравийных участках.
 
 ## Частые вопросы
 

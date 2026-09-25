@@ -57,7 +57,7 @@
 
 ## Какой байк брать
 
-Дорога до озера Братан и Джатилувих — несложная, её же приводят как ориентир "лёгкой" трассы, так что до этой части маршрута хватит и [Yamaha Xmax 250](/bikes?category=yamaha_xmax250). Но это двухдневный маршрут на 150+ км с прохладными вечерами в Мундуке и неровным трафиком в горной части ближе к северу — для полной версии комфортнее турэндуро: [Suzuki V-Strom 250](/bikes?group=motorcycle&model=suzuki_vstrom250) или [Keeway Road Falcon 250](/bikes?group=motorcycle&model=keeway_roadfalcon250) — прямая посадка и ветровое стекло имеют значение на длинном холодном перегоне через горы. [Kawasaki Versys](/bikes?group=motorcycle&model=kawasaki_versys) — тоже рабочий вариант для этого направления.
+Дорога до озера Братан и Джатилувих — несложная, её же приводят как ориентир "лёгкой" трассы, так что до этой части маршрута хватит и [Yamaha Xmax 250](/bikes?category=yamaha_xmax250). Но это двухдневный маршрут на 150+ км с прохладными вечерами в Мундуке и неровным трафиком в горной части ближе к северу — для полной версии комфортнее турэндуро: [Suzuki V-Strom 250](/bikes?group=motorcycle&model=suzuki_vstrom250) или [Keeway Road Falcon 250](/bikes?group=motorcycle&model=keeway_roadfalcon250) — прямая посадка и ветровое стекло имеют значение на длинном холодном перегоне через горы. [Kawasaki Versys-X 250](/bikes?group=motorcycle&model=kawasaki_versys) — тоже рабочий вариант для этого направления.
 
 ## Сезонность
 

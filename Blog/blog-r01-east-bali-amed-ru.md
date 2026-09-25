@@ -21,13 +21,13 @@
 
 **Начало маршрута.** Группы стартуют либо из Убуда/Букита, либо от заправки [Pertamina](https://maps.app.goo.gl/Z3uLFWPAhi8op6Fh8) по пути на восток — один из водителей описывал утренний старт так: "07:00 — старт и завтрак в Чангу, там лучший кофе в районе. Первая остановка — заправка Pertamina."
 
-![Видео клиента: утренний старт маршрута, дорога через зелень (Versys, клип 2 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-02.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-02-poster.webp")
+![Видео клиента: утренний старт маршрута, дорога через зелень (Kawasaki Versys-X 250, клип 2 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-02.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-02-poster.webp")
 
-![Видео клиента: открытая дорога в сторону гор (Versys, клип 8 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-08.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-08-poster.webp")
+![Видео клиента: открытая дорога в сторону гор (Kawasaki Versys-X 250, клип 8 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-08.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-08-poster.webp")
 
 **Монки-Бар / Sidemen — водопады.** Первая часть маршрута идёт через район Сидемена: Gembleng Waterfall (природные бассейны, джунгли) и менее известный Jagasatru Waterfall — по отзыву гостя, там меньше людей, чем на популярных водопадах, и это удобная остановка на середине пути к востоку.
 
-![Видео клиента: смотровая площадка-павильон над джунглями, район Сидемена (Versys, клип 10 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-10.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-10-poster.webp")
+![Видео клиента: смотровая площадка-павильон над джунглями, район Сидемена (Kawasaki Versys-X 250, клип 10 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-10.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-10-poster.webp")
 
 **BERINA Rice Terrace → Амед.** Небольшая остановка у рисовых террас, а затем — по словам гостя, проехавшего этот участок дважды в разных группах, "лучший road section всей поездки" на пути к Амеду.
 
@@ -37,9 +37,9 @@
 
 Другой участник назвал это место "самой сильной sunrise-точкой всей поездки" — рассвет здесь стоит закладывать в план отдельным ранним пунктом, если это позволяет ваш маршрут.
 
-![Видео клиента: рассвет через деревья на смотровой (Versys, клип 1 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-01.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-01-poster.webp")
+![Видео клиента: рассвет через деревья на смотровой (Kawasaki Versys-X 250, клип 1 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-01.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-01-poster.webp")
 
-![Видео клиента: байк на парковке у смотровой площадки (Versys, клип 11 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-11.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-11-poster.webp")
+![Видео клиента: байк на парковке у смотровой площадки (Kawasaki Versys-X 250, клип 11 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-11.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-11-poster.webp")
 
 **[Тирта Гангга](https://maps.app.goo.gl/Adr7ZYwRSYvkEHzu5) и [Таман Уджунг](https://maps.app.goo.gl/mFVrQWQXV9ze8vmbA).** Два водных дворца восточного Бали — Тирта Гангга ("по мотивам Версаля", как описал её один из гостей) и Таман Уджунг, бывшая королевская резиденция — оба стоит проходить не спеша, без спешки между прудами и павильонами.
 
@@ -51,17 +51,17 @@
 
 **Амед.** Побережье с чёрным вулканическим песком, вход в дайвинг/снорклинг. Лучшая точка для снорклинга с берега, по отзыву гостя, — залив [Jemeluk](https://maps.app.goo.gl/j8FDvwtnTAafK9Te7): "Это самый комфортный пляж в Амеде для снорклинга. Песочек, лежаки, кораллы прекрасные. Утром бывают черепахи иногда." Рядом — пляж Липах (более песчаный вариант) и место погружения к затонувшему кораблю USAT Liberty в Тулambene.
 
-![Видео клиента: спокойная бухта с рыбацкими лодками у берега (Versys, клип 3 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-03.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-03-poster.webp")
+![Видео клиента: спокойная бухта с рыбацкими лодками у берега (Kawasaki Versys-X 250, клип 3 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-03.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-03-poster.webp")
 
-![Видео клиента: пешеходный мост над бухтой с лодками (Versys, клип 7 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-07.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-07-poster.webp")
+![Видео клиента: пешеходный мост над бухтой с лодками (Kawasaki Versys-X 250, клип 7 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-07.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-07-poster.webp")
 
 **[Virgin Beach](https://maps.app.goo.gl/rKteTKBfyy3rzFX39) (Bias Tugel).** Частая финальная точка восточного маршрута — белый песок и бирюзовая вода между зелёными холмами, по описанию одного из гостей. Формула у большинства групп одна: доехать → кокос → искупаться (море здесь спокойнее, чем на открытых пляжах) → перекусить рыбой → отдохнуть перед обратной дорогой. На месте есть кемпинг, если планируете остаться на ночь.
 
-![Видео клиента: грунтовая дорога над обрывом с видом на бухту (Versys, клип 4 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-04.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-04-poster.webp")
+![Видео клиента: грунтовая дорога над обрывом с видом на бухту (Kawasaki Versys-X 250, клип 4 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-04.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-04-poster.webp")
 
-![Видео клиента: скалистый берег с гротами у кромки воды (Versys, клип 5 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-05.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-05-poster.webp")
+![Видео клиента: скалистый берег с гротами у кромки воды (Kawasaki Versys-X 250, клип 5 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-05.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-05-poster.webp")
 
-![Видео клиента: светлый песок на пляже крупным планом (Versys, клип 6 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-06.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-06-poster.webp")
+![Видео клиента: светлый песок на пляже крупным планом (Kawasaki Versys-X 250, клип 6 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-06.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-06-poster.webp")
 
 ## Опасные участки и что говорят сами водители
 
@@ -69,9 +69,9 @@
 
 > "Негде гнать, дорога в сторону порта опасная — там байки дорогу пересекать могут, дальше серпантины и света мало... серпантины и дорога так себе." — комментарий одного из путешественников, июнь 2026
 
-![Видео клиента: серпантин в горах с отбойником (Versys, клип 9 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-09.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-09-poster.webp")
+![Видео клиента: серпантин в горах с отбойником (Kawasaki Versys-X 250, клип 9 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-09.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-09-poster.webp")
 
-![Видео клиента: узкая грунтовая дорога через джунгли (Versys, клип 12 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-12.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-12-poster.webp")
+![Видео клиента: узкая грунтовая дорога через джунгли (Kawasaki Versys-X 250, клип 12 из 12)](https://cdn.bikebalirent.com/blog/versys-east-bali-12.mp4 "https://cdn.bikebalirent.com/blog/versys-east-bali-12-poster.webp")
 
 На затяжных спусках и серпантинах действуют те же правила, что и на любых горных дорогах Бали — подробный разбор техники торможения смотрите в нашем гиде: [Как правильно и безопасно пользоваться тормозами на горных и холмистых дорогах Бали](/ru/blog/kak-pravilno-i-bezopasno-polzovatsya-tormozami-na-gornyh-i-holmistyh-dorogah-bali).
 
@@ -88,9 +88,9 @@
 
 Если весь план — доехать до Лаханган Свит, дворцов и вернуться в тот же день по основной дороге, [Yamaha Xmax 250](/bikes?category=yamaha_xmax250) или любой макси-скутер справляется без проблем: дорога до этой части маршрута в основном ровная. Комфорт скутера заканчивается там же, где заканчивается хороший асфальт — на подъезде к самому Амеду и особенно на дороге в сторону порта, которую сами водители описывают как "серпантины и не очень" — там уже приятнее ехать на байке с более прямой посадкой и запасом мощности на затяжных подъёмах.
 
-Для двух-трёхдневной версии маршрута с ночёвкой в Амеде — оптимальны турэндуро: [Suzuki V-Strom 250](/bikes?group=motorcycle&model=suzuki_vstrom250) (6-ступенчатая коробка, бак на 12 литров) или [Kawasaki Versys](/bikes?group=motorcycle&model=kawasaki_versys).
+Для двух-трёхдневной версии маршрута с ночёвкой в Амеде — оптимальны турэндуро: [Suzuki V-Strom 250](/bikes?group=motorcycle&model=suzuki_vstrom250) (6-ступенчатая коробка, бак на 12 литров) или [Kawasaki Versys-X 250](/bikes?group=motorcycle&model=kawasaki_versys).
 
-Если едете компанией и кто-то предпочитает механику попроще автомата, но с более цепкой посадкой на разбитых участках — [Honda CB150X](/bikes?group=motorcycle&model=honda_cb150x) или adventure-скутер [Honda ADV](/bikes?category=honda_adv160) — тоже рабочий вариант для этого направления.
+Если едете компанией и кто-то предпочитает механику попроще автомата, но с более цепкой посадкой на разбитых участках — [Honda CB150X](/bikes?group=motorcycle&model=honda_cb150x) или adventure-скутер [Honda ADV 160](/bikes?category=honda_adv160) — тоже рабочий вариант для этого направления.
 
 ## Сезонность
 

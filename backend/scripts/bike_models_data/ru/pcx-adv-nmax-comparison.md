@@ -2,4 +2,4 @@
 
 В идеале, прежде чем выбрать себе байк надолго — поездить на каждом от 5 дней до месяца, чтобы реально прочувствовать разницу. 1-3 дней часто не хватает, чтобы по-настоящему понять байк.
 
-Карточки моделей: [Honda PCX160](/ru/bikes?category=honda_pcx160), [Honda ADV160](/ru/bikes?category=honda_adv160), [Yamaha Nmax](/ru/bikes?category=yamaha_nmax155).
+Карточки моделей: [Honda PCX 160](/ru/bikes?category=honda_pcx160), [Honda ADV 160](/ru/bikes?category=honda_adv160), [Yamaha Nmax](/ru/bikes?category=yamaha_nmax155).
