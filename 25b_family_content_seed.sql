@@ -339,7 +339,7 @@ SELECT id, 'en', $html$
 <li><strong>Efficient 248cc engine</strong>: reliable performance with genuinely good fuel economy for a touring bike.</li>
 <li><strong>Comfortable touring ergonomics</strong>: upright seating and suspension tuned for longer rides.</li>
 <li><strong>6-speed transmission</strong>: smooth shifting and efficient cruising at speed.</li>
-<li><strong>Large 17.3-litre tank</strong>: long range between fuel stops.</li>
+<li><strong>Large 12-litre tank</strong>: long range between fuel stops.</li>
 </ul>
 <h3>Expert Tips</h3>
 <ul>

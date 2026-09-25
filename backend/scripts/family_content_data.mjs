@@ -1567,7 +1567,7 @@ export const FAMILY_CONTENT = {
 <li><strong>Экономичный двигатель объёмом 248 куб. см</strong>: надёжная динамика и по-настоящему хороший расход топлива для туристического байка.</li>
 <li><strong>Комфортная туристическая эргономика</strong>: прямая посадка и подвеска, настроенные под долгие поездки.</li>
 <li><strong>6-ступенчатая коробка передач</strong>: плавное переключение и эффективный крейсерский ход на скорости.</li>
-<li><strong>Большой бак на 17,3 литра</strong>: большой запас хода между заправками.</li>
+<li><strong>Большой бак на 12 литров</strong>: большой запас хода между заправками.</li>
 </ul>
 <h3>Советы эксперта</h3>
 <ul>
@@ -1587,7 +1587,7 @@ export const FAMILY_CONTENT = {
 <li><strong>Effizienter 248-cm³-Motor</strong>: zuverlässige Leistung mit wirklich gutem Kraftstoffverbrauch für ein Tourenmotorrad.</li>
 <li><strong>Komfortable Touring-Ergonomie</strong>: aufrechte Sitzposition und Fahrwerk für längere Fahrten abgestimmt.</li>
 <li><strong>6-Gang-Getriebe</strong>: sanftes Schalten und effizientes Cruisen bei Geschwindigkeit.</li>
-<li><strong>Großer 17,3-Liter-Tank</strong>: große Reichweite zwischen den Tankstopps.</li>
+<li><strong>Großer 12-Liter-Tank</strong>: große Reichweite zwischen den Tankstopps.</li>
 </ul>
 <h3>Experten-Tipps</h3>
 <ul>
@@ -1607,7 +1607,7 @@ export const FAMILY_CONTENT = {
 <li><strong>Moteur efficace de 248 cm³</strong> : performances fiables avec une consommation vraiment raisonnable pour une routière.</li>
 <li><strong>Ergonomie de tourisme confortable</strong> : assise droite et suspension réglées pour les longs trajets.</li>
 <li><strong>Boîte à 6 rapports</strong> : passages en douceur et croisière efficace à vitesse de croisière.</li>
-<li><strong>Grand réservoir de 17,3 litres</strong> : grande autonomie entre les arrêts essence.</li>
+<li><strong>Grand réservoir de 12 litres</strong> : grande autonomie entre les arrêts essence.</li>
 </ul>
 <h3>Conseils d'expert</h3>
 <ul>
@@ -1627,7 +1627,7 @@ export const FAMILY_CONTENT = {
 <li><strong>Motor eficiente de 248 cc</strong>: rendimiento fiable con un consumo realmente bueno para una moto touring.</li>
 <li><strong>Ergonomía touring cómoda</strong>: postura erguida y suspensión ajustadas para trayectos más largos.</li>
 <li><strong>Transmisión de 6 velocidades</strong>: cambios suaves y crucero eficiente en velocidad.</li>
-<li><strong>Depósito grande de 17,3 litros</strong>: gran autonomía entre repostajes.</li>
+<li><strong>Depósito grande de 12 litros</strong>: gran autonomía entre repostajes.</li>
 </ul>
 <h3>Consejos de expertos</h3>
 <ul>
@@ -1647,7 +1647,7 @@ export const FAMILY_CONTENT = {
 <li><strong>Motore efficiente da 248 cc</strong>: prestazioni affidabili con consumi davvero buoni per una touring.</li>
 <li><strong>Ergonomia touring comoda</strong>: seduta eretta e sospensioni tarate per viaggi più lunghi.</li>
 <li><strong>Cambio a 6 marce</strong>: innesti morbidi e andatura da crociera efficiente.</li>
-<li><strong>Ampio serbatoio da 17,3 litri</strong>: grande autonomia tra un rifornimento e l'altro.</li>
+<li><strong>Ampio serbatoio da 12 litri</strong>: grande autonomia tra un rifornimento e l'altro.</li>
 </ul>
 <h3>Consigli degli esperti</h3>
 <ul>
@@ -1667,7 +1667,7 @@ export const FAMILY_CONTENT = {
 <li><strong>効率的な248ccエンジン</strong>：ツーリングバイクとして信頼できる走りと本当に良好な燃費を両立。</li>
 <li><strong>快適なツーリングエルゴノミクス</strong>：アップライトな着座姿勢と、長距離走行向けにセッティングされたサスペンション。</li>
 <li><strong>6速トランスミッション</strong>：スムーズなシフトと高速巡航時の効率の良さ。</li>
-<li><strong>大容量17.3リットルタンク</strong>：給油間隔の長い航続距離。</li>
+<li><strong>大容量12リットルタンク</strong>：給油間隔の長い航続距離。</li>
 </ul>
 <h3>エキスパートのアドバイス</h3>
 <ul>
@@ -1687,7 +1687,7 @@ export const FAMILY_CONTENT = {
 <li><strong>محرك فعال بسعة 248cc</strong>: أداء موثوق مع استهلاك وقود جيد حقًا لدراجة سياحية.</li>
 <li><strong>هندسة سياحية مريحة</strong>: جلسة مستقيمة وتعليق مضبوطان للرحلات الطويلة.</li>
 <li><strong>ناقل حركة 6 سرعات</strong>: تعشيق سلس وسير مريح عند السرعة.</li>
-<li><strong>خزان كبير سعة 17.3 لترًا</strong>: مدى طويل بين توقفات التزود بالوقود.</li>
+<li><strong>خزان كبير سعة 12 لترًا</strong>: مدى طويل بين توقفات التزود بالوقود.</li>
 </ul>
 <h3>نصائح الخبراء</h3>
 <ul>
