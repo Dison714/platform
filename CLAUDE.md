@@ -748,6 +748,47 @@ Phase 2; hi + zh-Hans запущены тем же днём, 2026-09-07). Фак
   `bikes/` (product photos, свои size-поддиректории thumb/gallery/hero),
   `blog/` (featured/embed-фото статей, плоские файлы без размеров),
   `districts/` (district hero-фото, плоские файлы).
+- **Название модели байка — три РАЗНЫХ источника, не путать между
+  собой** (найдено 2026-09-25, сессия Routes: собственный более ранний
+  ответ по этому вопросу оказался неверным — был взят из заголовков
+  статей Bike Models, не с живого каталога). `product_families.model_name`
+  — внутреннее поле без чисел ("ADV", "PCX", "Nmax", "Xmax", "Versys").
+  `product_translations.title` конкретного товара — тоже без чисел
+  ("Honda ADV Brown", "Kawasaki Versys Black"). **То, что реально видит
+  посетитель на фильтр-чипах и бренд-бейджах `/bikes`** —
+  `vehicle_categories.name` (единственный источник, своя
+  `vehicle_category_translations` пустая на всех языках): **"Honda ADV
+  160"**, **"Honda PCX 160"**, **"Yamaha Nmax 155"**, **"Yamaha Xmax
+  250"** — везде с пробелом, "Xmax" смешанным регистром (НЕ "XMAX").
+  Для моделей без отдельного `vehicle_categories`-чипа (Kawasaki
+  Versys, Suzuki V-Strom 250 — попадают в общий "Touring/Enduro")
+  подтверждать вживую на вкладке `/bikes?group=motorcycle` — **"Kawasaki
+  Versys"** без "-X 250", "Suzuki V-Strom 250" как есть. Перед тем как
+  писать «каталожное имя» модели куда-либо — проверять эту таблицу
+  живьём (Browser-инструмент), не полагаться на заголовки статей блога
+  или на память из прошлой сессии. Известный пласт того же бага
+  (усечённые/слитные формы) по всей категории Bike Models, всем 11
+  языкам, и даже в slug'ах статей (`yamaha-xmax250-review`,
+  `kawasaki-versys-x250-review`) — зафиксирован как отдельная будущая
+  задача, не исправлен, см. PROJECT_STATUS.md, сессия Routes 25.09.
+- **Баг в уже применённой миграции — чинить НОВОЙ миграцией, никогда не
+  редактировать файл в `backend/migrations/` задним числом**, даже
+  если `migrate.js` (трекает `schema_migrations` по имени файла, без
+  чексуммы) технически не заметит правку. Устоявшийся паттерн проекта
+  (`032_side_view_hero.sql` → `033_..._fix.sql` → `043_..._fix2.sql`,
+  `056_delivery_disclaimer_fix.sql`, `059_fix_district_todo_leaks.sql`,
+  `064_vstrom_fuel_tank_fix.sql`) — новый файл, `UPDATE`/`DELETE`
+  идемпотентно, комментарий в шапке объясняет, что и почему чинит.
+- **`backend/scripts/family_content_data.mjs` — не мёртвый мирор,
+  живой источник для прод-отката.** Его напрямую импортирует
+  `apply_family_content.mjs` (`FAMILY_CONTENT`) и пишет прямо в
+  `family_content_translations`. Любая правка `content_html` этой
+  таблицы на проде вручную (как в 3.4/3.8) обязана быть зеркалирована
+  сюда же — иначе случайный повторный запуск `apply_family_content.mjs`
+  тихо откатывает прод. Не путать с `backend/scripts/bike_models_data/`
+  (dev-источник для `gen_bike_models_sync.mjs`, отдельный контур) —
+  оба нужно держать в курсе одной и той же правки, если она касается
+  и article-контента, и family_content блока одновременно.
 
 ## 7. Источники для сидирования
 
