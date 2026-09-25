@@ -694,6 +694,24 @@ Phase 2; hi + zh-Hans запущены тем же днём, 2026-09-07). Фак
   deploy) под конкретный `POST /api/v1/deploy?uuid=<app_uuid>` через
   curl.** UUID приложений: `mdb-platform-frontend` =
   `odke6aycqzy4zybnkutq8qbm`, `mdb-platform-backend` = `uy845drxpx5z6t5qf0c8voa8`.
+  **Подтверждено фактами (аудит 2026-09-25), не только логически**:
+  собственная БД Coolify (`docker exec coolify-db psql -U coolify -d
+  coolify`), таблица `application_deployment_queues`, поле `is_webhook` —
+  из 97 записей за всю историю (с 29.07) **ни одна не имеет
+  `is_webhook=true` или `is_api=true`**: автодеплой по пушу в `main`
+  никогда не был настроен и ни разу не срабатывал, каждый деплой без
+  исключения — ручной клик в UI. Источник обоих приложений в таблице
+  `applications` (`source_type = App\Models\GithubApp`, `source_id = 0`) —
+  это связка с записью `github_apps` `"Public GitHub"` (`app_id`/
+  `installation_id` пустые) — не полноценная GitHub App-интеграция, а
+  генерический публичный источник без вебхука. Если когда-нибудь
+  понадобится посчитать "сколько коммитов реально не задеплоено" — этот
+  же запрос (`is_webhook`, `created_at`, `commit` из
+  `application_deployment_queues`, отсортировать по `created_at DESC`,
+  взять топ по каждому `application_id`) даёт однозначный ответ без
+  доверия хендоффам: любой коммит-предок последнего задеплоенного `commit`
+  уже в проде (история `main` линейна, каждый деплой пересобирает образ
+  из текущего HEAD целиком).
 - **Новое поле под контент — схема и рендер одним изменением, не отдельными
   шагами.** Инцидент 2026-09-19: `articles.featured_image_url` существовал в
   БД, но ни `[locale]/blog/[slug]/page.js`, ни `[locale]/blog/page.js`
