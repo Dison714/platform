@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { pool } from '../db/pool.js';
+import { publicGetLimiter } from '../middleware/rateLimit.js';
 
 export const blogRouter = Router();
 
@@ -12,7 +13,7 @@ export const blogRouter = Router();
 const DEFAULT_LANG = 'en';
 
 // GET /api/blog/posts?lang=xx — список опубликованных статей на языке.
-blogRouter.get('/blog/posts', async (req, res, next) => {
+blogRouter.get('/blog/posts', publicGetLimiter, async (req, res, next) => {
     try {
         const lang = req.query.lang || DEFAULT_LANG;
         const { rows } = await pool.query(
@@ -33,7 +34,7 @@ blogRouter.get('/blog/posts', async (req, res, next) => {
 });
 
 // GET /api/blog/posts/:slug?lang=xx — одна опубликованная статья.
-blogRouter.get('/blog/posts/:slug', async (req, res, next) => {
+blogRouter.get('/blog/posts/:slug', publicGetLimiter, async (req, res, next) => {
     try {
         const lang = req.query.lang || DEFAULT_LANG;
         const { rows } = await pool.query(
@@ -59,7 +60,7 @@ blogRouter.get('/blog/posts/:slug', async (req, res, next) => {
 // остальных языках (Задача 7: языковой переключатель на странице статьи
 // резолвит slug через article_id, не меняет только префикс локали — slug
 // per-locale, в отличие от products.slug).
-blogRouter.get('/blog/posts/:slug/translations', async (req, res, next) => {
+blogRouter.get('/blog/posts/:slug/translations', publicGetLimiter, async (req, res, next) => {
     try {
         const lang = req.query.lang || DEFAULT_LANG;
         const { rows } = await pool.query(

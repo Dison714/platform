@@ -10,7 +10,7 @@ export async function GET(request, { params }) {
   const lang = request.nextUrl.searchParams.get('lang') || 'en';
   try {
     const res = await fetch(
-      `${BASE}/api/blog/posts/${encodeURIComponent(slug)}/translations?lang=${encodeURIComponent(lang)}`,
+      `${BASE}/api/v1/blog/posts/${encodeURIComponent(slug)}/translations?lang=${encodeURIComponent(lang)}`,
       { cache: 'no-store' }
     );
     const data = await res.text();

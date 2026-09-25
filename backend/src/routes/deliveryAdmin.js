@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { pool } from '../db/pool.js';
 import { getActiveRuleSetId } from '../services/ruleSet.js';
 import { requireInternalToken } from '../middleware/internalAuth.js';
+import { publicGetLimiter } from '../middleware/rateLimit.js';
 
 export const deliveryAdminRouter = Router();
 
@@ -11,7 +12,7 @@ export const deliveryAdminRouter = Router();
 // не гейтится, в отличие от остальных 4 admin-роутеров в server.js.
 
 // GET /api/delivery-fee-rules — тиры активного rule_set.
-deliveryAdminRouter.get('/delivery-fee-rules', async (req, res, next) => {
+deliveryAdminRouter.get('/delivery-fee-rules', publicGetLimiter, async (req, res, next) => {
     try {
         const ruleSetId = await getActiveRuleSetId();
         const { rows } = await pool.query(

@@ -234,8 +234,21 @@ async function findOrCreateCustomer(client, companyId, c) {
     return rows[0].id;
 }
 
-export async function createBooking(input) {
+export async function createBooking(input, { apiClient = null } = {}) {
     const { product, start_date, end_date, customer, insurance, equipment, location_link, delivery_time, payment_preference, comment } = input ?? {};
+    // record_source — фиксированный enum (001_foundation.sql: website |
+    // telegram_bot | whatsapp_bot | manual | import | api), НЕ подходит
+    // произвольный slug клиента. Все 3 сегодняшних api_clients — Telegram-
+    // боты (mdb_drivers_bot/mdb_tugas_approver_bot/mdb_drver_noapi_bot),
+    // поэтому 'telegram_bot', не общий 'api' — хардкод, не отдельная
+    // колонка-канал на api_clients: ни одного не-Telegram клиента сегодня
+    // не существует, схему под гипотетический будущий канал не строим
+    // (не усложнять). 'api' остаётся в enum'е как задел на такой клиент
+    // позже — тогда и будет что мапить. Точная идентичность вызывающего —
+    // не через source (грубая категория), а через api_client_id (FK,
+    // ниже) — 065_api_clients_seed.sql добавляет колонку именно для
+    // этого различия.
+    const source = apiClient ? 'telegram_bot' : 'website';
     // Язык заявки: уведомление менеджеру и снимок имён — на нём. Неизвестный → en.
     const locale = SUPPORTED_LOCALES.includes(input?.locale) ? input.locale : 'en';
 
@@ -283,8 +296,8 @@ export async function createBooking(input) {
             `INSERT INTO bookings (
                 company_id, source, status, customer_id, product_id, rule_set_id,
                 start_date, end_date, rental_days,
-                base_price_idr, delivery_fee_idr, total_payable_idr, quote_snapshot, location_link, delivery_time, payment_preference, locale, comment
-             ) VALUES ($1,'website','created',$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
+                base_price_idr, delivery_fee_idr, total_payable_idr, quote_snapshot, location_link, delivery_time, payment_preference, locale, comment, api_client_id
+             ) VALUES ($1,$17,'created',$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$18)
              RETURNING id, status, created_at, booking_number`,
             [
                 companyId, customerId, quote.product.id, ruleSetId,
@@ -292,15 +305,15 @@ export async function createBooking(input) {
                 quote.breakdown.base_rental.price_idr,
                 quote.breakdown.delivery.fee_idr,
                 quote.total_payable_idr,
-                quote, link, deliveryTime, paymentPreference.length ? paymentPreference : null, locale, commentText,
+                quote, link, deliveryTime, paymentPreference.length ? paymentPreference : null, locale, commentText, source, apiClient?.id ?? null,
             ]
         );
         const booking = bRows[0];
 
         await client.query(
             `INSERT INTO booking_status_history (booking_id, from_status, to_status, note)
-             VALUES ($1, NULL, 'created', 'Website lead via POST /api/bookings')`,
-            [booking.id]
+             VALUES ($1, NULL, 'created', $2)`,
+            [booking.id, apiClient ? `API lead via POST /api/v1/bookings (client: ${apiClient.name})` : 'Website lead via POST /api/v1/bookings']
         );
 
         // Долговечные записи уведомлений (queued) — ПО ОДНОЙ НА КАЖДЫЙ chat_id.

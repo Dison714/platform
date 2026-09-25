@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { buildQuote } from '../services/quote.js';
 import { collectShadowStats } from '../services/deliveryShadow.js';
 import { getCompanyId } from '../services/config.js';
+import { quoteLimiter } from '../middleware/rateLimit.js';
 
 export const quoteRouter = Router();
 
@@ -13,7 +14,7 @@ export const quoteRouter = Router();
 //   equipment?: [ { code, quantity? } ],
 //   location_link?: string  // для водителя + shadow; на цену не влияет
 // }
-quoteRouter.post('/quote', async (req, res, next) => {
+quoteRouter.post('/quote', quoteLimiter, async (req, res, next) => {
     try {
         const { product, rental_days, start_date, insurance, equipment, location_link, lang } = req.body ?? {};
         const rentalDays = Number(rental_days);

@@ -8,7 +8,7 @@ const BASE = process.env.API_BASE_URL || 'http://localhost:3000';
 export async function POST(request) {
   const body = await request.text();
   try {
-    const res = await fetch(`${BASE}/api/quote`, {
+    const res = await fetch(`${BASE}/api/v1/quote`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body,

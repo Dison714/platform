@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { pool } from '../db/pool.js';
+import { publicGetLimiter } from '../middleware/rateLimit.js';
 
 export const locationPagesRouter = Router();
 
@@ -11,7 +12,7 @@ const DEFAULT_LANG = 'en';
 
 // GET /api/location-pages?lang=xx — список активных районных страниц с
 // переводом на язык (для sitemap.js, по образцу /api/blog/posts).
-locationPagesRouter.get('/location-pages', async (req, res, next) => {
+locationPagesRouter.get('/location-pages', publicGetLimiter, async (req, res, next) => {
     try {
         const lang = req.query.lang || DEFAULT_LANG;
         const { rows } = await pool.query(
@@ -27,7 +28,7 @@ locationPagesRouter.get('/location-pages', async (req, res, next) => {
 });
 
 // GET /api/location-pages/:slug?lang=xx
-locationPagesRouter.get('/location-pages/:slug', async (req, res, next) => {
+locationPagesRouter.get('/location-pages/:slug', publicGetLimiter, async (req, res, next) => {
     try {
         const lang = req.query.lang || DEFAULT_LANG;
         const { rows } = await pool.query(
@@ -50,7 +51,7 @@ locationPagesRouter.get('/location-pages/:slug', async (req, res, next) => {
 // хардкодим "все 11" — 2026-09-10 все 9 страниц реально переведены на все
 // 11, но это факт данных, не гарантия схемы (следующий район может
 // какое-то время существовать только на en).
-locationPagesRouter.get('/location-pages/:slug/translations', async (req, res, next) => {
+locationPagesRouter.get('/location-pages/:slug/translations', publicGetLimiter, async (req, res, next) => {
     try {
         const lang = req.query.lang || DEFAULT_LANG;
         const { rows } = await pool.query(

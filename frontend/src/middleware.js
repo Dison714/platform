@@ -85,7 +85,7 @@ function detectLocale(header, enabled) {
 // ступность backend проглатываются здесь же.
 function logUnsupportedLocale(event, browserPrimary, header, pathname) {
   const base = process.env.API_BASE_URL || 'http://localhost:3000';
-  const promise = fetch(`${base}/api/web-events`, {
+  const promise = fetch(`${base}/api/v1/web-events`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
