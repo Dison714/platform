@@ -14,6 +14,9 @@ const SECTIONS = [
   { href: '/internal/deposit', label: 'Депозит' },
   { href: '/internal/replacement-groups', label: 'Replacement Groups' },
   { href: '/internal/blog', label: 'Blog' },
+  { href: '/internal/fleet', label: 'Флот' },
+  { href: '/internal/bookings', label: 'Заявки и аренды' },
+  { href: '/internal/driver-tasks', label: 'Задачи водителям' },
 ];
 
 export default function InternalNav() {

@@ -15,6 +15,9 @@ import { replacementGroupsAdminRouter } from './routes/replacementGroupsAdmin.js
 import { blogRouter } from './routes/blog.js';
 import { blogAdminRouter } from './routes/blogAdmin.js';
 import { locationPagesRouter } from './routes/locationPages.js';
+import { bookingAdminRouter } from './routes/bookingAdmin.js';
+import { fleetAdminRouter } from './routes/fleetAdmin.js';
+import { driverTasksAdminRouter } from './routes/driverTasksAdmin.js';
 import { requireInternalToken } from './middleware/internalAuth.js';
 
 const app = express();
@@ -98,6 +101,10 @@ app.use(API_PREFIX, requireInternalToken, insuranceAdminRouter);
 app.use(API_PREFIX, requireInternalToken, depositAdminRouter);
 app.use(API_PREFIX, requireInternalToken, replacementGroupsAdminRouter);
 app.use(API_PREFIX, requireInternalToken, blogAdminRouter);
+// CRM v1.1 (сессия 2026-09-26) — Booking→Rental + флот, тот же периметр.
+app.use(API_PREFIX, requireInternalToken, bookingAdminRouter);
+app.use(API_PREFIX, requireInternalToken, fleetAdminRouter);
+app.use(API_PREFIX, requireInternalToken, driverTasksAdminRouter);
 
 // Централизованный обработчик ошибок: err.status (напр. 400/404/409/501) или 500.
 const ERROR_LABELS = { 400: 'bad_request', 404: 'not_found', 409: 'conflict', 501: 'not_implemented' };

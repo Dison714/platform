@@ -36,8 +36,9 @@ function kk(idr) {
     return `${Math.round(Number(idr) / 1000).toLocaleString('ru-RU')}к`;
 }
 
-// Экранирование для Telegram parse_mode=HTML.
-function esc(s) {
+// Экранирование для Telegram parse_mode=HTML. Экспортирован — переиспользует
+// driverTaskTemplates.js (CRM v1.1) для тех же текстов на индонезийском.
+export function esc(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
@@ -45,7 +46,7 @@ function esc(s) {
 // WhatsApp → wa.me/<только цифры>; Telegram username → t.me/<user>;
 // телефон → tel:; email → mailto:. Если только telegram_id без username —
 // надёжной deep-link нет, показываем текстом.
-function buildContactsHtml(c) {
+export function buildContactsHtml(c) {
     const parts = [];
     if (c.telegram_username) {
         const u = String(c.telegram_username).replace(/^@/, '');
@@ -76,13 +77,31 @@ function deliveryLine(d, t) {
 
 // Заявка водителю (база знаний диспетчера): деньги — просто тысячи без
 // разделителей/суффикса ("4400"), как в шаблоне Дмитрия — не путать с kk().
-function ddk(idr) {
+export function ddk(idr) {
     return String(Math.round(Number(idr) / 1000));
 }
 
-function formatDDMMYYYY(isoDate) {
+export function formatDDMMYYYY(isoDate) {
     const [y, m, d] = String(isoDate).split('-');
     return `${d}.${m}.${y}`;
+}
+
+// Сквозной номер карточки за календарный день (миграция 042) — общий
+// счётчик для карточек, порождённых и созданием брони (createBooking ниже),
+// и ручным созданием driver_tasks в /internal/driver-tasks (CRM v1.1,
+// driverTasksAdmin.js/driverTaskTemplates.js) — единая нумерация карточек
+// за день независимо от источника, как реально ведёт учёт диспетчер.
+// Экспортирован, чтобы не дублировать этот же UPSERT во втором месте.
+export async function nextDriverNotificationSeq(client, companyId) {
+    const { rows } = await client.query(
+        `INSERT INTO driver_notification_daily_seq (company_id, seq_date, last_seq)
+         VALUES ($1, CURRENT_DATE, 1)
+         ON CONFLICT (company_id, seq_date)
+         DO UPDATE SET last_seq = driver_notification_daily_seq.last_seq + 1
+         RETURNING last_seq`,
+        [companyId]
+    );
+    return rows[0].last_seq;
 }
 
 // Все шлемы в группе helmet сводятся к физическому типу для комплектации —
@@ -100,7 +119,7 @@ const HELMET_FF_CODES = new Set(['helmet_kyt_ff', 'helmet_kyt_ff_new']);
 //    из базы знаний, специфично для этой заявки);
 //  - karpet — всегда при выбранном SHAD-боксе (shad_box);
 //  - safety set — всегда и только для категории 'touring' (Vstrom/Versys).
-function computePeralatan(equipmentItems, categoryCode) {
+export function computePeralatan(equipmentItems, categoryCode) {
     let helmetCount = 0;
     let hasRaincoat = false;
     let hasShadBox = false;
@@ -354,15 +373,7 @@ export async function createBooking(input, { apiClient = null } = {}) {
 
         // Сквозной номер карточки за календарный день — атомарный UPSERT в этой
         // же транзакции (миграция 042).
-        const { rows: seqRows } = await client.query(
-            `INSERT INTO driver_notification_daily_seq (company_id, seq_date, last_seq)
-             VALUES ($1, CURRENT_DATE, 1)
-             ON CONFLICT (company_id, seq_date)
-             DO UPDATE SET last_seq = driver_notification_daily_seq.last_seq + 1
-             RETURNING last_seq`,
-            [companyId]
-        );
-        const dailySeq = seqRows[0].last_seq;
+        const dailySeq = await nextDriverNotificationSeq(client, companyId);
 
         const driverText = buildDriverText({
             seq: dailySeq, startDate: start_date, deliveryTime, customer, link, comment: commentText,
