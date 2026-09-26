@@ -6644,6 +6644,47 @@ Telegram нет. Чтобы включить:
 
 ---
 
+### Сессия 2026-09-26 (продолжение, 5) — 068+069 на проде (ЗАВЕРШЕНО,
+применено и подтверждено)
+
+Redeploy backend/frontend в Coolify (коммиты `fb87dfc`/`118a2d2`) выполнен
+раньше накатки схемы на прод — тот же класс разрыва, что уже
+документирован для 059-064 (CLAUDE.md §6): без 068/069 `/internal/fleet`,
+`/internal/bookings`, `/internal/driver-tasks` на проде падали бы на
+отсутствующих колонках/таблице. Закрыто в течение той же сессии, тем же
+протоколом, что и накатка 067.
+
+**1.** `pg_dump -Fc mdb_platform` → `/root/mdb_platform_prod_pre_068_069_
+20260926_182627.dump` на VPS (1.43 МБ) + копия в scratchpad; целостность
+подтверждена `pg_restore --list` (583 TOC-записи, `bookings`/
+`driver_tasks`/`fleet_items`/`task_types` с данными на месте), не только
+фактом создания файла.
+
+**2.** Накатка через `docker cp` в контейнер `xw6ykwjdrdmtly2qg8kbd16m` →
+`psql -v ON_ERROR_STOP=1 -f`, по одной миграции за раз — обе без ошибок
+(`068`: `CREATE TABLE`+`INSERT 0 3`+`2×ALTER TABLE`+`INSERT 0 1`; `069`:
+`ALTER TABLE`). `schema_migrations` дописана вручную сразу после каждой
+миграции, не отложено (правило из инцидента 059-064, CLAUDE.md §6).
+
+**3.** Независимая `SELECT`-проверка на проде — та же батарея, что уже
+прогонялась на dev в Коммите 1 этой сессии: `drivers` (Hari/Bayu/Saiban,
+все активны), `bookings.assigned_driver_slot` и
+`driver_tasks.{assigned_driver_slot,daily_seq}` (все `smallint`),
+`task_types.menjemput_helm` (флаги/фото), комментарий `driver_profiles`
+(Stefan убран), обе строки в `schema_migrations`. Всё совпало с dev
+значение-в-значение.
+
+**4.** Файлы миграций заархивированы на VPS — `/root/068_driver_slots_
+and_task_types_v1_1_1.sql`, `/root/069_driver_tasks_daily_seq.sql` (тот
+же паттерн, что `067_driver_task_taxonomy_v1_1.sql` и остальные файлы в
+этой папке — ни один не удалялся исторически). Временные копии в `/tmp`
+(хост и контейнер) удалены.
+
+**Итог**: dev и прод синхронны на `069`. Три коммита сессии (`5274883`,
+`fb87dfc`, `118a2d2`) уже в `origin/main` (см. выше).
+
+---
+
 ## 5. Как запустить локально
 
 ```bash
