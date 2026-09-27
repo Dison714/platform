@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
+import { DELIVERY_TIME_OPTIONS } from '../../../lib/timeSlots.js';
 
 const TASKS_API = '/api/admin/driver-tasks';
 const TASK_TYPES_API = '/api/admin/task-types';
@@ -227,8 +228,11 @@ export default function DriverTasksAdminClient() {
         </label>
         <label>
           Время (необязательно)
-          <input type="time" value={form.scheduled_time} style={{ display: 'block', width: '100%' }}
-            onChange={(e) => updateForm({ scheduled_time: e.target.value })} />
+          <select value={form.scheduled_time} style={{ display: 'block', width: '100%' }}
+            onChange={(e) => updateForm({ scheduled_time: e.target.value })}>
+            <option value="">— не указано —</option>
+            {DELIVERY_TIME_OPTIONS.map((time) => <option key={time} value={time}>{time}</option>)}
+          </select>
         </label>
         <label>
           Водитель (необязательно)

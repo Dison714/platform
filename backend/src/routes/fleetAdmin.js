@@ -50,16 +50,31 @@ fleetAdminRouter.get('/fleet-items', async (req, res, next) => {
 });
 
 // PATCH /fleet-items/:id — минимум под "видеть и поправить руками"
-// (склад/финансы вне этого среза): только status.
+// (склад/финансы вне этого среза): status и/или notes, оба необязательны
+// (Раздел 3, 2026-09-27) — можно поправить только заметку, не трогая статус.
 fleetAdminRouter.patch('/fleet-items/:id', async (req, res, next) => {
     try {
-        const { status } = req.body ?? {};
-        if (!FLEET_STATUSES.includes(status)) {
-            throw badReq(`status must be one of: ${FLEET_STATUSES.join(', ')}`);
+        const body = req.body ?? {};
+        const sets = [];
+        const params = [req.params.id];
+
+        if (Object.prototype.hasOwnProperty.call(body, 'status')) {
+            if (!FLEET_STATUSES.includes(body.status)) {
+                throw badReq(`status must be one of: ${FLEET_STATUSES.join(', ')}`);
+            }
+            params.push(body.status);
+            sets.push(`status = $${params.length}`);
         }
+        if (Object.prototype.hasOwnProperty.call(body, 'notes')) {
+            const notes = typeof body.notes === 'string' && body.notes.trim() ? body.notes.trim() : null;
+            params.push(notes);
+            sets.push(`notes = $${params.length}`);
+        }
+        if (!sets.length) throw badReq('no patchable fields provided (status, notes)');
+
         const { rows } = await pool.query(
-            `UPDATE fleet_items SET status = $2, updated_at = now() WHERE id = $1 RETURNING id, status`,
-            [req.params.id, status]
+            `UPDATE fleet_items SET ${sets.join(', ')}, updated_at = now() WHERE id = $1 RETURNING id, status, notes`,
+            params
         );
         if (!rows.length) { const e = new Error('fleet_item not found'); e.status = 404; throw e; }
         res.json({ data: rows[0] });

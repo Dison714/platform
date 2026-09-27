@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { formatIdr } from '../../lib/api.js';
+import { DELIVERY_TIME_OPTIONS } from '../../lib/timeSlots.js';
 import BookingForm from './BookingForm.jsx';
 
 // Калькулятор НИЧЕГО не считает сам: собирает ввод → POST /api/quote (через
@@ -16,15 +17,6 @@ function todayISO(offsetDays = 0) {
 function daysBetween(start, end) {
   return Math.round((new Date(end).getTime() - new Date(start).getTime()) / 86_400_000);
 }
-
-// 09:00–22:00, шаг 30 минут — окно, в которое доставка идёт штатно (без
-// согласования с менеджером). Раньше/позже — по запросу, см. delivery_time_hint.
-const DELIVERY_TIME_OPTIONS = Array.from({ length: 27 }, (_, i) => {
-  const totalMinutes = 9 * 60 + i * 30;
-  const h = String(Math.floor(totalMinutes / 60)).padStart(2, '0');
-  const m = String(totalMinutes % 60).padStart(2, '0');
-  return `${h}:${m}`;
-});
 
 export default function Calculator({ slug, locale, equipment, insuranceOptions, dict }) {
   const t = dict.calc;

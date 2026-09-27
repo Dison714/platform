@@ -13,6 +13,7 @@ export default function FleetAdminClient() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [busyId, setBusyId] = useState(null);
+  const [notesDraft, setNotesDraft] = useState({});
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -21,7 +22,9 @@ export default function FleetAdminClient() {
       const res = await fetch(`${API}${qs}`, { cache: 'no-store' });
       const json = await res.json();
       if (!res.ok) throw new Error(json.message || `HTTP ${res.status}`);
-      setItems(json.data ?? []);
+      const data = json.data ?? [];
+      setItems(data);
+      setNotesDraft(Object.fromEntries(data.map((it) => [it.id, it.notes ?? ''])));
       setError('');
     } catch (e) {
       setError(`Не удалось загрузить: ${e.message}`);
@@ -32,14 +35,14 @@ export default function FleetAdminClient() {
 
   useEffect(() => { load(); }, [load]);
 
-  async function handleStatusChange(id, status) {
+  async function patchFleetItem(id, patch) {
     setBusyId(id);
     setError('');
     try {
       const res = await fetch(`${API}/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status }),
+        body: JSON.stringify(patch),
       });
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));
@@ -50,6 +53,18 @@ export default function FleetAdminClient() {
     } finally {
       setBusyId(null);
     }
+  }
+
+  function handleStatusChange(id, status) {
+    return patchFleetItem(id, { status });
+  }
+
+  // Заметка — тот же паттерн, что статус (изменение → сразу PATCH), но по
+  // blur, не по каждому нажатию клавиши (текстовое поле, не select — Раздел 3).
+  function handleNotesBlur(id, originalNotes) {
+    const draft = notesDraft[id] ?? '';
+    if (draft.trim() === (originalNotes ?? '').trim()) return;
+    return patchFleetItem(id, { notes: draft });
   }
 
   return (
@@ -108,7 +123,18 @@ export default function FleetAdminClient() {
               </td>
               <td style={{ padding: 8 }}>{it.current_odo_km}</td>
               <td style={{ padding: 8 }}>{it.rent_until_date ?? '—'}</td>
-              <td style={{ padding: 8, color: '#666' }}>{it.notes ?? ''}</td>
+              <td style={{ padding: 8 }}>
+                <input
+                  type="text"
+                  value={notesDraft[it.id] ?? ''}
+                  disabled={busyId === it.id}
+                  placeholder="—"
+                  style={{ width: '100%', color: '#666', border: '1px solid transparent', background: 'none' }}
+                  onFocus={(e) => { e.target.style.border = '1px solid #ddd'; e.target.style.background = '#fff'; }}
+                  onChange={(e) => setNotesDraft((d) => ({ ...d, [it.id]: e.target.value }))}
+                  onBlur={(e) => { e.target.style.border = '1px solid transparent'; e.target.style.background = 'none'; handleNotesBlur(it.id, it.notes); }}
+                />
+              </td>
             </tr>
           ))}
         </tbody>

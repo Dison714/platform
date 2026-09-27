@@ -89,16 +89,16 @@ function ActionCell({ booking, drivers, onAction, busy }) {
       : tier === 'same_family' ? assignable.same_family
       : tier === 'replacement_group' ? assignable.replacement_group
       : [];
-    const tierLabel = tier === 'exact' ? 'Точное совпадение'
-      : tier === 'same_family' ? 'Другой цвет, та же модель'
-      : tier === 'replacement_group' ? `Замена по группе: ${assignable.replacement_group_name ?? '—'}`
+    const tierLabel = tier === 'exact' ? `Точное совпадение — ${items.length} свободно`
+      : tier === 'same_family' ? `Другой цвет, та же модель — ${items.length} свободно`
+      : tier === 'replacement_group' ? `Замена по группе: ${assignable.replacement_group_name ?? '—'} — ${items.length} свободно`
       : null;
     const isReplacement = tier === 'same_family' || tier === 'replacement_group';
     const reasonOk = !isReplacement || replacementReason.trim();
 
     return (
       <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
-        {tierLabel && <span style={{ fontSize: 11, color: '#666' }}>{tierLabel}:</span>}
+        {tierLabel && <span style={{ fontSize: 11, color: '#666' }}>{tierLabel}</span>}
         <select value={selectedFleetItem} disabled={loadingFleet || busy || !tier}
           onChange={(e) => setSelectedFleetItem(e.target.value)}>
           <option value="">{loadingFleet ? 'загрузка…' : items.length ? '— байк —' : 'нет свободных'}</option>
