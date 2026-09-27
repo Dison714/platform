@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { DELIVERY_TIME_OPTIONS } from '../../../lib/timeSlots.js';
+import { formatIdr } from '../../../lib/api.js';
 
 const BOOKINGS_API = '/api/admin/bookings';
 const DRIVERS_API = '/api/admin/drivers';
@@ -285,7 +286,14 @@ function CreateBookingForm({ onCreated }) {
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [equipmentOptions, setEquipmentOptions] = useState([]);
-  const [selectedEquipment, setSelectedEquipment] = useState({});
+  // Точная копия helmet-slot механики Calculator.jsx (сайт): 2 физических
+  // слота на байк, каждый — чекбокс "занят/пуст" + select конкретного
+  // шлема. Единственное осознанное отличие от сайта (дизайн подтверждён
+  // Дмитрием 2026-09-27): по умолчанию занят только слот 1 (бесплатный
+  // шлем), не оба — ручное создание не предполагает автоматически второго
+  // пассажира, в отличие от калькулятора на сайте.
+  const [helmetSlots, setHelmetSlots] = useState([null, null]);
+  const [extras, setExtras] = useState({});
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [form, setForm] = useState({
@@ -293,6 +301,9 @@ function CreateBookingForm({ onCreated }) {
     product_id: '', start_date: '', end_date: '',
     location_link: '', delivery_time: '',
   });
+
+  const helmets = equipmentOptions.filter((e) => e.addon_group === 'helmet');
+  const extrasList = equipmentOptions.filter((e) => e.addon_group !== 'helmet');
 
   useEffect(() => {
     if (!open) return;
@@ -305,7 +316,11 @@ function CreateBookingForm({ onCreated }) {
         ]);
         if (cancelled) return;
         setProducts((await pRes.json()).data ?? []);
-        setEquipmentOptions((await eRes.json()).data?.equipment ?? []);
+        const eq = (await eRes.json()).data?.equipment ?? [];
+        setEquipmentOptions(eq);
+        const freeCode = eq.find((h) => h.addon_group === 'helmet' && h.rental_price_idr === 0)?.code
+          ?? eq.find((h) => h.addon_group === 'helmet')?.code ?? null;
+        setHelmetSlots([freeCode, null]);
       } catch { /* справочники необязательны для показа формы */ }
     })();
     return () => { cancelled = true; };
@@ -322,9 +337,17 @@ function CreateBookingForm({ onCreated }) {
     if (!canSubmit) { setError('Заполните клиента (имя + контакт), продукт и даты'); return; }
     setBusy(true);
     try {
-      const equipment = Object.entries(selectedEquipment)
-        .filter(([, qty]) => qty > 0)
-        .map(([code, qty]) => ({ code, quantity: qty }));
+      // Тот же расчёт, что selection в Calculator.jsx: шлемы по слотам
+      // сворачиваются в quantity на code, extras — по одному.
+      const helmetTally = {};
+      for (const code of helmetSlots) {
+        if (!code) continue;
+        helmetTally[code] = (helmetTally[code] || 0) + 1;
+      }
+      const equipment = [
+        ...Object.entries(helmetTally).map(([code, quantity]) => ({ code, quantity })),
+        ...extrasList.filter((eq) => extras[eq.code]).map((eq) => ({ code: eq.code, quantity: 1 })),
+      ];
       const res = await fetch('/api/admin/bookings/create-manual', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -349,7 +372,7 @@ function CreateBookingForm({ onCreated }) {
         return;
       }
       setForm({ full_name: '', phone: '', whatsapp: '', telegram_username: '', product_id: '', start_date: '', end_date: '', location_link: '', delivery_time: '' });
-      setSelectedEquipment({});
+      setExtras({});
       setOpen(false);
       await onCreated();
     } finally {
@@ -416,27 +439,50 @@ function CreateBookingForm({ onCreated }) {
           {DELIVERY_TIME_OPTIONS.map((time) => <option key={time} value={time}>{time}</option>)}
         </select>
       </label>
-      <fieldset style={{ border: '1px solid #ddd', borderRadius: 4, padding: 10 }}>
-        <legend style={{ fontSize: 13, color: '#666' }}>Оборудование (необязательно)</legend>
-        {equipmentOptions.map((eq) => (
-          <div key={eq.code} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1 }}>
-              <input type="checkbox" checked={Boolean(selectedEquipment[eq.code])}
-                onChange={(e) => setSelectedEquipment((s) => {
-                  const next = { ...s };
-                  if (e.target.checked) next[eq.code] = next[eq.code] || 1;
-                  else delete next[eq.code];
-                  return next;
-                })} />
+      {helmets.length > 0 && (
+        <fieldset style={{ border: '1px solid #ddd', borderRadius: 4, padding: 10 }}>
+          <legend style={{ fontSize: 13, color: '#666' }}>Шлемы (2 слота на байк)</legend>
+          {[0, 1].map((i) => {
+            const defaultFreeCode = helmets.find((h) => h.rental_price_idr === 0)?.code ?? helmets[0]?.code ?? null;
+            return (
+              <div key={i} style={{ marginBottom: 6 }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <input type="checkbox" checked={helmetSlots[i] != null}
+                    onChange={(e) => setHelmetSlots((s) => {
+                      const next = [...s];
+                      next[i] = e.target.checked ? defaultFreeCode : null;
+                      return next;
+                    })} />
+                  Слот {i + 1}
+                </label>
+                {helmetSlots[i] != null && (
+                  <select value={helmetSlots[i]} style={{ display: 'block', width: '100%', marginTop: 4 }}
+                    onChange={(e) => setHelmetSlots((s) => { const next = [...s]; next[i] = e.target.value; return next; })}>
+                    {helmets.map((h) => (
+                      <option key={h.code} value={h.code}>
+                        {h.rental_price_idr > 0 ? `${h.name} (+${formatIdr(h.rental_price_idr)})` : `${h.name} — бесплатно`}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </div>
+            );
+          })}
+        </fieldset>
+      )}
+      {extrasList.length > 0 && (
+        <fieldset style={{ border: '1px solid #ddd', borderRadius: 4, padding: 10 }}>
+          <legend style={{ fontSize: 13, color: '#666' }}>Другое оборудование (необязательно)</legend>
+          {extrasList.map((eq) => (
+            <label key={eq.code} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+              <input type="checkbox" checked={Boolean(extras[eq.code])}
+                onChange={(e) => setExtras((x) => ({ ...x, [eq.code]: e.target.checked }))} />
               {eq.name}
+              <span style={{ color: '#888', fontSize: 12 }}>{eq.rental_price_idr > 0 ? formatIdr(eq.rental_price_idr) : 'бесплатно'}</span>
             </label>
-            {Boolean(selectedEquipment[eq.code]) && (
-              <input type="number" min={1} max={9} value={selectedEquipment[eq.code]} style={{ width: 48 }}
-                onChange={(e) => setSelectedEquipment((s) => ({ ...s, [eq.code]: Math.max(1, Number(e.target.value) || 1) }))} />
-            )}
-          </div>
-        ))}
-      </fieldset>
+          ))}
+        </fieldset>
+      )}
       <div style={{ display: 'flex', gap: 8 }}>
         <button type="submit" disabled={busy || !canSubmit}>Создать</button>
         <button type="button" disabled={busy} onClick={() => setOpen(false)}>Отмена</button>

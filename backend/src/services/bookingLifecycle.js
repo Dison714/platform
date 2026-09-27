@@ -434,6 +434,15 @@ export async function cancelBooking(bookingId, reason) {
             await client.query(`UPDATE fleet_items SET status = 'available', updated_at = now() WHERE id = $1`, [booking.assigned_fleet_item]);
         }
 
+        // Та же логика, что unassignDriver (Раздел 2): если для этой брони уже
+        // успела создаться задача 'pengiriman' (Раздел 1) и она ещё не
+        // выполнена — отменяем её, не удаляем (остаётся для истории).
+        await client.query(
+            `UPDATE driver_tasks SET status = 'cancelled', updated_at = now()
+             WHERE booking_id = $1 AND type_code = 'pengiriman' AND status NOT IN ('completed', 'cancelled')`,
+            [bookingId]
+        );
+
         await client.query('UPDATE bookings SET cancellation_reason = $2 WHERE id = $1', [bookingId, trimmedReason]);
         await recordTransition(client, bookingId, booking.status, 'cancelled', `Cancelled via /internal/bookings: ${trimmedReason}`);
 
