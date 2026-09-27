@@ -15,6 +15,7 @@ import {
     unmarkAwaitingPayment,
     unmarkPaid,
     unfulfillBooking,
+    cancelBooking,
 } from '../services/bookingLifecycle.js';
 
 export const bookingAdminRouter = Router();
@@ -279,6 +280,14 @@ bookingAdminRouter.post('/bookings/:id/unmark-paid', async (req, res, next) => {
 bookingAdminRouter.post('/bookings/:id/unfulfill', async (req, res, next) => {
     try {
         const data = await unfulfillBooking(req.params.id);
+        res.json({ data });
+    } catch (err) { next(err); }
+});
+
+// POST /bookings/:id/cancel { reason } — Раздел 4, любой нетерминальный статус.
+bookingAdminRouter.post('/bookings/:id/cancel', async (req, res, next) => {
+    try {
+        const data = await cancelBooking(req.params.id, req.body?.reason);
         res.json({ data });
     } catch (err) { next(err); }
 });

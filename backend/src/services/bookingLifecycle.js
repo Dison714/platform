@@ -411,3 +411,32 @@ export async function unfulfillBooking(bookingId) {
         return { booking_id: bookingId, status: 'paid' };
     });
 }
+
+// =====================================================================
+// РАЗДЕЛ 4 (2026-09-27) — отмена заявки. Штраф "отмена после доставки"
+// (system_config['cancel_after_delivery_fee_idr']) сознательно НЕ
+// автоматизируется здесь — Finance ещё не подключён (v1.3), сумма при
+// необходимости фиксируется вручную прямо в cancellation_reason.
+// =====================================================================
+const CANCEL_TERMINAL_STATUSES = ['fulfilled', 'cancelled', 'expired'];
+
+export async function cancelBooking(bookingId, reason) {
+    const trimmedReason = typeof reason === 'string' ? reason.trim() : '';
+    if (!trimmedReason) throw badReq('reason is required');
+
+    return withTransaction(async (client) => {
+        const booking = await loadBookingForUpdate(client, bookingId);
+        if (CANCEL_TERMINAL_STATUSES.includes(booking.status)) {
+            throw conflict(`booking.status is '${booking.status}' — cannot cancel a terminal booking`);
+        }
+
+        if (booking.assigned_fleet_item) {
+            await client.query(`UPDATE fleet_items SET status = 'available', updated_at = now() WHERE id = $1`, [booking.assigned_fleet_item]);
+        }
+
+        await client.query('UPDATE bookings SET cancellation_reason = $2 WHERE id = $1', [bookingId, trimmedReason]);
+        await recordTransition(client, bookingId, booking.status, 'cancelled', `Cancelled via /internal/bookings: ${trimmedReason}`);
+
+        return { booking_id: bookingId, status: 'cancelled' };
+    });
+}
