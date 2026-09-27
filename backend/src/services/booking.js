@@ -405,3 +405,24 @@ export async function createBooking(input, { apiClient = null } = {}) {
         client.release();
     }
 }
+
+// Снимок брони для карточки водителю — переиспользуется и ручной формой
+// создания задачи (driverTasksAdmin.js), и автосозданием задачи pengiriman
+// (services/driverTaskDispatch.js, CRM v1.1 Раздел 1). Перенесено сюда из
+// driverTasksAdmin.js (там была локальная, неэкспортированная), чтобы не
+// плодить копию SQL во втором месте.
+export async function loadBookingSnapshot(client, bookingId) {
+    const { rows } = await client.query(
+        `SELECT b.id, b.quote_snapshot, b.location_link, b.assigned_fleet_item,
+                c.full_name, c.phone, c.whatsapp, c.telegram_username, c.telegram_id, c.email,
+                vc.code AS category_code
+         FROM bookings b
+         JOIN customers c ON c.id = b.customer_id
+         JOIN products p ON p.id = b.product_id
+         JOIN product_families pf ON pf.id = p.family_id
+         JOIN vehicle_categories vc ON vc.id = pf.category_id
+         WHERE b.id = $1`,
+        [bookingId]
+    );
+    return rows[0] ?? null;
+}

@@ -5,9 +5,16 @@ import {
     assignFleetItem,
     confirmBooking,
     assignDriver,
+    retryPengirimanTask,
     markAwaitingPayment,
     markPaid,
     fulfillBooking,
+    unassignFleetItem,
+    unconfirmBooking,
+    unassignDriver,
+    unmarkAwaitingPayment,
+    unmarkPaid,
+    unfulfillBooking,
 } from '../services/bookingLifecycle.js';
 
 export const bookingAdminRouter = Router();
@@ -34,11 +41,13 @@ bookingAdminRouter.get('/bookings', async (req, res, next) => {
         const { rows } = await pool.query(
             `SELECT b.id, b.booking_number, b.status, b.product_id, b.start_date, b.end_date, b.rental_days,
                     b.total_payable_idr, b.assigned_fleet_item, b.assigned_driver_slot, b.locale,
-                    b.created_at,
+                    b.created_at, b.location_link, b.delivery_time,
                     c.full_name AS customer_name, c.phone, c.whatsapp, c.telegram_username,
+                    (c.phone IS NOT NULL OR c.whatsapp IS NOT NULL OR c.telegram_username IS NOT NULL OR c.telegram_id IS NOT NULL) AS has_customer_contact,
                     p.internal_name AS product_name, pf.brand, pf.model_name,
                     fi.internal_number AS fleet_internal_number, fi.license_plate AS fleet_license_plate,
-                    d.name AS driver_name
+                    d.name AS driver_name,
+                    EXISTS (SELECT 1 FROM driver_tasks dt WHERE dt.booking_id = b.id AND dt.type_code = 'pengiriman') AS has_pengiriman_task
              FROM bookings b
              JOIN customers c ON c.id = b.customer_id
              JOIN products p ON p.id = b.product_id
@@ -192,6 +201,19 @@ bookingAdminRouter.post('/bookings/:id/assign-driver', async (req, res, next) =>
     } catch (err) { next(err); }
 });
 
+// POST /bookings/:id/driver-task-followup — дозаполнение location_link/
+// delivery_time и повторная попытка создать+отправить задачу 'pengiriman',
+// когда assign-driver не смог это сделать сразу (CRM v1.1 Раздел 1).
+bookingAdminRouter.post('/bookings/:id/driver-task-followup', async (req, res, next) => {
+    try {
+        const data = await retryPengirimanTask(req.params.id, {
+            location_link: req.body?.location_link,
+            delivery_time: req.body?.delivery_time,
+        });
+        res.json({ data });
+    } catch (err) { next(err); }
+});
+
 bookingAdminRouter.post('/bookings/:id/mark-awaiting-payment', async (req, res, next) => {
     try {
         const data = await markAwaitingPayment(req.params.id);
@@ -212,6 +234,51 @@ bookingAdminRouter.post('/bookings/:id/fulfill', async (req, res, next) => {
             start_date: req.body?.start_date,
             end_date: req.body?.end_date,
         });
+        res.json({ data });
+    } catch (err) { next(err); }
+});
+
+// --- Раздел 2 (2026-09-27) — симметричные обратные переходы ("← Назад"),
+// один роут на действие, та же логика проверки статуса внутри сервиса. ---
+
+bookingAdminRouter.post('/bookings/:id/unassign-fleet-item', async (req, res, next) => {
+    try {
+        const data = await unassignFleetItem(req.params.id);
+        res.json({ data });
+    } catch (err) { next(err); }
+});
+
+bookingAdminRouter.post('/bookings/:id/unconfirm', async (req, res, next) => {
+    try {
+        const data = await unconfirmBooking(req.params.id);
+        res.json({ data });
+    } catch (err) { next(err); }
+});
+
+bookingAdminRouter.post('/bookings/:id/unassign-driver', async (req, res, next) => {
+    try {
+        const data = await unassignDriver(req.params.id);
+        res.json({ data });
+    } catch (err) { next(err); }
+});
+
+bookingAdminRouter.post('/bookings/:id/unmark-awaiting-payment', async (req, res, next) => {
+    try {
+        const data = await unmarkAwaitingPayment(req.params.id);
+        res.json({ data });
+    } catch (err) { next(err); }
+});
+
+bookingAdminRouter.post('/bookings/:id/unmark-paid', async (req, res, next) => {
+    try {
+        const data = await unmarkPaid(req.params.id);
+        res.json({ data });
+    } catch (err) { next(err); }
+});
+
+bookingAdminRouter.post('/bookings/:id/unfulfill', async (req, res, next) => {
+    try {
+        const data = await unfulfillBooking(req.params.id);
         res.json({ data });
     } catch (err) { next(err); }
 });

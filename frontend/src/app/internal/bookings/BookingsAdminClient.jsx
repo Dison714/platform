@@ -33,6 +33,24 @@ function contactsText(row) {
 // проверкой текущего статуса, см. bookingLifecycle.js).
 const EMPTY_ASSIGNABLE = { exact: [], same_family: [], replacement_group: [], replacement_group_name: null };
 
+// Раздел 2 (2026-09-27) — симметричный откат на каждом нетерминальном шаге
+// кроме 'created' (там некуда откатывать). confirmText — доп. window.confirm
+// для unfulfill (реально удаляет rentals-запись, не просто меняет статус).
+function BackButton({ onClick, busy, confirmText }) {
+  return (
+    <button
+      disabled={busy}
+      onClick={() => {
+        if (confirmText && !window.confirm(confirmText)) return;
+        onClick();
+      }}
+      style={{ fontSize: 12, color: '#888', background: 'none', border: '1px solid #ddd', borderRadius: 4, padding: '2px 8px', cursor: 'pointer' }}
+    >
+      ← Назад
+    </button>
+  );
+}
+
 function ActionCell({ booking, drivers, onAction, busy }) {
   const [assignable, setAssignable] = useState(EMPTY_ASSIGNABLE);
   const [loadingFleet, setLoadingFleet] = useState(false);
@@ -41,6 +59,8 @@ function ActionCell({ booking, drivers, onAction, busy }) {
   const [selectedDriver, setSelectedDriver] = useState('');
   const [startDate, setStartDate] = useState(booking.start_date);
   const [endDate, setEndDate] = useState(booking.end_date);
+  const [followupLocation, setFollowupLocation] = useState('');
+  const [followupTime, setFollowupTime] = useState('');
 
   useEffect(() => {
     if (booking.status !== 'created') return;
@@ -105,7 +125,12 @@ function ActionCell({ booking, drivers, onAction, busy }) {
   }
 
   if (booking.status === 'fleet_item_assigned') {
-    return <button disabled={busy} onClick={() => onAction(booking.id, 'confirm', {})}>Подтвердить</button>;
+    return (
+      <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+        <button disabled={busy} onClick={() => onAction(booking.id, 'confirm', {})}>Подтвердить</button>
+        <BackButton busy={busy} onClick={() => onAction(booking.id, 'unassign-fleet-item', {})} />
+      </div>
+    );
   }
 
   if (booking.status === 'confirmed') {
@@ -122,16 +147,72 @@ function ActionCell({ booking, drivers, onAction, busy }) {
           onClick={() => onAction(booking.id, 'assign-driver', { driver_slot: Number(selectedDriver) })}>
           Назначить водителя
         </button>
+        <BackButton busy={busy} onClick={() => onAction(booking.id, 'unconfirm', {})} />
       </div>
     );
   }
 
   if (booking.status === 'driver_assigned') {
-    return <button disabled={busy} onClick={() => onAction(booking.id, 'mark-awaiting-payment', {})}>Отметить: ожидает оплаты</button>;
+    if (booking.has_pengiriman_task) {
+      return (
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+          <span style={{ color: '#0a0', fontSize: 12 }}>✓ задача водителю создана</span>
+          <button disabled={busy} onClick={() => onAction(booking.id, 'mark-awaiting-payment', {})}>Отметить: ожидает оплаты</button>
+          <BackButton busy={busy} onClick={() => onAction(booking.id, 'unassign-driver', {})} />
+        </div>
+      );
+    }
+    // Автосоздание задачи 'pengiriman' (bookingLifecycle.assignDriver(),
+    // CRM v1.1 Раздел 1) не сработало сразу — не хватало данных. Показываем
+    // инпуты именно под недостающие поля, не сваливаем всё в одну форму.
+    const missing = [];
+    if (!booking.has_customer_contact) missing.push('контакт клиента');
+    if (!booking.location_link) missing.push('локация');
+    if (!booking.delivery_time) missing.push('время доставки');
+    const ready = booking.has_customer_contact
+      && (booking.location_link || followupLocation.trim())
+      && (booking.delivery_time || followupTime);
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <div style={{ fontSize: 11, color: '#a60' }}>Не хватает для задачи водителю: {missing.join(', ')}</div>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
+          {!booking.location_link && (
+            <input type="text" placeholder="Локация" value={followupLocation} disabled={busy}
+              style={{ minWidth: 160 }}
+              onChange={(e) => setFollowupLocation(e.target.value)} />
+          )}
+          {!booking.delivery_time && (
+            <input type="time" value={followupTime} disabled={busy}
+              onChange={(e) => setFollowupTime(e.target.value)} />
+          )}
+          <button disabled={busy || !ready}
+            onClick={() => {
+              const body = {};
+              if (!booking.location_link) body.location_link = followupLocation.trim();
+              if (!booking.delivery_time) body.delivery_time = followupTime;
+              onAction(booking.id, 'driver-task-followup', body);
+            }}>
+            Создать и отправить задачу
+          </button>
+        </div>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          <button disabled={busy}
+            onClick={() => onAction(booking.id, 'mark-awaiting-payment', {})}>
+            Отметить: ожидает оплаты
+          </button>
+          <BackButton busy={busy} onClick={() => onAction(booking.id, 'unassign-driver', {})} />
+        </div>
+      </div>
+    );
   }
 
   if (booking.status === 'awaiting_payment') {
-    return <button disabled={busy} onClick={() => onAction(booking.id, 'mark-paid', {})}>Отметить: оплачено</button>;
+    return (
+      <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+        <button disabled={busy} onClick={() => onAction(booking.id, 'mark-paid', {})}>Отметить: оплачено</button>
+        <BackButton busy={busy} onClick={() => onAction(booking.id, 'unmark-awaiting-payment', {})} />
+      </div>
+    );
   }
 
   if (booking.status === 'paid') {
@@ -145,7 +226,20 @@ function ActionCell({ booking, drivers, onAction, busy }) {
           onClick={() => onAction(booking.id, 'fulfill', { start_date: startDate, end_date: endDate })}>
           Завершить (Fulfilled)
         </button>
+        <BackButton busy={busy} onClick={() => onAction(booking.id, 'unmark-paid', {})} />
       </div>
+    );
+  }
+
+  // fulfilled — терминальный шаг в обычном потоке, но откат нужен на случай
+  // ошибочного клика (реальной выдачи байка не было): unfulfillBooking()
+  // полностью удаляет rentals/events, байк возвращается в 'reserved'
+  // (CRM v1.1 Раздел 2, дизайн подтверждён Дмитрием 2026-09-27).
+  if (booking.status === 'fulfilled') {
+    return (
+      <BackButton busy={busy}
+        confirmText="Откатить Fulfilled? Запись в rentals будет удалена целиком — используйте только если реальной выдачи байка не было."
+        onClick={() => onAction(booking.id, 'unfulfill', {})} />
     );
   }
 

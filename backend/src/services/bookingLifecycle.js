@@ -1,4 +1,5 @@
 import { pool } from '../db/pool.js';
+import { createPengirimanTaskIfReady, finalizePengirimanTaskOutcome } from './driverTaskDispatch.js';
 
 // =====================================================================
 // BOOKING LIFECYCLE — CRM v1.1, первый функциональный срез (сессия
@@ -162,10 +163,19 @@ export async function confirmBooking(bookingId) {
 // миграция 068), не по конкретному users.id. Без отслеживания "водитель
 // ответил ОК" (решение Дмитрия — вне схемы, живёт в реальном Telegram-чате).
 // ---------------------------------------------------------------------
+// confirmed → driver_assigned триггерит автосоздание+автоотправку задачи
+// 'pengiriman' (CRM v1.1 Раздел 1, дизайн подтверждён Дмитрием 2026-09-27):
+// как только бронь получила И байк (tier-назначение выше), И водителя —
+// проверяем достаточность данных (контакт клиента, location_link,
+// delivery_time) и, если всё есть, создаём+шлём карточку тем же путём, что
+// кнопка "отправить тест" на /internal/driver-tasks. Если данных не
+// хватает — статус-переход всё равно происходит (водитель назначен), но
+// задача НЕ создаётся молча — вызывающая сторона получает missing_fields
+// в driver_task и должна дозаполнить их через retryPengirimanTask() ниже.
 export async function assignDriver(bookingId, driverSlot) {
     const slot = Number(driverSlot);
     if (![1, 2, 3].includes(slot)) throw badReq('driver_slot must be 1, 2 or 3');
-    return withTransaction(async (client) => {
+    const taskOutcome = await withTransaction(async (client) => {
         const booking = await loadBookingForUpdate(client, bookingId);
         assertStatus(booking, 'confirmed');
 
@@ -176,8 +186,36 @@ export async function assignDriver(bookingId, driverSlot) {
         await client.query('UPDATE bookings SET assigned_driver_slot = $2 WHERE id = $1', [bookingId, slot]);
         await recordTransition(client, bookingId, 'confirmed', 'driver_assigned', `Driver slot ${slot} assigned via /internal/bookings`);
 
-        return { booking_id: bookingId, status: 'driver_assigned', driver_slot: slot };
+        return createPengirimanTaskIfReady(client, bookingId);
     });
+
+    const driverTask = await finalizePengirimanTaskOutcome(taskOutcome);
+    return { booking_id: bookingId, status: 'driver_assigned', driver_slot: slot, driver_task: driverTask };
+}
+
+// Дозаполнение недостающих полей (location_link/delivery_time) и повторная
+// попытка создать+отправить 'pengiriman', когда assignDriver() выше не смог
+// это сделать сразу. customer_contact здесь не чинится — это поле
+// customers, не bookings, чинится за пределами этой формы (см. Раздел 1
+// задания). Идемпотентна — если задача уже была создана параллельно/ранее,
+// createPengirimanTaskIfReady() просто вернёт alreadyExisted, без дубля.
+export async function retryPengirimanTask(bookingId, { location_link, delivery_time } = {}) {
+    const taskOutcome = await withTransaction(async (client) => {
+        const booking = await loadBookingForUpdate(client, bookingId);
+        if (booking.status !== 'driver_assigned') {
+            throw conflict(`booking.status is '${booking.status}', expected 'driver_assigned' for this action`);
+        }
+        if (typeof location_link === 'string' && location_link.trim()) {
+            await client.query('UPDATE bookings SET location_link = $2, updated_at = now() WHERE id = $1', [bookingId, location_link.trim()]);
+        }
+        if (typeof delivery_time === 'string' && /^\d{2}:\d{2}$/.test(delivery_time)) {
+            await client.query('UPDATE bookings SET delivery_time = $2, updated_at = now() WHERE id = $1', [bookingId, delivery_time]);
+        }
+        return createPengirimanTaskIfReady(client, bookingId);
+    });
+
+    const driverTask = await finalizePengirimanTaskOutcome(taskOutcome);
+    return { booking_id: bookingId, driver_task: driverTask };
 }
 
 // ---------------------------------------------------------------------
@@ -266,5 +304,110 @@ export async function fulfillBooking(bookingId, { start_date, end_date } = {}) {
         await recordTransition(client, bookingId, 'paid', 'fulfilled', 'Fulfilled via /internal/bookings — rental created');
 
         return { booking_id: bookingId, status: 'fulfilled', rental_id: rentalId };
+    });
+}
+
+// =====================================================================
+// РАЗДЕЛ 2 (2026-09-27) — симметричные обратные переходы ("← Назад").
+// Тот же паттерн: транзакция, FOR UPDATE, запись в booking_status_history.
+// paid → awaiting_payment — последний шаг, где откат делается без вопросов
+// (Дмитрий). fulfilled → paid (unfulfillBooking, ниже) — особый случай: на
+// этом шаге уже создана реальная rentals-запись, откат должен быть
+// ПОЛНЫМ, а не сменой статуса.
+// =====================================================================
+
+// fleet_item_assigned → created — байк возвращается в пул ('available'),
+// replacement_reason сбрасывается (он был написан именно под это, теперь
+// уже отменённое, назначение).
+export async function unassignFleetItem(bookingId) {
+    return withTransaction(async (client) => {
+        const booking = await loadBookingForUpdate(client, bookingId);
+        assertStatus(booking, 'fleet_item_assigned');
+        if (booking.assigned_fleet_item) {
+            await client.query(`UPDATE fleet_items SET status = 'available', updated_at = now() WHERE id = $1`, [booking.assigned_fleet_item]);
+        }
+        await client.query('UPDATE bookings SET assigned_fleet_item = NULL, replacement_reason = NULL WHERE id = $1', [bookingId]);
+        await recordTransition(client, bookingId, 'fleet_item_assigned', 'created', '← Назад via /internal/bookings');
+        return { booking_id: bookingId, status: 'created' };
+    });
+}
+
+// confirmed → fleet_item_assigned — только статус назад, без побочных эффектов.
+export async function unconfirmBooking(bookingId) {
+    return withTransaction(async (client) => {
+        const booking = await loadBookingForUpdate(client, bookingId);
+        assertStatus(booking, 'confirmed');
+        await recordTransition(client, bookingId, 'confirmed', 'fleet_item_assigned', '← Назад via /internal/bookings');
+        return { booking_id: bookingId, status: 'fleet_item_assigned' };
+    });
+}
+
+// driver_assigned → confirmed — очищаем assigned_driver_slot; если для этой
+// брони уже успела создаться (Раздел 1) задача 'pengiriman' и она ещё не
+// выполнена — отменяем её (status='cancelled'), НЕ удаляем — остаётся для
+// истории.
+export async function unassignDriver(bookingId) {
+    return withTransaction(async (client) => {
+        const booking = await loadBookingForUpdate(client, bookingId);
+        assertStatus(booking, 'driver_assigned');
+
+        await client.query(
+            `UPDATE driver_tasks SET status = 'cancelled', updated_at = now()
+             WHERE booking_id = $1 AND type_code = 'pengiriman' AND status NOT IN ('completed', 'cancelled')`,
+            [bookingId]
+        );
+        await client.query('UPDATE bookings SET assigned_driver_slot = NULL WHERE id = $1', [bookingId]);
+        await recordTransition(client, bookingId, 'driver_assigned', 'confirmed', '← Назад via /internal/bookings');
+        return { booking_id: bookingId, status: 'confirmed' };
+    });
+}
+
+// awaiting_payment → driver_assigned — только статус назад.
+export async function unmarkAwaitingPayment(bookingId) {
+    return withTransaction(async (client) => {
+        const booking = await loadBookingForUpdate(client, bookingId);
+        assertStatus(booking, 'awaiting_payment');
+        await recordTransition(client, bookingId, 'awaiting_payment', 'driver_assigned', '← Назад via /internal/bookings');
+        return { booking_id: bookingId, status: 'driver_assigned' };
+    });
+}
+
+// paid → awaiting_payment — только статус назад.
+export async function unmarkPaid(bookingId) {
+    return withTransaction(async (client) => {
+        const booking = await loadBookingForUpdate(client, bookingId);
+        assertStatus(booking, 'paid');
+        await recordTransition(client, bookingId, 'paid', 'awaiting_payment', '← Назад via /internal/bookings');
+        return { booking_id: bookingId, status: 'awaiting_payment' };
+    });
+}
+
+// fulfilled → paid — ПОЛНЫЙ откат ошибочного Fulfilled (дизайн подтверждён
+// Дмитрием 2026-09-27: "если Fulfilled нажали по ошибке и реальной выдачи
+// байка не было — откат должен быть полным"). rentals удаляется целиком —
+// не переводится в какой-то статус ('cancelled' не входит в rental_status
+// enum active|returned|closed, и по факту аренды не было вообще), events
+// (bike_delivered) для неё удаляется, fleet_item возвращается в 'reserved'
+// (не 'available' — байк всё ещё назначен на эту бронь).
+// booking_status_history получает НОВУЮ запись fulfilled→paid — старая
+// запись о переходе в fulfilled не трогается, остаётся в истории.
+export async function unfulfillBooking(bookingId) {
+    return withTransaction(async (client) => {
+        const booking = await loadBookingForUpdate(client, bookingId);
+        assertStatus(booking, 'fulfilled');
+
+        const { rows: rentalRows } = await client.query(
+            'SELECT id, fleet_item_id FROM rentals WHERE booking_id = $1 FOR UPDATE',
+            [bookingId]
+        );
+        if (!rentalRows.length) throw conflict('no rentals row found for this booking — cannot unfulfill');
+        const rental = rentalRows[0];
+
+        await client.query(`DELETE FROM events WHERE type_code = 'bike_delivered' AND rental_id = $1`, [rental.id]);
+        await client.query('DELETE FROM rentals WHERE id = $1', [rental.id]);
+        await client.query(`UPDATE fleet_items SET status = 'reserved', updated_at = now() WHERE id = $1`, [rental.fleet_item_id]);
+        await recordTransition(client, bookingId, 'fulfilled', 'paid', 'Откат ошибочного Fulfilled — реальной выдачи не было');
+
+        return { booking_id: bookingId, status: 'paid' };
     });
 }
