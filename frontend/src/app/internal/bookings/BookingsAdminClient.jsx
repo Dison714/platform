@@ -1,10 +1,13 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
+import { DELIVERY_TIME_OPTIONS } from '../../../lib/timeSlots.js';
 
 const BOOKINGS_API = '/api/admin/bookings';
 const DRIVERS_API = '/api/admin/drivers';
 const RENTALS_API = '/api/admin/rentals';
+const PRODUCTS_API = '/api/admin/bookings-products';
+const EQUIPMENT_API = '/api/admin/equipment-options';
 
 // booking_status enum (001_foundation.sql) — порядок этого среза (CRM v1.1,
 // согласован с Дмитрием, НЕ порядок объявления enum):
@@ -272,6 +275,176 @@ function ActionCell({ booking, drivers, onAction, busy }) {
   );
 }
 
+// Раздел 5А (2026-09-27) — ручное создание заявки диспетчером. Переиспользует
+// createBooking() целиком через POST /bookings/create-manual (validation,
+// buildQuote() по продукту/датам/оборудованию, findOrCreateCustomer,
+// уведомления менеджеру/водителям) — цена НЕ вводится руками. Форма не
+// предлагает страховку (задание Раздела 5А перечисляет только клиента/
+// продукт/даты/оборудование/доставку).
+function CreateBookingForm({ onCreated }) {
+  const [open, setOpen] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [equipmentOptions, setEquipmentOptions] = useState([]);
+  const [selectedEquipment, setSelectedEquipment] = useState({});
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const [form, setForm] = useState({
+    full_name: '', phone: '', whatsapp: '', telegram_username: '',
+    product_id: '', start_date: '', end_date: '',
+    location_link: '', delivery_time: '',
+  });
+
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const [pRes, eRes] = await Promise.all([
+          fetch(PRODUCTS_API, { cache: 'no-store' }),
+          fetch(EQUIPMENT_API, { cache: 'no-store' }),
+        ]);
+        if (cancelled) return;
+        setProducts((await pRes.json()).data ?? []);
+        setEquipmentOptions((await eRes.json()).data?.equipment ?? []);
+      } catch { /* справочники необязательны для показа формы */ }
+    })();
+    return () => { cancelled = true; };
+  }, [open]);
+
+  function update(patch) { setForm((f) => ({ ...f, ...patch })); }
+
+  const hasContact = Boolean(form.phone.trim() || form.whatsapp.trim() || form.telegram_username.trim());
+  const canSubmit = form.full_name.trim() && hasContact && form.product_id && form.start_date && form.end_date;
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError('');
+    if (!canSubmit) { setError('Заполните клиента (имя + контакт), продукт и даты'); return; }
+    setBusy(true);
+    try {
+      const equipment = Object.entries(selectedEquipment)
+        .filter(([, qty]) => qty > 0)
+        .map(([code, qty]) => ({ code, quantity: qty }));
+      const res = await fetch('/api/admin/bookings/create-manual', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          product: form.product_id,
+          start_date: form.start_date,
+          end_date: form.end_date,
+          customer: {
+            full_name: form.full_name.trim(),
+            phone: form.phone.trim() || undefined,
+            whatsapp: form.whatsapp.trim() || undefined,
+            telegram_username: form.telegram_username.trim() || undefined,
+          },
+          equipment: equipment.length ? equipment : undefined,
+          location_link: form.location_link.trim() || undefined,
+          delivery_time: form.delivery_time || undefined,
+        }),
+      });
+      if (!res.ok) {
+        const json = await res.json().catch(() => ({}));
+        setError(json.message || `Ошибка ${res.status}`);
+        return;
+      }
+      setForm({ full_name: '', phone: '', whatsapp: '', telegram_username: '', product_id: '', start_date: '', end_date: '', location_link: '', delivery_time: '' });
+      setSelectedEquipment({});
+      setOpen(false);
+      await onCreated();
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  if (!open) {
+    return <button onClick={() => setOpen(true)} style={{ marginBottom: 12 }}>Создать заявку</button>;
+  }
+
+  return (
+    <form onSubmit={handleSubmit} style={{ border: '1px solid #ddd', borderRadius: 6, padding: 16, marginBottom: 16, maxWidth: 480, display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <h3 style={{ margin: 0, fontSize: 16 }}>Новая заявка (вручную)</h3>
+      {error && <div style={{ color: '#c00', fontSize: 13 }}>{error}</div>}
+      <label>Клиент — имя
+        <input type="text" required value={form.full_name} style={{ display: 'block', width: '100%' }}
+          onChange={(e) => update({ full_name: e.target.value })} />
+      </label>
+      <div style={{ display: 'flex', gap: 8 }}>
+        <label style={{ flex: 1 }}>Телефон
+          <input type="text" value={form.phone} style={{ display: 'block', width: '100%' }}
+            onChange={(e) => update({ phone: e.target.value })} />
+        </label>
+        <label style={{ flex: 1 }}>WhatsApp
+          <input type="text" value={form.whatsapp} style={{ display: 'block', width: '100%' }}
+            onChange={(e) => update({ whatsapp: e.target.value })} />
+        </label>
+        <label style={{ flex: 1 }}>Telegram
+          <input type="text" value={form.telegram_username} style={{ display: 'block', width: '100%' }}
+            onChange={(e) => update({ telegram_username: e.target.value })} />
+        </label>
+      </div>
+      {!hasContact && <div style={{ fontSize: 11, color: '#a60' }}>Нужен хотя бы один контакт</div>}
+      <label>Продукт
+        <select required value={form.product_id} style={{ display: 'block', width: '100%' }}
+          onChange={(e) => update({ product_id: e.target.value })}>
+          <option value="">— выберите —</option>
+          {products.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.brand} {p.model_name} {p.color_name}{p.variant ? ` (${p.variant})` : ''}
+            </option>
+          ))}
+        </select>
+      </label>
+      <div style={{ display: 'flex', gap: 8 }}>
+        <label style={{ flex: 1 }}>Начало
+          <input type="date" required value={form.start_date} style={{ display: 'block', width: '100%' }}
+            onChange={(e) => update({ start_date: e.target.value })} />
+        </label>
+        <label style={{ flex: 1 }}>Окончание
+          <input type="date" required value={form.end_date} min={form.start_date} style={{ display: 'block', width: '100%' }}
+            onChange={(e) => update({ end_date: e.target.value })} />
+        </label>
+      </div>
+      <label>Локация (ссылка, необязательно)
+        <input type="text" value={form.location_link} style={{ display: 'block', width: '100%' }}
+          onChange={(e) => update({ location_link: e.target.value })} />
+      </label>
+      <label>Время доставки (необязательно)
+        <select value={form.delivery_time} style={{ display: 'block', width: '100%' }}
+          onChange={(e) => update({ delivery_time: e.target.value })}>
+          <option value="">— не указано —</option>
+          {DELIVERY_TIME_OPTIONS.map((time) => <option key={time} value={time}>{time}</option>)}
+        </select>
+      </label>
+      <fieldset style={{ border: '1px solid #ddd', borderRadius: 4, padding: 10 }}>
+        <legend style={{ fontSize: 13, color: '#666' }}>Оборудование (необязательно)</legend>
+        {equipmentOptions.map((eq) => (
+          <div key={eq.code} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1 }}>
+              <input type="checkbox" checked={Boolean(selectedEquipment[eq.code])}
+                onChange={(e) => setSelectedEquipment((s) => {
+                  const next = { ...s };
+                  if (e.target.checked) next[eq.code] = next[eq.code] || 1;
+                  else delete next[eq.code];
+                  return next;
+                })} />
+              {eq.name}
+            </label>
+            {Boolean(selectedEquipment[eq.code]) && (
+              <input type="number" min={1} max={9} value={selectedEquipment[eq.code]} style={{ width: 48 }}
+                onChange={(e) => setSelectedEquipment((s) => ({ ...s, [eq.code]: Math.max(1, Number(e.target.value) || 1) }))} />
+            )}
+          </div>
+        ))}
+      </fieldset>
+      <div style={{ display: 'flex', gap: 8 }}>
+        <button type="submit" disabled={busy || !canSubmit}>Создать</button>
+        <button type="button" disabled={busy} onClick={() => setOpen(false)}>Отмена</button>
+      </div>
+    </form>
+  );
+}
+
 function BookingsTab() {
   const [bookings, setBookings] = useState([]);
   const [drivers, setDrivers] = useState([]);
@@ -325,6 +498,8 @@ function BookingsTab() {
 
   return (
     <>
+      <CreateBookingForm onCreated={load} />
+
       <div style={{ margin: '16px 0' }}>
         <label>
           Фильтр по статусу:{' '}

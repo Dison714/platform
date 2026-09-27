@@ -259,7 +259,7 @@ async function findOrCreateCustomer(client, companyId, c) {
     return rows[0].id;
 }
 
-export async function createBooking(input, { apiClient = null } = {}) {
+export async function createBooking(input, { apiClient = null, sourceOverride = null } = {}) {
     const { product, start_date, end_date, customer, insurance, equipment, location_link, delivery_time, payment_preference, comment } = input ?? {};
     // record_source — фиксированный enum (001_foundation.sql: website |
     // telegram_bot | whatsapp_bot | manual | import | api), НЕ подходит
@@ -273,7 +273,10 @@ export async function createBooking(input, { apiClient = null } = {}) {
     // не через source (грубая категория), а через api_client_id (FK,
     // ниже) — 065_api_clients_seed.sql добавляет колонку именно для
     // этого различия.
-    const source = apiClient ? 'telegram_bot' : 'website';
+    // sourceOverride — ручное создание заявки диспетчером на
+    // /internal/bookings (Раздел 5А, 2026-09-27) шлёт 'manual' сюда,
+    // минуя оба автоматических канала.
+    const source = sourceOverride || (apiClient ? 'telegram_bot' : 'website');
     // Язык заявки: уведомление менеджеру и снимок имён — на нём. Неизвестный → en.
     const locale = SUPPORTED_LOCALES.includes(input?.locale) ? input.locale : 'en';
 

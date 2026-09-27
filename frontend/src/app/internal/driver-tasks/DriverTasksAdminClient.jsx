@@ -8,14 +8,16 @@ const TASK_TYPES_API = '/api/admin/task-types';
 const DRIVERS_API = '/api/admin/drivers';
 const BOOKINGS_API = '/api/admin/bookings';
 const FLEET_ITEMS_API = '/api/admin/fleet-items';
+const EQUIPMENT_API = '/api/admin/equipment-options';
 
 // task_status enum (001_foundation.sql).
 const TASK_STATUSES = ['pending', 'acknowledged', 'in_progress', 'completed', 'cancelled'];
 
 const emptyForm = {
   type_code: '', booking_id: '', scheduled_date: '', scheduled_time: '',
-  assigned_driver_slot: '', comment: '',
+  assigned_driver_slot: '', assigned_driver_slot_2: '', comment: '',
   location_text: '', customer_contact: '', fleet_item_id: '',
+  pakai_mode: 'none', pakai_fleet_item_id: '', pakai_text: '',
 };
 
 export default function DriverTasksAdminClient() {
@@ -24,6 +26,8 @@ export default function DriverTasksAdminClient() {
   const [drivers, setDrivers] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [fleetItems, setFleetItems] = useState([]);
+  const [equipmentOptions, setEquipmentOptions] = useState([]);
+  const [selectedEquipment, setSelectedEquipment] = useState({});
   const [statusFilter, setStatusFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [loading, setLoading] = useState(true);
@@ -45,12 +49,13 @@ export default function DriverTasksAdminClient() {
   // GET /bookings поддерживает только один status за раз, отсюда два запроса.
   const loadRefs = useCallback(async () => {
     try {
-      const [ttRes, dRes, bRes, bFulfilledRes, fiRes] = await Promise.all([
+      const [ttRes, dRes, bRes, bFulfilledRes, fiRes, eqRes] = await Promise.all([
         fetch(TASK_TYPES_API, { cache: 'no-store' }),
         fetch(DRIVERS_API, { cache: 'no-store' }),
         fetch(BOOKINGS_API, { cache: 'no-store' }),
         fetch(`${BOOKINGS_API}?status=fulfilled`, { cache: 'no-store' }),
         fetch(FLEET_ITEMS_API, { cache: 'no-store' }),
+        fetch(EQUIPMENT_API, { cache: 'no-store' }),
       ]);
       setTaskTypes((await ttRes.json()).data ?? []);
       setDrivers((await dRes.json()).data ?? []);
@@ -58,6 +63,7 @@ export default function DriverTasksAdminClient() {
       const fulfilled = (await bFulfilledRes.json()).data ?? [];
       setBookings([...active, ...fulfilled]);
       setFleetItems((await fiRes.json()).data ?? []);
+      setEquipmentOptions((await eqRes.json()).data?.equipment ?? []);
     } catch (e) {
       setError(`Не удалось загрузить справочники: ${e.message}`);
     }
@@ -111,6 +117,9 @@ export default function DriverTasksAdminClient() {
 
     setBusy(true);
     try {
+      const equipment = Object.entries(selectedEquipment)
+        .filter(([, qty]) => qty > 0)
+        .map(([code, qty]) => ({ code, quantity: qty }));
       const res = await fetch(TASKS_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -120,10 +129,14 @@ export default function DriverTasksAdminClient() {
           scheduled_date: form.scheduled_date,
           scheduled_time: form.scheduled_time || null,
           assigned_driver_slot: form.assigned_driver_slot ? Number(form.assigned_driver_slot) : null,
+          assigned_driver_slot_2: form.assigned_driver_slot_2 ? Number(form.assigned_driver_slot_2) : null,
           comment: form.comment || null,
           location_text: form.location_text || null,
           customer_contact: form.customer_contact || null,
           fleet_item_id: form.fleet_item_id || null,
+          pakai_fleet_item_id: form.pakai_mode === 'fleet' ? (form.pakai_fleet_item_id || null) : null,
+          pakai_text: form.pakai_mode === 'text' ? (form.pakai_text.trim() || null) : null,
+          equipment: equipment.length ? equipment : undefined,
         }),
       });
       if (!res.ok) {
@@ -132,6 +145,7 @@ export default function DriverTasksAdminClient() {
         return;
       }
       setForm(emptyForm);
+      setSelectedEquipment({});
       await loadTasks();
     } finally {
       setBusy(false);
@@ -243,6 +257,67 @@ export default function DriverTasksAdminClient() {
           </select>
         </label>
         <label>
+          Второй водитель (необязательно — сценарий "два байка на задачу")
+          <select value={form.assigned_driver_slot_2} style={{ display: 'block', width: '100%' }}
+            onChange={(e) => updateForm({ assigned_driver_slot_2: e.target.value })}>
+            <option value="">— не назначен —</option>
+            {activeDrivers.map((d) => <option key={d.driver_slot} value={d.driver_slot}>{d.name}</option>)}
+          </select>
+        </label>
+        <label>
+          Pakai (байк, на котором водитель едет и возвращается)
+          <select value={form.pakai_mode} style={{ display: 'block', width: '100%' }}
+            onChange={(e) => updateForm({ pakai_mode: e.target.value, pakai_fleet_item_id: '', pakai_text: '' })}>
+            <option value="none">— не используется —</option>
+            <option value="fleet">Выбрать байк из парка</option>
+            <option value="text">Указать текстом</option>
+          </select>
+        </label>
+        {form.pakai_mode === 'fleet' && (
+          <label>
+            Pakai — байк
+            <select value={form.pakai_fleet_item_id} style={{ display: 'block', width: '100%' }}
+              onChange={(e) => updateForm({ pakai_fleet_item_id: e.target.value })}>
+              <option value="">— не выбран —</option>
+              {fleetItems.map((fi) => (
+                <option key={fi.id} value={fi.id}>
+                  №{fi.internal_number} {fi.brand} {fi.model_name} {fi.license_plate}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+        {form.pakai_mode === 'text' && (
+          <label>
+            Pakai — текстом
+            <input type="text" value={form.pakai_text} style={{ display: 'block', width: '100%' }}
+              onChange={(e) => updateForm({ pakai_text: e.target.value })} />
+          </label>
+        )}
+        <fieldset style={{ border: '1px solid #ddd', borderRadius: 4, padding: 10 }}>
+          <legend style={{ fontSize: 13, color: '#666' }}>Оборудование (необязательно — формирует Peralatan)</legend>
+          {equipmentOptions.length === 0 ? (
+            <div style={{ fontSize: 13, color: '#888' }}>загрузка…</div>
+          ) : equipmentOptions.map((eq) => (
+            <div key={eq.code} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1 }}>
+                <input type="checkbox" checked={Boolean(selectedEquipment[eq.code])}
+                  onChange={(e) => setSelectedEquipment((s) => {
+                    const next = { ...s };
+                    if (e.target.checked) next[eq.code] = next[eq.code] || 1;
+                    else delete next[eq.code];
+                    return next;
+                  })} />
+                {eq.name}
+              </label>
+              {Boolean(selectedEquipment[eq.code]) && (
+                <input type="number" min={1} max={9} value={selectedEquipment[eq.code]} style={{ width: 48 }}
+                  onChange={(e) => setSelectedEquipment((s) => ({ ...s, [eq.code]: Math.max(1, Number(e.target.value) || 1) }))} />
+              )}
+            </div>
+          ))}
+        </fieldset>
+        <label>
           Комментарий (необязательно)
           <textarea value={form.comment} rows={2} style={{ display: 'block', width: '100%' }}
             onChange={(e) => updateForm({ comment: e.target.value })} />
@@ -309,7 +384,7 @@ export default function DriverTasksAdminClient() {
               <td style={{ padding: 8 }}>{t.type_name_id}</td>
               <td style={{ padding: 8 }}>{t.scheduled_date}{t.scheduled_time ? ` ${String(t.scheduled_time).slice(0, 5)}` : ''}</td>
               <td style={{ padding: 8 }}>{t.booking_number ? `№${t.booking_number}` : '—'}</td>
-              <td style={{ padding: 8 }}>{t.driver_name ?? '—'}</td>
+              <td style={{ padding: 8 }}>{[t.driver_name, t.driver_name_2].filter(Boolean).join(' + ') || '—'}</td>
               <td style={{ padding: 8 }}>{t.fleet_internal_number != null ? `№${t.fleet_internal_number}` : '—'}</td>
               <td style={{ padding: 8 }}>{t.status}</td>
               <td style={{ padding: 8, color: '#666' }}>{t.comment ?? ''}</td>

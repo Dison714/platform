@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { pool } from '../db/pool.js';
 import { getCompanyId } from '../services/config.js';
+import { createBooking } from '../services/booking.js';
 import {
     assignFleetItem,
     confirmBooking,
@@ -23,6 +24,43 @@ export const bookingAdminRouter = Router();
 // Configuration First / CRM v1.1 (ТЗ п.12, CLAUDE.md §3.2) — /internal/bookings.
 // Доступ закрыт requireInternalToken на уровне монтирования в server.js (как
 // у 5 остальных admin-роутеров), Basic Auth — на уровне Next.js middleware.
+
+// GET /bookings-products — лёгкий список активных Product для пикера формы
+// "Создать заявку" (Раздел 5А, 2026-09-27). Публичный /products (catalog.js)
+// не подходит напрямую — тянет переводы/фото/цены под витрину сайта;
+// диспетчеру нужны только id + человекочитаемая подпись.
+bookingAdminRouter.get('/bookings-products', async (req, res, next) => {
+    try {
+        const { rows } = await pool.query(
+            `SELECT p.id, p.slug, p.color_name, p.variant, pf.brand, pf.model_name
+             FROM products p
+             JOIN product_families pf ON pf.id = p.family_id
+             WHERE p.is_active = TRUE
+             ORDER BY pf.brand, pf.model_name, p.color_name`
+        );
+        res.json({ data: rows });
+    } catch (err) { next(err); }
+});
+
+// POST /bookings/create-manual — ручное создание заявки диспетчером
+// (Раздел 5А). Переиспользует createBooking() целиком (та же валидация,
+// buildQuote(), findOrCreateCustomer, уведомления менеджеру/водителям) —
+// отличается только source='manual' вместо website/telegram_bot. Body —
+// тот же контракт, что у публичного POST /bookings (services/booking.js),
+// без insurance (форма его не предлагает — п.5А задания перечисляет
+// только клиента/продукт/даты/оборудование/доставку).
+bookingAdminRouter.post('/bookings/create-manual', async (req, res, next) => {
+    try {
+        const result = await createBooking(req.body ?? {}, { sourceOverride: 'manual' });
+        res.status(201).json({
+            data: {
+                id: result.booking.id,
+                booking_number: result.booking.booking_number,
+                status: result.booking.status,
+            },
+        });
+    } catch (err) { next(err); }
+});
 
 // GET /bookings?status=created — очередь диспетчера. Без status — все НЕ
 // терминальные брони (обычный дефолт экрана), с status — конкретный срез

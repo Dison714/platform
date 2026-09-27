@@ -41,14 +41,18 @@ driverTasksAdminRouter.get('/driver-tasks', async (req, res, next) => {
             `SELECT dt.id, dt.type_code, tt.name_id AS type_name_id, tt.name_ru AS type_name_ru,
                     dt.seq_label, dt.daily_seq, dt.status, dt.priority, dt.scheduled_date, dt.scheduled_time, dt.time_code,
                     dt.booking_id, dt.rental_id, dt.fleet_item_id, dt.assigned_driver_slot,
+                    dt.assigned_driver_slot_2, dt.pakai_fleet_item_id, dt.pakai_text,
                     dt.location_text, dt.customer_contact, dt.comment, dt.created_at,
-                    b.booking_number, d.name AS driver_name,
-                    fi.internal_number AS fleet_internal_number
+                    b.booking_number, d.name AS driver_name, d2.name AS driver_name_2,
+                    fi.internal_number AS fleet_internal_number,
+                    pfi.internal_number AS pakai_fleet_internal_number
              FROM driver_tasks dt
              JOIN task_types tt ON tt.code = dt.type_code
              LEFT JOIN bookings b ON b.id = dt.booking_id
              LEFT JOIN drivers d ON d.driver_slot = dt.assigned_driver_slot
+             LEFT JOIN drivers d2 ON d2.driver_slot = dt.assigned_driver_slot_2
              LEFT JOIN fleet_items fi ON fi.id = dt.fleet_item_id
+             LEFT JOIN fleet_items pfi ON pfi.id = dt.pakai_fleet_item_id
              WHERE ${where}
              ORDER BY dt.scheduled_date DESC, dt.created_at DESC
              LIMIT 200`,
@@ -82,11 +86,15 @@ driverTasksAdminRouter.post('/driver-tasks', async (req, res, next) => {
             booking_id: bookingId = null,
             rental_id: rentalId = null,
             assigned_driver_slot: driverSlot = null,
+            assigned_driver_slot_2: driverSlot2 = null,
             scheduled_date: scheduledDate,
             scheduled_time: scheduledTime = null,
             time_code: timeCode = null,
             comment = null,
             seq_label: seqLabel = null,
+            pakai_fleet_item_id: pakaiFleetItemId = null,
+            pakai_text: pakaiText = null,
+            equipment = null,
         } = body;
         let { fleet_item_id: fleetItemId = null, location_text: locationText = null, customer_contact: customerContact = null, payload = {} } = body;
         payload = payload && typeof payload === 'object' && !Array.isArray(payload) ? { ...payload } : {};
@@ -102,6 +110,13 @@ driverTasksAdminRouter.post('/driver-tasks', async (req, res, next) => {
             const { rows: dRows } = await pool.query('SELECT is_active FROM drivers WHERE driver_slot = $1', [Number(driverSlot)]);
             if (!dRows.length) throw badReq('unknown driver_slot');
         }
+        if (driverSlot2 != null) {
+            const { rows: d2Rows } = await pool.query('SELECT is_active FROM drivers WHERE driver_slot = $1', [Number(driverSlot2)]);
+            if (!d2Rows.length) throw badReq('unknown assigned_driver_slot_2');
+        }
+        // Pakai — либо конкретный fleet_item, либо свободный текст, не оба сразу
+        // (Раздел 5C, миграция 073).
+        if (pakaiFleetItemId && pakaiText) throw badReq('pakai_fleet_item_id and pakai_text are mutually exclusive');
 
         if (bookingId) {
             const snap = await loadBookingSnapshot(pool, bookingId);
@@ -120,6 +135,27 @@ driverTasksAdminRouter.post('/driver-tasks', async (req, res, next) => {
             }
         }
 
+        // Оборудование, выбранное прямо в этой форме (Раздел 5D) — приоритет
+        // над тем, что подтянулось из брони выше: диспетчер явно указал, что
+        // берёт водитель на ЭТУ конкретную задачу. categoryCode — с байка,
+        // если он уже выбран (для строки "safety set" при touring).
+        if (Array.isArray(equipment) && equipment.length) {
+            let categoryCode = null;
+            if (fleetItemId) {
+                const { rows: catRows } = await pool.query(
+                    `SELECT vc.code
+                     FROM fleet_items fi
+                     JOIN products p ON p.id = fi.product_id
+                     JOIN product_families pf ON pf.id = p.family_id
+                     JOIN vehicle_categories vc ON vc.id = pf.category_id
+                     WHERE fi.id = $1`,
+                    [fleetItemId]
+                );
+                categoryCode = catRows[0]?.code ?? null;
+            }
+            payload.peralatan = computePeralatan(equipment, categoryCode);
+        }
+
         const companyId = await getCompanyId();
         // Сквозной номер за день (069_driver_tasks_daily_seq.sql) — тот же
         // общий счётчик, что и у driver-карточки при создании брони.
@@ -128,13 +164,17 @@ driverTasksAdminRouter.post('/driver-tasks', async (req, res, next) => {
         const { rows } = await pool.query(
             `INSERT INTO driver_tasks (
                 company_id, type_code, seq_label, daily_seq, booking_id, rental_id, fleet_item_id,
-                assigned_driver_slot, priority, status, scheduled_date, scheduled_time, time_code,
+                assigned_driver_slot, assigned_driver_slot_2, pakai_fleet_item_id, pakai_text,
+                priority, status, scheduled_date, scheduled_time, time_code,
                 customer_contact, location_text, payload, comment, source
-             ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'planned','pending',$9,$10,$11,$12,$13,$14,$15,'manual')
+             ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,'planned','pending',$12,$13,$14,$15,$16,$17,$18,'manual')
              RETURNING id, daily_seq`,
             [
                 companyId, typeCode, seqLabel, dailySeq, bookingId, rentalId, fleetItemId,
-                driverSlot != null ? Number(driverSlot) : null, scheduledDate, scheduledTime, timeCode,
+                driverSlot != null ? Number(driverSlot) : null,
+                driverSlot2 != null ? Number(driverSlot2) : null,
+                pakaiFleetItemId || null, pakaiText || null,
+                scheduledDate, scheduledTime, timeCode,
                 customerContact, locationText, payload, comment,
             ]
         );
@@ -144,6 +184,9 @@ driverTasksAdminRouter.post('/driver-tasks', async (req, res, next) => {
 
 const PATCHABLE_FIELDS = {
     assigned_driver_slot: 'assigned_driver_slot',
+    assigned_driver_slot_2: 'assigned_driver_slot_2',
+    pakai_fleet_item_id: 'pakai_fleet_item_id',
+    pakai_text: 'pakai_text',
     scheduled_date: 'scheduled_date',
     scheduled_time: 'scheduled_time',
     time_code: 'time_code',

@@ -47,7 +47,28 @@ export async function dispatchDriverTask(taskId, { templateCode = 'driver_task_t
     let totalK = null;
     let peralatan = task.payload?.peralatan ?? null;
     let sopir = null;
-    const pakai = null; // см. комментарий в driverTaskTemplates.js — источника данных под Pakai пока нет.
+    // Pakai — байк, на котором ВОДИТЕЛЬ едет выполнять задачу и возвращается
+    // (не Motor — тот сдаётся/забирается у клиента). Раздел 5C, миграция 073:
+    // источник данных теперь есть — pakai_fleet_item_id (select по парку) ИЛИ
+    // pakai_text (свободный текст), взаимоисключимо. Пусто, если ни то ни другое
+    // не заполнено (штатно для одного водителя — он возвращается на такси).
+    let pakai = null;
+    if (task.pakai_fleet_item_id) {
+        const { rows: pkRows } = await pool.query(
+            `SELECT fi.internal_number, fi.license_plate, p.color_name, pf.brand, pf.model_name
+             FROM fleet_items fi
+             JOIN products p ON p.id = fi.product_id
+             JOIN product_families pf ON pf.id = p.family_id
+             WHERE fi.id = $1`,
+            [task.pakai_fleet_item_id]
+        );
+        if (pkRows.length) {
+            const pk = pkRows[0];
+            pakai = `${pk.internal_number}.${pk.brand} ${pk.model_name} ${pk.color_name} ${pk.license_plate}`;
+        }
+    } else if (task.pakai_text) {
+        pakai = task.pakai_text;
+    }
 
     if (task.assigned_driver_slot != null) {
         const { rows: dRows } = await pool.query('SELECT name FROM drivers WHERE driver_slot = $1', [task.assigned_driver_slot]);
