@@ -3,7 +3,6 @@
 import { useEffect, useState, useCallback } from 'react';
 
 const BOOKINGS_API = '/api/admin/bookings';
-const FLEET_API = '/api/admin/fleet-items';
 const DRIVERS_API = '/api/admin/drivers';
 const RENTALS_API = '/api/admin/rentals';
 
@@ -32,10 +31,13 @@ function contactsText(row) {
 // Один шаг вперёд по цепочке (см. STATUS_OPTIONS) — ровно одна кнопка/форма
 // на статус, ничего не пропустить через UI (бэкенд и так это гарантирует
 // проверкой текущего статуса, см. bookingLifecycle.js).
+const EMPTY_ASSIGNABLE = { exact: [], same_family: [], replacement_group: [], replacement_group_name: null };
+
 function ActionCell({ booking, drivers, onAction, busy }) {
-  const [fleetItems, setFleetItems] = useState([]);
+  const [assignable, setAssignable] = useState(EMPTY_ASSIGNABLE);
   const [loadingFleet, setLoadingFleet] = useState(false);
   const [selectedFleetItem, setSelectedFleetItem] = useState('');
+  const [replacementReason, setReplacementReason] = useState('');
   const [selectedDriver, setSelectedDriver] = useState('');
   const [startDate, setStartDate] = useState(booking.start_date);
   const [endDate, setEndDate] = useState(booking.end_date);
@@ -44,31 +46,58 @@ function ActionCell({ booking, drivers, onAction, busy }) {
     if (booking.status !== 'created') return;
     let cancelled = false;
     setLoadingFleet(true);
-    fetch(`${FLEET_API}?product_id=${booking.product_id}`, { cache: 'no-store' })
+    fetch(`${BOOKINGS_API}/${booking.id}/assignable-fleet-items`, { cache: 'no-store' })
       .then((r) => r.json())
       .then((json) => {
         if (cancelled) return;
-        setFleetItems((json.data ?? []).filter((f) => f.status === 'available' || f.status === 'prepared'));
+        setAssignable(json.data ?? EMPTY_ASSIGNABLE);
       })
       .catch(() => {})
       .finally(() => { if (!cancelled) setLoadingFleet(false); });
     return () => { cancelled = true; };
-  }, [booking.status, booking.product_id]);
+  }, [booking.status, booking.id]);
 
+  // Автосворачивание на первую непустую ступень (дизайн 2026-09-27,
+  // CLAUDE.md §3.1): точное совпадение → другой цвет той же Family → та же
+  // replacement_groups. Пустые ступени вообще не показываются оператору.
   if (booking.status === 'created') {
+    const tier = assignable.exact.length ? 'exact'
+      : assignable.same_family.length ? 'same_family'
+      : assignable.replacement_group.length ? 'replacement_group'
+      : null;
+    const items = tier === 'exact' ? assignable.exact
+      : tier === 'same_family' ? assignable.same_family
+      : tier === 'replacement_group' ? assignable.replacement_group
+      : [];
+    const tierLabel = tier === 'exact' ? 'Точное совпадение'
+      : tier === 'same_family' ? 'Другой цвет, та же модель'
+      : tier === 'replacement_group' ? `Замена по группе: ${assignable.replacement_group_name ?? '—'}`
+      : null;
+    const isReplacement = tier === 'same_family' || tier === 'replacement_group';
+    const reasonOk = !isReplacement || replacementReason.trim();
+
     return (
       <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
-        <select value={selectedFleetItem} disabled={loadingFleet || busy}
+        {tierLabel && <span style={{ fontSize: 11, color: '#666' }}>{tierLabel}:</span>}
+        <select value={selectedFleetItem} disabled={loadingFleet || busy || !tier}
           onChange={(e) => setSelectedFleetItem(e.target.value)}>
-          <option value="">{loadingFleet ? 'загрузка…' : fleetItems.length ? '— байк —' : 'нет свободных'}</option>
-          {fleetItems.map((f) => (
+          <option value="">{loadingFleet ? 'загрузка…' : items.length ? '— байк —' : 'нет свободных'}</option>
+          {items.map((f) => (
             <option key={f.id} value={f.id}>
-              №{f.internal_number} {f.brand} {f.model_name} ({f.license_plate})
+              №{f.internal_number} {f.brand} {f.model_name} {f.color_name} ({f.license_plate})
             </option>
           ))}
         </select>
-        <button disabled={!selectedFleetItem || busy}
-          onClick={() => onAction(booking.id, 'assign-fleet-item', { fleet_item_id: selectedFleetItem })}>
+        {isReplacement && selectedFleetItem && (
+          <input type="text" placeholder="Причина замены" value={replacementReason} disabled={busy}
+            style={{ minWidth: 200 }}
+            onChange={(e) => setReplacementReason(e.target.value)} />
+        )}
+        <button disabled={!selectedFleetItem || !reasonOk || busy}
+          onClick={() => onAction(booking.id, 'assign-fleet-item', {
+            fleet_item_id: selectedFleetItem,
+            replacement_reason: isReplacement ? replacementReason.trim() : null,
+          })}>
           Назначить байк
         </button>
       </div>

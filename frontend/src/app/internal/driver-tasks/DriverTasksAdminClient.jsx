@@ -6,6 +6,7 @@ const TASKS_API = '/api/admin/driver-tasks';
 const TASK_TYPES_API = '/api/admin/task-types';
 const DRIVERS_API = '/api/admin/drivers';
 const BOOKINGS_API = '/api/admin/bookings';
+const FLEET_ITEMS_API = '/api/admin/fleet-items';
 
 // task_status enum (001_foundation.sql).
 const TASK_STATUSES = ['pending', 'acknowledged', 'in_progress', 'completed', 'cancelled'];
@@ -13,6 +14,7 @@ const TASK_STATUSES = ['pending', 'acknowledged', 'in_progress', 'completed', 'c
 const emptyForm = {
   type_code: '', booking_id: '', scheduled_date: '', scheduled_time: '',
   assigned_driver_slot: '', comment: '',
+  location_text: '', customer_contact: '', fleet_item_id: '',
 };
 
 export default function DriverTasksAdminClient() {
@@ -20,6 +22,7 @@ export default function DriverTasksAdminClient() {
   const [taskTypes, setTaskTypes] = useState([]);
   const [drivers, setDrivers] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [fleetItems, setFleetItems] = useState([]);
   const [statusFilter, setStatusFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [loading, setLoading] = useState(true);
@@ -41,17 +44,19 @@ export default function DriverTasksAdminClient() {
   // GET /bookings поддерживает только один status за раз, отсюда два запроса.
   const loadRefs = useCallback(async () => {
     try {
-      const [ttRes, dRes, bRes, bFulfilledRes] = await Promise.all([
+      const [ttRes, dRes, bRes, bFulfilledRes, fiRes] = await Promise.all([
         fetch(TASK_TYPES_API, { cache: 'no-store' }),
         fetch(DRIVERS_API, { cache: 'no-store' }),
         fetch(BOOKINGS_API, { cache: 'no-store' }),
         fetch(`${BOOKINGS_API}?status=fulfilled`, { cache: 'no-store' }),
+        fetch(FLEET_ITEMS_API, { cache: 'no-store' }),
       ]);
       setTaskTypes((await ttRes.json()).data ?? []);
       setDrivers((await dRes.json()).data ?? []);
       const active = (await bRes.json()).data ?? [];
       const fulfilled = (await bFulfilledRes.json()).data ?? [];
       setBookings([...active, ...fulfilled]);
+      setFleetItems((await fiRes.json()).data ?? []);
     } catch (e) {
       setError(`Не удалось загрузить справочники: ${e.message}`);
     }
@@ -115,6 +120,9 @@ export default function DriverTasksAdminClient() {
           scheduled_time: form.scheduled_time || null,
           assigned_driver_slot: form.assigned_driver_slot ? Number(form.assigned_driver_slot) : null,
           comment: form.comment || null,
+          location_text: form.location_text || null,
+          customer_contact: form.customer_contact || null,
+          fleet_item_id: form.fleet_item_id || null,
         }),
       });
       if (!res.ok) {
@@ -186,6 +194,28 @@ export default function DriverTasksAdminClient() {
             {bookings.map((b) => (
               <option key={b.id} value={b.id}>
                 №{b.booking_number} — {b.customer_name} — {b.brand} {b.model_name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Локация
+          <input type="text" value={form.location_text} style={{ display: 'block', width: '100%' }}
+            onChange={(e) => updateForm({ location_text: e.target.value })} />
+        </label>
+        <label>
+          Контакт клиента
+          <input type="text" value={form.customer_contact} style={{ display: 'block', width: '100%' }}
+            onChange={(e) => updateForm({ customer_contact: e.target.value })} />
+        </label>
+        <label>
+          Байк (необязательно)
+          <select value={form.fleet_item_id} style={{ display: 'block', width: '100%' }}
+            onChange={(e) => updateForm({ fleet_item_id: e.target.value })}>
+            <option value="">— не выбран —</option>
+            {fleetItems.map((fi) => (
+              <option key={fi.id} value={fi.id}>
+                №{fi.internal_number} {fi.brand} {fi.model_name} {fi.license_plate}
               </option>
             ))}
           </select>

@@ -74,29 +74,70 @@ async function withTransaction(fn) {
 // 1. created → fleet_item_assigned — диспетчер выбирает конкретный байк.
 // fleet_items.status → 'reserved' (НЕ 'rented' — байк ещё не выдан
 // физически, см. CLAUDE.md §3.2: Rental создаётся только при передаче).
+//
+// Три допустимых уровня совпадения (дизайн подтверждён Дмитрием
+// 2026-09-27, CLAUDE.md §3.1 replacement_groups): точный product_id брони
+// (tier 1) → тот же product_families.family_id, другой цвет (tier 2) →
+// та же product_families.replacement_group_id (tier 3, обе НЕ NULL).
+// Любой уровень кроме tier 1 — реальная замена, требует непустой
+// replacement_reason (bookings.replacement_reason, ТЗ п.7.3).
 // ---------------------------------------------------------------------
-export async function assignFleetItem(bookingId, fleetItemId) {
+export async function assignFleetItem(bookingId, fleetItemId, replacementReason = null) {
     if (typeof fleetItemId !== 'string' || !fleetItemId) throw badReq('fleet_item_id is required');
     return withTransaction(async (client) => {
         const booking = await loadBookingForUpdate(client, bookingId);
         assertStatus(booking, 'created');
 
+        const { rows: bfRows } = await client.query(
+            `SELECT p.family_id, pf.replacement_group_id
+             FROM products p JOIN product_families pf ON pf.id = p.family_id
+             WHERE p.id = $1`,
+            [booking.product_id]
+        );
+        const bookingFamilyId = bfRows[0]?.family_id ?? null;
+        const bookingReplacementGroupId = bfRows[0]?.replacement_group_id ?? null;
+
         const { rows: fRows } = await client.query(
-            'SELECT id, product_id, status FROM fleet_items WHERE id = $1 FOR UPDATE',
+            `SELECT fi.id, fi.product_id, fi.status, p.family_id, pf.replacement_group_id
+             FROM fleet_items fi
+             JOIN products p ON p.id = fi.product_id
+             JOIN product_families pf ON pf.id = p.family_id
+             WHERE fi.id = $1 FOR UPDATE`,
             [fleetItemId]
         );
         if (!fRows.length) throw notFound('fleet_item not found');
         const fleetItem = fRows[0];
-        if (fleetItem.product_id !== booking.product_id) {
-            throw badReq('fleet_item does not belong to the product requested in this booking');
+
+        const isExact = fleetItem.product_id === booking.product_id;
+        const isSameFamily = !isExact && fleetItem.family_id === bookingFamilyId;
+        const isReplacementGroup = !isExact && !isSameFamily
+            && bookingReplacementGroupId != null
+            && fleetItem.replacement_group_id === bookingReplacementGroupId;
+
+        if (!isExact && !isSameFamily && !isReplacementGroup) {
+            throw badReq('fleet_item is not an exact match, a same-family alternative, or a replacement-group alternative for this booking');
         }
+
+        const reason = typeof replacementReason === 'string' ? replacementReason.trim() : '';
+        if (!isExact && !reason) {
+            throw badReq('replacement_reason is required when assigning a fleet_item outside the exact product match');
+        }
+
         if (!['available', 'prepared'].includes(fleetItem.status)) {
             throw conflict(`fleet_item.status is '${fleetItem.status}', must be 'available' or 'prepared'`);
         }
 
-        await client.query('UPDATE bookings SET assigned_fleet_item = $2 WHERE id = $1', [bookingId, fleetItemId]);
+        await client.query(
+            'UPDATE bookings SET assigned_fleet_item = $2, replacement_reason = $3 WHERE id = $1',
+            [bookingId, fleetItemId, isExact ? null : reason]
+        );
         await client.query(`UPDATE fleet_items SET status = 'reserved', updated_at = now() WHERE id = $1`, [fleetItemId]);
-        await recordTransition(client, bookingId, 'created', 'fleet_item_assigned', 'Fleet item assigned via /internal/bookings');
+        await recordTransition(
+            client, bookingId, 'created', 'fleet_item_assigned',
+            isExact
+                ? 'Fleet item assigned via /internal/bookings'
+                : `Fleet item assigned via /internal/bookings (replacement: ${reason})`
+        );
 
         return { booking_id: bookingId, status: 'fleet_item_assigned', fleet_item_id: fleetItemId };
     });

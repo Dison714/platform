@@ -98,12 +98,82 @@ bookingAdminRouter.get('/rentals', async (req, res, next) => {
     } catch (err) { next(err); }
 });
 
+// GET /bookings/:id/assignable-fleet-items — три ступени подбора байка для
+// "Назначить байк" (дизайн подтверждён Дмитрием 2026-09-27): точный
+// product_id брони → тот же product_families (другой цвет) → тот же
+// replacement_groups.id, что у family брони (CLAUDE.md §3.1). Каждая
+// ступень отдельным массивом — фронт обязан показать оператору, какую
+// именно ступень он выбирает, не сваливать всё в один список молча.
+bookingAdminRouter.get('/bookings/:id/assignable-fleet-items', async (req, res, next) => {
+    try {
+        const { rows: bRows } = await pool.query(
+            `SELECT b.product_id, p.family_id, pf.replacement_group_id
+             FROM bookings b
+             JOIN products p ON p.id = b.product_id
+             JOIN product_families pf ON pf.id = p.family_id
+             WHERE b.id = $1`,
+            [req.params.id]
+        );
+        if (!bRows.length) { const e = new Error('booking not found'); e.status = 404; throw e; }
+        const { product_id: productId, family_id: familyId, replacement_group_id: replacementGroupId } = bRows[0];
+
+        const fleetItemSelect = `fi.id, fi.internal_number, fi.license_plate, fi.status,
+                    p.id AS product_id, p.color_name, pf.brand, pf.model_name`;
+
+        const { rows: exact } = await pool.query(
+            `SELECT ${fleetItemSelect}
+             FROM fleet_items fi
+             JOIN products p ON p.id = fi.product_id
+             JOIN product_families pf ON pf.id = p.family_id
+             WHERE fi.product_id = $1 AND fi.status IN ('available','prepared')
+             ORDER BY fi.internal_number`,
+            [productId]
+        );
+
+        const { rows: sameFamily } = await pool.query(
+            `SELECT ${fleetItemSelect}
+             FROM fleet_items fi
+             JOIN products p ON p.id = fi.product_id
+             JOIN product_families pf ON pf.id = p.family_id
+             WHERE p.family_id = $1 AND fi.product_id != $2 AND fi.status IN ('available','prepared')
+             ORDER BY fi.internal_number`,
+            [familyId, productId]
+        );
+
+        let replacementGroup = [];
+        let replacementGroupName = null;
+        if (replacementGroupId != null) {
+            const { rows: rgRows } = await pool.query('SELECT name FROM replacement_groups WHERE id = $1', [replacementGroupId]);
+            replacementGroupName = rgRows[0]?.name ?? null;
+            const { rows } = await pool.query(
+                `SELECT ${fleetItemSelect}
+                 FROM fleet_items fi
+                 JOIN products p ON p.id = fi.product_id
+                 JOIN product_families pf ON pf.id = p.family_id
+                 WHERE pf.replacement_group_id = $1 AND pf.id != $2 AND fi.status IN ('available','prepared')
+                 ORDER BY pf.brand, pf.model_name, fi.internal_number`,
+                [replacementGroupId, familyId]
+            );
+            replacementGroup = rows;
+        }
+
+        res.json({
+            data: {
+                exact,
+                same_family: sameFamily,
+                replacement_group: replacementGroup,
+                replacement_group_name: replacementGroupName,
+            },
+        });
+    } catch (err) { next(err); }
+});
+
 // --- 6 переходов жизненного цикла (bookingLifecycle.js) — по одному на
 // action, каждый со своей проверкой текущего статуса внутри сервиса. ---
 
 bookingAdminRouter.post('/bookings/:id/assign-fleet-item', async (req, res, next) => {
     try {
-        const data = await assignFleetItem(req.params.id, req.body?.fleet_item_id);
+        const data = await assignFleetItem(req.params.id, req.body?.fleet_item_id, req.body?.replacement_reason ?? null);
         res.json({ data });
     } catch (err) { next(err); }
 });
