@@ -9,6 +9,7 @@
 
 import { pool } from '../src/db/pool.js';
 import { FAMILY_CONTENT } from './family_content_data.mjs';
+import { withReviewLink } from './review_links.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const TARGET_LANGS = ['ru', 'de', 'fr', 'es', 'it', 'ja', 'ar'];
@@ -56,7 +57,10 @@ for (const w of writes) {
     `INSERT INTO family_content_translations (family_id, language_code, content_html)
      VALUES ($1, $2, $3)
      ON CONFLICT (family_id, language_code) DO UPDATE SET content_html = EXCLUDED.content_html`,
-    [w.familyId, w.lang, w.html]
+    // Ссылка на обзор модели (review_links.mjs) живёт только в БД, не в
+    // family_content_data.mjs — подмешиваем при записи, иначе повторный прогон
+    // этого скрипта тихо откатил бы её.
+    [w.familyId, w.lang, await withReviewLink(pool, w.familyId, w.lang, w.html)]
   );
   count++;
 }
