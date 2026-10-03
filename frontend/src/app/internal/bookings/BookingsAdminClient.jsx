@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import { DELIVERY_TIME_OPTIONS } from '../../../lib/timeSlots.js';
 import { formatIdr } from '../../../lib/api.js';
 
@@ -278,14 +278,61 @@ function ActionCell({ booking, drivers, onAction, busy }) {
 
 // Раздел 5А (2026-09-27) — ручное создание заявки диспетчером. Переиспользует
 // createBooking() целиком через POST /bookings/create-manual (validation,
-// buildQuote() по продукту/датам/оборудованию, findOrCreateCustomer,
-// уведомления менеджеру/водителям) — цена НЕ вводится руками. Форма не
-// предлагает страховку (задание Раздела 5А перечисляет только клиента/
-// продукт/даты/оборудование/доставку).
-function CreateBookingForm({ onCreated }) {
+// buildQuote() по продукту/датам/оборудованию/страховке, findOrCreateCustomer,
+// уведомления менеджеру/водителям) — цена НЕ вводится руками.
+//
+// Доработка (2026-10-03): страховка один в один с Calculator.jsx, live-превью
+// цены через публичный /api/quote (тот же debounce 400мс), и продолжение
+// оформления в этом же экране — после создания под формой появляется панель
+// с тем же <ActionCell>, что и в таблице (байк → подтверждение → водитель).
+function daysBetween(start, end) {
+  return Math.round((new Date(end).getTime() - new Date(start).getTime()) / 86_400_000);
+}
+
+const EMPTY_CREATE_FORM = {
+  full_name: '', phone: '', whatsapp: '', telegram_username: '',
+  product_id: '', start_date: '', end_date: '',
+  location_link: '', delivery_time: '',
+};
+
+function QuotePreview({ status, result, rentalDays }) {
+  const b = result?.breakdown;
+  return (
+    <div style={{ borderTop: '1px solid #eee', paddingTop: 10 }}>
+      {status === 'error' && (
+        <div style={{ color: '#a60', fontSize: 13 }}>
+          Не удалось рассчитать цену (бэкенд пересчитает при создании)
+        </div>
+      )}
+      {!result && status === 'loading' && <div style={{ color: '#888', fontSize: 13 }}>Считаем…</div>}
+      {result && b && (
+        <div style={{ opacity: status === 'loading' ? 0.5 : 1 }}>
+          <div style={{ fontSize: 22, fontWeight: 600 }}>{formatIdr(result.total_payable_idr)}</div>
+          <div style={{ fontSize: 11, color: '#666', marginTop: 4, lineHeight: 1.5 }}>
+            <div>Аренда · {rentalDays}д — {formatIdr(b.base_rental.price_idr)}</div>
+            <div>Доставка — {b.delivery.free ? 'бесплатно' : formatIdr(b.delivery.fee_idr)}</div>
+            {b.insurance?.theft && (
+              <div>Страховка от угона · {b.insurance.theft.months} мес — {formatIdr(b.insurance.theft.total_idr)}</div>
+            )}
+            {b.insurance?.damage && (
+              <div>Страховка от повреждений · {formatIdr(b.insurance.damage.coverage_idr)} — {formatIdr(b.insurance.damage.total_idr)}</div>
+            )}
+            {b.equipment?.items?.map((it) => (
+              <div key={it.code}>{it.name}{it.quantity > 1 ? ` ×${it.quantity}` : ''} — {formatIdr(it.total_idr)}</div>
+            ))}
+            <div>Депозит (возвращаемый, не в сумме) — {formatIdr(result.deposit.amount_idr)}</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CreateBookingForm({ bookings, drivers, busyId, onAction, onCreated }) {
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [equipmentOptions, setEquipmentOptions] = useState([]);
+  const [insuranceOptions, setInsuranceOptions] = useState({ damage: [] });
   // Точная копия helmet-slot механики Calculator.jsx (сайт): 2 физических
   // слота на байк, каждый — чекбокс "занят/пуст" + select конкретного
   // шлема. Единственное осознанное отличие от сайта (дизайн подтверждён
@@ -294,16 +341,25 @@ function CreateBookingForm({ onCreated }) {
   // пассажира, в отличие от калькулятора на сайте.
   const [helmetSlots, setHelmetSlots] = useState([null, null]);
   const [extras, setExtras] = useState({});
+  // Страховка — те же поля и дефолты, что в Calculator.jsx.
+  const [theft, setTheft] = useState(false);
+  const [damageOn, setDamageOn] = useState(false);
+  const [coverage, setCoverage] = useState(1500000);
+  const [age, setAge] = useState(30);
+  const [hasLicense, setHasLicense] = useState(true);
+  const [experienced, setExperienced] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
-  const [form, setForm] = useState({
-    full_name: '', phone: '', whatsapp: '', telegram_username: '',
-    product_id: '', start_date: '', end_date: '',
-    location_link: '', delivery_time: '',
-  });
+  const [form, setForm] = useState(EMPTY_CREATE_FORM);
+  // Панель продолжения оформления (п.5 задания) — живёт независимо от
+  // формы: можно закрыть форму и продолжить работать с панелью.
+  const [created, setCreated] = useState(null); // { id, booking_number }
 
-  const helmets = equipmentOptions.filter((e) => e.addon_group === 'helmet');
-  const extrasList = equipmentOptions.filter((e) => e.addon_group !== 'helmet');
+  const [quote, setQuote] = useState(null);
+  const [quoteStatus, setQuoteStatus] = useState('idle'); // idle | loading | error
+
+  const helmets = useMemo(() => equipmentOptions.filter((e) => e.addon_group === 'helmet'), [equipmentOptions]);
+  const extrasList = useMemo(() => equipmentOptions.filter((e) => e.addon_group !== 'helmet'), [equipmentOptions]);
 
   useEffect(() => {
     if (!open) return;
@@ -316,8 +372,12 @@ function CreateBookingForm({ onCreated }) {
         ]);
         if (cancelled) return;
         setProducts((await pRes.json()).data ?? []);
-        const eq = (await eRes.json()).data?.equipment ?? [];
+        const eqData = (await eRes.json()).data ?? {};
+        const eq = eqData.equipment ?? [];
         setEquipmentOptions(eq);
+        const damage = eqData.insurance?.damage ?? [];
+        setInsuranceOptions({ damage });
+        setCoverage(damage[0]?.coverage_idr ?? 1500000);
         const freeCode = eq.find((h) => h.addon_group === 'helmet' && h.rental_price_idr === 0)?.code
           ?? eq.find((h) => h.addon_group === 'helmet')?.code ?? null;
         setHelmetSlots([freeCode, null]);
@@ -328,6 +388,69 @@ function CreateBookingForm({ onCreated }) {
 
   function update(patch) { setForm((f) => ({ ...f, ...patch })); }
 
+  // Общая часть выбора (страховка + допы) — как `selection` в Calculator.jsx:
+  // одно и то же и для live-превью, и для финального submit.
+  const selection = useMemo(() => {
+    const helmetTally = {};
+    for (const code of helmetSlots) {
+      if (!code) continue;
+      const h = helmets.find((x) => x.code === code);
+      if (h) helmetTally[code] = (helmetTally[code] || 0) + 1;
+    }
+    const equip = [
+      ...Object.entries(helmetTally).map(([code, n]) => ({ code, quantity: n })),
+      ...extrasList.filter((e) => extras[e.code]).map((e) => ({ code: e.code, quantity: 1 })),
+    ];
+    let insurance;
+    if (theft || damageOn) {
+      insurance = {};
+      if (theft) insurance.theft = true;
+      if (damageOn) {
+        insurance.damage = { coverage_idr: Number(coverage) };
+        insurance.driver = { age: Number(age), has_license: hasLicense, experienced };
+      }
+    }
+    return { insurance, equipment: equip.length ? equip : undefined };
+  }, [helmetSlots, extras, helmets, extrasList, theft, damageOn, coverage, age, hasLicense, experienced]);
+
+  const rentalDays = useMemo(
+    () => (form.start_date && form.end_date ? daysBetween(form.start_date, form.end_date) : NaN),
+    [form.start_date, form.end_date],
+  );
+  const daysValid = Number.isInteger(rentalDays) && rentalDays >= 1;
+  const previewReady = Boolean(form.product_id) && daysValid;
+
+  // Live-превью: тот же debounce 400мс, что в Calculator.jsx; устаревшие
+  // ответы отбрасываются флагом cancelled в cleanup.
+  useEffect(() => {
+    if (!open || !previewReady) { setQuote(null); setQuoteStatus('idle'); return undefined; }
+    let cancelled = false;
+    setQuoteStatus('loading');
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch('/api/quote', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            product: form.product_id,
+            rental_days: rentalDays,
+            start_date: form.start_date,
+            ...(selection.insurance ? { insurance: selection.insurance } : {}),
+            ...(selection.equipment ? { equipment: selection.equipment } : {}),
+          }),
+        });
+        if (!res.ok) throw new Error('quote failed');
+        const json = await res.json();
+        if (cancelled) return;
+        setQuote(json.data);
+        setQuoteStatus('idle');
+      } catch {
+        if (!cancelled) setQuoteStatus('error');
+      }
+    }, 400);
+    return () => { cancelled = true; clearTimeout(timer); };
+  }, [open, previewReady, form.product_id, form.start_date, rentalDays, selection]);
+
   const hasContact = Boolean(form.phone.trim() || form.whatsapp.trim() || form.telegram_username.trim());
   const canSubmit = form.full_name.trim() && hasContact && form.product_id && form.start_date && form.end_date;
 
@@ -337,17 +460,6 @@ function CreateBookingForm({ onCreated }) {
     if (!canSubmit) { setError('Заполните клиента (имя + контакт), продукт и даты'); return; }
     setBusy(true);
     try {
-      // Тот же расчёт, что selection в Calculator.jsx: шлемы по слотам
-      // сворачиваются в quantity на code, extras — по одному.
-      const helmetTally = {};
-      for (const code of helmetSlots) {
-        if (!code) continue;
-        helmetTally[code] = (helmetTally[code] || 0) + 1;
-      }
-      const equipment = [
-        ...Object.entries(helmetTally).map(([code, quantity]) => ({ code, quantity })),
-        ...extrasList.filter((eq) => extras[eq.code]).map((eq) => ({ code: eq.code, quantity: 1 })),
-      ];
       const res = await fetch('/api/admin/bookings/create-manual', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -361,30 +473,36 @@ function CreateBookingForm({ onCreated }) {
             whatsapp: form.whatsapp.trim() || undefined,
             telegram_username: form.telegram_username.trim() || undefined,
           },
-          equipment: equipment.length ? equipment : undefined,
+          insurance: selection.insurance,
+          equipment: selection.equipment,
           location_link: form.location_link.trim() || undefined,
           delivery_time: form.delivery_time || undefined,
         }),
       });
+      const json = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const json = await res.json().catch(() => ({}));
         setError(json.message || `Ошибка ${res.status}`);
         return;
       }
-      setForm({ full_name: '', phone: '', whatsapp: '', telegram_username: '', product_id: '', start_date: '', end_date: '', location_link: '', delivery_time: '' });
+      // Форму НЕ закрываем (п.5): поля чистим, чтобы повторный клик не создал
+      // дубль, а продолжение оформления идёт в панели под формой.
+      setForm(EMPTY_CREATE_FORM);
       setExtras({});
-      setOpen(false);
+      setTheft(false);
+      setDamageOn(false);
+      setHelmetSlots((s) => [s[0] ?? helmets.find((h) => h.rental_price_idr === 0)?.code ?? helmets[0]?.code ?? null, null]);
+      setCreated({ id: json.data.id, booking_number: json.data.booking_number });
       await onCreated();
     } finally {
       setBusy(false);
     }
   }
 
-  if (!open) {
-    return <button onClick={() => setOpen(true)} style={{ marginBottom: 12 }}>Создать заявку</button>;
-  }
+  const createdBooking = created ? bookings.find((b) => b.id === created.id) : null;
 
-  return (
+  const formNode = !open ? (
+    <button onClick={() => setOpen(true)} style={{ marginBottom: 12 }}>Создать заявку</button>
+  ) : (
     <form onSubmit={handleSubmit} style={{ border: '1px solid #ddd', borderRadius: 6, padding: 16, marginBottom: 16, maxWidth: 480, display: 'flex', flexDirection: 'column', gap: 10 }}>
       <h3 style={{ margin: 0, fontSize: 16 }}>Новая заявка (вручную)</h3>
       {error && <div style={{ color: '#c00', fontSize: 13 }}>{error}</div>}
@@ -428,6 +546,9 @@ function CreateBookingForm({ onCreated }) {
             onChange={(e) => update({ end_date: e.target.value })} />
         </label>
       </div>
+      {form.start_date && form.end_date && !daysValid && (
+        <div style={{ fontSize: 11, color: '#a60' }}>Окончание должно быть позже начала (минимум 1 день)</div>
+      )}
       <label>Локация (ссылка, необязательно)
         <input type="text" value={form.location_link} style={{ display: 'block', width: '100%' }}
           onChange={(e) => update({ location_link: e.target.value })} />
@@ -439,6 +560,41 @@ function CreateBookingForm({ onCreated }) {
           {DELIVERY_TIME_OPTIONS.map((time) => <option key={time} value={time}>{time}</option>)}
         </select>
       </label>
+      <fieldset style={{ border: '1px solid #ddd', borderRadius: 4, padding: 10 }}>
+        <legend style={{ fontSize: 13, color: '#666' }}>Страховка (необязательно)</legend>
+        <label style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+          <input type="checkbox" checked={theft} onChange={(e) => setTheft(e.target.checked)} />
+          От угона
+        </label>
+        <label style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+          <input type="checkbox" checked={damageOn} onChange={(e) => setDamageOn(e.target.checked)} />
+          От повреждений
+        </label>
+        {damageOn && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, paddingLeft: 20 }}>
+            <label>Покрытие
+              <select value={coverage} style={{ display: 'block', width: '100%' }}
+                onChange={(e) => setCoverage(e.target.value)}>
+                {insuranceOptions.damage.map((d) => (
+                  <option key={d.coverage_idr} value={d.coverage_idr}>{formatIdr(d.coverage_idr)}</option>
+                ))}
+              </select>
+            </label>
+            <label>Возраст водителя
+              <input type="number" min="16" max="99" value={age} style={{ display: 'block', width: 80 }}
+                onChange={(e) => setAge(e.target.value)} />
+            </label>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <input type="checkbox" checked={hasLicense} onChange={(e) => setHasLicense(e.target.checked)} />
+              Есть права
+            </label>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <input type="checkbox" checked={experienced} onChange={(e) => setExperienced(e.target.checked)} />
+              Опытный водитель
+            </label>
+          </div>
+        )}
+      </fieldset>
       {helmets.length > 0 && (
         <fieldset style={{ border: '1px solid #ddd', borderRadius: 4, padding: 10 }}>
           <legend style={{ fontSize: 13, color: '#666' }}>Шлемы (2 слота на байк)</legend>
@@ -483,11 +639,42 @@ function CreateBookingForm({ onCreated }) {
           ))}
         </fieldset>
       )}
+      {previewReady && <QuotePreview status={quoteStatus} result={quote} rentalDays={rentalDays} />}
       <div style={{ display: 'flex', gap: 8 }}>
         <button type="submit" disabled={busy || !canSubmit}>Создать</button>
-        <button type="button" disabled={busy} onClick={() => setOpen(false)}>Отмена</button>
+        <button type="button" disabled={busy} onClick={() => setOpen(false)}>Закрыть форму</button>
       </div>
     </form>
+  );
+
+  return (
+    <>
+      {formNode}
+      {created && (
+        <div style={{ border: '2px solid #1a2b6d', borderRadius: 6, padding: 16, marginBottom: 16, maxWidth: 560 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+            <h3 style={{ margin: 0, fontSize: 16 }}>
+              Новая заявка №{created.booking_number} — продолжите оформление
+            </h3>
+            <button type="button" onClick={() => setCreated(null)}>Свернуть</button>
+          </div>
+          {createdBooking ? (
+            <>
+              <div style={{ fontSize: 13, color: '#555', marginBottom: 10 }}>
+                {createdBooking.customer_name} · {createdBooking.brand} {createdBooking.model_name} ·{' '}
+                {createdBooking.start_date} → {createdBooking.end_date} · {money(createdBooking.total_payable_idr)} · статус: {createdBooking.status}
+              </div>
+              <ActionCell key={createdBooking.id} booking={createdBooking} drivers={drivers}
+                busy={busyId === createdBooking.id} onAction={onAction} />
+            </>
+          ) : (
+            <div style={{ fontSize: 13, color: '#888' }}>
+              Заявки нет в текущем списке (проверьте фильтр по статусу) — она доступна в таблице ниже.
+            </div>
+          )}
+        </div>
+      )}
+    </>
   );
 }
 
@@ -544,7 +731,7 @@ function BookingsTab() {
 
   return (
     <>
-      <CreateBookingForm onCreated={load} />
+      <CreateBookingForm bookings={bookings} drivers={drivers} busyId={busyId} onAction={handleAction} onCreated={load} />
 
       <div style={{ margin: '16px 0' }}>
         <label>
