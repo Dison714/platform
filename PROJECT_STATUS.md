@@ -6788,6 +6788,15 @@ _Пометка 2026-10-03: коммит документации этой за�
 
 ---
 
+### Сессия 2026-10-03 — SEO-сборщик, этап 1 (репозиторий mdb-seo-monitoring)
+
+- **Миграция `074_seo_collector.sql`** (14 таблиц `seo_*`, без `company_id` — данные одного сайта, см. шапку файла) применена на прод 03.10.2026 после `pg_dump` (`/root/mdb_platform_prod_pre_074_20261003_110109.dump`), строка в `schema_migrations` добавлена в той же сессии. В `origin` из `platform` пока не запушена (один коммит впереди); push в `platform` деплой не запускает — вебхуков GitHub у репозитория нет, `is_webhook=false` у всех 75 записей `application_deployment_queues`.
+- **Фикс падения PSI 03.10:** Coolify каждый день в 00:00 (`server_settings.docker_cleanup_frequency = 0 0 * * *`) удаляет неиспользуемые образы, а образ монитора жил только в `--rm`-контейнерах → ночью он скачивался заново целиком и pull падал по IPv6 (GHCR, connection reset). `run.sh`: 4 попытки pull, откат на локальный образ с предупреждением, контейнер-«якорь» `mdb-seo-keep`. Пропуск за 03.10 закрыт ручным прогоном (21 строка).
+- **Часовой пояс VPS — Europe/Berlin**, cron `0 3` = 03:00 CEST = 09:00 WITA (в README монитора было «UTC» — ошибка). Сборщики: `30 3 * * *`.
+- **Первый сбор:** GSC Search Analytics — API отдаёт данные только с 2026-07-29 (63 дня: прямая проверка запросом на 16 месяцев — до 28.07 0 строк), GA4 — с 2026-01-01, URL Inspection — все 1782 URL sitemap, 0 ошибок, 1731+51 запросов за день.
+- **Статус индексации (URL Inspection, 03.10):** Submitted and indexed 1215; URL is unknown to Google 266; Discovered — currently not indexed 217; Alternate page with proper canonical 55; Crawled — currently not indexed 23; Duplicate without user-selected canonical 6. **Bike Models (165 URL):** 101 «unknown to Google», 63 «Discovered», 1 в индексе (ar/honda-pcx160-review, найден через sitemap, обход 20.09); 164 из 165 без referringUrls; обход после 15.09 — только этот один. Контроль: Legal 53/66 в индексе, Deposit & Safety 63/99. Индексные страницы блога (`/en/blog` и др.) в Google есть (обход en 20.09, ru 21.09, de 15.09), но в sitemap их нет (`STATIC_PATHS` в `sitemap.js` без `/blog`). Причина отсутствия показов у Bike Models — «Google не обнаружил/не обошёл URL», не качество; почему не обошёл — гипотеза (очередь обхода нового сайта).
+- Ключ сервисного аккаунта `seo-analytics-reader@mdb-motor-rental.iam.gserviceaccount.com` — только на VPS (`/root/mdb-seo-monitoring/secrets/google-sa.json`, 600, монтируется read-only). Access-log Traefik: план и подготовка на сервере готовы (`docs/traefik-access-log-plan.md` в репозитории монитора), сам рестарт прокси через Coolify UI ещё не выполнен.
+
 ## 5. Как запустить локально
 
 ```bash
