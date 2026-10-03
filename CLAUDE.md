@@ -59,6 +59,15 @@
   своих фильтрах, просто вне группы функциональной взаимозаменяемости.
   Когда будет строиться Replacement Matrix — опираться на
   `replacement_group_id`, не на `vehicle_categories`/фильтры.
+  **Мотоциклетные группы (миграции 070–072, источник —
+  MDB_Agent_Knowledge_Base.docx §5.2, 2026-09-27):**
+  `touring_replacement_pool` (Suzuki V-Strom 250, Kawasaki Versys),
+  `naked_classic_replacement_pool` (Yamaha XSR, TVS Ronin 225, Yamaha
+  Scorpio 225), `sport_replacement_pool` (Kawasaki ZX-25R, Honda CBR250RR,
+  Yamaha MT-25). MT-25 сначала сознательно оставили без группы (070, «одна
+  модель — разные цвета»), потом Дмитрий включил его в sport (071) —
+  актуально последнее. **Реально использовано**: группы работают как
+  ступень 3 в «Назначить байк» (см. §3.10), не только как справочник.
 - **Product может существовать без Fleet Item** (прецедент — Keeway Road
   Falcon 250, миграция 031): байк в заказе, физически ещё не приехал —
   заводим Family/Product/цену/фото/видео, чтобы карточка была на сайте, но
@@ -342,9 +351,9 @@ awaiting_payment → paid → fulfilled
 для §3.2 (Booking ≠ Rental): **`rentals` создаётся ТОЛЬКО на шаге
 `fulfilled`** — там же `fleet_items.status → 'rented'`. На шаге
 `fleet_item_assigned` байк уходит только в `'reserved'` (зарезервирован,
-ещё не выдан физически) — если бронь после этого никуда не идёт, `'reserved'`
-нужно вручную вернуть в `'available'` на `/internal/fleet` (авто-отмены
-брони в этом срезе нет). `awaiting_payment`/`paid` — чистые флаги-отметки
+ещё не выдан физически) — вернуть в `'available'` можно кнопкой «← Назад»,
+отменой брони (`cancelBooking`) или вручную на `/internal/fleet`.
+`awaiting_payment`/`paid` — чистые флаги-отметки
 факта оплаты, без `finance_transactions` и без сумм (расчёт — Finance,
 v1.3).
 
@@ -370,11 +379,96 @@ assigned_driver` / `driver_tasks.driver_id` (UUID→`users`) — те остаю
 `driver_tasks.replies_to_task_id`) — в `PROJECT_STATUS.md`, не дублируется
 здесь. Формат самой карточки (`backend/src/config/driverTaskTemplates.js`)
 — **черновик** (v3: структура один-в-один с `buildDriverText()` из
-`services/booking.js`, Sopir/Motor реально заполняются, Pakai всегда
-пусто — под будущий сценарий двух водителей на задачу, схемы под него
-нет). Кнопка отправки активна только для 8 кодов `SEND_ALLOWED_CODES`
+`services/booking.js`, Sopir/Motor/Pakai реально заполняются — Pakai с
+миграции 073; префикс «🧪 ТЕСТ» и отсутствие второго Sopir в тексте — всё
+ещё черновик). Кнопка отправки активна только для 8 кодов `SEND_ALLOWED_CODES`
 (раздел А задания — 7 пунктов, пункт про шлем закрыт парой `bawa_helm`+
 `menjemput_helm`).
+
+#### 3.10.1 Что добавлено поверх среза (сессии 2026-09-27 … 2026-10-03)
+
+Всё ниже — на dev и на проде (образ `0bac1f7`), подробный журнал и
+откаты — `PROJECT_STATUS.md`, «Сессия 2026-09-27 … 2026-10-03».
+
+- **«Назначить байк» — три ступени подбора**
+  (`GET /bookings/:id/assignable-fleet-items`, `assignFleetItem()`):
+  1) точный `product_id` брони → 2) тот же `product_families` (другой цвет)
+  → 3) та же `replacement_group_id` (обе не NULL). Фронт автоматически
+  сворачивается на первую непустую ступень, подпись с количеством
+  («Точное совпадение — N свободно»). Любая ступень кроме 1 — реальная
+  замена: обязательное `replacement_reason` (пишется в
+  `bookings.replacement_reason` и в `booking_status_history.note`). Байк вне
+  всех трёх ступеней бэкенд отклоняет (400). Тест-кейс-прототип: бронь с
+  цветом без парка (XSR Custom Black, 0 fleet items) предлагает байки того же
+  Family (№22/23/26).
+- **Авто-создание и авто-отправка задачи `pengiriman`** на переходе
+  confirmed→driver_assigned (`assignDriver()` →
+  `services/driverTaskDispatch.js`). Достаточность данных: контакт клиента +
+  `bookings.location_link` + `bookings.delivery_time`. Если чего-то нет —
+  задача НЕ создаётся молча: `assign-driver` возвращает `driver_task.
+  missing_fields`, переход в `driver_assigned` всё равно происходит, на
+  `/internal/bookings` показываются инпуты под недостающее
+  (`POST /bookings/:id/driver-task-followup`). Создание идемпотентно
+  (повторный вызов не плодит вторую задачу). Сетевая отправка — строго
+  ПОСЛЕ коммита транзакции. Отправляется тем же путём, что «отправить
+  тест» (`dispatchDriverTask()`, общий код), в `manager_telegram_chat_ids`
+  (`template_code='driver_task_auto'` vs `'driver_task_test'`) — реальный
+  водительский бот по-прежнему не подключён. Источник задачи —
+  `source='manual'` (в enum `record_source` нет `'auto'`).
+- **Обратные переходы («← Назад») на каждом шаге**: `unassignFleetItem`
+  (байк → `available`, чистит `replacement_reason`), `unconfirmBooking`,
+  `unassignDriver` (чистит слот, **отменяет** — не удаляет — незавершённую
+  `pengiriman`), `unmarkAwaitingPayment`, `unmarkPaid`, и особый
+  `unfulfillBooking` (fulfilled→paid, решение Дмитрия: «Fulfilled нажали по
+  ошибке → откат ПОЛНЫЙ»): `rentals` и `events(bike_delivered)` **удаляются**
+  (в `rental_status` нет `'cancelled'`, аренды по факту не было), байк →
+  `reserved`, в `booking_status_history` добавляется строка fulfilled→paid,
+  старая запись о fulfilled не трогается. На фронте у этой кнопки
+  `window.confirm()`.
+- **Отмена брони** `cancelBooking(id, reason)` (`POST /bookings/:id/cancel`):
+  из любого статуса кроме fulfilled/cancelled/expired (иначе 409), причина
+  обязательна, освобождает байк, **отменяет висящую `pengiriman`**. Штраф
+  «отмена после доставки» (`cancel_after_delivery_fee_idr`) сознательно НЕ
+  автоматизирован — Finance (v1.3) не подключён, сумма вручную в
+  `cancellation_reason`.
+- **Миграция 073** (`driver_tasks`): `assigned_driver_slot_2` (второй
+  водитель), `pakai_fleet_item_id` / `pakai_text` (взаимоисключимы). Pakai —
+  байк, на котором ВОДИТЕЛЬ едет и возвращается, не Motor. Второго водителя в
+  текст карточки НЕ выводим (шаблон правит Дмитрий сам) — только схема+форма.
+- **Оборудование в форме задачи → `payload.peralatan`** через
+  `computePeralatan()`; явный выбор в форме имеет приоритет над подстановкой
+  из брони.
+- **Создание заявки вручную живёт НЕ на `/internal/bookings`, а в форме
+  «Новая задача» на `/internal/driver-tasks`.** Условие: «Бронь = без брони»
+  И у выбранного типа `task_types.needs_customer=true`. Форма добавляет имя
+  клиента, дату окончания, страховку и live-превью (`/api/quote`, debounce
+  400мс). Submit-цепочка: `POST /bookings/create-manual` →
+  `assign-fleet-item` → `confirm` → `assign-driver`; для `pengiriman` на
+  этом всё (задачу создаёт и шлёт `assignDriver`, второй `POST /driver-tasks`
+  дал бы дубль), для любого другого клиентского типа — обычный
+  `POST /driver-tasks` с `booking_id` новой брони. Бронь создаётся первым
+  шагом и остаётся, если следующий шаг упал: рамка с номером брони и
+  «Повторить оставшиеся шаги», точка возобновления берётся из РЕАЛЬНОГО
+  статуса брони (повтор безопасен). Контакт клиента (одно поле) →
+  `@x`=telegram_username, `x@y.z`=email, иначе WhatsApp. `delivery_time`
+  на бронь пишется только для `pengiriman` (иначе `assignDriver` создал бы
+  лишнюю автозадачу для menjemput и т.п.). Дропдаун «Байк» в этой ветке —
+  только `status='available'`. Раньше та же функция была отдельной формой на
+  `/internal/bookings` (`CreateBookingForm`, коммиты `df0b821`/`c3656ce`) —
+  убрана целиком в `0bac1f7`.
+- **`createBooking(input, {sourceOverride})`**: `source='manual'` для
+  ручного создания. У ручной заявки НЕ создаётся строка `booking_created`
+  (диспетчер сам инициатор), `driver_card` создаётся и отправляется после
+  ответа (по строке на каждый chat_id). Для website/telegram_bot обе строки
+  по-прежнему создаются и **отправляются** (публичный `POST /bookings`
+  зовёт `deliverNotification` после ответа) — не менять без решения.
+- **`GET /bookings-products`** (лёгкий список для пикеров) отдаёт только
+  `is_active` продукты с хотя бы одним физическим Fleet Item — продукты без
+  флота (§3.1, Keeway-прецедент) не показываются.
+- Мелочи: `PATCH /fleet-items/:id` принимает `status` и/или `notes`
+  независимо (заметка во Fleet сохраняется по blur);
+  `frontend/src/lib/timeSlots.js` — единый набор `DELIVERY_TIME_OPTIONS`
+  (09:00–22:00 шаг 30 мин) для сайта и админки.
 
 ## 4. Бизнес-правила (живут в данных/конфиге, не в коде)
 
