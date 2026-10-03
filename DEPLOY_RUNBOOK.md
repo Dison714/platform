@@ -270,3 +270,46 @@ docker cp backend/scripts/apply_review_links.mjs $C:/app/scripts/
 docker exec $C node scripts/apply_review_links.mjs --dry-run   # затем без --dry-run
 ```
 Перед запуском — `pg_dump -t family_content_translations` (бэкап).
+
+## Traefik: файлы на VPS вне git
+
+Любая пересборка/миграция сервера **стирает** эти файлы — пересоздать из этого
+раздела. Traefik подхватывает `/data/coolify/proxy/dynamic/*` на лету, без рестарта.
+
+1. `bikebalirent-https-redirect.yaml` (14.09.2026) — http→https для apex и www как
+   *постоянный* редирект (Coolify генерирует непостоянный 307, правка исходника
+   Coolify слишком широка): см. CLAUDE.md §6 и PROJECT_STATUS, сессия 2026-09-14.
+2. `bikebalirent-www-redirect.yaml` (03.10.2026) — www → apex, постоянный, путь и query
+   сохраняются, `priority: 1100` (перебивает и Coolify-роутеры, и файл №1 для www):
+```yaml
+http:
+  middlewares:
+    www-to-apex-permanent:
+      redirectregex:
+        regex: "^https?://www\\.bikebalirent\\.com/?(.*)"
+        replacement: "https://bikebalirent.com/${1}"
+        permanent: true
+  routers:
+    bikebalirent-www-http:
+      entryPoints: [http]
+      rule: "Host(`www.bikebalirent.com`)"
+      middlewares: [www-to-apex-permanent]
+      service: noop-bikebalirent@file
+      priority: 1100
+    bikebalirent-www-https:
+      entryPoints: [https]
+      rule: "Host(`www.bikebalirent.com`)"
+      middlewares: [www-to-apex-permanent]
+      service: noop-bikebalirent@file
+      priority: 1100
+      tls:
+        certResolver: letsencrypt
+```
+   (`noop-bikebalirent` определён в файле №1.) Проверка: `curl -s -o /dev/null -w '%{http_code} %{redirect_url}' https://www.bikebalirent.com/en` → `301 https://bikebalirent.com/en`.
+   Откат: удалить файл, подождать ~4 с — www снова отвечает 200.
+3. Статическая конфигурация прокси (access-log, 8 флагов `--accesslog…`) хранится в БД
+   Coolify, не в файле: Servers → Proxy → Configuration; список строк —
+   `docs/traefik-access-log-plan.md` в репозитории `mdb-seo-monitoring`.
+4. `/etc/logrotate.d/traefik-access` — ротация `/data/coolify/proxy/access.log`
+   (ежедневно, 14 копий, `postrotate: docker kill --signal=USR1 coolify-proxy`).
+5. `/etc/ssh/sshd_config.d/00-hardening.conf` — key-only SSH (CLAUDE.md §6).

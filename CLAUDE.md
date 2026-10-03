@@ -911,6 +911,47 @@ Phase 2; hi + zh-Hans запущены тем же днём, 2026-09-07). Фак
   вернётся к 307, и про это никто не вспомнит, если не заглянуть сюда.
   Пересоздать — тот же паттерн (см. `PROJECT_STATUS.md`, сессия
   2026-09-14, для точного содержимого файла).
+- **⚠️ `www.bikebalirent.com` → apex: тот же класс «только на VPS, не в git»**
+  (сессия 2026-10-03, аудит индексации). Coolify-приложение frontend обслуживает
+  оба хоста (`fqdn = bikebalirent.com,www.bikebalirent.com`, `redirect = both`), и
+  до 03.10 `www` отдавал весь сайт кодом 200 (спасал только canonical на apex;
+  Google о www-URL не знал). Теперь постоянный редирект (301 на GET, 308 на
+  HEAD; путь и query сохраняются, один хоп с http://www) лежит в
+  `/data/coolify/proxy/dynamic/bikebalirent-www-redirect.yaml` (priority 1100,
+  выше файла с http→https). Содержимое файла — `DEPLOY_RUNBOOK.md`, раздел
+  «Traefik: файлы на VPS вне git»; бэкап прежнего каталога —
+  `/data/coolify/proxy/backups/dynamic.pre-www-redirect.20261003/`. Рестарт
+  прокси из Coolify его не стирает (проверено), но пересборка сервера с нуля —
+  сотрёт, поэтому раздел в RUNBOOK обязателен к прочтению при любой миграции.
+- **Access-log Traefik включён с 03.10.2026** (JSON, `/data/coolify/proxy/access.log`,
+  права 600, logrotate ежедневно/14 копий, остальное — `docs/traefik-access-log-plan.md`
+  в репозитории `mdb-seo-monitoring`). Изменение конфига прокси живёт в БД Coolify
+  (Servers → Proxy → Configuration), не в файле: правка `docker-compose.yml` на диске
+  затирается при следующем старте прокси. До 03.10 бот-трафик нигде не логировался —
+  любые утверждения «Googlebot заходил/не заходил» по датам до 03.10 проверить
+  нельзя, только по `lastCrawlTime` из URL Inspection.
+- **SSH на VPS — только по ключам** (с 03.10.2026): `/etc/ssh/sshd_config.d/00-hardening.conf`
+  (`PasswordAuthentication no`, `KbdInteractiveAuthentication no`,
+  `PermitRootLogin prohibit-password` — именно не `no`: Coolify ходит root по ключу).
+  Причина: эффективно было `PasswordAuthentication yes` (файл `50-cloud-init.conf`
+  читается раньше `60-cloudimg-settings.conf`, побеждает первое значение), в `auth.log`
+  372 тыс. неудачных парольных попыток за месяц. Откат: удалить файл +
+  `systemctl reload ssh`. Новый пользователь `deploy` (28.09.2026, без sudo/docker) и
+  `driver-expense-bot` под pm2 (`/opt/driver-expense-bot`) — сервис Дмитрия вне
+  Coolify; он не входит в периметр деплоя Platform.
+- **SEO-сборщик (`Dison714/mdb-seo-monitoring`, этап 1, 03.10.2026)** пишет в таблицы
+  `seo_*` (миграция 074): GSC Search Analytics/Sitemaps, GA4, URL Inspection (история
+  статусов индексации по каждому URL sitemap), алерты П1–П6 в Telegram, недельный срез
+  (файл на Drive). Ключ сервисного аккаунта — только на VPS
+  (`/root/mdb-seo-monitoring/secrets/`, read-only mount). Facts для будущих решений:
+  данные GSC для ресурса есть только с 2026-07-29; суточная квота URL Inspection
+  (2000) сбрасывается в полночь по Pacific = 07:00 UTC. Подробности — README
+  репозитория монитора и `PROJECT_STATUS.md`, «Сессия 2026-10-03».
+- **Ссылки на обзоры моделей (Bike Models) живут в `family_content_translations`
+  (прод-БД)** и не отражены в `family_content_data.mjs`; после любого пересева
+  family_content, кроме `apply_family_content.mjs` (тот подмешивает их сам),
+  запускать `backend/scripts/apply_review_links.mjs` (идемпотентно, `--dry-run`).
+  Решение Дмитрия 03.10.2026: данные вместо правки кода, без деплоя.
 - **Claude Code не может сам задеплоить Coolify-ресурс** (проверено на
   сессии 2026-09-15) — `git push` только кладёт коммит в `origin/main`,
   сам redeploy контейнера всё ещё отдельное ручное действие в Coolify UI.
