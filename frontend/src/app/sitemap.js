@@ -8,12 +8,27 @@ import { categoriesInGroup, SINGLE_MODEL_CATEGORIES } from '../lib/categoryGroup
 // (это отдельный Шаг 2 чанка) — каждая локаль как самостоятельный URL.
 export const dynamic = 'force-dynamic';
 
+// kind определяет, откуда берётся lastmod (см. staticLastmod ниже): раньше у
+// всех статических страниц lastmod был "сейчас" (дата запроса) — Google видел,
+// что главная/каталог "изменились только что" при каждом обходе.
 const STATIC_PATHS = [
-  { path: '', priority: 1.0 },        // homepage
-  { path: '/bikes', priority: 0.9 },  // каталог
-  { path: '/about', priority: 0.5 },
-  { path: '/faq', priority: 0.5 },
+  { path: '', priority: 1.0, kind: 'home' },        // homepage
+  { path: '/bikes', priority: 0.9, kind: 'bikes' }, // каталог
+  // Индекс блога раньше отсутствовал в sitemap во всех локалях (аудит
+  // 03.10.2026) — Google обходил его только по ссылкам из шапки/подвала.
+  { path: '/blog', priority: 0.7, kind: 'blog' },
+  { path: '/about', priority: 0.5, kind: 'static' },
+  { path: '/faq', priority: 0.5, kind: 'static' },
 ];
+
+// about/faq живут в i18n-словарях, а не в БД — реальной даты изменения в данных
+// нет. Дата последнего коммита, трогавшего frontend/src/i18n/dictionaries,
+// [locale]/about или [locale]/faq (4bd3881, 2026-09-19). Обновлять вручную при
+// правке текста этих страниц; это честнее, чем "сейчас" при каждом запросе.
+const STATIC_PAGES_LASTMOD = new Date('2026-09-19T05:46:27+08:00');
+
+const maxDate = (values) =>
+  values.filter(Boolean).map((v) => new Date(v)).reduce((a, b) => (!a || b > a ? b : a), null);
 
 export default async function sitemap() {
   // До финального DNS cutover на bikebalirent.com — пустой sitemap, не 76×2
@@ -24,22 +39,8 @@ export default async function sitemap() {
   if (!IS_PRODUCTION) return [];
 
   const locales = enabledLocales(); // ['en','ru']
-  const now = new Date();
 
   const entries = [];
-
-  // Статические страницы × локали. lastmod = дата генерации (у этих страниц
-  // нет записи в БД с updated_at — допущение зафиксировано здесь).
-  for (const loc of locales) {
-    for (const { path, priority } of STATIC_PATHS) {
-      entries.push({
-        url: `${SITE_URL}/${loc}${path}`,
-        lastModified: now,
-        changeFrequency: 'weekly',
-        priority,
-      });
-    }
-  }
 
   // Product pages × локали. lastmod = products.updated_at (через API); если по
   // какой-то причине нет — дата генерации.
@@ -53,7 +54,7 @@ export default async function sitemap() {
     for (const p of products) {
       entries.push({
         url: `${SITE_URL}/${loc}/bikes/${p.slug}`,
-        lastModified: p.updated_at ? new Date(p.updated_at) : now,
+        lastModified: p.updated_at ? new Date(p.updated_at) : undefined,
         changeFrequency: 'weekly',
         priority: 0.8,
       });
@@ -88,11 +89,19 @@ export default async function sitemap() {
   } catch {
     // API недоступен — просто без хабов в sitemap, не падаем.
   }
+  // lastmod хаба = самая свежая правка среди его товаров (раньше — "сейчас").
+  // category=<код> → товары этой категории; model=<family> → товары семейства.
+  const hubLastmod = (query) => {
+    const cat = /^category=(.+)$/.exec(query)?.[1];
+    const fam = /model=(.+)$/.exec(query)?.[1];
+    const subset = products.filter((p) => (cat ? p.category?.code === cat : p.family?.code === fam));
+    return maxDate(subset.map((p) => p.updated_at)) ?? undefined;
+  };
   for (const loc of locales) {
     for (const query of hubQueries) {
       entries.push({
         url: `${SITE_URL}/${loc}/bikes?${query}`,
-        lastModified: now,
+        lastModified: hubLastmod(query),
         changeFrequency: 'weekly',
         priority: 0.7,
       });
@@ -123,7 +132,7 @@ export default async function sitemap() {
     for (const post of posts) {
       entries.push({
         url: `${SITE_URL}/${loc}/blog/${post.slug}`,
-        lastModified: post.updated_at ? new Date(post.updated_at) : now,
+        lastModified: post.updated_at ? new Date(post.updated_at) : undefined,
         changeFrequency: 'weekly',
         priority: 0.5,
       });
@@ -149,12 +158,34 @@ export default async function sitemap() {
     for (const page of pages) {
       entries.push({
         url: `${SITE_URL}/${loc}/scooter-rental-${page.slug}`,
-        lastModified: page.updated_at ? new Date(page.updated_at) : now,
+        lastModified: page.updated_at ? new Date(page.updated_at) : undefined,
         changeFrequency: 'weekly',
         priority: 0.6,
       });
     }
   }
 
-  return entries;
+  // Статические страницы × локали, lastmod по реальным данным (см. STATIC_PATHS).
+  // Если API недоступен (нет данных) — lastModified не указываем вовсе, а не
+  // подставляем "сейчас".
+  const productsLast = maxDate(products.map((p) => p.updated_at));
+  const staticEntries = [];
+  for (const loc of locales) {
+    const blogLast = maxDate((postsByLocale.find((x) => x.loc === loc)?.posts ?? []).map((post) => post.updated_at));
+    const staticLastmod = {
+      home: maxDate([productsLast, blogLast, STATIC_PAGES_LASTMOD]),
+      bikes: productsLast,
+      blog: blogLast,
+      static: STATIC_PAGES_LASTMOD,
+    };
+    for (const { path, priority, kind } of STATIC_PATHS) {
+      staticEntries.push({
+        url: `${SITE_URL}/${loc}${path}`,
+        lastModified: staticLastmod[kind] ?? undefined,
+        changeFrequency: 'weekly',
+        priority,
+      });
+    }
+  }
+  return [...staticEntries, ...entries];
 }
