@@ -358,7 +358,10 @@ export async function createBooking(input, { apiClient = null, sourceOverride = 
             paymentPreference, comment: commentText,
         });
         const notificationIds = [];
-        for (const chatId of chatIds) {
+        // Ручное создание (source='manual', /internal/bookings): диспетчер сам
+        // инициатор — эскалация менеджеру о собственной заявке не нужна, строку
+        // booking_created не пишем вообще. driver_card остаётся.
+        for (const chatId of source === 'manual' ? [] : chatIds) {
             const { rows: nRows } = await client.query(
                 `INSERT INTO notifications (company_id, channel, status, template_code, payload, booking_id)
                  VALUES ($1,'telegram','queued','booking_created',$2,$3) RETURNING id`,

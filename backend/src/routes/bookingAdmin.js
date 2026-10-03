@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { pool } from '../db/pool.js';
 import { getCompanyId } from '../services/config.js';
 import { createBooking } from '../services/booking.js';
+import { deliverNotification } from '../services/notify.js';
 import {
     assignFleetItem,
     confirmBooking,
@@ -28,7 +29,9 @@ export const bookingAdminRouter = Router();
 // GET /bookings-products — лёгкий список активных Product для пикера формы
 // "Создать заявку" (Раздел 5А, 2026-09-27). Публичный /products (catalog.js)
 // не подходит напрямую — тянет переводы/фото/цены под витрину сайта;
-// диспетчеру нужны только id + человекочитаемая подпись.
+// диспетчеру нужны только id + человекочитаемая подпись. Products без
+// единого физического Fleet Item (ещё не приехали, CLAUDE.md §3.1, прецедент
+// Keeway Road Falcon) в форме не показываем.
 bookingAdminRouter.get('/bookings-products', async (req, res, next) => {
     try {
         const { rows } = await pool.query(
@@ -36,6 +39,7 @@ bookingAdminRouter.get('/bookings-products', async (req, res, next) => {
              FROM products p
              JOIN product_families pf ON pf.id = p.family_id
              WHERE p.is_active = TRUE
+               AND EXISTS (SELECT 1 FROM fleet_items fi WHERE fi.product_id = p.id)
              ORDER BY pf.brand, pf.model_name, p.color_name`
         );
         res.json({ data: rows });
@@ -59,6 +63,10 @@ bookingAdminRouter.post('/bookings/create-manual', async (req, res, next) => {
                 status: result.booking.status,
             },
         });
+        // Тот же fire-and-forget после ответа и после COMMIT, что у публичного
+        // POST /bookings (routes/booking.js). Для source='manual' в
+        // notificationIds только driver_card (booking_created не создаётся).
+        for (const id of result.notificationIds) deliverNotification(id);
     } catch (err) { next(err); }
 });
 
