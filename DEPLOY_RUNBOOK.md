@@ -257,3 +257,16 @@ curl -sI "$U" | grep -i cf-cache-status
 ⚠️ **После замены фото по тому же пути — обязательно Purge Cache** в
 Cloudflare (Caching → Configuration → Purge). Иначе на узлах CDN до недели
 будет отдаваться старая картинка, хотя в R2 уже лежит новая.
+
+## Family content: ссылки на обзоры моделей
+
+Ссылки на обзоры моделей живут в `family_content_translations` (прод-БД) и не отражены в `family_content_data.mjs`; после любого пересева family_content запускать `backend/scripts/apply_review_links.mjs` (идемпотентно, `--dry-run` показывает, сколько строк изменится). `apply_family_content.mjs` подмешивает эти ссылки сам, но любой другой путь пересева (прямой SQL, `family_content_sync.sql`) их стирает.
+
+Запуск на проде (скрипт в контейнер backend не входит — копируется разово, пропадает при редеплое):
+```bash
+C=uy845drxpx5z6t5qf0c8voa8-065244726861   # контейнер backend, имя меняется при каждом деплое — сверить docker ps
+docker cp backend/scripts/review_links.mjs $C:/app/scripts/
+docker cp backend/scripts/apply_review_links.mjs $C:/app/scripts/
+docker exec $C node scripts/apply_review_links.mjs --dry-run   # затем без --dry-run
+```
+Перед запуском — `pg_dump -t family_content_translations` (бэкап).
